@@ -1,0 +1,109 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  PYTHON_VERSION: '3.10'
+
+jobs:
+  # 浠ｇ爜璐ㄩ噺妫€鏌?  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install flake8 black isort
+
+      - name: Check code format (Black)
+        run: |
+          black --check src/
+
+      - name: Check import order (isort)
+        run: |
+          isort --check-only src/
+
+      - name: Lint with flake8
+        run: |
+          flake8 src/ --max-line-length=120 --ignore=E203,W503
+
+  # 鍗曞厓娴嬭瘯
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest pytest-asyncio
+
+      - name: Run tests
+        run: |
+          pytest tests/ -v --tb=short
+
+  # 鏋勫缓妫€鏌?  build:
+    runs-on: ubuntu-latest
+    needs: [lint, test]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Verify imports
+        run: |
+          python -c "from src.agent.customer_service_agent import CustomerServiceAgent; print('Import OK')"
+
+      - name: Run lint check
+        run: |
+          flake8 src/ --max-line-length=120 --ignore=E203,W503 --exit-zero
+
+  # 璇勬祴闆嗛獙璇?  eval-check:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Validate evaluation dataset
+        run: |
+          python -c "
+from src.eval.evaluator import EvaluationDataset, DEFAULT_EVAL_DATASET
+dataset = EvaluationDataset()
+dataset.load_from_dict(DEFAULT_EVAL_DATASET)
+print(f'Loaded {len(dataset.samples)} evaluation samples')
+print(f'Intents: {set(s.expected_intent for s in dataset.samples)}')
+"
