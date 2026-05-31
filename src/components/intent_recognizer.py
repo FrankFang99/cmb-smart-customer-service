@@ -1,454 +1,678 @@
 """
-阶梯式意图识别器 v1.1
+阶梯式意图识别器 v2.0
 规则 -> 轻量模型 -> LLM 三级回退
-支持8大类意图分类体系
+基于CCCS国标 + 招行95555真实运营场景设计
+
+支持6大类和20个二级分类的意图体系
 """
 from enum import Enum
-from typing import Optional, Tuple, List
+from typing import Optional, Tuple, List, Dict
 from dataclasses import dataclass
 
 
 class IntentType(str, Enum):
-    """银行客服意图类型 v1.1 - 8大类"""
-
-    # === 一级意图 ===
-    # 查询类
-    QUERY_BALANCE = "query_balance"           # 余额查询
-    QUERY_BILL = "query_bill"                 # 账单查询
-    QUERY_BANK_INFO = "query_bank_info"      # 开户行查询
-    QUERY_PROGRESS = "query_progress"        # 进度查询
-    QUERY_OTHER = "query_other"               # 其他查询
-
-    # 交易操作类
-    TRANSFER = "transfer"                     # 转账汇款
-    PASSWORD_MANAGE = "password_manage"       # 密码管理
-    CARD_LOSS = "card_loss"                   # 卡片挂失
-    CARD_ACTIVATE = "card_activate"          # 卡片激活
-    TRANSACTION_OTHER = "transaction_other"   # 其他操作
-
-    # 咨询类
-    CONSULT_RATE = "consult_rate"             # 利率咨询
-    CONSULT_FEE = "consult_fee"              # 手续费咨询
-    CONSULT_RULE = "consult_rule"             # 规则咨询
-    CONSULT_ACTIVITY = "consult_activity"    # 活动咨询
-    CONSULT_PRODUCT = "consult_product"      # 产品咨询
-
-    # 服务转接类 [P0立即转]
-    HUMAN_SERVICE = "human_service"          # 明确要求转人工
-    COMPLAINT = "complaint"                  # 投诉
-    SUGGESTION = "suggestion"                # 建议反馈
-    URGENT_HELP = "urgent_help"              # 紧急求助
-
-    # 营销咨询类
-    MARKETING_WEALTH = "marketing_wealth"     # 理财产品咨询
-    MARKETING_CREDIT = "marketing_credit"    # 信用卡咨询
-    MARKETING_LOAN = "marketing_loan"       # 贷款产品咨询
-    MARKETING_PROMO = "marketing_promo"      # 优惠活动咨询
-
-    # 风险类 [P0立即转]
-    ANTI_FRAUD = "anti_fraud"               # 反诈举报
-    THEFT_REPORT = "theft_report"           # 盗刷反馈
-    FREEZE_REQUEST = "freeze_request"       # 冻结申请
-    SECURITY_EVENT = "security_event"       # 安全事件
-
-    # 复杂需求
-    CUSTOM_PLAN = "custom_plan"             # 定制理财方案
-    LOAN_COMPARE = "loan_compare"           # 贷款方案对比
-    COMPLEX_BUSINESS = "complex_business"   # 复杂业务办理
-    HUMAN_INTERVENTION = "human_intervention"  # 需要人工介入
-
-    # 模糊/无效意图
-    ACCIDENTAL_TOUCH = "accidental_touch"   # 误触
-    SEMANTIC_INVALID = "semantic_invalid"   # 语义不通
-    UNKNOWN = "unknown"                     # 未知
-
-    # 系统意图
-    GREETING = "greeting"                   # 问候
-    THANKS = "thanks"                       # 感谢
+    """
+    银行客服意图类型 v2.0
+    基于CCCS国标 + 招行95555真实运营场景
+    
+    三层结构：一级大类 → 二级子类 → 三级具体意图
+    """
+    
+    # ========================================
+    # 一、信息查询类 (INFO) - 30%占比
+    # ========================================
+    
+    # 账户信息查询
+    INFO_ACC_BALANCE = "info_acc_balance"        # 余额查询
+    INFO_ACC_DETAIL = "info_acc_detail"           # 账户明细/流水
+    INFO_ACC_STATUS = "info_acc_status"          # 账户状态
+    INFO_ACC_INFO = "info_acc_info"              # 账户基本信息
+    
+    # 账单信息查询
+    INFO_BILL_AMOUNT = "info_bill_amount"        # 账单金额
+    INFO_BILL_DATE = "info_bill_date"           # 还款日期
+    INFO_BILL_MIN = "info_bill_min"             # 最低还款
+    INFO_BILL_POINT = "info_bill_point"          # 积分查询
+    
+    # 交易记录查询
+    INFO_TRAN_RECORD = "info_tran_record"        # 交易记录
+    INFO_TRAN_STATUS = "info_tran_status"        # 交易状态
+    
+    # 产品信息查询
+    INFO_PROD_WEALTH = "info_prod_wealth"       # 理财信息
+    INFO_PROD_LOAN = "info_prod_loan"           # 贷款信息
+    INFO_PROD_CREDIT = "info_prod_credit"       # 信用卡信息
+    
+    # 业务进度查询
+    INFO_PROG_APPLICATION = "info_prog_application"  # 申请进度
+    INFO_PROG_TRANSFER = "info_prog_transfer"    # 转账进度
+    INFO_PROG_OTHER = "info_prog_other"         # 其他进度
+    
+    # 其他查询
+    INFO_BRANCH = "info_branch"                 # 网点查询
+    INFO_PHONE = "info_phone"                   # 电话查询
+    INFO_HOUR = "info_hour"                      # 营业时间
+    INFO_OTHER = "info_other"                   # 其他查询
+    
+    # ========================================
+    # 二、业务办理类 (BIZ) - 20%占比
+    # ========================================
+    
+    # 转账汇款
+    BIZ_TRAN_INTERNAL = "biz_tran_internal"      # 行内转账
+    BIZ_TRAN_EXTERNAL = "biz_tran_external"     # 跨行转账
+    BIZ_TRAN_REMIT = "biz_tran_remit"           # 汇款
+    BIZ_TRAN_REVERSE = "biz_tran_reverse"       # 撤销/退回
+    BIZ_TRAN_LIMIT = "biz_tran_limit"          # 限额问题
+    
+    # 卡片管理
+    BIZ_CARD_LOSS = "biz_card_loss"             # 卡片挂失
+    BIZ_CARD_ACTIVATE = "biz_card_activate"    # 卡片激活
+    BIZ_CARD_REISSUE = "biz_card_reissue"       # 补办新卡
+    BIZ_CARD_DAMAGE = "biz_card_damage"        # 损坏换卡
+    BIZ_CARD_EJECT = "biz_card_eject"          # 卡被吞
+    BIZ_CARD_CANCEL = "biz_card_cancel"        # 注销卡片
+    
+    # 密码管理
+    BIZ_PWD_RESET = "biz_pwd_reset"             # 密码重置
+    BIZ_PWD_CHANGE = "biz_pwd_change"          # 密码修改
+    BIZ_PWD_SET = "biz_pwd_set"               # 密码设置
+    
+    # 还款操作
+    BIZ_PAY_REPAY = "biz_pay_repay"            # 主动还款
+    BIZ_PAY_AUTOPAY = "biz_pay_autopay"        # 自动还款设置
+    BIZ_PAY_OVERDUE = "biz_pay_overdue"        # 逾期处理
+    
+    # 其他业务
+    BIZ_INSTALLMENT = "biz_installment"        # 分期办理
+    BIZ_STATEMENT = "biz_statement"            # 对账单寄送
+    BIZ_OTHER = "biz_other"                   # 其他业务
+    
+    # ========================================
+    # 三、咨询投诉类 (CONSULT) - 20%占比
+    # ========================================
+    
+    # 产品咨询 [需要风险提示]
+    CONS_PROD_WEALTH = "cons_prod_wealth"       # 理财咨询
+    CONS_PROD_LOAN = "cons_prod_loan"          # 贷款咨询
+    CONS_PROD_CREDIT = "cons_prod_credit"      # 信用卡咨询
+    CONS_PROD_DEPOSIT = "cons_prod_deposit"    # 存款咨询
+    CONS_PROD_COMPARE = "cons_prod_compare"     # 产品对比
+    
+    # 费用咨询
+    CONS_FEE_TRAN = "cons_fee_tran"            # 转账手续费
+    CONS_FEE_WITHDRW = "cons_fee_withdrw"      # 取现手续费
+    CONS_FEE_INSTALL = "cons_fee_install"      # 分期手续费
+    CONS_FEE_OTHER = "cons_fee_other"         # 其他费用
+    
+    # 规则咨询
+    CONS_RULE_REFUND = "cons_rule_refund"       # 退款规则
+    CONS_RULE_CANCEL = "cons_rule_cancel"      # 注销规则
+    CONS_RULE_OVERDUE = "cons_rule_overdue"    # 逾期规则
+    CONS_RULE_OTHER = "cons_rule_other"        # 其他规则
+    
+    # 投诉处理 [P0 - 立即转人工]
+    CONS_COMP_SERVICE = "cons_comp_service"     # 服务态度投诉
+    CONS_COMP_DELAY = "cons_comp_delay"         # 延误投诉
+    CONS_COMP_ERROR = "cons_comp_error"        # 错误投诉
+    CONS_COMP_REFUSE = "cons_comp_refuse"     # 拒绝服务投诉
+    CONS_COMP_OTHER = "cons_comp_other"        # 其他投诉
+    
+    # 建议反馈
+    CONS_SUGG_IMPROVE = "cons_sugg_improve"    # 改进建议
+    CONS_SUGG_NEW = "cons_sugg_new"           # 新功能建议
+    
+    # 紧急求助 [P0 - 立即转人工]
+    CONS_URG_LOSS = "cons_urg_loss"            # 资金损失
+    CONS_URG_LOCK = "cons_urg_lock"           # 账户锁定
+    CONS_URG_CARD = "cons_urg_card"           # 卡片紧急问题
+    CONS_URG_HUMAN = "cons_urg_human"         # 强烈要求人工
+    
+    # ========================================
+    # 四、营销推广类 (SALES) - 10%占比
+    # ========================================
+    
+    # 理财产品 [需要风险提示]
+    SALES_WEALTH_PROD = "sales_wealth_prod"   # 产品推荐
+    SALES_WEALTH_RETURN = "sales_wealth_return"  # 收益咨询
+    SALES_WEALTH_RISK = "sales_wealth_risk"    # 风险咨询
+    
+    # 贷款产品 [需要风险提示]
+    SALES_LOAN_PROD = "sales_loan_prod"       # 产品推荐
+    SALES_LOAN_RATE = "sales_loan_rate"       # 利率咨询
+    SALES_LOAN_COND = "sales_loan_cond"       # 条件咨询
+    
+    # 信用卡产品 [需要风险提示]
+    SALES_CREDIT_PROD = "sales_credit_prod"   # 产品推荐
+    SALES_CREDIT_POINT = "sales_credit_point"  # 积分活动
+    SALES_CREDIT_FEE = "sales_credit_fee"     # 年费咨询
+    
+    # 优惠活动
+    SALES_PROMO_DISCOUNT = "sales_promo_discount"  # 折扣活动
+    SALES_PROMO_REWARD = "sales_promo_reward"    # 返现活动
+    SALES_PROMO_OTHER = "sales_promo_other"      # 其他活动
+    
+    # ========================================
+    # 五、安全风控类 (SECURITY) - 10%占比
+    # [全部P0 - 立即转人工]
+    # ========================================
+    
+    # 诈骗举报
+    SEC_FRAUD_REPORT = "sec_fraud_report"      # 被骗举报
+    SEC_FRAUD_SUSPECT = "sec_fraud_suspect"    # 可疑交易
+    SEC_FRAUD_PHISHING = "sec_fraud_phishing"  # 钓鱼链接
+    SEC_FRAUD_SCAM = "sec_fraud_scam"         # 诈骗电话/短信
+    
+    # 盗刷反馈
+    SEC_STOLEN_CARD = "sec_stolen_card"        # 卡被盗刷
+    SEC_STOLEN_INFO = "sec_stolen_info"        # 信息泄露
+    
+    # 账户冻结
+    SEC_FREEZE_UNEXPECTED = "sec_freeze_unexpected"  # 异常冻结
+    SEC_FREEZE_REQUEST = "sec_freeze_request"  # 申请冻结
+    SEC_FREEZE_LEGAL = "sec_freeze_legal"     # 司法冻结
+    
+    # 其他安全问题
+    SEC_VIRUS = "sec_virus"                   # 病毒/木马
+    SEC_HACK = "sec_hack"                    # 账户被盗
+    SEC_OTHER = "sec_other"                  # 其他安全问题
+    
+    # ========================================
+    # 六、系统交互类 (SYSTEM) - 10%占比
+    # ========================================
+    
+    # 问候寒暄
+    SYS_GREETING = "sys_greeting"            # 问候
+    SYS_BYE = "sys_bye"                       # 告别
+    SYS_INTRO = "sys_intro"                   # 自我介绍
+    
+    # 感谢告别
+    SYS_THANKS = "sys_thanks"                 # 感谢
+    SYS_FEEDBACK = "sys_feedback"            # 反馈感谢
+    
+    # 无效输入
+    SYS_INVALID = "sys_invalid"               # 语义不通
+    SYS_GIBBERISH = "sys_gibberish"           # 乱码/无法识别
+    SYS_OFFTOPIC = "sys_offtopic"            # 无关话题
+    
+    # 其他系统交互
+    SYS_CONFIRM = "sys_confirm"              # 确认/核实
+    SYS_REPEAT = "sys_repeat"                # 重复问题
+    SYS_OTHER = "sys_other"                  # 其他
 
 
 class IntentCategory:
-    """意图分类工具"""
-
+    """意图分类工具 - v2.0"""
+    
     # 一级分类映射
     PRIMARY_CATEGORIES = {
-        "query": ["query_balance", "query_bill", "query_bank_info", "query_progress", "query_other"],
-        "transaction": ["transfer", "password_manage", "card_loss", "card_activate", "transaction_other"],
-        "consult": ["consult_rate", "consult_fee", "consult_rule", "consult_activity", "consult_product"],
-        "service_transfer": ["human_service", "complaint", "suggestion", "urgent_help"],
-        "marketing": ["marketing_wealth", "marketing_credit", "marketing_loan", "marketing_promo"],
-        "risk": ["anti_fraud", "theft_report", "freeze_request", "security_event"],
-        "complex": ["custom_plan", "loan_compare", "complex_business", "human_intervention"],
-        "invalid": ["accidental_touch", "semantic_invalid", "unknown"],
+        "INFO": [  # 信息查询类
+            "info_acc_balance", "info_acc_detail", "info_acc_status", "info_acc_info",
+            "info_bill_amount", "info_bill_date", "info_bill_min", "info_bill_point",
+            "info_tran_record", "info_tran_status",
+            "info_prod_wealth", "info_prod_loan", "info_prod_credit",
+            "info_prog_application", "info_prog_transfer", "info_prog_other",
+            "info_branch", "info_phone", "info_hour", "info_other",
+        ],
+        "BIZ": [  # 业务办理类
+            "biz_tran_internal", "biz_tran_external", "biz_tran_remit", "biz_tran_reverse", "biz_tran_limit",
+            "biz_card_loss", "biz_card_activate", "biz_card_reissue", "biz_card_damage", "biz_card_eject", "biz_card_cancel",
+            "biz_pwd_reset", "biz_pwd_change", "biz_pwd_set",
+            "biz_pay_repay", "biz_pay_autopay", "biz_pay_overdue",
+            "biz_installment", "biz_statement", "biz_other",
+        ],
+        "CONSULT": [  # 咨询投诉类
+            "cons_prod_wealth", "cons_prod_loan", "cons_prod_credit", "cons_prod_deposit", "cons_prod_compare",
+            "cons_fee_tran", "cons_fee_withdrw", "cons_fee_install", "cons_fee_other",
+            "cons_rule_refund", "cons_rule_cancel", "cons_rule_overdue", "cons_rule_other",
+            "cons_comp_service", "cons_comp_delay", "cons_comp_error", "cons_comp_refuse", "cons_comp_other",
+            "cons_sugg_improve", "cons_sugg_new",
+            "cons_urg_loss", "cons_urg_lock", "cons_urg_card", "cons_urg_human",
+        ],
+        "SALES": [  # 营销推广类
+            "sales_wealth_prod", "sales_wealth_return", "sales_wealth_risk",
+            "sales_loan_prod", "sales_loan_rate", "sales_loan_cond",
+            "sales_credit_prod", "sales_credit_point", "sales_credit_fee",
+            "sales_promo_discount", "sales_promo_reward", "sales_promo_other",
+        ],
+        "SECURITY": [  # 安全风控类 [全部P0]
+            "sec_fraud_report", "sec_fraud_suspect", "sec_fraud_phishing", "sec_fraud_scam",
+            "sec_stolen_card", "sec_stolen_info",
+            "sec_freeze_unexpected", "sec_freeze_request", "sec_freeze_legal",
+            "sec_virus", "sec_hack", "sec_other",
+        ],
+        "SYSTEM": [  # 系统交互类
+            "sys_greeting", "sys_bye", "sys_intro",
+            "sys_thanks", "sys_feedback",
+            "sys_invalid", "sys_gibberish", "sys_offtopic",
+            "sys_confirm", "sys_repeat", "sys_other",
+        ],
     }
-
-    # 需要P0立即转人工的意图
+    
+    # P0立即转人工的意图（绝对转人工）
     P0_HUMAN_TRANSFER = [
-        "human_service",  # 明确要求转人工
-        "complaint",      # 投诉
-        "urgent_help",    # 紧急求助
-        "anti_fraud",     # 反诈举报
-        "theft_report",   # 盗刷反馈
-        "security_event", # 安全事件
+        # 投诉类
+        "cons_comp_service", "cons_comp_delay", "cons_comp_error", "cons_comp_refuse", "cons_comp_other",
+        # 紧急求助类
+        "cons_urg_loss", "cons_urg_lock", "cons_urg_card", "cons_urg_human",
+        # 安全风控类
+        "sec_fraud_report", "sec_fraud_suspect", "sec_fraud_phishing", "sec_fraud_scam",
+        "sec_stolen_card", "sec_stolen_info",
+        "sec_freeze_unexpected", "sec_freeze_request", "sec_freeze_legal",
+        "sec_virus", "sec_hack", "sec_other",
     ]
-
+    
     # 需要风险提示的意图
     NEED_RISK_DISCLOSURE = [
-        "marketing_wealth",  # 理财
-        "marketing_loan",    # 贷款
-        "consult_product",  # 产品咨询
+        # 理财产品
+        "cons_prod_wealth", "sales_wealth_prod", "sales_wealth_return", "sales_wealth_risk",
+        # 贷款产品
+        "cons_prod_loan", "sales_loan_prod", "sales_loan_rate", "sales_loan_cond",
+        # 信用卡产品
+        "cons_prod_credit", "sales_credit_prod",
+        # 存款
+        "cons_prod_deposit",
     ]
+    
+    # 需要转账风险提示的意图
+    NEED_TRANSFER_DISCLOSURE = [
+        "biz_tran_internal", "biz_tran_external", "biz_tran_remit",
+        "cons_fee_tran",
+    ]
+    
+    # 意图到一级分类的映射
+    INTENT_TO_PRIMARY = {}
+    for primary, intents in PRIMARY_CATEGORIES.items():
+        for intent in intents:
+            INTENT_TO_PRIMARY[intent] = primary
 
-    @classmethod
-    def is_p0_transfer(cls, intent: IntentType) -> bool:
-        """判断是否需要P0立即转人工"""
-        return intent.value in cls.P0_HUMAN_TRANSFER
 
-    @classmethod
-    def needs_risk_disclosure(cls, intent: IntentType) -> bool:
-        """判断是否需要风险提示"""
-        return intent.value in cls.NEED_RISK_DISCLOSURE
+class IntentRecognizer:
+    """
+    阶梯式意图识别器 v2.0
+    
+    三级回退机制：
+    1. 规则匹配（高速、精准覆盖80%高频场景）
+    2. 轻量模型（处理规则未覆盖的变体表达）
+    3. LLM兜底（处理复杂/模糊场景）
+    
+    规则优先级：P0 > 风控 > 业务 > 查询 > 系统
+    """
+    
+    def __init__(self, settings=None):
+        self.settings = settings
+        self._init_rules()
+    
+    def _init_rules(self):
+        """初始化规则库"""
+        
+        # P0规则：紧急类意图（最高优先级）
+        self._p0_rules = [
+            # 明确要求人工
+            (r"(我要)?转人工|找客服|人工服务|接人工|帮我接人", "cons_urg_human"),
+            (r"赶紧转人工|立刻转|马上转人工", "cons_urg_human"),
+            (r"受不了|不要机器|不要AI|不要机器人", "cons_urg_human"),
+            
+            # 资金损失
+            (r"钱(被|没)?(盗|丢|不见)|资金丢失|钱没了", "sec_stolen_card"),
+            (r"卡.*没离身|未离身|在身上.*消费", "sec_stolen_card"),
+            (r"境外.*消费|海外.*消费|出国.*消费", "sec_stolen_card"),
+            
+            # 盗刷举报
+            (r"盗刷|被(人)?盗(了)?刷|卡(被)?盗(用)?", "sec_stolen_card"),
+            (r"信息泄露|泄露|资料外泄|隐私泄露", "sec_stolen_info"),
+            
+            # 诈骗举报
+            (r"被(骗|诈)(了)?|诈骗|骗子", "sec_fraud_report"),
+            (r"钓鱼|假链接|假冒银行|钓鱼网站", "sec_fraud_phishing"),
+            (r"诈骗电话|诈骗短信|诈骗信息", "sec_fraud_scam"),
+            
+            # 账户冻结
+            (r"冻(了|结)|账户冻结|卡冻结|不能用", "sec_freeze_unexpected"),
+            (r"帮我冻(结|住)|申请冻结|先冻住", "sec_freeze_request"),
+            
+            # 资金损失紧急
+            (r"(急|好急|急死).*钱|钱.*没了|被骗了", "cons_urg_loss"),
+            (r"损失|不见了|消失了.*钱", "cons_urg_loss"),
+            
+            # 账户锁定
+            (r"锁了|登录不了|进不去|锁定", "cons_urg_lock"),
+            
+            # 投诉
+            (r"投诉|举报|曝光|差评", "cons_comp_service"),
+            (r"服务(态度)?(太差|不好|差)|敷衍|不理", "cons_comp_service"),
+            (r"等太(久|长)|处理慢|效率低|太慢", "cons_comp_delay"),
+            (r"搞错|弄错|错误|信息不对", "cons_comp_error"),
+            (r"不给办|拒绝|推脱|踢皮球", "cons_comp_refuse"),
+        ]
+        
+        # 账户查询规则
+        self._account_rules = [
+            (r"余额|还有多少(钱)?|剩多少|还剩", "info_acc_balance"),
+            (r"账户明细|交易流水|记录|历史", "info_tran_record"),
+            (r"账户状态|卡状态|正常吗|状态", "info_acc_status"),
+            (r"开户行|(我的)?卡号|账户信息", "info_acc_info"),
+        ]
+        
+        # 账单查询规则
+        self._bill_rules = [
+            (r"账单(多少|金额)?|本期账单", "info_bill_amount"),
+            (r"还款日|几号还|截止日期|哪天还款", "info_bill_date"),
+            (r"最低还款(额)?|最少还多少", "info_bill_min"),
+            (r"积分(多少|怎么用|查询)?", "info_bill_point"),
+        ]
+        
+        # 卡片管理规则
+        self._card_rules = [
+            (r"挂失|卡丢(了)?|卡不见|丢失", "biz_card_loss"),
+            (r"激活|开卡|启用|卡片激活", "biz_card_activate"),
+            (r"补(办)?卡|补卡|换卡|新卡", "biz_card_reissue"),
+            (r"(磁条)?损坏|坏了|换卡", "biz_card_damage"),
+            (r"吞卡|机器吃(了)?|取不出", "biz_card_eject"),
+            (r"注销(卡)?|销卡|取消卡", "biz_card_cancel"),
+        ]
+        
+        # 密码管理规则
+        self._password_rules = [
+            (r"密码忘了|忘记密码|重置密码", "biz_pwd_reset"),
+            (r"改密码|修改密码|换密码", "biz_pwd_change"),
+            (r"设置密码|设定密码", "biz_pwd_set"),
+        ]
+        
+        # 转账规则
+        self._transfer_rules = [
+            (r"行内转账|同行转账|转账到招行", "biz_tran_internal"),
+            (r"跨行(转账)?|转他行|他行转账", "biz_tran_external"),
+            (r"汇款|同城汇款", "biz_tran_remit"),
+            (r"撤销(转账)?|转错了|撤回", "biz_tran_reverse"),
+            (r"转账限额|限额多少|日限额", "biz_tran_limit"),
+            (r"转账|转钱|汇款", "biz_tran_internal"),
+        ]
+        
+        # 产品咨询规则 [需要风险提示]
+        self._product_rules = [
+            (r"理财(产品|收益|安全|风险)?", "cons_prod_wealth"),
+            (r"贷款(利率|条件|额度|产品)?", "cons_prod_loan"),
+            (r"信用贷|抵押贷|消费贷", "cons_prod_loan"),
+            (r"信用(卡)?(额度|年费|申请)?", "cons_prod_credit"),
+            (r"定期(存款)?|大额存单|存款利率", "cons_prod_deposit"),
+            (r"哪个(产品|理财)?好|比较|对比", "cons_prod_compare"),
+        ]
+        
+        # 费用规则
+        self._fee_rules = [
+            (r"转账手续?费|跨行费", "cons_fee_tran"),
+            (r"取现手续?费|提现费", "cons_fee_withdrw"),
+            (r"分期手续?费|分期利率", "cons_fee_install"),
+        ]
+        
+        # 还款规则
+        self._repay_rules = [
+            (r"还款|还(信用)?卡|还钱", "biz_pay_repay"),
+            (r"自动还款|设置自动", "biz_pay_autopay"),
+            (r"逾期|滞纳金|罚息", "biz_pay_overdue"),
+        ]
+        
+        # 分期规则
+        self._installment_rules = [
+            (r"分期|账单分期|消费分期", "biz_installment"),
+            (r"分期付款|分期的?", "biz_installment"),
+        ]
+        
+        # 营销规则 [需要风险提示]
+        self._sales_rules = [
+            (r"推荐.*理财|理财推荐|想买理财", "sales_wealth_prod"),
+            (r"贷款推荐|信用贷推荐|推荐贷款", "sales_loan_prod"),
+            (r"信用卡推荐|办卡|申请卡", "sales_credit_prod"),
+            (r"积分.*活动|打折|优惠", "sales_promo_discount"),
+            (r"返现|返利|奖励", "sales_promo_reward"),
+        ]
+        
+        # 网点查询规则
+        self._branch_rules = [
+            (r"(网点|支行|分行|营业部).*(在哪|地址|电话)?", "info_branch"),
+            (r"网点电话|支行电话|营业厅电话", "info_phone"),
+            (r"营业时间|几点开门|几点下班", "info_hour"),
+        ]
+        
+        # 进度查询规则
+        self._progress_rules = [
+            (r"(申请)?进度|批下来(了)?没|审批", "info_prog_application"),
+            (r"转账(多久|时间|到账)?|到账时间", "info_prog_transfer"),
+        ]
+        
+        # 系统交互规则
+        self._system_rules = [
+            # 问候
+            (r"^(你好|您好|hi|hello|hi~|hey)", "sys_greeting"),
+            (r"请问|咨询|问一下", "sys_greeting"),
+            # 感谢
+            (r"谢谢|感谢|多谢|谢了", "sys_thanks"),
+            # 告别
+            (r"(那我|先)?走了|(再见|拜拜)", "sys_bye"),
+            # 确认
+            (r"对(的)?|是吧|没错", "sys_confirm"),
+            # 重复
+            (r"再说一遍|重新说|再说一次", "sys_repeat"),
+        ]
+        
+        # 无效输入规则
+        self._invalid_rules = [
+            (r"^[asdfghjklqwertyuiop]+$", "sys_gibberish"),  # 乱码
+            (r"^[0-9]+$", "sys_gibberish"),  # 纯数字
+            (r"^(嗯|哦|啊|呃|咦|哈)$", "sys_invalid"),
+            (r"天气|新闻|股票", "sys_offtopic"),  # 无关话题
+        ]
+        
+        # 规则优先级列表（按匹配顺序）
+        self._rule_groups = [
+            ("P0", self._p0_rules),
+            ("CARD", self._card_rules),
+            ("PASSWORD", self._password_rules),
+            ("TRANSFER", self._transfer_rules),
+            ("PRODUCT", self._product_rules),
+            ("FEE", self._fee_rules),
+            ("REPAY", self._repay_rules),
+            ("INSTALLMENT", self._installment_rules),
+            ("ACCOUNT", self._account_rules),
+            ("BILL", self._bill_rules),
+            ("SALES", self._sales_rules),
+            ("BRANCH", self._branch_rules),
+            ("PROGRESS", self._progress_rules),
+            ("SYSTEM", self._system_rules),
+            ("INVALID", self._invalid_rules),
+        ]
+    
+    def recognize(self, text: str, context: Optional[List[Dict]] = None) -> 'IntentResult':
+        """
+        意图识别主入口
+        
+        Args:
+            text: 用户输入文本
+            context: 对话上下文（多轮对话）
+        
+        Returns:
+            IntentResult: 包含意图类型、置信度、是否转人工等
+        """
+        text = text.strip()
+        if not text:
+            return IntentResult(
+                intent=IntentType.SYS_INVALID,
+                confidence=1.0,
+                should_transfer=False,
+                is_p0=False,
+                needs_risk_disclosure=False,
+                reasoning="空输入"
+            )
+        
+        # 1. 规则匹配（高速）
+        rule_result = self._match_rules(text)
+        if rule_result:
+            return rule_result
+        
+        # 2. 轻量模型匹配（如有）
+        model_result = self._match_with_model(text)
+        if model_result:
+            return model_result
+        
+        # 3. LLM兜底（如配置）
+        llm_result = self._match_with_llm(text)
+        if llm_result:
+            return llm_result
+        
+        # 4. 默认兜底
+        return IntentResult(
+            intent=IntentType.SYS_INVALID,
+            confidence=0.0,
+            should_transfer=False,
+            is_p0=False,
+            needs_risk_disclosure=False,
+            reasoning="无法识别，默认归类"
+        )
+    
+    def _match_rules(self, text: str) -> Optional['IntentResult']:
+        """规则匹配"""
+        import re
+        
+        for group_name, rules in self._rule_groups:
+            for pattern, intent_str in rules:
+                if re.search(pattern, text.lower()):
+                    try:
+                        intent = IntentType(intent_str)
+                    except ValueError:
+                        intent = IntentType.SYS_INVALID
+                    
+                    # 判断是否P0
+                    is_p0 = intent_str in IntentCategory.P0_HUMAN_TRANSFER
+                    
+                    # 判断是否需要风险提示
+                    needs_risk = intent_str in IntentCategory.NEED_RISK_DISCLOSURE
+                    
+                    # 判断是否需要转账提示
+                    if intent_str in IntentCategory.NEED_TRANSFER_DISCLOSURE:
+                        needs_risk = True
+                    
+                    return IntentResult(
+                        intent=intent,
+                        confidence=0.95,
+                        should_transfer=is_p0,
+                        is_p0=is_p0,
+                        needs_risk_disclosure=needs_risk,
+                        reasoning=f"规则匹配[{group_name}]: {pattern}"
+                    )
+        
+        return None
+    
+    def _match_with_model(self, text: str) -> Optional['IntentResult']:
+        """轻量模型匹配（待实现）"""
+        # TODO: 集成轻量模型（如MiniLM）
+        return None
+    
+    def _match_with_llm(self, text: str) -> Optional['IntentResult']:
+        """LLM兜底匹配 - 使用MiniMax进行意图分类"""
+        try:
+            import httpx
+            
+            # 获取API配置
+            from ...config import settings
+            api_key, base_url, provider = settings.get_active_api_key()
+            if not api_key:
+                return None
+            
+            if provider == "MiniMax":
+                base_url = "https://api.minimaxi.com/v1"
+            
+            # 意图描述（精简版，用于LLM分类）
+            intent_options = """意图选项：
+- info_acc_balance: 余额查询（如：卡里还有多少钱、账户余额）
+- info_bill_amount: 账单金额（如：欠了多少钱、本期账单多少）
+- info_bill_date: 还款日期（如：几号还款、截止日期）
+- biz_card_loss: 卡片挂失（如：卡丢了、卡不见了）
+- biz_card_activate: 卡片激活（如：激活卡片、开卡）
+- biz_tran_external: 跨行转账（如：转账到其他银行、跨行汇款）
+- biz_tran_internal: 行内转账（如：招行卡互转）
+- cons_prod_loan: 贷款咨询（如：贷款利率、贷款额度）
+- cons_prod_wealth: 理财咨询（如：理财产品、收益）
+- cons_prod_credit: 信用卡咨询（如：信用卡额度、年费）
+- cons_urg_human: 转人工（如：转人工、找客服）
+- cons_comp_service: 服务投诉（如：态度差、服务差）
+- sec_fraud_report: 诈骗举报（如：被骗了、诈骗）
+- sec_stolen_card: 卡片盗刷（如：卡被盗刷、有陌生消费）
+- sys_greeting: 问候（如：你好、您好）
+- sys_invalid: 无效输入"""
+            
+            prompt = f"""你是银行客服意图分类器。用户输入："{text}"
 
-    @classmethod
-    def get_primary_category(cls, intent: IntentType) -> str:
-        """获取一级分类"""
-        for category, intents in cls.PRIMARY_CATEGORIES.items():
-            if intent.value in intents:
-                return category
-        return "unknown"
+{intent_options}
+
+请输出最匹配的意图（只输出意图名称，如：info_acc_balance）。"""
+            
+            headers = {"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"}
+            data = {
+                "model": "MiniMax-M2.7",
+                "messages": [{"role": "user", "content": prompt}],
+                "max_tokens": 50,
+                "temperature": 0.1
+            }
+            
+            resp = httpx.post(f"{base_url}/chat/completions", headers=headers, json=data, timeout=30)
+            
+            if resp.status_code == 200:
+                result = resp.json()
+                intent_str = result["choices"][0]["message"]["content"].strip()
+                
+                try:
+                    intent = IntentType(intent_str)
+                except ValueError:
+                    intent = IntentType.SYS_INVALID
+                
+                # 判断P0和风险提示
+                is_p0 = intent.value in IntentCategory.P0_HUMAN_TRANSFER
+                needs_risk = intent.value in IntentCategory.NEED_RISK_DISCLOSURE
+                
+                return IntentResult(
+                    intent=intent,
+                    confidence=0.7,
+                    should_transfer=is_p0,
+                    is_p0=is_p0,
+                    needs_risk_disclosure=needs_risk,
+                    reasoning=f"LLM兜底分类: {intent_str}"
+                )
+        except Exception:
+            pass
+        
+        return None
+    
+    def get_primary_category(self, intent: IntentType) -> str:
+        """获取意图所属的一级分类"""
+        return IntentCategory.INTENT_TO_PRIMARY.get(intent.value, "SYSTEM")
+    
+    def should_transfer_human(self, intent: IntentType, confidence: float = 1.0) -> bool:
+        """判断是否应转人工"""
+        # P0意图直接转
+        if intent.value in IntentCategory.P0_HUMAN_TRANSFER:
+            return True
+        
+        # 低置信度且非简单查询类，转人工
+        if confidence < 0.6:
+            primary = self.get_primary_category(intent)
+            if primary not in ["INFO", "SYSTEM"]:
+                return True
+        
+        return False
 
 
 @dataclass
 class IntentResult:
     """意图识别结果"""
     intent: IntentType
-    confidence: float
-    reasoning: str
-    source: str  # "rule" | "model" | "llm"
-    primary_category: str = ""  # 一级分类
-    need_p0_transfer: bool = False  # 是否需要P0立即转
-
-
-class RuleBasedRecognizer:
-    """规则引擎 - 处理高频指令"""
-
-    # 高频关键词 -> 意图映射
-    RULE_MAPPINGS = {
-        # === 服务转接类 [P0] ===
-        "转人工": IntentType.HUMAN_SERVICE,
-        "人工服务": IntentType.HUMAN_SERVICE,
-        "真人": IntentType.HUMAN_SERVICE,
-        "客服": IntentType.HUMAN_SERVICE,
-        "帮我转": IntentType.HUMAN_SERVICE,
-        "要人工": IntentType.HUMAN_SERVICE,
-        "转接人工": IntentType.HUMAN_SERVICE,
-
-        "投诉": IntentType.COMPLAINT,
-        "不满": IntentType.COMPLAINT,
-        "太差": IntentType.COMPLAINT,
-        "举报": IntentType.COMPLAINT,
-        "反馈": IntentType.COMPLAINT,
-
-        "紧急": IntentType.URGENT_HELP,
-        "快点": IntentType.URGENT_HELP,
-        "急": IntentType.URGENT_HELP,
-
-        # === 风险类 [P0] ===
-        "诈骗": IntentType.ANTI_FRAUD,
-        "被骗": IntentType.ANTI_FRAUD,
-        "钓鱼": IntentType.ANTI_FRAUD,
-        "盗刷": IntentType.THEFT_REPORT,
-        "扣错钱": IntentType.THEFT_REPORT,
-        "冻结": IntentType.FREEZE_REQUEST,
-        "账户异常": IntentType.SECURITY_EVENT,
-        "被盗": IntentType.SECURITY_EVENT,
-
-        # === 查询类 ===
-        "余额": IntentType.QUERY_BALANCE,
-        "多少钱": IntentType.QUERY_BALANCE,
-        "还有多少": IntentType.QUERY_BALANCE,
-
-        "账单": IntentType.QUERY_BILL,
-        "还款": IntentType.QUERY_BILL,
-        "消费明细": IntentType.QUERY_BILL,
-        "消费记录": IntentType.QUERY_BILL,
-
-        "开户行": IntentType.QUERY_BANK_INFO,
-        "开户": IntentType.QUERY_BANK_INFO,
-
-        "进度": IntentType.QUERY_PROGRESS,
-        "什么时候": IntentType.QUERY_PROGRESS,
-        "多久": IntentType.QUERY_PROGRESS,
-
-        # === 交易操作类 ===
-        "转账": IntentType.TRANSFER,
-        "汇款": IntentType.TRANSFER,
-        "打钱": IntentType.TRANSFER,
-
-        "密码": IntentType.PASSWORD_MANAGE,
-        "改密": IntentType.PASSWORD_MANAGE,
-        "忘记密码": IntentType.PASSWORD_MANAGE,
-
-        "挂失": IntentType.CARD_LOSS,
-        "丢了": IntentType.CARD_LOSS,
-        "卡丢了": IntentType.CARD_LOSS,
-
-        "激活": IntentType.CARD_ACTIVATE,
-        "开卡": IntentType.CARD_ACTIVATE,
-
-        # === 咨询类 ===
-        "利率": IntentType.CONSULT_RATE,
-        "利息": IntentType.CONSULT_RATE,
-        "年化": IntentType.CONSULT_RATE,
-
-        "手续费": IntentType.CONSULT_FEE,
-        "收多少": IntentType.CONSULT_FEE,
-        "费用": IntentType.CONSULT_FEE,
-
-        "规则": IntentType.CONSULT_RULE,
-        "规定": IntentType.CONSULT_RULE,
-        "怎么操作": IntentType.CONSULT_RULE,
-
-        "活动": IntentType.CONSULT_ACTIVITY,
-        "优惠": IntentType.CONSULT_ACTIVITY,
-        "打折": IntentType.CONSULT_ACTIVITY,
-
-        # === 营销咨询类 ===
-        "理财": IntentType.MARKETING_WEALTH,
-        "基金": IntentType.MARKETING_WEALTH,
-        "黄金": IntentType.MARKETING_WEALTH,
-
-        "信用卡": IntentType.MARKETING_CREDIT,
-        "办卡": IntentType.MARKETING_CREDIT,
-        "申请卡": IntentType.MARKETING_CREDIT,
-
-        "贷款": IntentType.MARKETING_LOAN,
-        "借款": IntentType.MARKETING_LOAN,
-        "信用贷": IntentType.MARKETING_LOAN,
-
-        # === 复杂需求类 ===
-        "帮我规划": IntentType.CUSTOM_PLAN,
-        "怎么配置": IntentType.CUSTOM_PLAN,
-        "建议": IntentType.CUSTOM_PLAN,
-
-        "对比": IntentType.LOAN_COMPARE,
-        "哪个好": IntentType.LOAN_COMPARE,
-
-        # === 问候/感谢 ===
-        "你好": IntentType.GREETING,
-        "您好": IntentType.GREETING,
-        "嗨": IntentType.GREETING,
-
-        "谢谢": IntentType.THANKS,
-        "感谢": IntentType.THANKS,
-    }
-
-    def recognize(self, query: str) -> Optional[IntentResult]:
-        """识别意图，返回 None 表示未命中"""
-        query_lower = query.lower()
-
-        for keyword, intent in self.RULE_MAPPINGS.items():
-            if keyword in query_lower:
-                primary_category = IntentCategory.get_primary_category(intent)
-                need_p0 = IntentCategory.is_p0_transfer(intent)
-
-                return IntentResult(
-                    intent=intent,
-                    confidence=0.95,
-                    reasoning=f"规则命中: 关键词 '{keyword}'",
-                    source="rule",
-                    primary_category=primary_category,
-                    need_p0_transfer=need_p0
-                )
-
-        return None
-
-
-class IntentRecognizer:
-    """三级意图识别器 v1.1"""
-
-    def __init__(self, settings):
-        self.settings = settings
-        self.rule_engine = RuleBasedRecognizer()
-
-    def recognize(self, query: str, context: Optional[dict] = None) -> IntentResult:
-        """
-        阶梯式意图识别
-
-        流程: 规则 -> 轻量模型 -> LLM
-        """
-        # 第一层：规则引擎
-        result = self.rule_engine.recognize(query)
-        if result and result.confidence >= self.settings.rule_confidence_threshold:
-            return result
-
-        # 第二层：轻量模型（待接入 sentence-transformers）
-        # result = self.lightweight_model.predict(query)
-        # if result and result.confidence >= self.settings.model_confidence_threshold:
-        #     return result
-
-        # 第三层：LLM 兜底
-        return self._llm_fallback(query, context)
-
-    def _llm_fallback(self, query: str, context: Optional[dict] = None) -> IntentResult:
-        """LLM 意图解析"""
-        from langchain_openai import ChatOpenAI
-        from langchain.prompts import ChatPromptTemplate
-
-        llm = ChatOpenAI(
-            model=self.settings.llm_model,
-            api_key=self.settings.deepseek_api_key,
-            base_url=self.settings.deepseek_base_url,
-            temperature=0.1
-        )
-
-        intent_list = "\n".join([f"- {i.value}: {i.name.replace('_', ' ')}" for i in IntentType])
-
-        prompt = ChatPromptTemplate.from_template("""你是一个银行客服系统的意图识别器。
-
-用户输入: {query}
-{context}
-
-请识别用户的意图，从以下类别中选择最匹配的（只能选择一个）：
-{intent_list}
-
-直接输出意图名称和置信度(0-1)，格式如下：
-意图: xxx
-置信度: 0.xx
-分析: xxx""")
-
-        response = llm.invoke(prompt.format(
-            query=query,
-            context=f"上下文: {context}" if context else "",
-            intent_list=intent_list
-        ))
-        content = response.content
-
-        # 解析 LLM 返回
-        lines = content.split('\n')
-        intent_str = ""
-        confidence = 0.5
-
-        for line in lines:
-            if line.startswith("意图:"):
-                intent_str = line.replace("意图:", "").strip()
-            if line.startswith("置信度:"):
-                try:
-                    confidence = float(line.replace("置信度:", "").strip())
-                except:
-                    confidence = 0.6
-
-        # 映射到 IntentType
-        intent_map = {e.value: e for e in IntentType}
-        intent = intent_map.get(intent_str.lower(), IntentType.UNKNOWN)
-
-        primary_category = IntentCategory.get_primary_category(intent)
-        need_p0 = IntentCategory.is_p0_transfer(intent)
-
-        return IntentResult(
-            intent=intent,
-            confidence=confidence,
-            reasoning=f"LLM识别: {content[:100]}...",
-            source="llm",
-            primary_category=primary_category,
-            need_p0_transfer=need_p0
-        )
-
-
-class SmartTriage:
-    """智能分流模块 - 快速转人工决策"""
-
-    def __init__(self):
-        self.transfer_keywords = [
-            "转人工", "人工服务", "真人", "客服",
-            "要人工", "转接人工", "人工", "真人工"
-        ]
-
-        self.urgent_keywords = [
-            "紧急", "快点", "急", "马上", "立刻",
-            "快", "来不及了", "很急"
-        ]
-
-        self.risk_keywords = [
-            "诈骗", "被骗", "钓鱼", "盗刷", "扣错",
-            "冻结", "异常", "被盗", "风险"
-        ]
-
-    def should_transfer_immediately(self, query: str, history: List[dict],
-                                   emotion_score: float = 0.0) -> Tuple[bool, str]:
-        """
-        判断是否需要立即转人工
-
-        Returns:
-            (是否立即转, 原因)
-        """
-        query_lower = query.lower()
-
-        # P0: 明确要求转人工
-        for keyword in self.transfer_keywords:
-            if keyword in query_lower:
-                return True, f"P0触发: 明确要求转人工（关键词: {keyword}）"
-
-        # P0: 情绪激烈
-        if emotion_score > 0.8:
-            return True, f"P0触发: 用户情绪激烈（评分: {emotion_score}）"
-
-        # P0: 紧急求助
-        for keyword in self.urgent_keywords:
-            if keyword in query_lower:
-                return True, f"P0触发: 紧急求助（关键词: {keyword}）"
-
-        # P0: 风险类
-        for keyword in self.risk_keywords:
-            if keyword in query_lower:
-                return True, f"P0触发: 风险相关（关键词: {keyword}）"
-
-        # P0: 历史对话中已连续要求转人工
-        transfer_count = sum(1 for h in history if h.get("intent") == IntentType.HUMAN_SERVICE.value)
-        if transfer_count >= 2:
-            return True, f"P0触发: 连续{transfer_count}次要求转人工"
-
-        # P1: 同一问题3轮未解决
-        if len(history) >= 3:
-            same_intent_count = 1
-            last_intent = history[-1].get("intent") if history else None
-            for h in history[-3:]:
-                if h.get("intent") == last_intent:
-                    same_intent_count += 1
-            if same_intent_count >= 3 and not history[-1].get("resolved"):
-                return True, "P1触发: 同一问题3轮未解决，建议转人工"
-
-        return False, ""
-
-    def generate_transfer_summary(self, history: List[dict],
-                                 final_intent: IntentType) -> dict:
-        """
-        生成转人工摘要，供人工客服参考
-
-        避免用户重复描述问题
-        """
-        # 提取用户问题
-        user_queries = [h.get("query", "") for h in history if h.get("role") == "user"]
-
-        # 提取AI回答摘要
-        ai_summaries = []
-        for h in history:
-            if h.get("role") == "assistant":
-                answer = h.get("answer", "")
-                ai_summaries.append(answer[:100] + "..." if len(answer) > 100 else answer)
-
-        # 统计意图分布
-        intent_counts = {}
-        for h in history:
-            intent = h.get("intent", "unknown")
-            intent_counts[intent] = intent_counts.get(intent, 0) + 1
-
-        return {
-            "user_main_query": user_queries[0] if user_queries else "",
-            "conversation_turns": len(history),
-            "final_intent": final_intent.value,
-            "intent_distribution": intent_counts,
-            "user_query_history": user_queries,
-            "ai_answer_summaries": ai_summaries[-3:],  # 最近3轮
-            "recommended_transfer_reason": f"意图分类: {final_intent.value}",
-        }
+    confidence: float  # 0.0 ~ 1.0
+    should_transfer: bool  # 是否应转人工
+    is_p0: bool  # 是否P0紧急
+    needs_risk_disclosure: bool  # 是否需要风险提示
+    reasoning: str = ""  # 识别理由
+    slots: Dict = None  # 提取的槽位信息
+    
+    def __post_init__(self):
+        if self.slots is None:
+            self.slots = {}
