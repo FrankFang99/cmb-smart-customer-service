@@ -1,5 +1,6 @@
+﻿# -*- coding: utf-8 -*-
 """
-Streamlit 聊天界面
+Streamlit Chat Interface
 """
 import streamlit as st
 from src.agent.customer_service_agent import CustomerServiceAgent
@@ -7,21 +8,21 @@ from src.config import settings
 import uuid
 
 
-# 页面配置
+# Page Config
 st.set_page_config(
-    page_title="招商银行智能客服",
+    page_title="CMBC Smart Customer Service",
     page_icon="🏦",
     layout="centered"
 )
 
-# 初始化 Agent
+# Initialize Agent
 @st.cache_resource
 def init_agent():
     return CustomerServiceAgent(settings)
 
 agent = init_agent()
 
-# 会话管理
+# Session Management
 if "session_id" not in st.session_state:
     st.session_state.session_id = str(uuid.uuid4())
 
@@ -32,43 +33,42 @@ if "agent_initialized" not in st.session_state:
     st.session_state.agent_initialized = True
 
 
-# 标题
-st.title("🏦 招商银行智能客服")
-st.markdown("您好！我是小招智能客服，有什么可以帮您？")
+# Title
+st.title("🏦 CMBC Smart Customer Service")
+st.markdown("Hello! I'm the CMBC Smart Assistant. How can I help you today?")
 
-# 侧边栏 - 功能介绍
+# Sidebar
 with st.sidebar:
-    st.header("📌 功能说明")
+    st.header("📌 Features")
     st.markdown("""
-    **支持的服务：**
-    - 账户余额查询
-    - 信用卡账单查询
-    - 网点地址查询
-    - 理财产品咨询
-    - 转账操作指引
-    - 卡片挂失服务
-    - 转人工服务
+    **Services Supported:**
+    - Account Balance Query
+    - Credit Card Bill Query
+    - Branch Location Query
+    - Wealth Products Inquiry
+    - Transfer Guidance
+    - Card Loss Report
+    - Human Service Transfer
 
-    **使用提示：**
-    - 输入您的问题，小招会尽力解答
-    - 如需人工服务，请说"转人工"
+    **Usage Tips:**
+    - Enter your question and I'll do my best to help
+    - For human agent, say "transfer to human"
     """)
     st.divider()
     st.caption("Powered by DeepSeek + LangChain")
 
 
-# 对话历史
+# Chat History
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
         if "metadata" in message:
-            with st.expander("详情"):
+            with st.expander("Details"):
                 st.json(message["metadata"])
 
 
-# 用户输入
-if prompt := st.chat_input("请输入您的问题..."):
-    # 添加用户消息
+# User Input
+if prompt := st.chat_input("Please enter your question..."):
     st.session_state.messages.append({
         "role": "user",
         "content": prompt
@@ -77,11 +77,9 @@ if prompt := st.chat_input("请输入您的问题..."):
     with st.chat_message("user"):
         st.markdown(prompt)
 
-    # 调用 Agent
-    with st.spinner("小招正在思考中..."):
+    with st.spinner("Processing..."):
         response = agent.chat(prompt, st.session_state.session_id)
 
-    # 添加助手消息
     st.session_state.messages.append({
         "role": "assistant",
         "content": response["answer"],
@@ -93,45 +91,43 @@ if prompt := st.chat_input("请输入您的问题..."):
         }
     })
 
-    # 显示回复
     with st.chat_message("assistant"):
         st.markdown(response["answer"])
 
-        # 显示意图信息
         col1, col2, col3 = st.columns(3)
         with col1:
-            st.caption(f"🧠 意图: {response['intent']}")
+            st.caption(f"🧠 Intent: {response['intent']}")
         with col2:
-            st.caption(f"📊 置信度: {response['confidence']:.2f}")
+            st.caption(f"📊 Confidence: {response['confidence']:.2f}")
         with col3:
             if response.get("tool_used"):
-                st.caption(f"🔧 工具: {response['tool_used']}")
+                st.caption(f"🔧 Tool: {response['tool_used']}")
 
         if response.get("sources"):
-            st.caption(f"📚 来源: {', '.join(response['sources'])}")
+            st.caption(f"📚 Sources: {', '.join(response['sources'])}")
 
 
-# 底部功能按钮
+# Quick Action Buttons
 st.divider()
 col1, col2, col3 = st.columns(3)
 
 with col1:
-    if st.button("💰 查询余额"):
-        st.session_state.messages.append({"role": "user", "content": "查询账户余额"})
-        response = agent.chat("查询账户余额", st.session_state.session_id)
+    if st.button("💰 Query Balance"):
+        st.session_state.messages.append({"role": "user", "content": "Query account balance"})
+        response = agent.chat("Query account balance", st.session_state.session_id)
         st.session_state.messages.append({"role": "assistant", "content": response["answer"]})
         st.rerun()
 
 with col2:
-    if st.button("📋 查账单"):
-        st.session_state.messages.append({"role": "user", "content": "查询信用卡账单"})
-        response = agent.chat("查询信用卡账单", st.session_state.session_id)
+    if st.button("📋 Check Bill"):
+        st.session_state.messages.append({"role": "user", "content": "Query credit card bill"})
+        response = agent.chat("Query credit card bill", st.session_state.session_id)
         st.session_state.messages.append({"role": "assistant", "content": response["answer"]})
         st.rerun()
 
 with col3:
-    if st.button("👤 转人工"):
-        st.session_state.messages.append({"role": "user", "content": "转人工服务"})
-        response = agent.chat("转人工服务", st.session_state.session_id)
+    if st.button("👤 Transfer"):
+        st.session_state.messages.append({"role": "user", "content": "Transfer to human service"})
+        response = agent.chat("Transfer to human service", st.session_state.session_id)
         st.session_state.messages.append({"role": "assistant", "content": response["answer"]})
         st.rerun()

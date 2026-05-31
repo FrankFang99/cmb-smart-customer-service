@@ -732,6 +732,8 @@ class EvalReportGenerator:
 
 def main():
     """主函数"""
+    import os
+
     # 加载配置
     config = EvalConfig()
 
@@ -744,14 +746,31 @@ def main():
     # 加载知识库（简化：使用数据集的预期回答作为知识库）
     knowledge_base = []
 
-    # 初始化Agent（使用模拟Agent，实际应替换为真实实现）
-    agent = MockCustomerServiceAgent(knowledge_base)
+    # 检查是否使用真实Agent
+    use_real_agent = os.environ.get("USE_REAL_AGENT", "true").lower() == "true"
+
+    if use_real_agent:
+        print("使用真实Agent (DeepSeek API)...")
+        try:
+            from .real_agent import create_agent
+            agent = create_agent()
+            print("真实Agent初始化成功")
+        except Exception as e:
+            import traceback
+            print(f"真实Agent初始化失败: {type(e).__name__}: {e}")
+            print(f"错误详情: {traceback.format_exc()[:500]}")
+            print("回退到MockAgent")
+            agent = MockCustomerServiceAgent(knowledge_base)
+            use_real_agent = False
+    else:
+        print("使用MockAgent...")
+        agent = MockCustomerServiceAgent(knowledge_base)
 
     # 创建评测引擎
     engine = EvaluationEngine(config, agent, dataset)
 
     # 运行评测
-    print("开始评测...")
+    print(f"开始评测... (使用{'真实Agent' if use_real_agent else 'MockAgent'})")
     results = engine.run()
 
     # 生成报告

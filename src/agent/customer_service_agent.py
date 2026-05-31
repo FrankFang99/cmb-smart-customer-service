@@ -4,13 +4,12 @@
 """
 from typing import Dict, List, Optional
 from langchain_openai import ChatOpenAI
-from langchain.prompts import ChatPromptTemplate
-from langchain.output_parsers import PydanticOutputParser
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.output_parsers import PydanticOutputParser
 from pydantic import BaseModel, Field
 
 from ..components.intent_recognizer import IntentRecognizer, IntentType, IntentResult
 from ..rag.knowledge_base import KNOWLEDGE_BASE, get_knowledge_by_intent
-from ..rag.retriever import create_retriever, HybridRetriever
 from .conversation_manager import ConversationManager
 from .tools import execute_tool, BANKING_TOOLS, ToolResult
 
@@ -38,7 +37,15 @@ class CustomerServiceAgent:
 
         # 初始化组件
         self.intent_recognizer = IntentRecognizer(settings)
-        self.retriever = create_retriever(KNOWLEDGE_BASE, k=5)
+
+        # 使用简单检索器（不依赖外部模型）
+        try:
+            from ..rag.simple_retriever import create_retriever
+            self.retriever = create_retriever(KNOWLEDGE_BASE, k=5)
+        except ImportError:
+            # 完全无法创建检索器，使用空列表
+            self.retriever = None
+
         self.conversation_manager = ConversationManager(max_history=20)
 
         # 初始化 LLM
@@ -92,24 +99,42 @@ class CustomerServiceAgent:
         """根据意图类型处理请求"""
 
         # 转人工
-        if intent_result.intent == IntentType.HUMAN_SERVICE:
+        if intent_result.intent in [IntentType.HUMAN_SERVICE, IntentType.URGENT_HELP]:
             return self._handle_human_service(session_id)
 
         # 投诉
-        if intent_result.intent == IntentType.COMPLAINT:
+        if intent_result.intent in [IntentType.COMPLAINT, IntentType.SUGGESTION]:
             return self._handle_complaint(query, session_id)
 
-        # 知识库查询（FAQ、产品、网点等）
-        if intent_result.intent in [IntentType.FAQ, IntentType.ACCOUNT_QUERY,
-                                     IntentType.BILL_QUERY, IntentType.BRANCH_QUERY,
-                                     IntentType.PRODUCT_QUERY, IntentType.CARD_MANAGE,
-                                     IntentType.TRANSFER_GUIDE]:
+        # 风险类 - 转人工
+        if intent_result.intent in [IntentType.ANTI_FRAUD, IntentType.THEFT_REPORT,
+                                     IntentType.FREEZE_REQUEST, IntentType.SECURITY_EVENT]:
+            return self._handle_human_service(session_id)
+
+        # 复杂需求 - 建议转人工
+        if intent_result.intent in [IntentType.CUSTOM_PLAN, IntentType.LOAN_COMPARE,
+                                     IntentType.COMPLEX_BUSINESS, IntentType.HUMAN_INTERVENTION]:
+            return self._handle_human_service(session_id)
+
+        # 知识库查询（查询类、交易操作类、咨询类、营销咨询类）
+        if intent_result.intent.value.startswith(('query_', 'transfer', 'password_',
+                                                   'card_', 'consult_', 'marketing_')):
             return self._handle_knowledge_query(query, intent_result, session_id)
 
         # 问候
-        if intent_result.intent == IntentType.GREETING:
+        if intent_result.intent in [IntentType.GREETING, IntentType.THANKS]:
             return {
                 "answer": "您好！我是招商银行智能客服小招，有什么可以帮您？\n\n您可以咨询：\n- 账户余额查询\n- 信用卡账单\n- 网点查询\n- 理财产品\n- 转账操作\n- 卡片管理等",
+                "intent": intent_result.intent.value,
+                "confidence": intent_result.confidence,
+                "tool_used": None,
+                "sources": []
+            }
+
+        # 模糊/无效意图
+        if intent_result.intent in [IntentType.ACCIDENTAL_TOUCH, IntentType.SEMANTIC_INVALID]:
+            return {
+                "answer": "抱歉，我没有理解您的问题。请用简洁的语言描述您的需求，我会尽力帮助您。",
                 "intent": intent_result.intent.value,
                 "confidence": intent_result.confidence,
                 "tool_used": None,
