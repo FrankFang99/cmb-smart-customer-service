@@ -324,6 +324,7 @@ class IntentRecognizer:
             
             # 诈骗举报
             (r"被(骗|诈)(了)?|诈骗|骗子", "sec_fraud_report"),
+            (r"可疑交易|陌生消费|账户异常", "sec_fraud_suspect"),
             (r"钓鱼|假链接|假冒银行|钓鱼网站", "sec_fraud_phishing"),
             (r"诈骗电话|诈骗短信|诈骗信息", "sec_fraud_scam"),
             
@@ -349,9 +350,14 @@ class IntentRecognizer:
         # 账户查询规则
         self._account_rules = [
             (r"余额|还有多少(钱)?|剩多少|还剩", "info_acc_balance"),
-            (r"账户明细|交易流水|记录|历史", "info_tran_record"),
+            (r"账户明细|交易流水|记录|历史", "info_acc_detail"),
             (r"账户状态|卡状态|正常吗|状态", "info_acc_status"),
             (r"开户行|(我的)?卡号|账户信息", "info_acc_info"),
+        ]
+        
+        # 交易记录查询规则
+        self._tran_record_rules = [
+            (r"交易记录|消费明细|消费记录", "info_tran_record"),
         ]
         
         # 账单查询规则
@@ -441,6 +447,24 @@ class IntentRecognizer:
             (r"转账(多久|时间|到账)?|到账时间", "info_prog_transfer"),
         ]
         
+        # 产品信息查询规则（info_prod系列）
+        self._info_product_rules = [
+            (r"理财产品(信息|介绍)?|查询理财", "info_prod_wealth"),
+            (r"贷款(产品)?信息|贷款情况", "info_prod_loan"),
+            (r"信用卡(产品)?信息|信用卡情况", "info_prod_credit"),
+        ]
+        
+        # 营销咨询规则（sales系列）
+        self._sales_rules = [
+            (r"推荐.*理财|理财推荐|想买理财", "sales_wealth_prod"),
+            (r"贷款推荐|信用贷推荐|推荐贷款", "sales_loan_prod"),
+            (r"信用卡推荐|办卡|申请卡", "sales_credit_prod"),
+            (r"积分.*活动|打折|优惠", "sales_promo_discount"),
+            (r"返现|返利|奖励", "sales_promo_reward"),
+            (r"贷款利率咨询|贷款利息", "sales_loan_rate"),
+            (r"积分兑换|积分活动", "sales_credit_point"),
+        ]
+        
         # 系统交互规则
         self._system_rules = [
             # 问候
@@ -464,7 +488,7 @@ class IntentRecognizer:
             (r"天气|新闻|股票", "sys_offtopic"),  # 无关话题
         ]
         
-        # 规则优先级列表（按匹配顺序）
+# 规则优先级列表（按匹配顺序）
         self._rule_groups = [
             ("P0", self._p0_rules),
             ("CARD", self._card_rules),
@@ -475,7 +499,9 @@ class IntentRecognizer:
             ("REPAY", self._repay_rules),
             ("INSTALLMENT", self._installment_rules),
             ("ACCOUNT", self._account_rules),
+            ("TRAN_RECORD", self._tran_record_rules),  # 交易记录查询
             ("BILL", self._bill_rules),
+            ("INFO_PRODUCT", self._info_product_rules),
             ("SALES", self._sales_rules),
             ("BRANCH", self._branch_rules),
             ("PROGRESS", self._progress_rules),
