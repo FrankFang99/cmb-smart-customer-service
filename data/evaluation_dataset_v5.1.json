@@ -1,0 +1,3608 @@
+{
+  "dataset_version": "v5.1",
+  "total_samples": 600,
+  "generated_date": "2026-06-01",
+  "description": "修复版数据集 - 真实用户问题",
+  "samples": [
+    {
+      "id": "SMART_00781",
+      "intent": "sales_wealth_prod",
+      "question": "有什么好理财",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00581",
+      "intent": "cons_comp_service",
+      "question": "态度不好",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00351",
+      "intent": "cons_prod_loan",
+      "question": "信用贷怎么申请",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00872",
+      "intent": "sys_greeting",
+      "question": "你好",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00315",
+      "intent": "cons_urg_human",
+      "question": "转人工",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00004",
+      "intent": "info_bill_amount",
+      "question": "要还多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00087",
+      "intent": "info_bill_amount",
+      "question": "我欠了多少钱",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00407",
+      "intent": "cons_prod_credit",
+      "question": "申请信用卡",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00805",
+      "intent": "sales_loan_prod",
+      "question": "贷款推荐",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00879",
+      "intent": "sys_thanks",
+      "question": "谢谢",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00886",
+      "intent": "sys_thanks",
+      "question": "感谢",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00584",
+      "intent": "cons_comp_service",
+      "question": "态度不好",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00295",
+      "intent": "cons_urg_human",
+      "question": "找客服",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00844",
+      "intent": "sys_greeting",
+      "question": "在吗",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00971",
+      "intent": "info_acc_detail",
+      "question": "查一下交易明细",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00814",
+      "intent": "sales_loan_prod",
+      "question": "有什么贷款产品",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00720",
+      "intent": "info_bill_date",
+      "question": "最晚什么时候还款",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00864",
+      "intent": "sys_greeting",
+      "question": "您好",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00317",
+      "intent": "cons_urg_human",
+      "question": "需要人工服务",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00027",
+      "intent": "info_bill_amount",
+      "question": "我欠了多少钱",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00264",
+      "intent": "biz_tran_external",
+      "question": "转账到别的银行",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00958",
+      "intent": "sec_freeze_unexpected",
+      "question": "账户异常冻结",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00835",
+      "intent": "sales_credit_prod",
+      "question": "推荐信用卡",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00803",
+      "intent": "sales_loan_prod",
+      "question": "贷款推荐",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00943",
+      "intent": "cons_fee_tran",
+      "question": "转账手续费多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00830",
+      "intent": "sales_credit_prod",
+      "question": "办什么卡好",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00215",
+      "intent": "biz_card_loss",
+      "question": "要挂失",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00292",
+      "intent": "cons_urg_human",
+      "question": "找客服",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00945",
+      "intent": "cons_fee_tran",
+      "question": "转账手续费多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00511",
+      "intent": "cons_prod_wealth",
+      "question": "有什么好理财",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00040",
+      "intent": "info_bill_amount",
+      "question": "信用卡欠款",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00444",
+      "intent": "sec_fraud_report",
+      "question": "举报诈骗",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00538",
+      "intent": "biz_pay_repay",
+      "question": "主动还款",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00454",
+      "intent": "sec_fraud_report",
+      "question": "我被骗了",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00986",
+      "intent": "info_acc_detail",
+      "question": "查一下交易明细",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00513",
+      "intent": "cons_prod_wealth",
+      "question": "理财收益多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00935",
+      "intent": "cons_fee_tran",
+      "question": "转账手续费多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00739",
+      "intent": "biz_pwd_reset",
+      "question": "忘记密码",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00272",
+      "intent": "biz_tran_external",
+      "question": "转10000到工行",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00448",
+      "intent": "sec_fraud_report",
+      "question": "我被骗了",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00147",
+      "intent": "info_acc_balance",
+      "question": "账户余额多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00474",
+      "intent": "sec_stolen_card",
+      "question": "收到陌生消费",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00913",
+      "intent": "sys_bye",
+      "question": "我先走了",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_01016",
+      "intent": "biz_tran_internal",
+      "question": "转钱到招行卡",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00680",
+      "intent": "cons_urg_loss",
+      "question": "被诈骗了",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00034",
+      "intent": "info_bill_amount",
+      "question": "要还多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00762",
+      "intent": "biz_card_activate",
+      "question": "卡片激活",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00752",
+      "intent": "biz_card_activate",
+      "question": "新卡怎么开",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00303",
+      "intent": "cons_urg_human",
+      "question": "转人工",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00636",
+      "intent": "info_branch",
+      "question": "招行网点查询",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00663",
+      "intent": "cons_urg_loss",
+      "question": "资金损失",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00328",
+      "intent": "cons_urg_human",
+      "question": "找客服",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00621",
+      "intent": "info_branch",
+      "question": "招行网点查询",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00060",
+      "intent": "info_bill_amount",
+      "question": "信用卡欠款",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00430",
+      "intent": "sec_fraud_report",
+      "question": "我被骗了",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00166",
+      "intent": "biz_card_loss",
+      "question": "卡不见了怎么办",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00860",
+      "intent": "sys_greeting",
+      "question": "你好",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00912",
+      "intent": "sys_bye",
+      "question": "拜拜",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00109",
+      "intent": "info_acc_balance",
+      "question": "余额查询",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00885",
+      "intent": "sys_thanks",
+      "question": "谢谢",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00221",
+      "intent": "biz_card_loss",
+      "question": "我的卡丢了",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00090",
+      "intent": "info_bill_amount",
+      "question": "信用卡欠款",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00782",
+      "intent": "sales_wealth_prod",
+      "question": "推荐理财产品",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00244",
+      "intent": "biz_tran_external",
+      "question": "跨行转账怎么转",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00526",
+      "intent": "biz_pay_repay",
+      "question": "主动还款",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00426",
+      "intent": "sec_fraud_report",
+      "question": "举报诈骗",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00770",
+      "intent": "biz_card_activate",
+      "question": "新卡怎么开",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00577",
+      "intent": "cons_comp_service",
+      "question": "投诉",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00551",
+      "intent": "biz_pay_repay",
+      "question": "怎么还款",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00566",
+      "intent": "cons_comp_service",
+      "question": "态度不好",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00656",
+      "intent": "info_hour",
+      "question": "几点开门",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00863",
+      "intent": "sys_greeting",
+      "question": "你好",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00601",
+      "intent": "info_tran_record",
+      "question": "交易流水",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00103",
+      "intent": "info_acc_balance",
+      "question": "我的招行卡还有钱吗",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00602",
+      "intent": "info_tran_record",
+      "question": "查交易记录",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00559",
+      "intent": "biz_pay_repay",
+      "question": "主动还款",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00490",
+      "intent": "sec_stolen_card",
+      "question": "卡片异常",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00520",
+      "intent": "cons_prod_wealth",
+      "question": "有什么好理财",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00124",
+      "intent": "info_acc_balance",
+      "question": "余额查询",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00545",
+      "intent": "biz_pay_repay",
+      "question": "怎么还款",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00952",
+      "intent": "sec_freeze_unexpected",
+      "question": "账户异常冻结",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00868",
+      "intent": "sys_greeting",
+      "question": "在吗",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00964",
+      "intent": "sec_freeze_unexpected",
+      "question": "账户异常冻结",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00208",
+      "intent": "biz_card_loss",
+      "question": "卡丢了",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00518",
+      "intent": "cons_prod_wealth",
+      "question": "理财产品怎么样",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00659",
+      "intent": "info_hour",
+      "question": "几点开门",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00281",
+      "intent": "biz_tran_external",
+      "question": "转10000到工行",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00856",
+      "intent": "sys_greeting",
+      "question": "在吗",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00992",
+      "intent": "biz_tran_internal",
+      "question": "转钱到招行卡",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00908",
+      "intent": "sys_bye",
+      "question": "再见",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00036",
+      "intent": "info_bill_amount",
+      "question": "本期账单多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00253",
+      "intent": "biz_tran_external",
+      "question": "跨行转账怎么转",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00633",
+      "intent": "info_branch",
+      "question": "招行网点查询",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00293",
+      "intent": "cons_urg_human",
+      "question": "需要人工服务",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00013",
+      "intent": "info_bill_amount",
+      "question": "账单金额是多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00542",
+      "intent": "biz_pay_repay",
+      "question": "怎么还款",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00023",
+      "intent": "info_bill_amount",
+      "question": "账单金额是多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00775",
+      "intent": "biz_card_activate",
+      "question": "怎么激活卡片",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00701",
+      "intent": "info_bill_date",
+      "question": "还款日是哪天",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_01021",
+      "intent": "sales_loan_rate",
+      "question": "贷款利率多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00586",
+      "intent": "info_tran_record",
+      "question": "查交易记录",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00754",
+      "intent": "biz_card_activate",
+      "question": "怎么激活卡片",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00233",
+      "intent": "biz_card_loss",
+      "question": "我的卡丢了",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00006",
+      "intent": "info_bill_amount",
+      "question": "本期账单多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00408",
+      "intent": "cons_prod_credit",
+      "question": "信用卡额度多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00677",
+      "intent": "cons_urg_loss",
+      "question": "被诈骗了",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00469",
+      "intent": "sec_stolen_card",
+      "question": "卡片异常",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00832",
+      "intent": "sales_credit_prod",
+      "question": "办什么卡好",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00346",
+      "intent": "cons_prod_loan",
+      "question": "贷款额度多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00949",
+      "intent": "cons_fee_tran",
+      "question": "转账手续费多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00337",
+      "intent": "cons_urg_human",
+      "question": "找客服",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00418",
+      "intent": "cons_prod_credit",
+      "question": "年费多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00825",
+      "intent": "sales_credit_prod",
+      "question": "推荐信用卡",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00357",
+      "intent": "cons_prod_loan",
+      "question": "信用贷怎么申请",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00191",
+      "intent": "biz_card_loss",
+      "question": "要挂失",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00692",
+      "intent": "info_bill_date",
+      "question": "最晚什么时候还款",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_01000",
+      "intent": "biz_tran_internal",
+      "question": "转钱到招行卡",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00071",
+      "intent": "info_bill_amount",
+      "question": "本期账单多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00080",
+      "intent": "info_bill_amount",
+      "question": "信用卡欠款",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00493",
+      "intent": "cons_prod_wealth",
+      "question": "有什么好理财",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00136",
+      "intent": "info_acc_balance",
+      "question": "卡里还有多少钱",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00220",
+      "intent": "biz_card_loss",
+      "question": "卡丢了",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00956",
+      "intent": "sec_freeze_unexpected",
+      "question": "卡不能用了",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00991",
+      "intent": "biz_tran_internal",
+      "question": "行内转账",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00277",
+      "intent": "biz_tran_external",
+      "question": "跨行转账怎么转",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00347",
+      "intent": "cons_prod_loan",
+      "question": "贷款利息多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00279",
+      "intent": "biz_tran_external",
+      "question": "转账到别的银行",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00110",
+      "intent": "info_acc_balance",
+      "question": "还剩多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00182",
+      "intent": "biz_card_loss",
+      "question": "卡不见了怎么办",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00505",
+      "intent": "cons_prod_wealth",
+      "question": "有什么好理财",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00324",
+      "intent": "cons_urg_human",
+      "question": "转人工",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00910",
+      "intent": "sys_bye",
+      "question": "我先走了",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00127",
+      "intent": "info_acc_balance",
+      "question": "账户余额多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00915",
+      "intent": "sys_bye",
+      "question": "拜拜",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00787",
+      "intent": "sales_wealth_prod",
+      "question": "有什么好理财",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00361",
+      "intent": "cons_prod_loan",
+      "question": "贷款额度多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00072",
+      "intent": "info_bill_amount",
+      "question": "我欠了多少钱",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00184",
+      "intent": "biz_card_loss",
+      "question": "卡丢了",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00186",
+      "intent": "biz_card_loss",
+      "question": "卡不见了怎么办",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00909",
+      "intent": "sys_bye",
+      "question": "拜拜",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00214",
+      "intent": "biz_card_loss",
+      "question": "卡不见了怎么办",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00727",
+      "intent": "biz_pwd_reset",
+      "question": "忘记密码",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00049",
+      "intent": "info_bill_amount",
+      "question": "要还多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00207",
+      "intent": "biz_card_loss",
+      "question": "要挂失",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00033",
+      "intent": "info_bill_amount",
+      "question": "账单金额是多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00594",
+      "intent": "info_tran_record",
+      "question": "查交易记录",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00225",
+      "intent": "biz_card_loss",
+      "question": "我的卡丢了",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00569",
+      "intent": "cons_comp_service",
+      "question": "态度不好",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00579",
+      "intent": "cons_comp_service",
+      "question": "服务态度差",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00895",
+      "intent": "sys_thanks",
+      "question": "感谢",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00362",
+      "intent": "cons_prod_loan",
+      "question": "贷款利息多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00737",
+      "intent": "biz_pwd_reset",
+      "question": "密码忘了怎么办",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00873",
+      "intent": "sys_greeting",
+      "question": "您好",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00433",
+      "intent": "sec_fraud_report",
+      "question": "我被骗了",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00902",
+      "intent": "sys_bye",
+      "question": "再见",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_01003",
+      "intent": "biz_tran_internal",
+      "question": "行内转账",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00997",
+      "intent": "biz_tran_internal",
+      "question": "行内转账",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_01025",
+      "intent": "sales_loan_rate",
+      "question": "贷款利率多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00167",
+      "intent": "biz_card_loss",
+      "question": "要挂失",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00523",
+      "intent": "biz_pay_repay",
+      "question": "主动还款",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00266",
+      "intent": "biz_tran_external",
+      "question": "转10000到工行",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00382",
+      "intent": "cons_prod_credit",
+      "question": "年费多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00406",
+      "intent": "cons_prod_credit",
+      "question": "年费多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00358",
+      "intent": "cons_prod_loan",
+      "question": "贷款额度多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00759",
+      "intent": "biz_card_activate",
+      "question": "卡片激活",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00905",
+      "intent": "sys_bye",
+      "question": "再见",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_01004",
+      "intent": "biz_tran_internal",
+      "question": "转钱到招行卡",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00922",
+      "intent": "sys_invalid",
+      "question": "呃",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00903",
+      "intent": "sys_bye",
+      "question": "拜拜",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00213",
+      "intent": "biz_card_loss",
+      "question": "我的卡丢了",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00151",
+      "intent": "info_acc_balance",
+      "question": "卡里还有多少钱",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00644",
+      "intent": "info_hour",
+      "question": "几点开门",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00745",
+      "intent": "biz_pwd_reset",
+      "question": "忘记密码",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00431",
+      "intent": "sec_fraud_report",
+      "question": "遇到诈骗",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00712",
+      "intent": "info_bill_date",
+      "question": "最晚什么时候还款",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00099",
+      "intent": "info_bill_amount",
+      "question": "要还多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00736",
+      "intent": "biz_pwd_reset",
+      "question": "忘记密码",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00428",
+      "intent": "sec_fraud_report",
+      "question": "遇到诈骗",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00161",
+      "intent": "biz_card_loss",
+      "question": "我的卡丢了",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00463",
+      "intent": "sec_stolen_card",
+      "question": "卡片异常",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00725",
+      "intent": "biz_pwd_reset",
+      "question": "密码忘了怎么办",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00615",
+      "intent": "info_tran_record",
+      "question": "消费明细",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00442",
+      "intent": "sec_fraud_report",
+      "question": "我被骗了",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00883",
+      "intent": "sys_thanks",
+      "question": "感谢",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00578",
+      "intent": "cons_comp_service",
+      "question": "态度不好",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_01028",
+      "intent": "sales_loan_rate",
+      "question": "贷款利息咨询",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00631",
+      "intent": "info_branch",
+      "question": "附近网点在哪",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00662",
+      "intent": "cons_urg_loss",
+      "question": "被诈骗了",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00058",
+      "intent": "info_bill_amount",
+      "question": "账单金额是多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00003",
+      "intent": "info_bill_amount",
+      "question": "账单金额是多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00146",
+      "intent": "info_acc_balance",
+      "question": "卡里还有多少钱",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00403",
+      "intent": "cons_prod_credit",
+      "question": "年费多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00978",
+      "intent": "info_acc_detail",
+      "question": "最近有什么消费",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00084",
+      "intent": "info_bill_amount",
+      "question": "要还多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00632",
+      "intent": "info_branch",
+      "question": "最近的支行地址",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00291",
+      "intent": "cons_urg_human",
+      "question": "转人工",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00845",
+      "intent": "sys_greeting",
+      "question": "你好",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00504",
+      "intent": "cons_prod_wealth",
+      "question": "理财收益多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00256",
+      "intent": "biz_tran_external",
+      "question": "跨行转账怎么转",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00076",
+      "intent": "info_bill_amount",
+      "question": "本期账单多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00777",
+      "intent": "sales_wealth_prod",
+      "question": "有什么好理财",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00464",
+      "intent": "sec_stolen_card",
+      "question": "卡被盗刷了",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00672",
+      "intent": "cons_urg_loss",
+      "question": "资金损失",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00499",
+      "intent": "cons_prod_wealth",
+      "question": "有什么好理财",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00687",
+      "intent": "info_bill_date",
+      "question": "截止日期",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00497",
+      "intent": "cons_prod_wealth",
+      "question": "理财产品怎么样",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00487",
+      "intent": "sec_stolen_card",
+      "question": "卡片异常",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00478",
+      "intent": "sec_stolen_card",
+      "question": "卡片异常",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00488",
+      "intent": "sec_stolen_card",
+      "question": "卡被盗刷了",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00065",
+      "intent": "info_bill_amount",
+      "question": "信用卡欠款",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00379",
+      "intent": "cons_prod_loan",
+      "question": "贷款额度多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00158",
+      "intent": "info_acc_balance",
+      "question": "我的招行卡还有钱吗",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00676",
+      "intent": "cons_urg_loss",
+      "question": "钱被骗了",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00243",
+      "intent": "biz_tran_external",
+      "question": "转账到别的银行",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00089",
+      "intent": "info_bill_amount",
+      "question": "要还多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00029",
+      "intent": "info_bill_amount",
+      "question": "要还多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00381",
+      "intent": "cons_prod_credit",
+      "question": "信用卡额度多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00653",
+      "intent": "info_hour",
+      "question": "几点开门",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00015",
+      "intent": "info_bill_amount",
+      "question": "信用卡欠款",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_01032",
+      "intent": "sales_loan_rate",
+      "question": "贷款利息咨询",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00400",
+      "intent": "cons_prod_credit",
+      "question": "年费多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00779",
+      "intent": "sales_wealth_prod",
+      "question": "有什么好理财",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00012",
+      "intent": "info_bill_amount",
+      "question": "我欠了多少钱",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00302",
+      "intent": "cons_urg_human",
+      "question": "需要人工服务",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00017",
+      "intent": "info_bill_amount",
+      "question": "我欠了多少钱",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00686",
+      "intent": "info_bill_date",
+      "question": "几号要还钱",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00794",
+      "intent": "sales_wealth_prod",
+      "question": "推荐理财产品",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00919",
+      "intent": "sys_invalid",
+      "question": "听不懂",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00989",
+      "intent": "info_acc_detail",
+      "question": "账单明细",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00730",
+      "intent": "biz_pwd_reset",
+      "question": "忘记密码",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00941",
+      "intent": "cons_fee_tran",
+      "question": "转账手续费多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00107",
+      "intent": "info_acc_balance",
+      "question": "账户余额多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00223",
+      "intent": "biz_card_loss",
+      "question": "要挂失",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00948",
+      "intent": "cons_fee_tran",
+      "question": "跨行费用",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00650",
+      "intent": "info_hour",
+      "question": "几点开门",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00227",
+      "intent": "biz_card_loss",
+      "question": "要挂失",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00165",
+      "intent": "biz_card_loss",
+      "question": "我的卡丢了",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00252",
+      "intent": "biz_tran_external",
+      "question": "转账到别的银行",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00888",
+      "intent": "sys_thanks",
+      "question": "谢谢",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00841",
+      "intent": "sys_greeting",
+      "question": "在吗",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00628",
+      "intent": "info_branch",
+      "question": "附近网点在哪",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00148",
+      "intent": "info_acc_balance",
+      "question": "我的招行卡还有钱吗",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00240",
+      "intent": "biz_card_loss",
+      "question": "卡丢了",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00056",
+      "intent": "info_bill_amount",
+      "question": "本期账单多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00981",
+      "intent": "info_acc_detail",
+      "question": "查一下交易明细",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00862",
+      "intent": "sys_greeting",
+      "question": "在吗",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00934",
+      "intent": "cons_fee_tran",
+      "question": "跨行费用",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00637",
+      "intent": "info_branch",
+      "question": "附近网点在哪",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00075",
+      "intent": "info_bill_amount",
+      "question": "信用卡欠款",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00384",
+      "intent": "cons_prod_credit",
+      "question": "信用卡额度多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00289",
+      "intent": "biz_tran_external",
+      "question": "跨行转账怎么转",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00850",
+      "intent": "sys_greeting",
+      "question": "在吗",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00697",
+      "intent": "info_bill_date",
+      "question": "还款日是哪天",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00938",
+      "intent": "cons_fee_tran",
+      "question": "跨行费用",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00100",
+      "intent": "info_bill_amount",
+      "question": "信用卡欠款",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00842",
+      "intent": "sys_greeting",
+      "question": "你好",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00811",
+      "intent": "sales_loan_prod",
+      "question": "贷款推荐",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00550",
+      "intent": "biz_pay_repay",
+      "question": "主动还款",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00995",
+      "intent": "biz_tran_internal",
+      "question": "行内转账",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00327",
+      "intent": "cons_urg_human",
+      "question": "转人工",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00196",
+      "intent": "biz_card_loss",
+      "question": "卡丢了",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00721",
+      "intent": "biz_pwd_reset",
+      "question": "忘记密码",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_01026",
+      "intent": "sales_loan_rate",
+      "question": "贷款利息咨询",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00641",
+      "intent": "info_hour",
+      "question": "几点开门",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_01005",
+      "intent": "biz_tran_internal",
+      "question": "行内转账",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00440",
+      "intent": "sec_fraud_report",
+      "question": "遇到诈骗",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00425",
+      "intent": "sec_fraud_report",
+      "question": "遇到诈骗",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00041",
+      "intent": "info_bill_amount",
+      "question": "本期账单多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00599",
+      "intent": "info_tran_record",
+      "question": "消费明细",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00753",
+      "intent": "biz_card_activate",
+      "question": "卡片激活",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00193",
+      "intent": "biz_card_loss",
+      "question": "我的卡丢了",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00081",
+      "intent": "info_bill_amount",
+      "question": "本期账单多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00121",
+      "intent": "info_acc_balance",
+      "question": "卡里还有多少钱",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00984",
+      "intent": "info_acc_detail",
+      "question": "账单明细",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00689",
+      "intent": "info_bill_date",
+      "question": "还款日是哪天",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00171",
+      "intent": "biz_card_loss",
+      "question": "要挂失",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00765",
+      "intent": "biz_card_activate",
+      "question": "卡片激活",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00698",
+      "intent": "info_bill_date",
+      "question": "几号要还钱",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00681",
+      "intent": "info_bill_date",
+      "question": "还款日是哪天",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00740",
+      "intent": "biz_pwd_reset",
+      "question": "密码忘了怎么办",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00611",
+      "intent": "info_tran_record",
+      "question": "消费明细",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00436",
+      "intent": "sec_fraud_report",
+      "question": "我被骗了",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00340",
+      "intent": "cons_urg_human",
+      "question": "找客服",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00309",
+      "intent": "cons_urg_human",
+      "question": "转人工",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00172",
+      "intent": "biz_card_loss",
+      "question": "卡丢了",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00119",
+      "intent": "info_acc_balance",
+      "question": "余额查询",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00284",
+      "intent": "biz_tran_external",
+      "question": "转10000到工行",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00769",
+      "intent": "biz_card_activate",
+      "question": "怎么激活卡片",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00200",
+      "intent": "biz_card_loss",
+      "question": "卡丢了",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00608",
+      "intent": "info_tran_record",
+      "question": "最近消费",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00968",
+      "intent": "sec_freeze_unexpected",
+      "question": "卡不能用了",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00169",
+      "intent": "biz_card_loss",
+      "question": "我的卡丢了",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00801",
+      "intent": "sales_loan_prod",
+      "question": "贷款推荐",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00953",
+      "intent": "sec_freeze_unexpected",
+      "question": "卡不能用了",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00125",
+      "intent": "info_acc_balance",
+      "question": "还剩多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00341",
+      "intent": "cons_prod_loan",
+      "question": "贷款利息多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00973",
+      "intent": "info_acc_detail",
+      "question": "最近有什么消费",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00394",
+      "intent": "cons_prod_credit",
+      "question": "年费多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00282",
+      "intent": "biz_tran_external",
+      "question": "转账到别的银行",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00757",
+      "intent": "biz_card_activate",
+      "question": "怎么激活卡片",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00091",
+      "intent": "info_bill_amount",
+      "question": "本期账单多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00625",
+      "intent": "info_branch",
+      "question": "附近网点在哪",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00789",
+      "intent": "sales_wealth_prod",
+      "question": "有什么好理财",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00652",
+      "intent": "info_hour",
+      "question": "网点几点下班",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00180",
+      "intent": "biz_card_loss",
+      "question": "卡丢了",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00481",
+      "intent": "sec_stolen_card",
+      "question": "卡片异常",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00661",
+      "intent": "cons_urg_loss",
+      "question": "钱被骗了",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00457",
+      "intent": "sec_fraud_report",
+      "question": "我被骗了",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00514",
+      "intent": "cons_prod_wealth",
+      "question": "有什么好理财",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00793",
+      "intent": "sales_wealth_prod",
+      "question": "有什么好理财",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00057",
+      "intent": "info_bill_amount",
+      "question": "我欠了多少钱",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00352",
+      "intent": "cons_prod_loan",
+      "question": "贷款额度多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00961",
+      "intent": "sec_freeze_unexpected",
+      "question": "账户异常冻结",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00247",
+      "intent": "biz_tran_external",
+      "question": "跨行转账怎么转",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00046",
+      "intent": "info_bill_amount",
+      "question": "本期账单多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00189",
+      "intent": "biz_card_loss",
+      "question": "我的卡丢了",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00658",
+      "intent": "info_hour",
+      "question": "网点几点下班",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00993",
+      "intent": "biz_tran_internal",
+      "question": "行内转账",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00699",
+      "intent": "info_bill_date",
+      "question": "截止日期",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00059",
+      "intent": "info_bill_amount",
+      "question": "要还多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00874",
+      "intent": "sys_greeting",
+      "question": "在吗",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_01018",
+      "intent": "biz_tran_internal",
+      "question": "转钱到招行卡",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00168",
+      "intent": "biz_card_loss",
+      "question": "卡丢了",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00733",
+      "intent": "biz_pwd_reset",
+      "question": "忘记密码",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00558",
+      "intent": "biz_pay_repay",
+      "question": "还信用卡",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00654",
+      "intent": "info_hour",
+      "question": "营业时间",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00342",
+      "intent": "cons_prod_loan",
+      "question": "信用贷怎么申请",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00037",
+      "intent": "info_bill_amount",
+      "question": "我欠了多少钱",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00399",
+      "intent": "cons_prod_credit",
+      "question": "信用卡额度多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00483",
+      "intent": "sec_stolen_card",
+      "question": "收到陌生消费",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00054",
+      "intent": "info_bill_amount",
+      "question": "要还多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00972",
+      "intent": "info_acc_detail",
+      "question": "消费记录怎么查",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00937",
+      "intent": "cons_fee_tran",
+      "question": "转账手续费多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00254",
+      "intent": "biz_tran_external",
+      "question": "转10000到工行",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00911",
+      "intent": "sys_bye",
+      "question": "再见",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00462",
+      "intent": "sec_stolen_card",
+      "question": "收到陌生消费",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00280",
+      "intent": "biz_tran_external",
+      "question": "跨行转账怎么转",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00355",
+      "intent": "cons_prod_loan",
+      "question": "贷款额度多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00170",
+      "intent": "biz_card_loss",
+      "question": "卡不见了怎么办",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00475",
+      "intent": "sec_stolen_card",
+      "question": "卡片异常",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00098",
+      "intent": "info_bill_amount",
+      "question": "账单金额是多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00792",
+      "intent": "sales_wealth_prod",
+      "question": "推荐理财产品",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00299",
+      "intent": "cons_urg_human",
+      "question": "需要人工服务",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00086",
+      "intent": "info_bill_amount",
+      "question": "本期账单多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00724",
+      "intent": "biz_pwd_reset",
+      "question": "忘记密码",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00897",
+      "intent": "sys_bye",
+      "question": "拜拜",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00683",
+      "intent": "info_bill_date",
+      "question": "截止日期",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00404",
+      "intent": "cons_prod_credit",
+      "question": "申请信用卡",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00570",
+      "intent": "cons_comp_service",
+      "question": "服务态度差",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00067",
+      "intent": "info_bill_amount",
+      "question": "我欠了多少钱",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00519",
+      "intent": "cons_prod_wealth",
+      "question": "理财收益多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00548",
+      "intent": "biz_pay_repay",
+      "question": "怎么还款",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00275",
+      "intent": "biz_tran_external",
+      "question": "转10000到工行",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00855",
+      "intent": "sys_greeting",
+      "question": "您好",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00039",
+      "intent": "info_bill_amount",
+      "question": "要还多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00155",
+      "intent": "info_acc_balance",
+      "question": "还剩多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00498",
+      "intent": "cons_prod_wealth",
+      "question": "理财收益多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00262",
+      "intent": "biz_tran_external",
+      "question": "跨行转账怎么转",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_01014",
+      "intent": "biz_tran_internal",
+      "question": "转钱到招行卡",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00924",
+      "intent": "sys_invalid",
+      "question": "嗯",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00707",
+      "intent": "info_bill_date",
+      "question": "截止日期",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00331",
+      "intent": "cons_urg_human",
+      "question": "找客服",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00177",
+      "intent": "biz_card_loss",
+      "question": "我的卡丢了",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00540",
+      "intent": "biz_pay_repay",
+      "question": "还信用卡",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00395",
+      "intent": "cons_prod_credit",
+      "question": "申请信用卡",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00742",
+      "intent": "biz_pwd_reset",
+      "question": "忘记密码",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_01023",
+      "intent": "sales_loan_rate",
+      "question": "贷款利率多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00229",
+      "intent": "biz_card_loss",
+      "question": "我的卡丢了",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00756",
+      "intent": "biz_card_activate",
+      "question": "卡片激活",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00917",
+      "intent": "sys_invalid",
+      "question": "啊",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_01017",
+      "intent": "biz_tran_internal",
+      "question": "行内转账",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00392",
+      "intent": "cons_prod_credit",
+      "question": "申请信用卡",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00901",
+      "intent": "sys_bye",
+      "question": "我先走了",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00130",
+      "intent": "info_acc_balance",
+      "question": "还剩多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00236",
+      "intent": "biz_card_loss",
+      "question": "卡丢了",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00875",
+      "intent": "sys_greeting",
+      "question": "你好",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00283",
+      "intent": "biz_tran_external",
+      "question": "跨行转账怎么转",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00871",
+      "intent": "sys_greeting",
+      "question": "在吗",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00290",
+      "intent": "biz_tran_external",
+      "question": "转10000到工行",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00353",
+      "intent": "cons_prod_loan",
+      "question": "贷款利息多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00378",
+      "intent": "cons_prod_loan",
+      "question": "信用贷怎么申请",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00371",
+      "intent": "cons_prod_loan",
+      "question": "贷款利息多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00522",
+      "intent": "biz_pay_repay",
+      "question": "还信用卡",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_01010",
+      "intent": "biz_tran_internal",
+      "question": "转钱到招行卡",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00849",
+      "intent": "sys_greeting",
+      "question": "您好",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00449",
+      "intent": "sec_fraud_report",
+      "question": "遇到诈骗",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00259",
+      "intent": "biz_tran_external",
+      "question": "跨行转账怎么转",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00916",
+      "intent": "sys_invalid",
+      "question": "嗯",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00370",
+      "intent": "cons_prod_loan",
+      "question": "贷款额度多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00627",
+      "intent": "info_branch",
+      "question": "招行网点查询",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00925",
+      "intent": "sys_invalid",
+      "question": "啊",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00857",
+      "intent": "sys_greeting",
+      "question": "你好",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00999",
+      "intent": "biz_tran_internal",
+      "question": "行内转账",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00412",
+      "intent": "cons_prod_credit",
+      "question": "年费多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00710",
+      "intent": "info_bill_date",
+      "question": "几号要还钱",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00159",
+      "intent": "info_acc_balance",
+      "question": "余额查询",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00286",
+      "intent": "biz_tran_external",
+      "question": "跨行转账怎么转",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00785",
+      "intent": "sales_wealth_prod",
+      "question": "有什么好理财",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00026",
+      "intent": "info_bill_amount",
+      "question": "本期账单多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00722",
+      "intent": "biz_pwd_reset",
+      "question": "密码忘了怎么办",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00983",
+      "intent": "info_acc_detail",
+      "question": "最近有什么消费",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00607",
+      "intent": "info_tran_record",
+      "question": "消费明细",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00790",
+      "intent": "sales_wealth_prod",
+      "question": "推荐理财产品",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00839",
+      "intent": "sys_greeting",
+      "question": "你好",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00480",
+      "intent": "sec_stolen_card",
+      "question": "收到陌生消费",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00646",
+      "intent": "info_hour",
+      "question": "网点几点下班",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00248",
+      "intent": "biz_tran_external",
+      "question": "转10000到工行",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00389",
+      "intent": "cons_prod_credit",
+      "question": "申请信用卡",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00142",
+      "intent": "info_acc_balance",
+      "question": "账户余额多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00881",
+      "intent": "sys_thanks",
+      "question": "好的谢谢",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_01019",
+      "intent": "biz_tran_internal",
+      "question": "行内转账",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00154",
+      "intent": "info_acc_balance",
+      "question": "余额查询",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00988",
+      "intent": "info_acc_detail",
+      "question": "最近有什么消费",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00669",
+      "intent": "cons_urg_loss",
+      "question": "资金损失",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_01013",
+      "intent": "biz_tran_internal",
+      "question": "行内转账",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00035",
+      "intent": "info_bill_amount",
+      "question": "信用卡欠款",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00183",
+      "intent": "biz_card_loss",
+      "question": "要挂失",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00778",
+      "intent": "sales_wealth_prod",
+      "question": "推荐理财产品",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00588",
+      "intent": "info_tran_record",
+      "question": "最近消费",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00376",
+      "intent": "cons_prod_loan",
+      "question": "贷款额度多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00804",
+      "intent": "sales_loan_prod",
+      "question": "有什么贷款产品",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00267",
+      "intent": "biz_tran_external",
+      "question": "转账到别的银行",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00300",
+      "intent": "cons_urg_human",
+      "question": "转人工",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00666",
+      "intent": "cons_urg_loss",
+      "question": "资金损失",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00748",
+      "intent": "biz_pwd_reset",
+      "question": "忘记密码",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00470",
+      "intent": "sec_stolen_card",
+      "question": "卡被盗刷了",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00900",
+      "intent": "sys_bye",
+      "question": "拜拜",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00815",
+      "intent": "sales_loan_prod",
+      "question": "贷款推荐",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00664",
+      "intent": "cons_urg_loss",
+      "question": "钱被骗了",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00896",
+      "intent": "sys_bye",
+      "question": "再见",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00606",
+      "intent": "info_tran_record",
+      "question": "查交易记录",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00360",
+      "intent": "cons_prod_loan",
+      "question": "信用贷怎么申请",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00028",
+      "intent": "info_bill_amount",
+      "question": "账单金额是多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00696",
+      "intent": "info_bill_date",
+      "question": "最晚什么时候还款",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00149",
+      "intent": "info_acc_balance",
+      "question": "余额查询",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00567",
+      "intent": "cons_comp_service",
+      "question": "服务态度差",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00112",
+      "intent": "info_acc_balance",
+      "question": "账户余额多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00053",
+      "intent": "info_bill_amount",
+      "question": "账单金额是多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00024",
+      "intent": "info_bill_amount",
+      "question": "要还多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00274",
+      "intent": "biz_tran_external",
+      "question": "跨行转账怎么转",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00738",
+      "intent": "biz_pwd_reset",
+      "question": "重置密码",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00150",
+      "intent": "info_acc_balance",
+      "question": "还剩多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00535",
+      "intent": "biz_pay_repay",
+      "question": "主动还款",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00494",
+      "intent": "cons_prod_wealth",
+      "question": "理财产品怎么样",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00694",
+      "intent": "info_bill_date",
+      "question": "几号要还钱",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00859",
+      "intent": "sys_greeting",
+      "question": "在吗",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00516",
+      "intent": "cons_prod_wealth",
+      "question": "理财收益多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00965",
+      "intent": "sec_freeze_unexpected",
+      "question": "卡不能用了",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00549",
+      "intent": "biz_pay_repay",
+      "question": "还信用卡",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_01035",
+      "intent": "sales_loan_rate",
+      "question": "贷款利率多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00496",
+      "intent": "cons_prod_wealth",
+      "question": "有什么好理财",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00704",
+      "intent": "info_bill_date",
+      "question": "最晚什么时候还款",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00345",
+      "intent": "cons_prod_loan",
+      "question": "信用贷怎么申请",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00329",
+      "intent": "cons_urg_human",
+      "question": "需要人工服务",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_01009",
+      "intent": "biz_tran_internal",
+      "question": "行内转账",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00265",
+      "intent": "biz_tran_external",
+      "question": "跨行转账怎么转",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00152",
+      "intent": "info_acc_balance",
+      "question": "账户余额多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00102",
+      "intent": "info_acc_balance",
+      "question": "账户余额多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00878",
+      "intent": "sys_thanks",
+      "question": "好的谢谢",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00772",
+      "intent": "biz_card_activate",
+      "question": "怎么激活卡片",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00907",
+      "intent": "sys_bye",
+      "question": "我先走了",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00626",
+      "intent": "info_branch",
+      "question": "最近的支行地址",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00982",
+      "intent": "info_acc_detail",
+      "question": "消费记录怎么查",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00385",
+      "intent": "cons_prod_credit",
+      "question": "年费多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00079",
+      "intent": "info_bill_amount",
+      "question": "要还多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00866",
+      "intent": "sys_greeting",
+      "question": "你好",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00241",
+      "intent": "biz_tran_external",
+      "question": "跨行转账怎么转",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00421",
+      "intent": "sec_fraud_report",
+      "question": "我被骗了",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00085",
+      "intent": "info_bill_amount",
+      "question": "信用卡欠款",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00709",
+      "intent": "info_bill_date",
+      "question": "还款日是哪天",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00827",
+      "intent": "sales_credit_prod",
+      "question": "推荐信用卡",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00892",
+      "intent": "sys_thanks",
+      "question": "感谢",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00840",
+      "intent": "sys_greeting",
+      "question": "您好",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00734",
+      "intent": "biz_pwd_reset",
+      "question": "密码忘了怎么办",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00263",
+      "intent": "biz_tran_external",
+      "question": "转10000到工行",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00593",
+      "intent": "info_tran_record",
+      "question": "交易流水",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00217",
+      "intent": "biz_card_loss",
+      "question": "我的卡丢了",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00758",
+      "intent": "biz_card_activate",
+      "question": "新卡怎么开",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00202",
+      "intent": "biz_card_loss",
+      "question": "卡不见了怎么办",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00603",
+      "intent": "info_tran_record",
+      "question": "消费明细",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00368",
+      "intent": "cons_prod_loan",
+      "question": "贷款利息多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00936",
+      "intent": "cons_fee_tran",
+      "question": "跨行费用",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00144",
+      "intent": "info_acc_balance",
+      "question": "余额查询",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00314",
+      "intent": "cons_urg_human",
+      "question": "需要人工服务",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_01031",
+      "intent": "sales_loan_rate",
+      "question": "贷款利率多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00921",
+      "intent": "sys_invalid",
+      "question": "啊",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00011",
+      "intent": "info_bill_amount",
+      "question": "本期账单多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00068",
+      "intent": "info_bill_amount",
+      "question": "账单金额是多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00512",
+      "intent": "cons_prod_wealth",
+      "question": "理财产品怎么样",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00755",
+      "intent": "biz_card_activate",
+      "question": "新卡怎么开",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00051",
+      "intent": "info_bill_amount",
+      "question": "本期账单多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00120",
+      "intent": "info_acc_balance",
+      "question": "还剩多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00735",
+      "intent": "biz_pwd_reset",
+      "question": "重置密码",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00796",
+      "intent": "sales_wealth_prod",
+      "question": "推荐理财产品",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00484",
+      "intent": "sec_stolen_card",
+      "question": "卡片异常",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00556",
+      "intent": "biz_pay_repay",
+      "question": "主动还款",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00539",
+      "intent": "biz_pay_repay",
+      "question": "怎么还款",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00232",
+      "intent": "biz_card_loss",
+      "question": "卡丢了",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00410",
+      "intent": "cons_prod_credit",
+      "question": "申请信用卡",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00851",
+      "intent": "sys_greeting",
+      "question": "你好",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00635",
+      "intent": "info_branch",
+      "question": "最近的支行地址",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00610",
+      "intent": "info_tran_record",
+      "question": "查交易记录",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00536",
+      "intent": "biz_pay_repay",
+      "question": "怎么还款",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00975",
+      "intent": "info_acc_detail",
+      "question": "交易流水",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00020",
+      "intent": "info_bill_amount",
+      "question": "信用卡欠款",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00563",
+      "intent": "cons_comp_service",
+      "question": "态度不好",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00829",
+      "intent": "sales_credit_prod",
+      "question": "推荐信用卡",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00398",
+      "intent": "cons_prod_credit",
+      "question": "申请信用卡",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00967",
+      "intent": "sec_freeze_unexpected",
+      "question": "账户异常冻结",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00865",
+      "intent": "sys_greeting",
+      "question": "在吗",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00138",
+      "intent": "info_acc_balance",
+      "question": "我的招行卡还有钱吗",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00458",
+      "intent": "sec_fraud_report",
+      "question": "遇到诈骗",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00799",
+      "intent": "sales_wealth_prod",
+      "question": "有什么好理财",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_01027",
+      "intent": "sales_loan_rate",
+      "question": "贷款利率多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00985",
+      "intent": "info_acc_detail",
+      "question": "交易流水",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00529",
+      "intent": "biz_pay_repay",
+      "question": "主动还款",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00270",
+      "intent": "biz_tran_external",
+      "question": "转账到别的银行",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00508",
+      "intent": "cons_prod_wealth",
+      "question": "有什么好理财",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00230",
+      "intent": "biz_card_loss",
+      "question": "卡不见了怎么办",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00728",
+      "intent": "biz_pwd_reset",
+      "question": "密码忘了怎么办",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00022",
+      "intent": "info_bill_amount",
+      "question": "我欠了多少钱",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00160",
+      "intent": "info_acc_balance",
+      "question": "还剩多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00682",
+      "intent": "info_bill_date",
+      "question": "几号要还钱",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00824",
+      "intent": "sales_credit_prod",
+      "question": "办什么卡好",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00678",
+      "intent": "cons_urg_loss",
+      "question": "资金损失",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00882",
+      "intent": "sys_thanks",
+      "question": "谢谢",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00258",
+      "intent": "biz_tran_external",
+      "question": "转账到别的银行",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00700",
+      "intent": "info_bill_date",
+      "question": "最晚什么时候还款",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00287",
+      "intent": "biz_tran_external",
+      "question": "转10000到工行",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00776",
+      "intent": "sales_wealth_prod",
+      "question": "推荐理财产品",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00521",
+      "intent": "biz_pay_repay",
+      "question": "怎么还款",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00235",
+      "intent": "biz_card_loss",
+      "question": "要挂失",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00914",
+      "intent": "sys_bye",
+      "question": "再见",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00334",
+      "intent": "cons_urg_human",
+      "question": "找客服",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00427",
+      "intent": "sec_fraud_report",
+      "question": "我被骗了",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00030",
+      "intent": "info_bill_amount",
+      "question": "信用卡欠款",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00884",
+      "intent": "sys_thanks",
+      "question": "好的谢谢",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00048",
+      "intent": "info_bill_amount",
+      "question": "账单金额是多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00330",
+      "intent": "cons_urg_human",
+      "question": "转人工",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00818",
+      "intent": "sales_loan_prod",
+      "question": "有什么贷款产品",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00870",
+      "intent": "sys_greeting",
+      "question": "您好",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00688",
+      "intent": "info_bill_date",
+      "question": "最晚什么时候还款",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00140",
+      "intent": "info_acc_balance",
+      "question": "还剩多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00222",
+      "intent": "biz_card_loss",
+      "question": "卡不见了怎么办",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00595",
+      "intent": "info_tran_record",
+      "question": "消费明细",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00920",
+      "intent": "sys_invalid",
+      "question": "嗯",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00711",
+      "intent": "info_bill_date",
+      "question": "截止日期",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00420",
+      "intent": "cons_prod_credit",
+      "question": "信用卡额度多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00001",
+      "intent": "info_bill_amount",
+      "question": "本期账单多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00723",
+      "intent": "biz_pwd_reset",
+      "question": "重置密码",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00473",
+      "intent": "sec_stolen_card",
+      "question": "卡被盗刷了",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00821",
+      "intent": "sales_credit_prod",
+      "question": "推荐信用卡",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00760",
+      "intent": "biz_card_activate",
+      "question": "怎么激活卡片",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00397",
+      "intent": "cons_prod_credit",
+      "question": "年费多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00622",
+      "intent": "info_branch",
+      "question": "附近网点在哪",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00679",
+      "intent": "cons_urg_loss",
+      "question": "钱被骗了",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00791",
+      "intent": "sales_wealth_prod",
+      "question": "有什么好理财",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00553",
+      "intent": "biz_pay_repay",
+      "question": "主动还款",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00137",
+      "intent": "info_acc_balance",
+      "question": "账户余额多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00411",
+      "intent": "cons_prod_credit",
+      "question": "信用卡额度多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00364",
+      "intent": "cons_prod_loan",
+      "question": "贷款额度多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00784",
+      "intent": "sales_wealth_prod",
+      "question": "推荐理财产品",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00255",
+      "intent": "biz_tran_external",
+      "question": "转账到别的银行",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00055",
+      "intent": "info_bill_amount",
+      "question": "信用卡欠款",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00708",
+      "intent": "info_bill_date",
+      "question": "最晚什么时候还款",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00073",
+      "intent": "info_bill_amount",
+      "question": "账单金额是多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00942",
+      "intent": "cons_fee_tran",
+      "question": "跨行费用",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00616",
+      "intent": "info_branch",
+      "question": "附近网点在哪",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00649",
+      "intent": "info_hour",
+      "question": "网点几点下班",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00969",
+      "intent": "sec_freeze_unexpected",
+      "question": "卡被冻结了",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00823",
+      "intent": "sales_credit_prod",
+      "question": "推荐信用卡",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00460",
+      "intent": "sec_fraud_report",
+      "question": "我被骗了",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00343",
+      "intent": "cons_prod_loan",
+      "question": "贷款额度多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00396",
+      "intent": "cons_prod_credit",
+      "question": "信用卡额度多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00456",
+      "intent": "sec_fraud_report",
+      "question": "举报诈骗",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00429",
+      "intent": "sec_fraud_report",
+      "question": "举报诈骗",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00105",
+      "intent": "info_acc_balance",
+      "question": "还剩多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00670",
+      "intent": "cons_urg_loss",
+      "question": "钱被骗了",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00417",
+      "intent": "cons_prod_credit",
+      "question": "信用卡额度多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00970",
+      "intent": "sec_freeze_unexpected",
+      "question": "账户异常冻结",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00224",
+      "intent": "biz_card_loss",
+      "question": "卡丢了",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00774",
+      "intent": "biz_card_activate",
+      "question": "卡片激活",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00713",
+      "intent": "info_bill_date",
+      "question": "还款日是哪天",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00562",
+      "intent": "cons_comp_service",
+      "question": "投诉",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00226",
+      "intent": "biz_card_loss",
+      "question": "卡不见了怎么办",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00957",
+      "intent": "sec_freeze_unexpected",
+      "question": "卡被冻结了",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00585",
+      "intent": "cons_comp_service",
+      "question": "服务态度差",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00126",
+      "intent": "info_acc_balance",
+      "question": "卡里还有多少钱",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00565",
+      "intent": "cons_comp_service",
+      "question": "投诉",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00133",
+      "intent": "info_acc_balance",
+      "question": "我的招行卡还有钱吗",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00025",
+      "intent": "info_bill_amount",
+      "question": "信用卡欠款",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00665",
+      "intent": "cons_urg_loss",
+      "question": "被诈骗了",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00695",
+      "intent": "info_bill_date",
+      "question": "截止日期",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00239",
+      "intent": "biz_card_loss",
+      "question": "要挂失",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00115",
+      "intent": "info_acc_balance",
+      "question": "还剩多少",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00795",
+      "intent": "sales_wealth_prod",
+      "question": "有什么好理财",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00311",
+      "intent": "cons_urg_human",
+      "question": "需要人工服务",
+      "is_p0": true
+    },
+    {
+      "id": "SMART_00605",
+      "intent": "info_tran_record",
+      "question": "交易流水",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00372",
+      "intent": "cons_prod_loan",
+      "question": "信用贷怎么申请",
+      "is_p0": false
+    },
+    {
+      "id": "SMART_00031",
+      "intent": "info_bill_amount",
+      "question": "本期账单多少",
+      "is_p0": false
+    }
+  ]
+}

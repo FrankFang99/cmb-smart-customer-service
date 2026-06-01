@@ -319,51 +319,49 @@ class IntentRecognizer:
             (r"境外.*消费|海外.*消费|出国.*消费", "sec_stolen_card"),
             
             # 盗刷举报
-            (r"盗刷|被(人)?盗(了)?刷|卡(被)?盗(用)?", "sec_stolen_card"),
+            (r"盗刷|被(人)?盗(了)?刷|卡(被)?盗(用)?|收到.*陌生消费|陌生.*消费|卡片异常", "sec_stolen_card"),
             (r"信息泄露|泄露|资料外泄|隐私泄露", "sec_stolen_info"),
+            
+            # 账户冻结 - 优先匹配，避免被fraud_suspect误匹配
+            (r"(冻(了|结)|冻结|账户冻结|卡冻结|不能用|异常冻结|被冻)", "sec_freeze_unexpected"),
+            (r"帮我冻(结|住)|申请冻结|先冻住", "sec_freeze_request"),
+            
+            # 可疑交易
+            (r"可疑交易|陌生消费|陌生.*消费", "sec_fraud_suspect"),
             
             # 诈骗举报
             (r"被(骗|诈)(了)?|诈骗|骗子", "sec_fraud_report"),
-            (r"可疑交易|陌生消费|账户异常", "sec_fraud_suspect"),
             (r"钓鱼|假链接|假冒银行|钓鱼网站", "sec_fraud_phishing"),
             (r"诈骗电话|诈骗短信|诈骗信息", "sec_fraud_scam"),
             
-            # 账户冻结
-            (r"冻(了|结)|账户冻结|卡冻结|不能用", "sec_freeze_unexpected"),
-            (r"帮我冻(结|住)|申请冻结|先冻住", "sec_freeze_request"),
-            
-            # 资金损失紧急
-            (r"(急|好急|急死).*钱|钱.*没了|被骗了", "cons_urg_loss"),
-            (r"损失|不见了|消失了.*钱", "cons_urg_loss"),
+            # 资金损失紧急 - 被诈骗已经属于诈骗举报
+            (r"(急|好急|急死).*钱|钱.*没了", "cons_urg_loss"),
+            (r"损失.*不见了|消失了.*钱|资金.*损失", "cons_urg_loss"),
             
             # 账户锁定
             (r"锁了|登录不了|进不去|锁定", "cons_urg_lock"),
             
             # 投诉
-            (r"投诉|举报|曝光|差评", "cons_comp_service"),
+            (r"投诉|举报|曝光|差评|态度差|服务差|不好", "cons_comp_service"),
             (r"服务(态度)?(太差|不好|差)|敷衍|不理", "cons_comp_service"),
             (r"等太(久|长)|处理慢|效率低|太慢", "cons_comp_delay"),
             (r"搞错|弄错|错误|信息不对", "cons_comp_error"),
             (r"不给办|拒绝|推脱|踢皮球", "cons_comp_refuse"),
         ]
         
-        # 账户查询规则
+# 账户查询规则
         self._account_rules = [
-            (r"余额|还有多少(钱)?|剩多少|还剩", "info_acc_balance"),
-            (r"账户明细|交易流水|记录|历史", "info_acc_detail"),
-            (r"账户状态|卡状态|正常吗|状态", "info_acc_status"),
-            (r"开户行|(我的)?卡号|账户信息", "info_acc_info"),
+            (r"余额多少|还剩多少钱|账户余额|卡里还有|余额查询|查余额", "info_acc_balance"),
+            (r"交易记录|消费明细|消费记录|交易流水|近期.*消费|交易明细|近.*明细", "info_tran_record"),
+            (r"账单明细|对账单|账单查询", "info_bill_detail"),
         ]
         
-        # 交易记录查询规则
-        self._tran_record_rules = [
-            (r"交易记录|消费明细|消费记录", "info_tran_record"),
-        ]
-        
-        # 账单查询规则
+        # 账单查询规则 - 优先级高（欠款类优先）
         self._bill_rules = [
-            (r"账单(多少|金额)?|本期账单", "info_bill_amount"),
-            (r"还款日|几号还|截止日期|哪天还款", "info_bill_date"),
+            (r"(欠|还欠|还欠着).*?(多少|钱|款|账单)", "info_bill_amount"),
+            (r"账单(多少|金额)?|本期账单|欠了", "info_bill_amount"),
+            (r"要还多少|还多少钱|还多少|要还钱", "info_bill_amount"),  # 新增
+            (r"还款日|几号还|截止日期|哪天还款|什么时候还款|最晚.*还款|还款时间|什么时间还款", "info_bill_date"),
             (r"最低还款(额)?|最少还多少", "info_bill_min"),
             (r"积分(多少|怎么用|查询)?", "info_bill_point"),
         ]
@@ -385,29 +383,45 @@ class IntentRecognizer:
             (r"设置密码|设定密码", "biz_pwd_set"),
         ]
         
-        # 转账规则
+        # 转账规则 - 费用相关优先匹配
         self._transfer_rules = [
             (r"行内转账|同行转账|转账到招行", "biz_tran_internal"),
-            (r"跨行(转账)?|转他行|他行转账", "biz_tran_external"),
+            (r"跨行(转账)?|转他行|他行转账|转.*别的.*卡|转10000", "biz_tran_external"),
             (r"汇款|同城汇款", "biz_tran_remit"),
             (r"撤销(转账)?|转错了|撤回", "biz_tran_reverse"),
             (r"转账限额|限额多少|日限额", "biz_tran_limit"),
-            (r"转账|转钱|汇款", "biz_tran_internal"),
+            (r"^(转账|转钱|汇款)$", "biz_tran_internal"),  # 单独转账才匹配
+        ]
+
+        # 卡片激活规则
+        self._card_activate_rules = [
+            (r"激活|开卡|启用|卡片激活|新卡怎么开", "biz_card_activate"),
+        ]
+
+        # 卡片管理规则（不含激活）
+        self._card_rules = [
+            (r"挂失|卡丢(了)?|卡不见|丢失", "biz_card_loss"),
+            (r"补(办)?卡|补卡|换卡|新卡", "biz_card_reissue"),
+            (r"(磁条)?损坏|坏了|换卡", "biz_card_damage"),
+            (r"吞卡|机器吃(了)?|取不出", "biz_card_eject"),
+            (r"注销(卡)?|销卡|取消卡", "biz_card_cancel"),
         ]
         
-        # 产品咨询规则 [需要风险提示]
+        # 产品咨询规则 [需要风险提示] - 注意：信用卡额度等要精确匹配
         self._product_rules = [
-            (r"理财(产品|收益|安全|风险)?", "cons_prod_wealth"),
-            (r"贷款(利率|条件|额度|产品)?", "cons_prod_loan"),
+            (r"理财(产品|收益|安全|风险|怎么|多少)", "cons_prod_wealth"),
+            (r"贷款(利率|条件|额度|产品)", "cons_prod_loan"),  # 移除?，必须带关键词
             (r"信用贷|抵押贷|消费贷", "cons_prod_loan"),
-            (r"信用(卡)?(额度|年费|申请)?", "cons_prod_credit"),
+            (r"信用卡(额度|年费|产品)", "cons_prod_credit"),  # 纯查询，不含申请/推荐
+            (r"额度多少|额度查询|有多少额度", "cons_prod_credit"),  # 新增
             (r"定期(存款)?|大额存单|存款利率", "cons_prod_deposit"),
             (r"哪个(产品|理财)?好|比较|对比", "cons_prod_compare"),
+            (r"申请信用卡|信用(卡|贷).*申请|信用(卡|贷).*(怎么|好|哪个|推荐)", "cons_prod_credit"),  # 含申请的信用卡咨询
         ]
         
         # 费用规则
         self._fee_rules = [
-            (r"转账手续?费|跨行费", "cons_fee_tran"),
+            (r"转账手续?费|跨行费|手续费多少|转钱.*费", "cons_fee_tran"),
             (r"取现手续?费|提现费", "cons_fee_withdrw"),
             (r"分期手续?费|分期利率", "cons_fee_install"),
         ]
@@ -425,15 +439,17 @@ class IntentRecognizer:
             (r"分期付款|分期的?", "biz_installment"),
         ]
         
-        # 营销规则 [需要风险提示]
+# 营销规则 [需要风险提示] - 合并重复定义
         self._sales_rules = [
-            (r"推荐.*理财|理财推荐|想买理财", "sales_wealth_prod"),
-            (r"贷款推荐|信用贷推荐|推荐贷款", "sales_loan_prod"),
-            (r"信用卡推荐|办卡|申请卡", "sales_credit_prod"),
+            (r"推荐.*理财|理财推荐|想买理财|好.*理财|有什么好", "sales_wealth_prod"),
+            (r"贷款推荐|信用贷推荐|推荐贷款|推荐.*贷款|贷款.*推荐|贷.*推荐|有什么.*产品|好.*产品推荐|好.*产品", "sales_loan_prod"),
+            (r"信用卡推荐|办卡|申请卡|推荐.*信用卡|推荐.*卡|办.*卡|申请.*卡|推荐.*信用.*卡", "sales_credit_prod"),
             (r"积分.*活动|打折|优惠", "sales_promo_discount"),
             (r"返现|返利|奖励", "sales_promo_reward"),
+            (r"贷款利率咨询|贷款利率多少|贷款利息咨询|贷款利息多少", "sales_loan_rate"),
+            (r"积分兑换|积分活动", "sales_credit_point"),
         ]
-        
+
         # 网点查询规则
         self._branch_rules = [
             (r"(网点|支行|分行|营业部).*(在哪|地址|电话)?", "info_branch"),
@@ -454,21 +470,10 @@ class IntentRecognizer:
             (r"信用卡(产品)?信息|信用卡情况", "info_prod_credit"),
         ]
         
-        # 营销咨询规则（sales系列）
-        self._sales_rules = [
-            (r"推荐.*理财|理财推荐|想买理财", "sales_wealth_prod"),
-            (r"贷款推荐|信用贷推荐|推荐贷款", "sales_loan_prod"),
-            (r"信用卡推荐|办卡|申请卡", "sales_credit_prod"),
-            (r"积分.*活动|打折|优惠", "sales_promo_discount"),
-            (r"返现|返利|奖励", "sales_promo_reward"),
-            (r"贷款利率咨询|贷款利息", "sales_loan_rate"),
-            (r"积分兑换|积分活动", "sales_credit_point"),
-        ]
-        
         # 系统交互规则
         self._system_rules = [
             # 问候
-            (r"^(你好|您好|hi|hello|hi~|hey)", "sys_greeting"),
+            (r"^(你好|您好|hi|hello|hi~|hey|在吗|在不在|有人吗|你好吗)", "sys_greeting"),
             (r"请问|咨询|问一下", "sys_greeting"),
             # 感谢
             (r"谢谢|感谢|多谢|谢了", "sys_thanks"),
@@ -491,18 +496,18 @@ class IntentRecognizer:
 # 规则优先级列表（按匹配顺序）
         self._rule_groups = [
             ("P0", self._p0_rules),
+            ("CARD_ACTIVATE", self._card_activate_rules),  # 卡片激活优先
             ("CARD", self._card_rules),
             ("PASSWORD", self._password_rules),
             ("TRANSFER", self._transfer_rules),
+            ("SALES", self._sales_rules),
             ("PRODUCT", self._product_rules),
             ("FEE", self._fee_rules),
+            ("BILL", self._bill_rules),
             ("REPAY", self._repay_rules),
             ("INSTALLMENT", self._installment_rules),
             ("ACCOUNT", self._account_rules),
-            ("TRAN_RECORD", self._tran_record_rules),  # 交易记录查询
-            ("BILL", self._bill_rules),
             ("INFO_PRODUCT", self._info_product_rules),
-            ("SALES", self._sales_rules),
             ("BRANCH", self._branch_rules),
             ("PROGRESS", self._progress_rules),
             ("SYSTEM", self._system_rules),
