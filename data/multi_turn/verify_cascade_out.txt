@@ -1,0 +1,6 @@
+﻿浣犲ソ: cascade=L1 llm=False action=answer_template 88.5ms
+鏌ヨ璐︽埛浣欓: cascade=L1 llm=False action=answer_template 17.0ms
+淇＄敤鍗℃縺娲? cascade=L1 llm=False action=answer_template 25.0ms
+鎴戝垰琚獥浜? cascade=? llm=None action=transfer_human 0.0ms
+鎴戜俊鐢ㄥ崱琚洍鍒蜂簡 5000 鍧? cascade=? llm=None action=transfer_human 0.0ms
+95555 瀹㈡湇鐢佃瘽: cascade=L3 llm=True action=answer 4983.9ms

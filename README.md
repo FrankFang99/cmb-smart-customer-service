@@ -4,9 +4,11 @@
 > **抽象 RAGAS 工业级框架 + 银行业务调整（Adapter 模式）+ Harness 工程搭建式评测**
 
 [![评测](https://img.shields.io/badge/RAGAS-4%E5%A4%A7%E6%8C%87%E6%A0%87-blue)]()
-[![业务](https://img.shields.io/badge/业务-FCR%2FCSAT%2F钱效-green)]()
-[![方法论](https://img.shields.io/badge/方法论-业界前沿-orange)]()
-[![评测](https://img.shields.io/badge/%E8%AF%84%E6%B5%8B-v3.2_Harness-orange)]()
+[![业务](https://img.shields.io/badge/%E4%B8%9A%E5%8A%A1-FCR%2FCSAT%2F%E9%92%B1%E6%95%88-green)]()
+[![方法论](https://img.shields.io/badge/%E6%96%B9%E6%B3%95%E8%AE%BA-%E4%B8%9A%E7%95%8C%E5%89%8D%E6%B2%BF-orange)]()
+[![评测](https://img.shields.io/badge/%E8%AF%84%E6%B5%8B-v3.4.0_Cascade-blueviolet)]()
+[![Cascade](https://img.shields.io/badge/Cascade-L1%2FL2%2FL3-success)]()
+[![Badcase](https://img.shields.io/badge/Badcase-%E6%A0%87%E6%B3%AA%E6%B1%A0-critical)]()
 
 ---
 
@@ -19,9 +21,10 @@
 | **评测框架** | RAGAS（GitHub 4k+ stars） | ✅ `eval_runner_v6.py` 4 大核心指标 + 3 项业务扩展 |
 | **业务指标** | 客服中心四象限（CSAT/FCR/转人工率/响应时长） | ✅ `business_metrics.py` 7 大指标 + 分层 + 钱效 |
 | **分层策略** | L1/L2/L3 复杂度分层 | ✅ 招行实战分层映射 |
-| **Badcase 管理** | P0/P1/P2 自动定级 | ✅ `BadcaseAnalyzer` 24h/3d/1w 响应 |
+| **Badcase 管理** | P0/P1/P2 自动定级 | ✅ `BadcaseAnalyzer` 24h/3d/1w 响应 + **v3.4.0 标注池 + 一键入 KB** |
 | **钱效模型** | Uplift Model | ✅ ROI + 净节省 + 单次成本对比 |
 | **★ Harness 工程评测** | CMU/Yale Survey ETCLOVG 七层架构 | ✅ v3.2 评测方案：L1/L2/L3 + 三大评估缺口 + 协同增强视角 |
+| **★ Cascade 路由 (v3.4.0)** | Anthropic / LangGraph / AWS Bedrock Agent | ✅ L1 模板 + L2 RAG + L3 LLM 三级路由，**LLM 调用率 6.83%，节省 93.2%** |
 
 ---
 
@@ -460,19 +463,94 @@ python -m src.eval.business_metrics
 
 ---
 
+## 七、v3.4.0 Cascade 路由 + Badcase 闭环
+
+### 7.1 Cascade 路由 (业界头部做法)
+
+**业界对齐**: Anthropic (Haiku/Opus), LangGraph conditional edges, AWS Bedrock Agent 都在 2025-2026 转向 Cascade 路由.
+
+**思路**:
+| Level | 触发条件 | 响应 | LLM 调用 |
+|-------|---------|------|---------|
+| **L1** | 高置信 (≥0.9) + 模板可答 | 银行业模板库 (35+ 业务) | 不调 |
+| **L2** | 中置信 (≥0.7) + RAG 命中 | 知识库 Top-1 直接答 | 不调 |
+| **L3** | 低置信 / 模糊 / 边界 | 调 LLM 兜底 | 调 |
+| **L0** | P0 红线 / 投诉 / 紧急 | 100% 转人工 | 不调 |
+
+**600 样本实测** (v3.4.0):
+| 指标 | 数值 | v3.2 对比 |
+|------|------|---------|
+| **意图准确率** | 83% | 52.5% → **+30.5pp** |
+| **L0 Compliance** | 100% | 94.25% → +5.75pp |
+| **RAG 命中率** | 98.75% | 57.4% → +41.35pp |
+| **LLM 调用率** | 6.83% | 100% → **-93.17pp** (节省) |
+
+**Cascade 路由分布** (600 样本):
+- L1 模板: 360 (60.0%)
+- L2 RAG 命中: 157 (26.2%)
+- L3 LLM 兜底: 41 (6.8%)
+- L0 转人工: 42 (7.0%)
+- **累计 86.2% 不调 LLM**
+
+### 7.2 RAG 4 阶段 Pipeline (v3.3.5)
+
+**业界对齐**: Anthropic Contextual Retrieval, LangGraph RAG, AWS Kendra
+
+| 阶段 | 方法 | 实现 |
+|------|------|------|
+| 1. Sparse 检索 | BM25 字符 2-gram + 银行业停用词 | `simple_retriever.py` |
+| 2. Dense 检索 | TF-IDF + 余弦 (sklearn) | `dense_retriever.py` |
+| 3. Multi-Query | 同义词扩展 + HyDE 降级 | `multi_query_retriever.py` |
+| 4. Reranker | 多信号加权 (5 信号) | `reranker.py` |
+
+**混合**: RRF (Cormack 2009, k=60) 融合 1+2 + 3+4 多级。
+
+### 7.3 Badcase 标注池 (v3.4.0-a)
+
+**业界对齐**: B 站「亚慧 AI 产品经理」(BV1vKuJzpEbc) — 「没有评估就没有迭代」, 「PM 价值核心是 Bad Case 闭环」.
+
+**实现** (`src/eval/badcase_pool.py`):
+- JSONL 持久化池 (git 友好)
+- 自动定级 (P0/P1/P2) + 自动初判根因
+- 5 类根因: `intent_mismatch / retrieval_miss / l0_false_trigger / l0_miss_trigger / cascade_routing_err`
+- 6 类修复动作: `add_faq / adjust_threshold / add_intent_pattern / transfer_to_human / ignore / pending`
+- **一键入知识库** (`add_faq_to_kb`) — 标注完直接入 KB
+- 周会分析 (`weekly_summary`) — 根因分布 + 修复率 + P0/P1 待办
+
+**13 条真实 badcase (v3.4.0 失败样本)**:
+- intent_mismatch: 8 (62%)
+- l0_miss_trigger: 5 (38%)
+- 5 P0 待办 + 8 P1 待办
+- 演示标注 4 条 + 入 KB 1 条 + 修复率 7.7%
+
+**使用**:
+```bash
+# 入池
+python scripts/eval_badcase.py
+
+# 演示标注
+python scripts/eval_badcase_demo.py
+
+# 周会分析
+python -m src.eval.badcase_pool summary
+```
+
+---
+
 ## 七、AI 产品运营能力映射（面试可讲）
 
 | 能力 | 在项目中的体现 | 业界方法论 |
 |------|---------------|-----------|
 | **业务场景识别** | 银行 95555 客服场景 | L1/L2/L3 分层（招行实战） |
-| **评测体系搭建** | RAGAS 4 项 + 业务 3 项 | 论文：RAGAS ArXiv:2309.15217 |
+| **评测体系搭建** | RAGAS 4 项 + 业务 3 项 + **v3.4.0 真 LLM 600 样本** | 论文：RAGAS ArXiv:2309.15217 |
 | **★ Harness 工程评测** | v3.2 三层指标 + 三大评估缺口 | CMU/Yale Survey ETCLOVG 七层架构 |
-| **RAG 调优** | Chroma + BM25 混合 | RAGAS 上下文精度/召回 |
-| **Agent 工程** | LangChain Agent + 工具 | function call 评测 |
+| **★ Cascade 路由 (v3.4.0)** | L1 模板 + L2 RAG + L3 LLM 三级路由 | Anthropic / LangGraph / AWS Bedrock Agent |
+| **RAG 调优** | 4 阶段 pipeline: BM25 + Dense + MultiQuery + Rerank | RAGAS 上下文精度/召回 |
+| **Agent 工程** | 端到端 Pipeline + 多轮对话 + 上下文 | function call 评测 |
 | **业务转化分析** | 四象限联动诊断 | 客服中心白皮书 |
 | **钱效意识** | Uplift Model ROI | 因果推断 |
-| **Badcase 管理** | P0/P1/P2 自动定级 + 9 大错误分类（含 v3.2 新增） | 大厂周会机制 |
-| **数据驱动** | P50/P95 响应时长 | SLA 监控 |
+| **★ Badcase 闭环 (v3.4.0)** | 标注池 + 自动定级 + 一键入 KB | 大厂 PM 周会机制 |
+| **数据驱动** | P50/P95 响应时长 + Cascade 路由耗时 | SLA 监控 |
 
 ---
 
@@ -496,6 +574,13 @@ python -m src.eval.business_metrics
 | 2b74dbc | 面试题库 PDF v2.2（14 页合并版） |
 | 735f42c | 拆分两个独立 PDF（项目复盘 6 页 + 面试题库 12 页）v2.2 |
 | **(next)** | **★ v3.2 评测方案：Harness 7 层架构 + 三大评估缺口 + 项目清理（70+ 老文件回收）** |
+| **6492a5f** | **★ v3.3.3 知识库 565 条 v2.0 接入代码** |
+| **92163aa** | **★ v3.3.4 RAG 检索增强 + L0 词典整合** |
+| **92163aa** | **★ v3.3.5 RAG 4 阶段业界 pipeline (Sparse + Dense + MultiQuery + Rerank)** |
+| **(待 push)** | **★ v3.3.6 LLM 接入 (订阅 Key + api.minimaxi.com 端点)** |
+| **(待 push)** | **★ v3.3.7 L0 误伤降级 + 投诉意图补全** |
+| **(待 push)** | **★ v3.3.8 端到端 Pipeline 串联 (意图 + L0 + RAG + LLM 真业务流)** |
+| **(待 push)** | **★ v3.4.0 Cascade 路由 (L1 模板 + L2 RAG + L3 LLM, LLM 调用率 6.83%, 节省 93.2%) + Badcase 标注池 (13 条 + 演示标注 4 条 + 入 KB 1 条)** |
 
 ---
 
@@ -634,5 +719,6 @@ MIT
 
 ---
 
-**更新时间**：2026-06-09
-**v3.2 新增**：Harness 工程搭建式评测方案（对齐 CMU/Yale Survey ETCLOVG 七层架构 + 三大评估缺口 + 协同增强视角）+ 项目清理（70+ 调试/老旧文件回收）
+**更新时间**：2026-06-11
+**v3.4.0 新增** (待 push)：Cascade 路由 (L1 模板 + L2 RAG + L3 LLM) + 真 LLM 600 样本评测 (意图 83% / L0 100% / RAG 98.75% / LLM 调用率 6.83%) + Badcase 标注池 (13 条 + 演示标注 4 条 + 一键入 KB)
+**v3.3.6-v3.3.8** (待 push)：LLM 接入 (订阅 Key + api.minimaxi.com 端点) + L0 误伤降级 + 端到端 Pipeline 串联
