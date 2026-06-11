@@ -260,6 +260,8 @@ class IntentCategory:
         "sec_stolen_card", "sec_stolen_info",
         "sec_freeze_unexpected", "sec_freeze_request", "sec_freeze_legal",
         "sec_virus", "sec_hack", "sec_other",
+        # 卡片挂失 (招行实战: 涉及账户安全, 必转人工核实身份)
+        "biz_card_loss",
     ]
     
     # 需要风险提示的意图
@@ -349,9 +351,9 @@ class IntentRecognizer:
             (r"不给办|拒绝|推脱|踢皮球", "cons_comp_refuse"),
         ]
         
-# 账户查询规则
+        # 账户查询规则
         self._account_rules = [
-            (r"余额多少|还剩多少钱|账户余额|卡里还有|余额查询|查余额", "info_acc_balance"),
+            (r"余额多少|还剩多少钱|账户余额|卡里还有|余额查询|查余额|还有多少钱|多少钱|有多少钱", "info_acc_balance"),
             (r"交易记录|消费明细|消费记录|交易流水|近期.*消费|交易明细|近.*明细", "info_tran_record"),
             (r"账单明细|对账单|账单查询", "info_bill_detail"),
         ]
@@ -368,9 +370,9 @@ class IntentRecognizer:
         
         # 卡片管理规则
         self._card_rules = [
-            (r"挂失|卡丢(了)?|卡不见|丢失", "biz_card_loss"),
+            (r"挂失|卡丢(了)?|卡不见|丢失|丢了|卡找不(到|着)|卡号.{0,20}\d{4}", "biz_card_loss"),
             (r"激活|开卡|启用|卡片激活", "biz_card_activate"),
-            (r"补(办)?卡|补卡|换卡|新卡", "biz_card_reissue"),
+            (r"补(办)?卡|补卡|换卡|新卡|补办|补.*?卡", "biz_card_reissue"),
             (r"(磁条)?损坏|坏了|换卡", "biz_card_damage"),
             (r"吞卡|机器吃(了)?|取不出", "biz_card_eject"),
             (r"注销(卡)?|销卡|取消卡", "biz_card_cancel"),
@@ -389,7 +391,7 @@ class IntentRecognizer:
             (r"跨行(转账)?|转他行|他行转账|转.*别的.*卡|转10000", "biz_tran_external"),
             (r"汇款|同城汇款", "biz_tran_remit"),
             (r"撤销(转账)?|转错了|撤回", "biz_tran_reverse"),
-            (r"转账限额|限额多少|日限额", "biz_tran_limit"),
+            (r"转账限额|限额多少|日限额|.*?(能|可以|最多).{0,3}转(多少|多少钱)|每天.*?转(多少|多少钱)", "biz_tran_limit"),
             (r"^(转账|转钱|汇款)$", "biz_tran_internal"),  # 单独转账才匹配
         ]
 
@@ -398,20 +400,14 @@ class IntentRecognizer:
             (r"激活|开卡|启用|卡片激活|新卡怎么开", "biz_card_activate"),
         ]
 
-        # 卡片管理规则（不含激活）
-        self._card_rules = [
-            (r"挂失|卡丢(了)?|卡不见|丢失", "biz_card_loss"),
-            (r"补(办)?卡|补卡|换卡|新卡", "biz_card_reissue"),
-            (r"(磁条)?损坏|坏了|换卡", "biz_card_damage"),
-            (r"吞卡|机器吃(了)?|取不出", "biz_card_eject"),
-            (r"注销(卡)?|销卡|取消卡", "biz_card_cancel"),
-        ]
+        # 卡片管理规则（不含激活）— line 402 是 line 370 重复定义, 此处不重新赋值
+        # 由 line 370 持有最终版本（含"丢了/卡找不/卡号"扩展）
         
         # 产品咨询规则 [需要风险提示] - 注意：信用卡额度等要精确匹配
         self._product_rules = [
             (r"理财(产品|收益|安全|风险|怎么|多少)", "cons_prod_wealth"),
-            (r"贷款(利率|条件|额度|产品)", "cons_prod_loan"),  # 移除?，必须带关键词
-            (r"信用贷|抵押贷|消费贷", "cons_prod_loan"),
+            (r"贷款(利率|条件|额度|产品)|利率多少|利率.{0,3}多少|利息多少", "cons_prod_loan"),  # 移除?，必须带关键词
+            (r"信用贷|抵押贷|消费贷|想贷|要贷|贷.*?万|贷.*?元", "cons_prod_loan"),
             (r"信用卡(额度|年费|产品)", "cons_prod_credit"),  # 纯查询，不含申请/推荐
             (r"额度多少|额度查询|有多少额度", "cons_prod_credit"),  # 新增
             (r"定期(存款)?|大额存单|存款利率", "cons_prod_deposit"),
@@ -443,7 +439,7 @@ class IntentRecognizer:
         self._sales_rules = [
             (r"推荐.*理财|理财推荐|想买理财|好.*理财|有什么好", "sales_wealth_prod"),
             (r"贷款推荐|信用贷推荐|推荐贷款|推荐.*贷款|贷款.*推荐|贷.*推荐|有什么.*产品|好.*产品推荐|好.*产品", "sales_loan_prod"),
-            (r"信用卡推荐|办卡|申请卡|推荐.*信用卡|推荐.*卡|办.*卡|申请.*卡|推荐.*信用.*卡", "sales_credit_prod"),
+            (r"信用卡推荐|办卡$|申请卡$|^办卡|^申请卡|推荐.*信用卡|推荐.*卡|申请.*信用卡|推荐.*信用.*卡", "sales_credit_prod"),
             (r"积分.*活动|打折|优惠", "sales_promo_discount"),
             (r"返现|返利|奖励", "sales_promo_reward"),
             (r"贷款利率咨询|贷款利率多少|贷款利息咨询|贷款利息多少", "sales_loan_rate"),
