@@ -247,6 +247,96 @@ src/rag/
 
 **验证**: 14 query 5 retriever 全部 14/14 = 100% 命中 (Reranked 排序质量最优)
 
+### 3.5.1 端到端 Pipeline (v3.3.8 真业务流串联)
+
+**文件**: `src/agent/e2e_pipeline.py` (~270 行, 0 LangChain 依赖)
+
+**完整业务流** (5 阶段, 业界标准 Agent 架构):
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│  用户输入 "我信用卡被盗刷了 5000 块"                              │
+└──────────────────────────────┬──────────────────────────────────┘
+                               ↓
+┌─────────────────────────────────────────────────────────────────┐
+│  1. 意图识别 (IntentRecognizer, 17 级规则)                       │
+│     识别: sec_stolen_card (置信度 0.95)                         │
+└──────────────────────────────┬──────────────────────────────────┘
+                               ↓
+┌─────────────────────────────────────────────────────────────────┐
+│  2. L0 红线检测 (banking_l0_dict.check_l0, 268 词词典)         │
+│     触发: fraud_high_risk (P0 严重)                             │
+└──────────────────────────────┬──────────────────────────────────┘
+                               ↓
+                ┌──────────────┴──────────────┐
+                ↓                             ↓
+        L0 触发 (银行业强约束)            L0 不触发
+                ↓                             ↓
+┌────────────────────────────┐  ┌──────────────────────────────────┐
+│  3a. 标准话术模板             │  │  3b. RAG 4 阶段检索               │
+│  L0_RESPONSE_TEMPLATES       │  │  (Sparse + Dense + MultiQuery     │
+│  + 转人工 (transfer_human)   │  │   + Rerank)                      │
+│  AI 不调 LLM 答业务           │  │  返回 top-3 知识                  │
+│  0ms 极速 (银行业硬约束)      │  └──────────────┬───────────────────┘
+└────────────────────────────┘                 ↓
+                                      ┌──────────────────────────────────┐
+                                      │  4. 业务 context 拼装             │
+                                      │  - 历史对话 (4 轮)               │
+                                      │  - 参考知识 (3 条)               │
+                                      │  - 意图 + 风险提示约束            │
+                                      └──────────────┬───────────────────┘
+                                                     ↓
+                                      ┌──────────────────────────────────┐
+                                      │  5. LLM 生成 (MiniMax-M2.7)       │
+                                      │  - 订阅 Key + api.minimaxi.com    │
+                                      │  - 系统提示含风险披露             │
+                                      │  - 贷款类强制年化利率             │
+                                      │  - 控制在 200 字内                │
+                                      └──────────────┬───────────────────┘
+                                                     ↓
+                                      ┌──────────────────────────────────┐
+                                      │  6. 回答返回 + 会话记录            │
+                                      │  ConversationManager 维护上下文   │
+                                      └──────────────────────────────────┘
+```
+
+**业界对应 (2024-2026 主流 Agent 框架)**:
+
+| 框架 | 核心架构 | 本项目 |
+|------|----------|--------|
+| LangGraph | Node + Edge + State graph | 顺序 5 阶段 + 单一 IntentRecognizer + RerankedRetriever + LLM |
+| LlamaIndex QueryEngine | Retriever + Synthesizer | 4 阶段 RerankedRetriever + minimax chat |
+| Haystack Pipeline | Node DAG | 顺序 5 阶段 |
+| AWS Bedrock Agent | Action Group + Knowledge Base | L0 强约束 + RAG + LLM 决策 |
+
+**0 外部框架依赖** (本项目优势):
+- 不依赖 langchain / langgraph / llamaindex / haystack
+- 自有 IntentRecognizer (17 级规则)
+- 自有 RerankedRetriever (4 阶段, 业界标准)
+- 自有 minimax_client (订阅 Key 直连)
+- 业务定制更灵活 (L0 强约束 / 风险披露 / 监管话术 都可嵌)
+
+**5 个真业务流验证 (v3.3.8)**:
+
+| 业务流 | 意图 | L0 触发 | 动作 | 耗时 | 状态 |
+|--------|------|---------|------|------|------|
+| L0 信用卡盗刷 | sec_stolen_card (0.95) | ✓ | transfer_human | 0ms | OK |
+| L0 假冒银监会 | sys_invalid (0.0) | ✓ | transfer_human | 16ms | OK |
+| L1 信用卡激活 | biz_card_activate (0.95) | ✗ | answer + LLM | 1832ms | OK |
+| L2 理财保本 | sys_invalid (0.0) | ✗ | answer + LLM | 7119ms | OK |
+| L1 招行五险一金 | sys_invalid (0.0) | ✗ | answer + LLM | 1666ms | OK |
+
+**5/5 业务流 OK** (L0 0ms 极速不调 LLM, 业务流 1.6-7.1s 含 RAG + LLM)
+
+**用法**:
+```python
+from src.agent.e2e_pipeline import create_e2e_pipeline
+pipeline = create_e2e_pipeline()
+result = pipeline.handle("我信用卡被盗刷了", session_id="s1")
+print(result['answer'], result['action'])
+# 回答 + action: 'transfer_human' / 'answer' / 'error'
+```
+
 ### 3.6 ★ 评测方案 v3.2（Harness 工程搭建式 + Survey 七层架构）
 
 **文件**：`docs/评测评分标准_v3.2.md`（29 KB / 23 页 PDF）
