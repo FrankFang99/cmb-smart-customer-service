@@ -1,6 +1,6 @@
 {
   "eval_version": "v1.0",
-  "eval_date": "2026-06-11T20:23:42",
+  "eval_date": "2026-06-11T20:50:25",
   "total_scenarios": 12,
   "passed": 12,
   "failed": 0,
@@ -279,10 +279,10 @@
         },
         {
           "role": "assistant",
-          "content": "您的问题涉及【假冒公检法/银行/客服】类业务，需要专业人工核实处理。我已为您转接 95555 客服专员，请稍候不要挂断，同时切记：**银行工作人员不会向您索要密码、验证码或要求转账到指定账户**。如发现可疑情况请立即拨打 110 报警。",
-          "detected_intent": "L0_red_line",
-          "action": "transfer_human",
-          "l0_triggered": true
+          "content": "非常抱歉给您带来不好的体验，我们对此非常重视。我已记录您的反馈，会有专人联系您核实具体情况。",
+          "detected_intent": "cons_comp_service",
+          "action": "empathy",
+          "l0_triggered": false
         }
       ]
     },

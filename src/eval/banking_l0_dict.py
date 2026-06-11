@@ -146,6 +146,11 @@ UNAUTHORIZED_KEYWORDS = {
     # 代查他人 (典型越权)
     "proxy_query": [
         "帮 XXX 查", "帮 XXX 看", "帮 XXX 问",
+        # v3.3.7 修复: "帮 X 查" 模板 ("帮老婆查", "帮朋友看" 等)
+        # 用正则 \u5e2e.+?\u67e5 (中文括号等价), 但这里只用字符串 substring 匹配
+        # 所以扩展多个常见 "帮 + 关系 + 查/看/问" 模式
+        "帮老婆查", "帮老公查", "帮父母查", "帮孩子查",
+        "帮朋友查", "帮同事查", "帮老板查", "帮员工查",
         "代 XXX 查", "代 XXX 看", "代 XXX 问",
         "替 XXX 查", "替 XXX 看", "替 XXX 问",
         "查 XXX 的账户", "查 XXX 的卡", "查 XXX 的余额",
@@ -232,6 +237,55 @@ def check_l0(question: str) -> Dict[str, Any]:
             if kw in q_lower:
                 triggered.append(("unauthorized", cat, "P0_critical"))
                 break
+
+    # 3.5 v3.3.7 误伤降级: 投诉类 query 不触发 fake_identity/fake_official_speech (它们常被 "工作人员" 误伤)
+    # "你们工作人员态度太差了" / "我要投诉" 等 -> 投诉 (L3), 不是假冒
+    # 但保留 fraud_high_risk (被骗/盗刷/异常交易 仍是真 P0)
+    COMPLAINT_KEYWORDS = [
+        "态度差", "态度不好", "态度太差", "服务差", "服务不好", "服务态度",
+        "投诉", "差评", "抱怨", "不满意", "骂人", "推诿",
+        "等太久", "效率低", "处理慢", "不理我",
+    ]
+    is_complaint = any(kw in q_lower for kw in COMPLAINT_KEYWORDS)
+    if is_complaint:
+        triggered = [
+            t for t in triggered
+            if not (t[0] == "fraud" and t[1] in ("fake_identity", "fake_official_speech"))
+        ]
+
+    # 3.6 v3.3.7 误伤降级: 投资咨询类 query 不触发 L0 investment_fraud
+    # "理财能保本吗" / "这个产品保本吗" -> 投资咨询 (需 risk_disclosure), 不是诈骗
+    INVESTMENT_CONSULT_KEYWORDS = [
+        "理财", "存款", "基金", "信托", "投资", "收益", "回报",
+        "保本", "保息", "高息", "稳健", "风险",
+    ]
+    INVESTMENT_FRAUD_STRONG_KEYWORDS = [
+        "稳赚不赔", "无风险", "高息保本", "保本保收益", "保本高收益",
+        "刷单", "传销", "拉人头", "发展下线", "退钱", "理赔", "中奖",
+    ]
+    is_investment_consult = (
+        any(kw in q_lower for kw in INVESTMENT_CONSULT_KEYWORDS)
+        and not any(kw in q_lower for kw in INVESTMENT_FRAUD_STRONG_KEYWORDS)
+    )
+    if is_investment_consult:
+        # 移除 investment_fraud 触发, 但保留 refund/lottery_fraud (理赔/中奖是真诈骗信号)
+        triggered = [
+            t for t in triggered
+            if not (t[0] == "fraud" and t[1] in ("investment_fraud",))
+        ]
+
+    # 3.7 v3.3.7 误伤降级: 95555 客服电话 / 网点咨询 等正常业务
+    # "95555" 单独 / "客服电话" / "网点营业" 不应触发 fake_identity
+    NORMAL_INQUIRY_KEYWORDS = [
+        "95555", "客服电话", "客服热线", "招行电话", "服务热线", "客服在哪",
+        "网点", "营业时间", "营业厅", "工作时间", "上班时间",
+    ]
+    is_normal_inquiry = any(kw in q_lower for kw in NORMAL_INQUIRY_KEYWORDS)
+    if is_normal_inquiry:
+        triggered = [
+            t for t in triggered
+            if not (t[0] == "fraud" and t[1] in ("fake_identity", "fake_official_speech"))
+        ]
 
     # 4. 敏感信息 (输出中检测, 不是输入)
     sensitive_violations: List[str] = []

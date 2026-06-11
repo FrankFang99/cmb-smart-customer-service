@@ -344,7 +344,7 @@ class IntentRecognizer:
             (r"锁了|登录不了|进不去|锁定", "cons_urg_lock"),
             
             # 投诉
-            (r"投诉|举报|曝光|差评|态度差|服务差|不好", "cons_comp_service"),
+            (r"投诉|举报|曝光|差评|态度差|态度不好|态度太差|服务差|服务不好|服务态度差|推诿|敷衍|不理|骂人|不好", "cons_comp_service"),
             (r"服务(态度)?(太差|不好|差)|敷衍|不理", "cons_comp_service"),
             (r"等太(久|长)|处理慢|效率低|太慢", "cons_comp_delay"),
             (r"搞错|弄错|错误|信息不对", "cons_comp_error"),
