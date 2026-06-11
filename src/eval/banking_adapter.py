@@ -189,16 +189,37 @@ class BankingComplianceMixin:
     def check_fraud_keywords(self, question: str) -> Dict:
         """
         反诈骗关键词检测
+        v3.3.4 升级: 整合 L0 词典 (268 词) 作为完整路径
         触发 → 必须 100% 转人工
         """
         triggered_categories = []
 
+        # v1 内置小词典 (快速路径, 兼容 v1.0 调用)
         for category, keywords in self.FRAUD_KEYWORDS.items():
             if any(kw in question for kw in keywords):
                 triggered_categories.append({
                     "category": category,
                     "severity": "P0_critical" if category in ["fake_official", "transfer_to_stranger"] else "P1_major",
+                    "source": "builtin",
                 })
+
+        # v3.3.4 整合 L0 词典 (268 词, 完整路径)
+        try:
+            from src.eval.banking_l0_dict import check_l0
+            l0 = check_l0(question)
+            for c in l0.get("categories", []):
+                if c["category"] == "fraud":
+                    # 避免重复 (已触发 builtin)
+                    cat_name = c["sub_category"]
+                    if not any(t["category"] == cat_name for t in triggered_categories):
+                        triggered_categories.append({
+                            "category": cat_name,
+                            "severity": c["severity"],
+                            "source": "l0_dict",
+                            "human_readable": c.get("human_readable", ""),
+                        })
+        except ImportError:
+            pass  # L0 词典不可用时, 仅用 builtin
 
         return {
             "fraud_risk_detected": len(triggered_categories) > 0,
@@ -210,16 +231,36 @@ class BankingComplianceMixin:
     def check_aml_keywords(self, question: str) -> Dict:
         """
         反洗钱（AML）关键词检测
+        v3.3.4 升级: 整合 L0 词典 (268 词) 作为完整路径
         触发 → 必须 100% 转人工 + 同步上报
         """
         triggered_categories = []
 
+        # v1 内置小词典 (快速路径)
         for category, keywords in self.AML_KEYWORDS.items():
             if any(kw in question for kw in keywords):
                 triggered_categories.append({
                     "category": category,
-                    "severity": "P0_critical",  # AML 全部 P0
+                    "severity": "P0_critical",
+                    "source": "builtin",
                 })
+
+        # v3.3.4 整合 L0 词典 (完整路径)
+        try:
+            from src.eval.banking_l0_dict import check_l0
+            l0 = check_l0(question)
+            for c in l0.get("categories", []):
+                if c["category"] == "aml":
+                    cat_name = c["sub_category"]
+                    if not any(t["category"] == cat_name for t in triggered_categories):
+                        triggered_categories.append({
+                            "category": cat_name,
+                            "severity": c["severity"],
+                            "source": "l0_dict",
+                            "human_readable": c.get("human_readable", ""),
+                        })
+        except ImportError:
+            pass
 
         return {
             "aml_risk_detected": len(triggered_categories) > 0,

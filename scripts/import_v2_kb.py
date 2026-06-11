@@ -82,7 +82,12 @@ def parse_v2_markdown(content: str) -> list:
             "domain_zh": domain_zh,           # 中文领域名
             "sub_category": sub_cat,          # 短码
             "question": question.strip(),
-            "answer": answer_hint.strip(),    # v2.0 表格只有要点
+            # v3.3.4 改进: 把"回答要点 + 风险标签 + 业务领域"拼到 answer 里, RAG 检索能命中更多关键词
+            "answer": " | ".join(filter(None, [
+                answer_hint.strip(),
+                f"风险提示: {', '.join(risk_tags)}" if risk_tags else "",
+                f"业务领域: {domain_zh}",
+            ])),
             "tags": risk_tags,                # 风险标签
             "metadata": {
                 "intent": f"{intent_cat}_{sub_cat}",  # 兼容 v1.0
