@@ -187,12 +187,14 @@ ROI = 净节省 / AI 投入 × 100%
 
 ### 3.5 RAG 知识库
 
-**文件**：`src/rag/knowledge_base.py`（代码内联 v1.0 40 条） + `knowledge_base/银行零售业务知识库_v2.0.md`（v2.0 565 条 文档已就位）
+**文件**：`src/rag/knowledge_base.py`（v2.0 565 条 已注入） + 源文档 `knowledge_base/银行零售业务知识库_v2.0.md`
 
-- 40 条业务知识（v1.0 代码内联, 当前 RAG 实际检索用）
-- 565 条业务知识（v2.0 文档, 2026-06 待接入代码 — 见 [P1-7 路线图](#)）
-- 8 大 category（query / transaction / consult / marketing / risk / info / service_transfer / complex）
+- **565 条业务知识**（v2.0, 14 业务领域 × 8 意图分类）
+- 14 大业务领域：账户/信用卡/贷款/理财/支付/数字人民币/养老金/政务/跨境/便民/新就业/服务/风控/产品
+- 8 大意图分类：query/consult/transaction/marketing/service_transfer/risk/complex/invalid
 - Chroma + BM25 混合检索
+- 注入脚本：`scripts/import_v2_kb.py`（从 markdown 表格解析）
+- 统计接口：`get_knowledge_stats()` / `get_knowledge_by_domain()` / `get_knowledge_by_intent()`
 
 ### 3.6 ★ 评测方案 v3.2（Harness 工程搭建式 + Survey 七层架构）
 

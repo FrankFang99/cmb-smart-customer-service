@@ -1,1617 +1,6335 @@
 """
-招商银行零售业务知识库 v1.1
-按8大类意图分层组织，增加业务深度
+招商银行零售业务知识库 v2.0
+===========================
 
-扩展说明：
-- 查询类：补充更多查询场景
-- 交易操作类：补充复杂操作流程
-- 咨询类：补充详细规则和注意事项
-- 服务转接类：明确转人工标准
-- 营销咨询类：补充产品详细信息和风险提示
-- 风险类：补充反诈、盗刷处理流程
-- 复杂需求：补充定制方案场景
-- 模糊/无效：明确边界
+从 knowledge_base/银行零售业务知识库_v2.0.md 解析生成
+总条数: 565, 大类: 14 业务领域, 8 意图分类
+
+字段:
+- id           v2.0 ID (KB_ACC_001 等)
+- category     意图分类 (query/consult/transaction/marketing/service_transfer/risk/complex/invalid)
+- domain       业务领域 (account/credit_card/loan/investment/payment/dcep/pension/gov/cross_border/life/new_worker/service/risk/product)
+- domain_zh    业务领域中文
+- sub_category 子类短码
+- question     问题
+- answer       回答要点 (v2.0 表格格式, 简版)
+- tags         风险标签
+- metadata     元数据 (intent/frequency/risk_disclosure/version)
+
+历史: v1.0 (40 条) → v2.0 (565 条) 招行最高标准
+生成: scripts/import_v2_kb.py
 """
 from typing import List, Dict
 
 
 # ============================================================
-# 知识库条目
-# 格式：{id, category, question, answer, tags, metadata}
+# 知识库条目 (v2.0, 565 条, 14 大业务领域)
 # ============================================================
 
-KNOWLEDGE_BASE = [
+KNOWLEDGE_BASE: List[Dict] = [
 
-    # ============================================================
-    # 一、查询类 (category: query)
-    # ============================================================
+    # ========== 账户与安全 (account) — 50 条 ==========
 
-    # --- 1.1 余额查询 ---
     {
-        "id": "KB_Q_001",
-        "category": "query",
-        "sub_category": "balance",
-        "question": "如何查询账户余额？",
-        "answer": """您可以通过以下方式查询账户余额：
-
-【手机银行】
-1. 打开招商银行手机APP
-2. 点击「我的账户」查看活期余额
-3. 可查看人民币、外币账户余额
-
-【网上银行】
-1. 登录 www.cmbchina.com
-2. 点击「我的账户」→「账户查询」
-
-【电话银行】
-1. 拨打 95555
-2. 按语音提示选择「账户查询」
-3. 输入卡号和密码验证
-
-【微信银行】
-1. 关注「招商银行」公众号
-2. 点击「我」→「余额查询」
-
-【柜台查询】
-携带有效身份证件到任意网点办理""",
-        "tags": ["余额", "查询", "账户", "手机银行", "网银"],
-        "metadata": {"intent": "query_balance", "frequency": "high", "risk_disclosure": False}
+        "id": 'KB_ACC_001',
+        "category": 'query',
+        "domain": 'account',
+        "domain_zh": '账户与安全',
+        "sub_category": 'acc',
+        "question": '如何查询账户余额？',
+        "answer": '手机银行 / 网银 / 95555 / 微信银行 / 柜台',
+        "tags": [],
+        "metadata": {'intent': 'query_acc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_ACC_002',
+        "category": 'query',
+        "domain": 'account',
+        "domain_zh": '账户与安全',
+        "sub_category": 'acc',
+        "question": '怎么查信用卡可用额度？',
+        "answer": '手机银行 → 信用卡 → 额度管理 / 掌上生活 / 短信 ED',
+        "tags": [],
+        "metadata": {'intent': 'query_acc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_ACC_003',
+        "category": 'query',
+        "domain": 'account',
+        "domain_zh": '账户与安全',
+        "sub_category": 'acc',
+        "question": '忘记网银/手机银行密码？',
+        "answer": '手机银行重置 / 网点办理（带身份证）',
+        "tags": [],
+        "metadata": {'intent': 'query_acc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_ACC_004',
+        "category": 'query',
+        "domain": 'account',
+        "domain_zh": '账户与安全',
+        "sub_category": 'acc',
+        "question": '账户被锁定怎么办？',
+        "answer": '95555 解锁 / 网点办理（带身份证）',
+        "tags": [],
+        "metadata": {'intent': 'query_acc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_ACC_005',
+        "category": 'query',
+        "domain": 'account',
+        "domain_zh": '账户与安全',
+        "sub_category": 'acc',
+        "question": '怎么修改个人信息（地址/邮箱）？',
+        "answer": '手机银行"设置" / 网银 / 网点',
+        "tags": [],
+        "metadata": {'intent': 'query_acc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_ACC_006',
+        "category": 'query',
+        "domain": 'account',
+        "domain_zh": '账户与安全',
+        "sub_category": 'acc',
+        "question": '一卡通是什么？',
+        "answer": '招行核心借记卡品牌，分普通/金卡/金葵花',
+        "tags": [],
+        "metadata": {'intent': 'query_acc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_ACC_007',
+        "category": 'query',
+        "domain": 'account',
+        "domain_zh": '账户与安全',
+        "sub_category": 'acc',
+        "question": '金葵花卡怎么申请？',
+        "answer": '招行月日均资产 50 万+ 达标',
+        "tags": [],
+        "metadata": {'intent': 'query_acc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_ACC_008',
+        "category": 'query',
+        "domain": 'account',
+        "domain_zh": '账户与安全',
+        "sub_category": 'acc',
+        "question": '一卡通丢了怎么办？',
+        "answer": '立即挂失 → 95555 / 手机银行 / 网点',
+        "tags": [],
+        "metadata": {'intent': 'query_acc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_ACC_009',
+        "category": 'query',
+        "domain": 'account',
+        "domain_zh": '账户与安全',
+        "sub_category": 'acc',
+        "question": '一卡通补办要多久？',
+        "answer": '网点现场补办即时 / 邮寄 3-5 工作日',
+        "tags": [],
+        "metadata": {'intent': 'query_acc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_ACC_010',
+        "category": 'query',
+        "domain": 'account',
+        "domain_zh": '账户与安全',
+        "sub_category": 'acc',
+        "question": '异地能办一卡通吗？',
+        "answer": '可以，15 分钟内全国任一网点',
+        "tags": [],
+        "metadata": {'intent': 'query_acc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_ACC_011',
+        "category": 'query',
+        "domain": 'account',
+        "domain_zh": '账户与安全',
+        "sub_category": 'acc',
+        "question": '活期账户和定期账户的区别？',
+        "answer": '活期随取随用 / 定期锁定有利息',
+        "tags": [],
+        "metadata": {'intent': 'query_acc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_ACC_012',
+        "category": 'query',
+        "domain": 'account',
+        "domain_zh": '账户与安全',
+        "sub_category": 'acc',
+        "question": '什么是 I 类 / II 类 / III 类账户？',
+        "answer": 'I 类全功能 / II 类限额 / III 类小额',
+        "tags": [],
+        "metadata": {'intent': 'query_acc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_ACC_013',
+        "category": 'query',
+        "domain": 'account',
+        "domain_zh": '账户与安全',
+        "sub_category": 'acc',
+        "question": '一网通账户是什么？',
+        "answer": '招行电子账户体系，含支付/理财/贷款',
+        "tags": [],
+        "metadata": {'intent': 'query_acc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_ACC_014',
+        "category": 'query',
+        "domain": 'account',
+        "domain_zh": '账户与安全',
+        "sub_category": 'acc',
+        "question": '联名账户怎么开？',
+        "answer": '双方持身份证到网点',
+        "tags": [],
+        "metadata": {'intent': 'query_acc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_ACC_015',
+        "category": 'query',
+        "domain": 'account',
+        "domain_zh": '账户与安全',
+        "sub_category": 'acc',
+        "question": '什么是招行"一卡通"金卡？',
+        "answer": '5 万-50 万资产对应',
+        "tags": [],
+        "metadata": {'intent': 'query_acc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_ACC_016',
+        "category": 'query',
+        "domain": 'account',
+        "domain_zh": '账户与安全',
+        "sub_category": 'acc',
+        "question": '如何设置转账密码？',
+        "answer": '手机银行安全中心 / 网点',
+        "tags": [],
+        "metadata": {'intent': 'query_acc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_ACC_017',
+        "category": 'query',
+        "domain": 'account',
+        "domain_zh": '账户与安全',
+        "sub_category": 'acc',
+        "question": '怎么开通/关闭网上银行？',
+        "answer": '手机银行自助 / 网点',
+        "tags": [],
+        "metadata": {'intent': 'query_acc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_ACC_018',
+        "category": 'query',
+        "domain": 'account',
+        "domain_zh": '账户与安全',
+        "sub_category": 'acc',
+        "question": '怎么修改支付密码？',
+        "answer": '手机银行 → 我的 → 安全中心',
+        "tags": [],
+        "metadata": {'intent': 'query_acc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_ACC_019',
+        "category": 'query',
+        "domain": 'account',
+        "domain_zh": '账户与安全',
+        "sub_category": 'acc',
+        "question": 'U盾 / 优KEY 是什么？',
+        "answer": '招行数字证书，50 万+ 大额转账用',
+        "tags": [],
+        "metadata": {'intent': 'query_acc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_ACC_020',
+        "category": 'query',
+        "domain": 'account',
+        "domain_zh": '账户与安全',
+        "sub_category": 'acc',
+        "question": '手机银行怎么用指纹/人脸登录？',
+        "answer": '我的 → 安全中心 → 生物识别',
+        "tags": [],
+        "metadata": {'intent': 'query_acc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_ACC_021',
+        "category": 'query',
+        "domain": 'account',
+        "domain_zh": '账户与安全',
+        "sub_category": 'acc',
+        "question": '怎么关闭小额免密支付？',
+        "answer": '手机银行 → 支付管理 → 关闭',
+        "tags": [],
+        "metadata": {'intent': 'query_acc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_ACC_022',
+        "category": 'query',
+        "domain": 'account',
+        "domain_zh": '账户与安全',
+        "sub_category": 'acc',
+        "question": '短信通知怎么开通？',
+        "answer": '收费服务 2-5 元/月，手机银行开通',
+        "tags": [],
+        "metadata": {'intent': 'query_acc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_ACC_023',
+        "category": 'query',
+        "domain": 'account',
+        "domain_zh": '账户与安全',
+        "sub_category": 'acc',
+        "question": '怎么销户？',
+        "answer": '须转人工，携带身份证到网点，**不可代办**',
+        "tags": ['P0'],
+        "metadata": {'intent': 'query_acc', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_ACC_024',
+        "category": 'query',
+        "domain": 'account',
+        "domain_zh": '账户与安全',
+        "sub_category": 'acc',
+        "question": '销户需要什么材料？',
+        "answer": '身份证 + 一卡通 + 网点办',
+        "tags": [],
+        "metadata": {'intent': 'query_acc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_ACC_025',
+        "category": 'query',
+        "domain": 'account',
+        "domain_zh": '账户与安全',
+        "sub_category": 'acc',
+        "question": '长期不用的账户会怎样？',
+        "answer": '久悬户处理，资金冻结',
+        "tags": [],
+        "metadata": {'intent': 'query_acc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_ACC_026',
+        "category": 'query',
+        "domain": 'account',
+        "domain_zh": '账户与安全',
+        "sub_category": 'acc',
+        "question": '久悬户怎么激活？',
+        "answer": '携带身份证到任一网点',
+        "tags": [],
+        "metadata": {'intent': 'query_acc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_ACC_027',
+        "category": 'query',
+        "domain": 'account',
+        "domain_zh": '账户与安全',
+        "sub_category": 'acc',
+        "question": '异地可以销户吗？',
+        "answer": '同城可办，异地需先做账户迁移',
+        "tags": [],
+        "metadata": {'intent': 'query_acc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_ACC_028',
+        "category": 'query',
+        "domain": 'account',
+        "domain_zh": '账户与安全',
+        "sub_category": 'acc',
+        "question": '怎么更新身份证信息？',
+        "answer": '携带新身份证到网点更新有效期',
+        "tags": [],
+        "metadata": {'intent': 'query_acc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_ACC_029',
+        "category": 'query',
+        "domain": 'account',
+        "domain_zh": '账户与安全',
+        "sub_category": 'acc',
+        "question": '怎么修改手机号码？',
+        "answer": '手机银行自助 / 柜台（需原手机号验证）',
+        "tags": [],
+        "metadata": {'intent': 'query_acc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_ACC_030',
+        "category": 'query',
+        "domain": 'account',
+        "domain_zh": '账户与安全',
+        "sub_category": 'acc',
+        "question": '怎么更新家庭住址？',
+        "answer": '手机银行 / 网点',
+        "tags": [],
+        "metadata": {'intent': 'query_acc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_ACC_031',
+        "category": 'query',
+        "domain": 'account',
+        "domain_zh": '账户与安全',
+        "sub_category": 'acc',
+        "question": '怎么更新工作单位？',
+        "answer": '网点办理',
+        "tags": [],
+        "metadata": {'intent': 'query_acc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_ACC_032',
+        "category": 'query',
+        "domain": 'account',
+        "domain_zh": '账户与安全',
+        "sub_category": 'acc',
+        "question": '对公账户怎么开？',
+        "answer": '营业执照 + 法人身份证 + 公章 → 网点',
+        "tags": ['引导对公专线', '95555-3'],
+        "metadata": {'intent': 'query_acc', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_ACC_033',
+        "category": 'query',
+        "domain": 'account',
+        "domain_zh": '账户与安全',
+        "sub_category": 'acc',
+        "question": '基本户和一般户的区别？',
+        "answer": '基本户唯一 / 一般户多个',
+        "tags": [],
+        "metadata": {'intent': 'query_acc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_ACC_034',
+        "category": 'query',
+        "domain": 'account',
+        "domain_zh": '账户与安全',
+        "sub_category": 'acc',
+        "question": '对公转账怎么操作？',
+        "answer": '企业网银 / 对公柜台',
+        "tags": [],
+        "metadata": {'intent': 'query_acc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_ACC_035',
+        "category": 'query',
+        "domain": 'account',
+        "domain_zh": '账户与安全',
+        "sub_category": 'acc',
+        "question": '单位结算卡是什么？',
+        "answer": '对公账户的支付卡',
+        "tags": [],
+        "metadata": {'intent': 'query_acc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_ACC_036',
+        "category": 'query',
+        "domain": 'account',
+        "domain_zh": '账户与安全',
+        "sub_category": 'acc',
+        "question": '招行有哪些一卡通产品？',
+        "answer": '普通 / 金卡 / 金葵花 / 钻石 / 联名',
+        "tags": [],
+        "metadata": {'intent': 'query_acc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_ACC_037',
+        "category": 'query',
+        "domain": 'account',
+        "domain_zh": '账户与安全',
+        "sub_category": 'acc',
+        "question": '学生一卡通怎么开？',
+        "answer": '携带学生证 + 身份证，绿色通道',
+        "tags": [],
+        "metadata": {'intent': 'query_acc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_ACC_038',
+        "category": 'query',
+        "domain": 'account',
+        "domain_zh": '账户与安全',
+        "sub_category": 'acc',
+        "question": '招行一卡通年费吗？',
+        "answer": '普通卡无年费，金葵花以上免年费',
+        "tags": [],
+        "metadata": {'intent': 'query_acc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_ACC_039',
+        "category": 'query',
+        "domain": 'account',
+        "domain_zh": '账户与安全',
+        "sub_category": 'acc',
+        "question": '一卡通能在港澳用吗？',
+        "answer": '银联标识全球通用',
+        "tags": [],
+        "metadata": {'intent': 'query_acc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_ACC_040',
+        "category": 'query',
+        "domain": 'account',
+        "domain_zh": '账户与安全',
+        "sub_category": 'acc',
+        "question": '一卡通和储蓄卡区别？',
+        "answer": '同一概念，名称差异',
+        "tags": [],
+        "metadata": {'intent': 'query_acc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_ACC_041',
+        "category": 'query',
+        "domain": 'account',
+        "domain_zh": '账户与安全',
+        "sub_category": 'acc',
+        "question": '什么是子账户？',
+        "answer": '一卡通下的多币种多账户管理',
+        "tags": [],
+        "metadata": {'intent': 'query_acc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_ACC_042',
+        "category": 'query',
+        "domain": 'account',
+        "domain_zh": '账户与安全',
+        "sub_category": 'acc',
+        "question": '一卡通支持哪些币种？',
+        "answer": '人民币 + 美元/欧元/港币/日元等 20+ 币种',
+        "tags": [],
+        "metadata": {'intent': 'query_acc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_ACC_043',
+        "category": 'query',
+        "domain": 'account',
+        "domain_zh": '账户与安全',
+        "sub_category": 'acc',
+        "question": '什么是招行 VTM 远程柜员机？',
+        "answer": '远程视频办理开户/签约',
+        "tags": [],
+        "metadata": {'intent': 'query_acc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_ACC_044',
+        "category": 'query',
+        "domain": 'account',
+        "domain_zh": '账户与安全',
+        "sub_category": 'acc',
+        "question": '一卡通怎么开短信通知？',
+        "answer": '收费，手机银行 / 网点',
+        "tags": [],
+        "metadata": {'intent': 'query_acc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_ACC_045',
+        "category": 'query',
+        "domain": 'account',
+        "domain_zh": '账户与安全',
+        "sub_category": 'acc',
+        "question": '一卡通能不能境外取现？',
+        "answer": '银联标识可，全球 ATM 取现',
+        "tags": [],
+        "metadata": {'intent': 'query_acc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_ACC_046',
+        "category": 'query',
+        "domain": 'account',
+        "domain_zh": '账户与安全',
+        "sub_category": 'acc',
+        "question": '账户异常怎么办？',
+        "answer": '立即 95555 冻结 / 网点核实',
+        "tags": ['P0'],
+        "metadata": {'intent': 'query_acc', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_ACC_047',
+        "category": 'query',
+        "domain": 'account',
+        "domain_zh": '账户与安全',
+        "sub_category": 'acc',
+        "question": '收到陌生扣款短信？',
+        "answer": '不点击链接，直接 95555 核实',
+        "tags": ['反诈'],
+        "metadata": {'intent': 'query_acc', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_ACC_048',
+        "category": 'query',
+        "domain": 'account',
+        "domain_zh": '账户与安全',
+        "sub_category": 'acc',
+        "question": '卡被复制了怎么办？',
+        "answer": '立即挂失 + 报警 + 申请补偿',
+        "tags": ['P0'],
+        "metadata": {'intent': 'query_acc', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_ACC_049',
+        "category": 'query',
+        "domain": 'account',
+        "domain_zh": '账户与安全',
+        "sub_category": 'acc',
+        "question": '怎么查账户历史交易明细？',
+        "answer": '手机银行 → 交易明细 / PDF 导出',
+        "tags": [],
+        "metadata": {'intent': 'query_acc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_ACC_050',
+        "category": 'query',
+        "domain": 'account',
+        "domain_zh": '账户与安全',
+        "sub_category": 'acc',
+        "question": '交易流水能打印几年？',
+        "answer": '网点可打近 5 年，电子版永久',
+        "tags": [],
+        "metadata": {'intent': 'query_acc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
     },
 
+    # ========== 信用卡 (credit_card) — 60 条 ==========
+
     {
-        "id": "KB_Q_002",
-        "category": "query",
-        "sub_category": "balance",
-        "question": "怎么查信用卡可用额度？",
-        "answer": """查询信用卡可用额度的方式：
-
-【手机银行】
-1. 登录手机银行 → 信用卡 → 额度管理
-2. 可查看固定额度、临时额度和可用额度
-
-【掌上生活APP】
-1. 首页「我的」
-2. 查看「可用额度」和「固定额度」
-
-【短信查询】
-发送「ED卡号末4位」到 95555
-示例：ED1234
-
-【客服电话】
-拨打 95555 → 信用卡服务 → 额度查询""",
-        "tags": ["额度", "信用卡额度", "可用额度", "查询"],
-        "metadata": {"intent": "query_balance", "frequency": "high", "risk_disclosure": False}
+        "id": 'KB_CC_001',
+        "category": 'query',
+        "domain": 'credit_card',
+        "domain_zh": '信用卡',
+        "sub_category": 'cc',
+        "question": '如何查看信用卡账单？',
+        "answer": '手机银行 / 掌上生活 / 微信银行 / 短信',
+        "tags": [],
+        "metadata": {'intent': 'query_cc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CC_002',
+        "category": 'query',
+        "domain": 'credit_card',
+        "domain_zh": '信用卡',
+        "sub_category": 'cc',
+        "question": '账单什么时候出？',
+        "answer": '每月固定日期，账单日后 2 天内',
+        "tags": [],
+        "metadata": {'intent': 'query_cc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CC_003',
+        "category": 'query',
+        "domain": 'credit_card',
+        "domain_zh": '信用卡',
+        "sub_category": 'cc',
+        "question": '最低还款多少？',
+        "answer": '账单金额 10%，最低 10 元',
+        "tags": [],
+        "metadata": {'intent': 'query_cc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CC_004',
+        "category": 'query',
+        "domain": 'credit_card',
+        "domain_zh": '信用卡',
+        "sub_category": 'cc',
+        "question": '怎么查询消费明细？',
+        "answer": '手机银行 → 信用卡 → 交易明细',
+        "tags": [],
+        "metadata": {'intent': 'query_cc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CC_005',
+        "category": 'query',
+        "domain": 'credit_card',
+        "domain_zh": '信用卡',
+        "sub_category": 'cc',
+        "question": '未出账单怎么看？',
+        "answer": '掌上生活 → 未出账单',
+        "tags": [],
+        "metadata": {'intent': 'query_cc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CC_006',
+        "category": 'query',
+        "domain": 'credit_card',
+        "domain_zh": '信用卡',
+        "sub_category": 'cc',
+        "question": '账单能寄纸质版吗？',
+        "answer": '默认电子，邮寄纸质需单独申请',
+        "tags": [],
+        "metadata": {'intent': 'query_cc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CC_007',
+        "category": 'query',
+        "domain": 'credit_card',
+        "domain_zh": '信用卡',
+        "sub_category": 'cc',
+        "question": '信用卡还款方式？',
+        "answer": '自动还款 / 手机银行 / 网银 / 支付宝 / 微信 / 他行转账',
+        "tags": [],
+        "metadata": {'intent': 'query_cc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CC_008',
+        "category": 'query',
+        "domain": 'credit_card',
+        "domain_zh": '信用卡',
+        "sub_category": 'cc',
+        "question": '怎么设置自动还款？',
+        "answer": '手机银行 → 信用卡 → 自动还款 → 绑定借记卡',
+        "tags": [],
+        "metadata": {'intent': 'query_cc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CC_009',
+        "category": 'query',
+        "domain": 'credit_card',
+        "domain_zh": '信用卡',
+        "sub_category": 'cc',
+        "question": '还款什么时候到账？',
+        "answer": '本行实时 / 他行 1-3 工作日',
+        "tags": [],
+        "metadata": {'intent': 'query_cc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CC_010',
+        "category": 'query',
+        "domain": 'credit_card',
+        "domain_zh": '信用卡',
+        "sub_category": 'cc',
+        "question": '逾期了怎么办？',
+        "answer": '尽快还款，可能产生滞纳金 + 影响征信',
+        "tags": ['风险'],
+        "metadata": {'intent': 'query_cc', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CC_011',
+        "category": 'query',
+        "domain": 'credit_card',
+        "domain_zh": '信用卡',
+        "sub_category": 'cc',
+        "question": '最低还款会影响征信吗？',
+        "answer": '不会上"逾期"，但会计收利息',
+        "tags": [],
+        "metadata": {'intent': 'query_cc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CC_012',
+        "category": 'query',
+        "domain": 'credit_card',
+        "domain_zh": '信用卡',
+        "sub_category": 'cc',
+        "question": '怎么查是否逾期？',
+        "answer": '央行征信 / 手机银行 → 信用报告',
+        "tags": [],
+        "metadata": {'intent': 'query_cc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CC_013',
+        "category": 'query',
+        "domain": 'credit_card',
+        "domain_zh": '信用卡',
+        "sub_category": 'cc',
+        "question": '跨行还款收手续费吗？',
+        "answer": '本行免费 / 跨行按他行标准',
+        "tags": [],
+        "metadata": {'intent': 'query_cc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CC_014',
+        "category": 'query',
+        "domain": 'credit_card',
+        "domain_zh": '信用卡',
+        "sub_category": 'cc',
+        "question": '能不能用支付宝给信用卡还款？',
+        "answer": '可以，免费但有限额',
+        "tags": [],
+        "metadata": {'intent': 'query_cc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CC_015',
+        "category": 'query',
+        "domain": 'credit_card',
+        "domain_zh": '信用卡',
+        "sub_category": 'cc',
+        "question": '信用卡分期方式？',
+        "answer": '账单分期 / 现金分期 / 消费分期',
+        "tags": [],
+        "metadata": {'intent': 'query_cc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CC_016',
+        "category": 'query',
+        "domain": 'credit_card',
+        "domain_zh": '信用卡',
+        "sub_category": 'cc',
+        "question": '账单分期手续费多少？',
+        "answer": '0.66%-0.9%/月，年化 7.92%-10.8%',
+        "tags": ['⚠️', '风险'],
+        "metadata": {'intent': 'query_cc', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CC_017',
+        "category": 'query',
+        "domain": 'credit_card',
+        "domain_zh": '信用卡',
+        "sub_category": 'cc',
+        "question": '现金分期利率多少？',
+        "answer": '年化 4.35%-18%，以审批为准',
+        "tags": ['⚠️', '风险'],
+        "metadata": {'intent': 'query_cc', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CC_018',
+        "category": 'query',
+        "domain": 'credit_card',
+        "domain_zh": '信用卡',
+        "sub_category": 'cc',
+        "question": '账单分期能分几期？',
+        "answer": '3/6/9/12/18/24 期可选',
+        "tags": [],
+        "metadata": {'intent': 'query_cc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CC_019',
+        "category": 'query',
+        "domain": 'credit_card',
+        "domain_zh": '信用卡',
+        "sub_category": 'cc',
+        "question": '分期后能提前还吗？',
+        "answer": '可以，可能收剩余手续费',
+        "tags": [],
+        "metadata": {'intent': 'query_cc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CC_020',
+        "category": 'query',
+        "domain": 'credit_card',
+        "domain_zh": '信用卡',
+        "sub_category": 'cc',
+        "question": '分期会影响提额吗？',
+        "answer": '不直接影响，正常使用有助于提额',
+        "tags": [],
+        "metadata": {'intent': 'query_cc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CC_021',
+        "category": 'query',
+        "domain": 'credit_card',
+        "domain_zh": '信用卡',
+        "sub_category": 'cc',
+        "question": '消费分期和账单分期区别？',
+        "answer": '消费针对单笔 / 账单针对整月',
+        "tags": [],
+        "metadata": {'intent': 'query_cc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CC_022',
+        "category": 'query',
+        "domain": 'credit_card',
+        "domain_zh": '信用卡',
+        "sub_category": 'cc',
+        "question": '怎么取消分期？',
+        "answer": '致电 95555 转人工',
+        "tags": [],
+        "metadata": {'intent': 'query_cc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CC_023',
+        "category": 'query',
+        "domain": 'credit_card',
+        "domain_zh": '信用卡',
+        "sub_category": 'cc',
+        "question": '信用卡丢了怎么办？',
+        "answer": '立即挂失，95555 / 手机银行 / 网点，手续费 50 元',
+        "tags": ['P0'],
+        "metadata": {'intent': 'query_cc', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CC_024',
+        "category": 'query',
+        "domain": 'credit_card',
+        "domain_zh": '信用卡',
+        "sub_category": 'cc',
+        "question": '怎么补办新卡？',
+        "answer": '挂失后申请，邮寄到家，3-5 工作日',
+        "tags": [],
+        "metadata": {'intent': 'query_cc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CC_025',
+        "category": 'query',
+        "domain": 'credit_card',
+        "domain_zh": '信用卡',
+        "sub_category": 'cc',
+        "question": '怎么查询信用卡额度？',
+        "answer": '手机银行 / 掌上生活 / 95555',
+        "tags": [],
+        "metadata": {'intent': 'query_cc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CC_026',
+        "category": 'query',
+        "domain": 'credit_card',
+        "domain_zh": '信用卡',
+        "sub_category": 'cc',
+        "question": '怎么申请提额？',
+        "answer": '手机银行 → 额度调整 / 致电 95555',
+        "tags": [],
+        "metadata": {'intent': 'query_cc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CC_027',
+        "category": 'query',
+        "domain": 'credit_card',
+        "domain_zh": '信用卡',
+        "sub_category": 'cc',
+        "question": '临时额度和固定额度区别？',
+        "answer": '临时短期 / 固定长期',
+        "tags": [],
+        "metadata": {'intent': 'query_cc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CC_028',
+        "category": 'query',
+        "domain": 'credit_card',
+        "domain_zh": '信用卡',
+        "sub_category": 'cc',
+        "question": '怎么激活新卡？',
+        "answer": '掌上生活 / 95555 / 网点',
+        "tags": [],
+        "metadata": {'intent': 'query_cc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CC_029',
+        "category": 'query',
+        "domain": 'credit_card',
+        "domain_zh": '信用卡',
+        "sub_category": 'cc',
+        "question": '信用卡到期了怎么办？',
+        "answer": '自动续卡，邮寄新卡',
+        "tags": [],
+        "metadata": {'intent': 'query_cc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CC_030',
+        "category": 'query',
+        "domain": 'credit_card',
+        "domain_zh": '信用卡',
+        "sub_category": 'cc',
+        "question": '怎么注销信用卡？',
+        "answer": '还清欠款 → 致电 95555 → 剪卡',
+        "tags": [],
+        "metadata": {'intent': 'query_cc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CC_031',
+        "category": 'query',
+        "domain": 'credit_card',
+        "domain_zh": '信用卡',
+        "sub_category": 'cc',
+        "question": '信用卡能不能取现？',
+        "answer": '可以，预借现金额度 50%，有手续费',
+        "tags": ['⚠️', '风险'],
+        "metadata": {'intent': 'query_cc', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CC_032',
+        "category": 'query',
+        "domain": 'credit_card',
+        "domain_zh": '信用卡',
+        "sub_category": 'cc',
+        "question": '预借现金什么时候还？',
+        "answer": '不享受免息期，按日计息',
+        "tags": ['⚠️', '风险'],
+        "metadata": {'intent': 'query_cc', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CC_033',
+        "category": 'query',
+        "domain": 'credit_card',
+        "domain_zh": '信用卡',
+        "sub_category": 'cc',
+        "question": '积分怎么查询？',
+        "answer": '手机银行 → 积分 / 掌上生活',
+        "tags": [],
+        "metadata": {'intent': 'query_cc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CC_034',
+        "category": 'query',
+        "domain": 'credit_card',
+        "domain_zh": '信用卡',
+        "sub_category": 'cc',
+        "question": '积分怎么使用？',
+        "answer": '兑换礼品 / 航空里程 / 刷卡抵扣 / 抽奖',
+        "tags": [],
+        "metadata": {'intent': 'query_cc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CC_035',
+        "category": 'query',
+        "domain": 'credit_card',
+        "domain_zh": '信用卡',
+        "sub_category": 'cc',
+        "question": '积分有效期？',
+        "answer": '大部分信用卡积分 3-5 年有效',
+        "tags": [],
+        "metadata": {'intent': 'query_cc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CC_036',
+        "category": 'query',
+        "domain": 'credit_card',
+        "domain_zh": '信用卡',
+        "sub_category": 'cc',
+        "question": '哪些消费不计积分？',
+        "answer": '房产/汽车/公立学校/医院等',
+        "tags": [],
+        "metadata": {'intent': 'query_cc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CC_037',
+        "category": 'query',
+        "domain": 'credit_card',
+        "domain_zh": '信用卡',
+        "sub_category": 'cc',
+        "question": '联名信用卡有什么权益？',
+        "answer": '航司里程 / 酒店权益 / 购物折扣',
+        "tags": [],
+        "metadata": {'intent': 'query_cc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CC_038',
+        "category": 'query',
+        "domain": 'credit_card',
+        "domain_zh": '信用卡',
+        "sub_category": 'cc',
+        "question": '有什么优惠活动？',
+        "answer": '掌上生活 APP，门店优惠、随机返现',
+        "tags": [],
+        "metadata": {'intent': 'query_cc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CC_039',
+        "category": 'query',
+        "domain": 'credit_card',
+        "domain_zh": '信用卡',
+        "sub_category": 'cc',
+        "question": '怎么参加"周三五折"？',
+        "answer": '掌上生活 → 美食 / 活动',
+        "tags": [],
+        "metadata": {'intent': 'query_cc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CC_040',
+        "category": 'query',
+        "domain": 'credit_card',
+        "domain_zh": '信用卡',
+        "sub_category": 'cc',
+        "question": '生日月双倍积分怎么算？',
+        "answer": '生日当月消费双倍',
+        "tags": [],
+        "metadata": {'intent': 'query_cc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CC_041',
+        "category": 'query',
+        "domain": 'credit_card',
+        "domain_zh": '信用卡',
+        "sub_category": 'cc',
+        "question": '掌上生活是干嘛的？',
+        "answer": '招行信用卡官方 APP',
+        "tags": [],
+        "metadata": {'intent': 'query_cc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CC_042',
+        "category": 'query',
+        "domain": 'credit_card',
+        "domain_zh": '信用卡',
+        "sub_category": 'cc',
+        "question": '怎么下载掌上生活？',
+        "answer": '应用商店搜索"掌上生活"',
+        "tags": [],
+        "metadata": {'intent': 'query_cc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CC_043',
+        "category": 'query',
+        "domain": 'credit_card',
+        "domain_zh": '信用卡',
+        "sub_category": 'cc',
+        "question": '掌上生活怎么登录？',
+        "answer": '身份证 + 信用卡卡号',
+        "tags": [],
+        "metadata": {'intent': 'query_cc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CC_044',
+        "category": 'query',
+        "domain": 'credit_card',
+        "domain_zh": '信用卡',
+        "sub_category": 'cc',
+        "question": '掌上生活能还款吗？',
+        "answer": '可以，支持本行和跨行',
+        "tags": [],
+        "metadata": {'intent': 'query_cc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CC_045',
+        "category": 'query',
+        "domain": 'credit_card',
+        "domain_zh": '信用卡',
+        "sub_category": 'cc',
+        "question": '掌上生活的"小招助理"是什么？',
+        "answer": 'AI 智能客服入口',
+        "tags": [],
+        "metadata": {'intent': 'query_cc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CC_046',
+        "category": 'query',
+        "domain": 'credit_card',
+        "domain_zh": '信用卡',
+        "sub_category": 'cc',
+        "question": '招行有哪些热门信用卡？',
+        "answer": '经典白 / 钻石卡 / AE 白金 / 车主卡 / 校园卡',
+        "tags": [],
+        "metadata": {'intent': 'query_cc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CC_047',
+        "category": 'query',
+        "domain": 'credit_card',
+        "domain_zh": '信用卡',
+        "sub_category": 'cc',
+        "question": '学生可以办信用卡吗？',
+        "answer": '可以，校园卡有专属额度',
+        "tags": [],
+        "metadata": {'intent': 'query_cc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CC_048',
+        "category": 'query',
+        "domain": 'credit_card',
+        "domain_zh": '信用卡',
+        "sub_category": 'cc',
+        "question": '招行经典白金卡权益？',
+        "answer": '机场贵宾厅 / 高铁贵宾厅 / 体检 / 酒店',
+        "tags": [],
+        "metadata": {'intent': 'query_cc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CC_049',
+        "category": 'query',
+        "domain": 'credit_card',
+        "domain_zh": '信用卡',
+        "sub_category": 'cc',
+        "question": '怎么申请附属卡？',
+        "answer": '主卡人申请，掌上生活 / 网点',
+        "tags": [],
+        "metadata": {'intent': 'query_cc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CC_050',
+        "category": 'query',
+        "domain": 'credit_card',
+        "domain_zh": '信用卡',
+        "sub_category": 'cc',
+        "question": '主卡附属卡额度独立吗？',
+        "answer": '共享主卡额度',
+        "tags": [],
+        "metadata": {'intent': 'query_cc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CC_051',
+        "category": 'query',
+        "domain": 'credit_card',
+        "domain_zh": '信用卡',
+        "sub_category": 'cc',
+        "question": '信用卡被冻结了？',
+        "answer": '立即 95555 核实，可能盗刷',
+        "tags": ['P0'],
+        "metadata": {'intent': 'query_cc', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CC_052',
+        "category": 'query',
+        "domain": 'credit_card',
+        "domain_zh": '信用卡',
+        "sub_category": 'cc',
+        "question": '信用卡被复制盗刷？',
+        "answer": '立即挂失 + 报警 + 申请争议处理',
+        "tags": ['P0'],
+        "metadata": {'intent': 'query_cc', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CC_053',
+        "category": 'query',
+        "domain": 'credit_card',
+        "domain_zh": '信用卡',
+        "sub_category": 'cc',
+        "question": '境外消费被限额？',
+        "answer": '致电 95555 解锁境外交易',
+        "tags": [],
+        "metadata": {'intent': 'query_cc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CC_054',
+        "category": 'query',
+        "domain": 'credit_card',
+        "domain_zh": '信用卡',
+        "sub_category": 'cc',
+        "question": '信用卡转账到他人卡？',
+        "answer": '信用卡不能直接转账，只能还款/取现',
+        "tags": [],
+        "metadata": {'intent': 'query_cc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CC_055',
+        "category": 'query',
+        "domain": 'credit_card',
+        "domain_zh": '信用卡',
+        "sub_category": 'cc',
+        "question": '信用卡能存钱吗？',
+        "answer": '可以（溢缴款），但不产生利息',
+        "tags": [],
+        "metadata": {'intent': 'query_cc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CC_056',
+        "category": 'query',
+        "domain": 'credit_card',
+        "domain_zh": '信用卡',
+        "sub_category": 'cc',
+        "question": '信用卡怎么申请？',
+        "answer": '掌上生活 / 官网 / 网点 / 推荐办卡',
+        "tags": [],
+        "metadata": {'intent': 'query_cc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CC_057',
+        "category": 'query',
+        "domain": 'credit_card',
+        "domain_zh": '信用卡',
+        "sub_category": 'cc',
+        "question": '办信用卡需要什么资料？',
+        "answer": '身份证 + 收入证明（白金卡需要）',
+        "tags": [],
+        "metadata": {'intent': 'query_cc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CC_058',
+        "category": 'query',
+        "domain": 'credit_card',
+        "domain_zh": '信用卡',
+        "sub_category": 'cc',
+        "question": '信用卡审批要多久？',
+        "answer": '1-15 个工作日',
+        "tags": [],
+        "metadata": {'intent': 'query_cc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CC_059',
+        "category": 'query',
+        "domain": 'credit_card',
+        "domain_zh": '信用卡',
+        "sub_category": 'cc',
+        "question": '办卡进度怎么查？',
+        "answer": '掌上生活 → 我的 → 办卡进度',
+        "tags": [],
+        "metadata": {'intent': 'query_cc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CC_060',
+        "category": 'query',
+        "domain": 'credit_card',
+        "domain_zh": '信用卡',
+        "sub_category": 'cc',
+        "question": '申请被拒了怎么办？',
+        "answer": '3 个月后可重新申请，改善征信',
+        "tags": [],
+        "metadata": {'intent': 'query_cc', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
     },
 
-    # --- 1.2 账单查询 ---
+    # ========== 贷款业务 (loan) — 50 条 ==========
+
     {
-        "id": "KB_Q_003",
-        "category": "query",
-        "sub_category": "bill",
-        "question": "如何查看信用卡账单？",
-        "answer": """查看信用卡账单的多种方式：
-
-【手机银行】
-1. 登录 → 信用卡 → 账单查询
-2. 可查看本月账单、历史账单
-3. 支持导出账单PDF
-
-【掌上生活APP】
-1. 信用卡 → 账单 → 本期账单
-2. 点击「账单解读」查看消费分析
-
-【微信银行】
-1. 关注「招商银行信用卡」公众号
-2. 点击「我」→「账单查询」
-
-【短信查询】
-发送「ZD卡号末4位」到 95555
-
-【邮箱账单】
-登录网上银行 → 信用卡 → 账单管理 → 设置邮箱账单""",
-        "tags": ["账单", "信用卡账单", "查询", "消费明细"],
-        "metadata": {"intent": "query_bill", "frequency": "high", "risk_disclosure": False}
+        "id": 'KB_LN_001',
+        "category": 'consult',
+        "domain": 'loan',
+        "domain_zh": '贷款业务',
+        "sub_category": 'ln',
+        "question": '信用贷款怎么申请？',
+        "answer": '手机银行 → 贷款 → 闪电贷 / 招行贷',
+        "tags": [],
+        "metadata": {'intent': 'consult_ln', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LN_002',
+        "category": 'consult',
+        "domain": 'loan',
+        "domain_zh": '贷款业务',
+        "sub_category": 'ln',
+        "question": '闪电贷利率多少？',
+        "answer": '年化 3.6%-18%，以审批为准',
+        "tags": ['⚠️', '风险'],
+        "metadata": {'intent': 'consult_ln', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LN_003',
+        "category": 'consult',
+        "domain": 'loan',
+        "domain_zh": '贷款业务',
+        "sub_category": 'ln',
+        "question": '闪电贷额度多少？',
+        "answer": '最高 100 万，视个人资质',
+        "tags": [],
+        "metadata": {'intent': 'consult_ln', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LN_004',
+        "category": 'consult',
+        "domain": 'loan',
+        "domain_zh": '贷款业务',
+        "sub_category": 'ln',
+        "question": '闪电贷怎么还款？',
+        "answer": '按月还本付息 / 先息后本',
+        "tags": [],
+        "metadata": {'intent': 'consult_ln', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LN_005',
+        "category": 'consult',
+        "domain": 'loan',
+        "domain_zh": '贷款业务',
+        "sub_category": 'ln',
+        "question": '闪电贷放款多久到账？',
+        "answer": '审批通过后实时到账',
+        "tags": [],
+        "metadata": {'intent': 'consult_ln', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LN_006',
+        "category": 'consult',
+        "domain": 'loan',
+        "domain_zh": '贷款业务',
+        "sub_category": 'ln',
+        "question": '招行消费贷和闪电贷区别？',
+        "answer": '招行消费贷是入口，闪电贷是产品',
+        "tags": [],
+        "metadata": {'intent': 'consult_ln', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LN_007',
+        "category": 'consult',
+        "domain": 'loan',
+        "domain_zh": '贷款业务',
+        "sub_category": 'ln',
+        "question": '信用贷款利率多少？',
+        "answer": '年化 3.6%-18%',
+        "tags": ['⚠️', '风险'],
+        "metadata": {'intent': 'consult_ln', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LN_008',
+        "category": 'consult',
+        "domain": 'loan',
+        "domain_zh": '贷款业务',
+        "sub_category": 'ln',
+        "question": '贷款额度怎么提升？',
+        "answer": '保持良好还款 + 提资产 + 提收入证明',
+        "tags": [],
+        "metadata": {'intent': 'consult_ln', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LN_009',
+        "category": 'consult',
+        "domain": 'loan',
+        "domain_zh": '贷款业务',
+        "sub_category": 'ln',
+        "question": '房贷利率是多少？',
+        "answer": 'LPR + 基点，首套二套不同',
+        "tags": ['⚠️', '风险'],
+        "metadata": {'intent': 'consult_ln', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LN_010',
+        "category": 'consult',
+        "domain": 'loan',
+        "domain_zh": '贷款业务',
+        "sub_category": 'ln',
+        "question": '首套房和二套房区别？',
+        "answer": '利率不同 / 首付比例不同',
+        "tags": [],
+        "metadata": {'intent': 'consult_ln', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LN_011',
+        "category": 'consult',
+        "domain": 'loan',
+        "domain_zh": '贷款业务',
+        "sub_category": 'ln',
+        "question": '怎么提前还贷？',
+        "answer": '提前申请，可能收违约金',
+        "tags": ['⚠️', '风险'],
+        "metadata": {'intent': 'consult_ln', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LN_012',
+        "category": 'consult',
+        "domain": 'loan',
+        "domain_zh": '贷款业务',
+        "sub_category": 'ln',
+        "question": '贷款审批需要多久？',
+        "answer": '资料齐全 3-7 工作日',
+        "tags": [],
+        "metadata": {'intent': 'consult_ln', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LN_013',
+        "category": 'consult',
+        "domain": 'loan',
+        "domain_zh": '贷款业务',
+        "sub_category": 'ln',
+        "question": '房贷 LPR 怎么选？',
+        "answer": '浮动利率 vs 固定利率，根据市场判断',
+        "tags": ['⚠️', '风险'],
+        "metadata": {'intent': 'consult_ln', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LN_014',
+        "category": 'consult',
+        "domain": 'loan',
+        "domain_zh": '贷款业务',
+        "sub_category": 'ln',
+        "question": '公积金贷款和商贷区别？',
+        "answer": '公积金利率低 / 额度有限',
+        "tags": [],
+        "metadata": {'intent': 'consult_ln', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LN_015',
+        "category": 'consult',
+        "domain": 'loan',
+        "domain_zh": '贷款业务',
+        "sub_category": 'ln',
+        "question": '怎么用公积金贷款？',
+        "answer": '公积金中心申请，指定银行办理',
+        "tags": [],
+        "metadata": {'intent': 'consult_ln', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LN_016',
+        "category": 'consult',
+        "domain": 'loan',
+        "domain_zh": '贷款业务',
+        "sub_category": 'ln',
+        "question": '房贷能转贷吗？',
+        "answer": '可以，转按揭 / 经营贷置换',
+        "tags": ['⚠️', '风险'],
+        "metadata": {'intent': 'consult_ln', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LN_017',
+        "category": 'consult',
+        "domain": 'loan',
+        "domain_zh": '贷款业务',
+        "sub_category": 'ln',
+        "question": '房贷断供会怎样？',
+        "answer": '银行催收 → 拍卖房产 → 信用受损',
+        "tags": ['P0'],
+        "metadata": {'intent': 'consult_ln', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LN_018',
+        "category": 'consult',
+        "domain": 'loan',
+        "domain_zh": '贷款业务',
+        "sub_category": 'ln',
+        "question": '房贷还款方式？',
+        "answer": '等额本息 / 等额本金',
+        "tags": [],
+        "metadata": {'intent': 'consult_ln', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LN_019',
+        "category": 'consult',
+        "domain": 'loan',
+        "domain_zh": '贷款业务',
+        "sub_category": 'ln',
+        "question": '招行小微贷款怎么申请？',
+        "answer": '招行企业银行 APP / 对公客户经理',
+        "tags": ['引导对公'],
+        "metadata": {'intent': 'consult_ln', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LN_020',
+        "category": 'consult',
+        "domain": 'loan',
+        "domain_zh": '贷款业务',
+        "sub_category": 'ln',
+        "question": '经营贷和消费贷区别？',
+        "answer": '经营贷有营业执照 / 利率更低',
+        "tags": [],
+        "metadata": {'intent': 'consult_ln', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LN_021',
+        "category": 'consult',
+        "domain": 'loan',
+        "domain_zh": '贷款业务',
+        "sub_category": 'ln',
+        "question": '招行有哪几种经营贷？',
+        "answer": '抵押贷 / 担保贷 / 信用贷',
+        "tags": [],
+        "metadata": {'intent': 'consult_ln', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LN_022',
+        "category": 'consult',
+        "domain": 'loan',
+        "domain_zh": '贷款业务',
+        "sub_category": 'ln',
+        "question": '经营贷被查到用于消费？',
+        "answer": '银行有权收回贷款',
+        "tags": ['⚠️', '风险'],
+        "metadata": {'intent': 'consult_ln', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LN_023',
+        "category": 'consult',
+        "domain": 'loan',
+        "domain_zh": '贷款业务',
+        "sub_category": 'ln',
+        "question": '招行车贷有哪些？',
+        "answer": '新车贷 / 二手车贷 / 信用卡分期',
+        "tags": [],
+        "metadata": {'intent': 'consult_ln', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LN_024',
+        "category": 'consult',
+        "domain": 'loan',
+        "domain_zh": '贷款业务',
+        "sub_category": 'ln',
+        "question": '车贷利率多少？',
+        "answer": '4%-8%，以审批为准',
+        "tags": ['⚠️', '风险'],
+        "metadata": {'intent': 'consult_ln', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LN_025',
+        "category": 'consult',
+        "domain": 'loan',
+        "domain_zh": '贷款业务',
+        "sub_category": 'ln',
+        "question": '车贷能提前还吗？',
+        "answer": '可以，可能收手续费',
+        "tags": [],
+        "metadata": {'intent': 'consult_ln', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LN_026',
+        "category": 'consult',
+        "domain": 'loan',
+        "domain_zh": '贷款业务',
+        "sub_category": 'ln',
+        "question": '招行装修贷款怎么申请？',
+        "answer": '凭房产证 / 购房合同申请',
+        "tags": [],
+        "metadata": {'intent': 'consult_ln', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LN_027',
+        "category": 'consult',
+        "domain": 'loan',
+        "domain_zh": '贷款业务',
+        "sub_category": 'ln',
+        "question": '装修贷利率多少？',
+        "answer": '4%-8%',
+        "tags": ['⚠️', '风险'],
+        "metadata": {'intent': 'consult_ln', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LN_028',
+        "category": 'consult',
+        "domain": 'loan',
+        "domain_zh": '贷款业务',
+        "sub_category": 'ln',
+        "question": '医美分期能用信用卡吗？',
+        "answer": '部分商户支持，注意免息期',
+        "tags": ['⚠️', '风险'],
+        "metadata": {'intent': 'consult_ln', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LN_029',
+        "category": 'consult',
+        "domain": 'loan',
+        "domain_zh": '贷款业务',
+        "sub_category": 'ln',
+        "question": '助学贷款怎么办？',
+        "answer": '当地教育局 / 信用社 / 国家开发银行',
+        "tags": [],
+        "metadata": {'intent': 'consult_ln', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LN_030',
+        "category": 'consult',
+        "domain": 'loan',
+        "domain_zh": '贷款业务',
+        "sub_category": 'ln',
+        "question": '助学贷款利息多少？',
+        "answer": '在校期间国家贴息，毕业后按 LPR',
+        "tags": [],
+        "metadata": {'intent': 'consult_ln', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LN_031',
+        "category": 'consult',
+        "domain": 'loan',
+        "domain_zh": '贷款业务',
+        "sub_category": 'ln',
+        "question": '怎么查贷款还款计划？',
+        "answer": '手机银行 → 贷款 → 还款计划',
+        "tags": [],
+        "metadata": {'intent': 'consult_ln', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LN_032',
+        "category": 'consult',
+        "domain": 'loan',
+        "domain_zh": '贷款业务',
+        "sub_category": 'ln',
+        "question": '贷款能延期还款吗？',
+        "answer": '部分产品支持，需申请',
+        "tags": [],
+        "metadata": {'intent': 'consult_ln', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LN_033',
+        "category": 'consult',
+        "domain": 'loan',
+        "domain_zh": '贷款业务',
+        "sub_category": 'ln',
+        "question": '提前还款收违约金吗？',
+        "answer": '收 1-3% 违约金',
+        "tags": ['⚠️', '风险'],
+        "metadata": {'intent': 'consult_ln', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LN_034',
+        "category": 'consult',
+        "domain": 'loan',
+        "domain_zh": '贷款业务',
+        "sub_category": 'ln',
+        "question": '怎么减少利息支出？',
+        "answer": '缩短期限 / 部分提前还款',
+        "tags": [],
+        "metadata": {'intent': 'consult_ln', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LN_035',
+        "category": 'consult',
+        "domain": 'loan',
+        "domain_zh": '贷款业务',
+        "sub_category": 'ln',
+        "question": '怎么查看贷款合同？',
+        "answer": '网点打印 / 手机银行下载',
+        "tags": [],
+        "metadata": {'intent': 'consult_ln', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LN_036',
+        "category": 'consult',
+        "domain": 'loan',
+        "domain_zh": '贷款业务',
+        "sub_category": 'ln',
+        "question": '贷款到期没还怎么办？',
+        "answer": '立即联系银行协商，**不要逃避**',
+        "tags": ['P0'],
+        "metadata": {'intent': 'consult_ln', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LN_037',
+        "category": 'consult',
+        "domain": 'loan',
+        "domain_zh": '贷款业务',
+        "sub_category": 'ln',
+        "question": '借呗/微粒贷影响银行贷款吗？',
+        "answer": '会，作为负债计入',
+        "tags": ['⚠️', '风险'],
+        "metadata": {'intent': 'consult_ln', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LN_038',
+        "category": 'consult',
+        "domain": 'loan',
+        "domain_zh": '贷款业务',
+        "sub_category": 'ln',
+        "question": '多次申请贷款会怎样？',
+        "answer": '征信查询过多，影响审批',
+        "tags": ['⚠️', '风险'],
+        "metadata": {'intent': 'consult_ln', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LN_039',
+        "category": 'consult',
+        "domain": 'loan',
+        "domain_zh": '贷款业务',
+        "sub_category": 'ln',
+        "question": '贷款被拒会上征信吗？',
+        "answer": '不会显示具体被拒原因',
+        "tags": [],
+        "metadata": {'intent': 'consult_ln', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LN_040',
+        "category": 'consult',
+        "domain": 'loan',
+        "domain_zh": '贷款业务',
+        "sub_category": 'ln',
+        "question": '怎么保护征信？',
+        "answer": '按时还款 / 控制负债 / 不频繁申请',
+        "tags": [],
+        "metadata": {'intent': 'consult_ln', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LN_041',
+        "category": 'consult',
+        "domain": 'loan',
+        "domain_zh": '贷款业务',
+        "sub_category": 'ln',
+        "question": '还不上了怎么办？',
+        "answer": '立即联系 95555 转人工，协商分期',
+        "tags": ['P0'],
+        "metadata": {'intent': 'consult_ln', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LN_042',
+        "category": 'consult',
+        "domain": 'loan',
+        "domain_zh": '贷款业务',
+        "sub_category": 'ln',
+        "question": '贷款纠纷怎么投诉？',
+        "answer": '95555 转 7 / 银保监 12378',
+        "tags": [],
+        "metadata": {'intent': 'consult_ln', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LN_043',
+        "category": 'consult',
+        "domain": 'loan',
+        "domain_zh": '贷款业务',
+        "sub_category": 'ln',
+        "question": '贷款合同有异议？',
+        "answer": '网点咨询 / 律师援助',
+        "tags": [],
+        "metadata": {'intent': 'consult_ln', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LN_044',
+        "category": 'consult',
+        "domain": 'loan',
+        "domain_zh": '贷款业务',
+        "sub_category": 'ln',
+        "question": '银行违规收费怎么举报？',
+        "answer": '银保监 12378 / 央行 12363',
+        "tags": [],
+        "metadata": {'intent': 'consult_ln', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LN_045',
+        "category": 'consult',
+        "domain": 'loan',
+        "domain_zh": '贷款业务',
+        "sub_category": 'ln',
+        "question": '贷款资金被挪用怎么办？',
+        "answer": '报警 + 银行举报',
+        "tags": ['P0'],
+        "metadata": {'intent': 'consult_ln', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LN_046',
+        "category": 'consult',
+        "domain": 'loan',
+        "domain_zh": '贷款业务',
+        "sub_category": 'ln',
+        "question": '招行"闪电贷"特色？',
+        "answer": '线上审批 / 实时放款',
+        "tags": [],
+        "metadata": {'intent': 'consult_ln', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LN_047',
+        "category": 'consult',
+        "domain": 'loan',
+        "domain_zh": '贷款业务',
+        "sub_category": 'ln',
+        "question": '招行"招行贷"是什么？',
+        "answer": '个人综合消费贷款',
+        "tags": [],
+        "metadata": {'intent': 'consult_ln', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LN_048',
+        "category": 'consult',
+        "domain": 'loan',
+        "domain_zh": '贷款业务',
+        "sub_category": 'ln',
+        "question": '招行"小微贷"特色？',
+        "answer": '普惠金融，扶持小微企业',
+        "tags": [],
+        "metadata": {'intent': 'consult_ln', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LN_049',
+        "category": 'consult',
+        "domain": 'loan',
+        "domain_zh": '贷款业务',
+        "sub_category": 'ln',
+        "question": '招行"周周提"活动？',
+        "answer": '闪电贷阶段性优惠利率',
+        "tags": [],
+        "metadata": {'intent': 'consult_ln', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LN_050',
+        "category": 'consult',
+        "domain": 'loan',
+        "domain_zh": '贷款业务',
+        "sub_category": 'ln',
+        "question": '招行"安居乐业"贷款？',
+        "answer": '房贷 + 装修一站式',
+        "tags": [],
+        "metadata": {'intent': 'consult_ln', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
     },
 
+    # ========== 投资理财 (investment) — 60 条 ==========
+
     {
-        "id": "KB_Q_004",
-        "category": "query",
-        "sub_category": "bill",
-        "question": "账单日和还款日有什么区别？",
-        "answer": """账单日和还款日是两个重要日期：
-
-【账单日】
-- 生成账单的日期，每月固定日期
-- 账单日之前的消费计入当期账单
-- 账单日之后的消费计入下期账单
-- 招行信用卡账单日可调整（部分卡种）
-
-【还款日】
-- 必须在该日期前还清欠款
-- 通常为账单日后18-20天
-- 逾期会影响个人征信
-
-【示例】
-假设您的账单日为每月5日，还款日为每月23日：
-- 4月6日-5月5日的消费 → 5月5日出账单 → 5月23日前还款
-- 5月6日-6月5日的消费 → 6月5日出账单 → 6月23日前还款
-
-【查询方式】
-登录手机银行 → 信用卡 → 账单查询 → 查看账单日和还款日""",
-        "tags": ["账单日", "还款日", "区别", "日期"],
-        "metadata": {"intent": "query_bill", "frequency": "high", "risk_disclosure": False}
+        "id": 'KB_INV_001',
+        "category": 'marketing',
+        "domain": 'investment',
+        "domain_zh": '投资理财',
+        "sub_category": 'inv',
+        "question": '招银理财有哪些产品？',
+        "answer": '日日金 / 增利系列 / 安赢系列 / 私行专享',
+        "tags": [],
+        "metadata": {'intent': 'marketing_inv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_INV_002',
+        "category": 'marketing',
+        "domain": 'investment',
+        "domain_zh": '投资理财',
+        "sub_category": 'inv',
+        "question": '招银理财净值型产品？',
+        "answer": '净值每日变动，浮动收益',
+        "tags": ['⚠️', '风险'],
+        "metadata": {'intent': 'marketing_inv', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_INV_003',
+        "category": 'marketing',
+        "domain": 'investment',
+        "domain_zh": '投资理财',
+        "sub_category": 'inv',
+        "question": '招银理财"日日金"是什么？',
+        "answer": '现金管理类，灵活申赎',
+        "tags": [],
+        "metadata": {'intent': 'marketing_inv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_INV_004',
+        "category": 'marketing',
+        "domain": 'investment',
+        "domain_zh": '投资理财',
+        "sub_category": 'inv',
+        "question": '招银理财私行产品门槛？',
+        "answer": '600 万起步',
+        "tags": [],
+        "metadata": {'intent': 'marketing_inv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_INV_005',
+        "category": 'marketing',
+        "domain": 'investment',
+        "domain_zh": '投资理财',
+        "sub_category": 'inv',
+        "question": '招银理财"目标盈"系列？',
+        "answer": '目标止盈，到期自动赎回',
+        "tags": ['⚠️', '风险'],
+        "metadata": {'intent': 'marketing_inv', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_INV_006',
+        "category": 'marketing',
+        "domain": 'investment',
+        "domain_zh": '投资理财',
+        "sub_category": 'inv',
+        "question": '怎么买招银理财产品？',
+        "answer": '手机银行 → 理财 → 风险测评后购买',
+        "tags": [],
+        "metadata": {'intent': 'marketing_inv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_INV_007',
+        "category": 'marketing',
+        "domain": 'investment',
+        "domain_zh": '投资理财',
+        "sub_category": 'inv',
+        "question": '招银理财赎回多久到账？',
+        "answer": 'T+0 / T+1 / T+3 不等',
+        "tags": [],
+        "metadata": {'intent': 'marketing_inv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_INV_008',
+        "category": 'marketing',
+        "domain": 'investment',
+        "domain_zh": '投资理财',
+        "sub_category": 'inv',
+        "question": '招银理财会亏本吗？',
+        "answer": '风险等级 R2 以上不保本',
+        "tags": ['⚠️', '风险'],
+        "metadata": {'intent': 'marketing_inv', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_INV_009',
+        "category": 'marketing',
+        "domain": 'investment',
+        "domain_zh": '投资理财',
+        "sub_category": 'inv',
+        "question": '买基金有什么风险？',
+        "answer": '市场风险 / 本金可能亏损',
+        "tags": ['⚠️', '风险'],
+        "metadata": {'intent': 'marketing_inv', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_INV_010',
+        "category": 'marketing',
+        "domain": 'investment',
+        "domain_zh": '投资理财',
+        "sub_category": 'inv',
+        "question": '怎么选择基金？',
+        "answer": '风险承受能力 + 投资期限 + 历史业绩',
+        "tags": ['⚠️', '风险'],
+        "metadata": {'intent': 'marketing_inv', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_INV_011',
+        "category": 'marketing',
+        "domain": 'investment',
+        "domain_zh": '投资理财',
+        "sub_category": 'inv',
+        "question": '基金赎回多久到账？',
+        "answer": '货币基金 T+1 / 股票基金 T+3',
+        "tags": [],
+        "metadata": {'intent': 'marketing_inv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_INV_012',
+        "category": 'marketing',
+        "domain": 'investment',
+        "domain_zh": '投资理财',
+        "sub_category": 'inv',
+        "question": '定投基金怎么操作？',
+        "answer": '手机银行 → 基金 → 定投',
+        "tags": [],
+        "metadata": {'intent': 'marketing_inv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_INV_013',
+        "category": 'marketing',
+        "domain": 'investment',
+        "domain_zh": '投资理财',
+        "sub_category": 'inv',
+        "question": '基金定投一定能赚钱吗？',
+        "answer": '不一定，分散风险但不能消除',
+        "tags": ['⚠️', '风险'],
+        "metadata": {'intent': 'marketing_inv', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_INV_014',
+        "category": 'marketing',
+        "domain": 'investment',
+        "domain_zh": '投资理财',
+        "sub_category": 'inv',
+        "question": '基金转换收费吗？',
+        "answer": '一般免收，部分基金收补差',
+        "tags": [],
+        "metadata": {'intent': 'marketing_inv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_INV_015',
+        "category": 'marketing',
+        "domain": 'investment',
+        "domain_zh": '投资理财',
+        "sub_category": 'inv',
+        "question": '招行"五星之选"基金？',
+        "answer": '评级高的基金池',
+        "tags": [],
+        "metadata": {'intent': 'marketing_inv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_INV_016',
+        "category": 'marketing',
+        "domain": 'investment',
+        "domain_zh": '投资理财',
+        "sub_category": 'inv',
+        "question": '怎么查基金净值？',
+        "answer": '手机银行 / 基金公司官网',
+        "tags": [],
+        "metadata": {'intent': 'marketing_inv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_INV_017',
+        "category": 'marketing',
+        "domain": 'investment',
+        "domain_zh": '投资理财',
+        "sub_category": 'inv',
+        "question": '黄金投资有什么风险？',
+        "answer": '价格波动风险 / 市场风险',
+        "tags": ['⚠️', '风险'],
+        "metadata": {'intent': 'marketing_inv', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_INV_018',
+        "category": 'marketing',
+        "domain": 'investment',
+        "domain_zh": '投资理财',
+        "sub_category": 'inv',
+        "question": '怎么买卖黄金？',
+        "answer": '手机银行 → 黄金 / 活期金 / 账户金',
+        "tags": [],
+        "metadata": {'intent': 'marketing_inv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_INV_019',
+        "category": 'marketing',
+        "domain": 'investment',
+        "domain_zh": '投资理财',
+        "sub_category": 'inv',
+        "question": '黄金活期和定期区别？',
+        "answer": '活期实时交易 / 定期有期限',
+        "tags": [],
+        "metadata": {'intent': 'marketing_inv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_INV_020',
+        "category": 'marketing',
+        "domain": 'investment',
+        "domain_zh": '投资理财',
+        "sub_category": 'inv',
+        "question": '实物金怎么提取？',
+        "answer": '网点提取 / 顺丰邮寄',
+        "tags": [],
+        "metadata": {'intent': 'marketing_inv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_INV_021',
+        "category": 'marketing',
+        "domain": 'investment',
+        "domain_zh": '投资理财',
+        "sub_category": 'inv',
+        "question": '招行黄金账户起存多少？',
+        "answer": '1 克起',
+        "tags": [],
+        "metadata": {'intent': 'marketing_inv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_INV_022',
+        "category": 'marketing',
+        "domain": 'investment',
+        "domain_zh": '投资理财',
+        "sub_category": 'inv',
+        "question": '黄金价格怎么定？',
+        "answer": '上海黄金交易所实时价格',
+        "tags": [],
+        "metadata": {'intent': 'marketing_inv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_INV_023',
+        "category": 'marketing',
+        "domain": 'investment',
+        "domain_zh": '投资理财',
+        "sub_category": 'inv',
+        "question": '存款利率是多少？',
+        "answer": '活期 0.3% / 定期 1.5%-2.75% / 大额 2.1%-2.9%',
+        "tags": [],
+        "metadata": {'intent': 'marketing_inv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_INV_024',
+        "category": 'marketing',
+        "domain": 'investment',
+        "domain_zh": '投资理财',
+        "sub_category": 'inv',
+        "question": '大额存单有什么要求？',
+        "answer": '起存 20 万 / 期限 1-3 年',
+        "tags": [],
+        "metadata": {'intent': 'marketing_inv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_INV_025',
+        "category": 'marketing',
+        "domain": 'investment',
+        "domain_zh": '投资理财',
+        "sub_category": 'inv',
+        "question": '定期存款可以提前取吗？',
+        "answer": '可以，利息按活期计算',
+        "tags": [],
+        "metadata": {'intent': 'marketing_inv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_INV_026',
+        "category": 'marketing',
+        "domain": 'investment',
+        "domain_zh": '投资理财',
+        "sub_category": 'inv',
+        "question": '结构性存款是什么？',
+        "answer": '存款 + 衍生品组合，浮动收益',
+        "tags": [],
+        "metadata": {'intent': 'marketing_inv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_INV_027',
+        "category": 'marketing',
+        "domain": 'investment',
+        "domain_zh": '投资理财',
+        "sub_category": 'inv',
+        "question": '通知存款怎么存？',
+        "answer": '提前 1 天 / 7 天通知',
+        "tags": [],
+        "metadata": {'intent': 'marketing_inv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_INV_028',
+        "category": 'marketing',
+        "domain": 'investment',
+        "domain_zh": '投资理财',
+        "sub_category": 'inv',
+        "question": '怎么存教育储蓄？',
+        "answer": '6 岁以下儿童家长，利率优惠',
+        "tags": [],
+        "metadata": {'intent': 'marketing_inv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_INV_029',
+        "category": 'marketing',
+        "domain": 'investment',
+        "domain_zh": '投资理财',
+        "sub_category": 'inv',
+        "question": '储蓄国债（凭证式）怎么买？',
+        "answer": '网点 / 网上银行',
+        "tags": [],
+        "metadata": {'intent': 'marketing_inv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_INV_030',
+        "category": 'marketing',
+        "domain": 'investment',
+        "domain_zh": '投资理财',
+        "sub_category": 'inv',
+        "question": '电子国债怎么买？',
+        "answer": '手机银行 / 网银',
+        "tags": [],
+        "metadata": {'intent': 'marketing_inv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_INV_031',
+        "category": 'marketing',
+        "domain": 'investment',
+        "domain_zh": '投资理财',
+        "sub_category": 'inv',
+        "question": '国债能提前支取吗？',
+        "answer": '可以，扣除手续费',
+        "tags": [],
+        "metadata": {'intent': 'marketing_inv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_INV_032',
+        "category": 'marketing',
+        "domain": 'investment',
+        "domain_zh": '投资理财',
+        "sub_category": 'inv',
+        "question": '国债利率比定期高吗？',
+        "answer": '同期略高于定期存款',
+        "tags": [],
+        "metadata": {'intent': 'marketing_inv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_INV_033',
+        "category": 'marketing',
+        "domain": 'investment',
+        "domain_zh": '投资理财',
+        "sub_category": 'inv',
+        "question": '信托产品门槛？',
+        "answer": '100 万起',
+        "tags": [],
+        "metadata": {'intent': 'marketing_inv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_INV_034',
+        "category": 'marketing',
+        "domain": 'investment',
+        "domain_zh": '投资理财',
+        "sub_category": 'inv',
+        "question": '私募基金门槛？',
+        "answer": '合格投资者 100 万起',
+        "tags": [],
+        "metadata": {'intent': 'marketing_inv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_INV_035',
+        "category": 'marketing',
+        "domain": 'investment',
+        "domain_zh": '投资理财',
+        "sub_category": 'inv',
+        "question": '信托产品有风险吗？',
+        "answer": '风险等级 R3-R4，本金可能受损',
+        "tags": ['⚠️', '风险'],
+        "metadata": {'intent': 'marketing_inv', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_INV_036',
+        "category": 'marketing',
+        "domain": 'investment',
+        "domain_zh": '投资理财',
+        "sub_category": 'inv',
+        "question": '信托到期能拿回本金吗？',
+        "answer": '看项目，理论上可能延期',
+        "tags": ['⚠️', '风险'],
+        "metadata": {'intent': 'marketing_inv', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_INV_037',
+        "category": 'marketing',
+        "domain": 'investment',
+        "domain_zh": '投资理财',
+        "sub_category": 'inv',
+        "question": '私募基金怎么买？',
+        "answer": '合格投资者认定 + 风险测评',
+        "tags": [],
+        "metadata": {'intent': 'marketing_inv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_INV_038',
+        "category": 'marketing',
+        "domain": 'investment',
+        "domain_zh": '投资理财',
+        "sub_category": 'inv',
+        "question": '风险测评是什么？',
+        "answer": '投资前必做的风险承受能力评估',
+        "tags": [],
+        "metadata": {'intent': 'marketing_inv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_INV_039',
+        "category": 'marketing',
+        "domain": 'investment',
+        "domain_zh": '投资理财',
+        "sub_category": 'inv',
+        "question": '风险测评有效期？',
+        "answer": '1 年，到期重测',
+        "tags": [],
+        "metadata": {'intent': 'marketing_inv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_INV_040',
+        "category": 'marketing',
+        "domain": 'investment',
+        "domain_zh": '投资理财',
+        "sub_category": 'inv',
+        "question": 'C1-C5 风险等级？',
+        "answer": '保守/稳健/平衡/成长/激进',
+        "tags": [],
+        "metadata": {'intent': 'marketing_inv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_INV_041',
+        "category": 'marketing',
+        "domain": 'investment',
+        "domain_zh": '投资理财',
+        "sub_category": 'inv',
+        "question": '测评结果影响产品购买？',
+        "answer": '影响可购买产品范围',
+        "tags": [],
+        "metadata": {'intent': 'marketing_inv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_INV_042',
+        "category": 'marketing',
+        "domain": 'investment',
+        "domain_zh": '投资理财',
+        "sub_category": 'inv',
+        "question": '怎么重做风险测评？',
+        "answer": '手机银行 → 我的 → 风险测评',
+        "tags": [],
+        "metadata": {'intent': 'marketing_inv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_INV_043',
+        "category": 'marketing',
+        "domain": 'investment',
+        "domain_zh": '投资理财',
+        "sub_category": 'inv',
+        "question": '招财号是什么？',
+        "answer": '招行 App 财富开放平台',
+        "tags": [],
+        "metadata": {'intent': 'marketing_inv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_INV_044',
+        "category": 'marketing',
+        "domain": 'investment',
+        "domain_zh": '投资理财',
+        "sub_category": 'inv',
+        "question": '招财号有哪些机构？',
+        "answer": '150+ 资管机构入驻',
+        "tags": [],
+        "metadata": {'intent': 'marketing_inv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_INV_045',
+        "category": 'marketing',
+        "domain": 'investment',
+        "domain_zh": '投资理财',
+        "sub_category": 'inv',
+        "question": '招财号能买什么？',
+        "answer": '基金 / 理财 / 保险',
+        "tags": [],
+        "metadata": {'intent': 'marketing_inv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_INV_046',
+        "category": 'marketing',
+        "domain": 'investment',
+        "domain_zh": '投资理财',
+        "sub_category": 'inv',
+        "question": '招财号和直销区别？',
+        "answer": '招财号是平台，机构入驻',
+        "tags": [],
+        "metadata": {'intent': 'marketing_inv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_INV_047',
+        "category": 'marketing',
+        "domain": 'investment',
+        "domain_zh": '投资理财',
+        "sub_category": 'inv',
+        "question": 'TREE 是什么？',
+        "answer": '招行资产配置方法论',
+        "tags": [],
+        "metadata": {'intent': 'marketing_inv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_INV_048',
+        "category": 'marketing',
+        "domain": 'investment',
+        "domain_zh": '投资理财',
+        "sub_category": 'inv',
+        "question": 'TREE 的含义？',
+        "answer": '活钱 / 稳钱 / 长钱 / 保障',
+        "tags": [],
+        "metadata": {'intent': 'marketing_inv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_INV_049',
+        "category": 'marketing',
+        "domain": 'investment',
+        "domain_zh": '投资理财',
+        "sub_category": 'inv',
+        "question": '活钱配什么？',
+        "answer": '货币基金 / 现金管理类理财',
+        "tags": [],
+        "metadata": {'intent': 'marketing_inv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_INV_050',
+        "category": 'marketing',
+        "domain": 'investment',
+        "domain_zh": '投资理财',
+        "sub_category": 'inv',
+        "question": '稳钱配什么？',
+        "answer": '短债基金 / 固定收益理财',
+        "tags": [],
+        "metadata": {'intent': 'marketing_inv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_INV_051',
+        "category": 'marketing',
+        "domain": 'investment',
+        "domain_zh": '投资理财',
+        "sub_category": 'inv',
+        "question": '长钱配什么？',
+        "answer": '权益基金 / 股票 / 长期理财',
+        "tags": [],
+        "metadata": {'intent': 'marketing_inv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_INV_052',
+        "category": 'marketing',
+        "domain": 'investment',
+        "domain_zh": '投资理财',
+        "sub_category": 'inv',
+        "question": '保障配什么？',
+        "answer": '重疾险 / 寿险 / 意外险',
+        "tags": [],
+        "metadata": {'intent': 'marketing_inv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_INV_053',
+        "category": 'marketing',
+        "domain": 'investment',
+        "domain_zh": '投资理财',
+        "sub_category": 'inv',
+        "question": '招行"投资仪表盘"？',
+        "answer": '进取类资产定量仓位',
+        "tags": [],
+        "metadata": {'intent': 'marketing_inv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_INV_054',
+        "category": 'marketing',
+        "domain": 'investment',
+        "domain_zh": '投资理财',
+        "sub_category": 'inv',
+        "question": '投资检视多久一次？',
+        "answer": '建议季度检视',
+        "tags": [],
+        "metadata": {'intent': 'marketing_inv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_INV_055',
+        "category": 'marketing',
+        "domain": 'investment',
+        "domain_zh": '投资理财',
+        "sub_category": 'inv',
+        "question": '投资亏了怎么办？',
+        "answer": '检视原因 / 不盲目止损',
+        "tags": ['⚠️', '风险'],
+        "metadata": {'intent': 'marketing_inv', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_INV_056',
+        "category": 'marketing',
+        "domain": 'investment',
+        "domain_zh": '投资理财',
+        "sub_category": 'inv',
+        "question": '投资被骗了怎么办？',
+        "answer": '报警 + 银行举报 + 银保监 12378',
+        "tags": ['P0'],
+        "metadata": {'intent': 'marketing_inv', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_INV_057',
+        "category": 'marketing',
+        "domain": 'investment',
+        "domain_zh": '投资理财',
+        "sub_category": 'inv',
+        "question": '"投资大师"推荐可信吗？',
+        "answer": '警惕"代客理财"陷阱',
+        "tags": ['反诈'],
+        "metadata": {'intent': 'marketing_inv', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_INV_058',
+        "category": 'marketing',
+        "domain": 'investment',
+        "domain_zh": '投资理财',
+        "sub_category": 'inv',
+        "question": '高收益无风险产品？',
+        "answer": '不存在，警惕非法集资',
+        "tags": ['反诈'],
+        "metadata": {'intent': 'marketing_inv', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_INV_059',
+        "category": 'marketing',
+        "domain": 'investment',
+        "domain_zh": '投资理财',
+        "sub_category": 'inv',
+        "question": '投资亏损会赔钱吗？',
+        "answer": '自负盈亏，银行不兜底',
+        "tags": ['⚠️', '风险'],
+        "metadata": {'intent': 'marketing_inv', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_INV_060',
+        "category": 'marketing',
+        "domain": 'investment',
+        "domain_zh": '投资理财',
+        "sub_category": 'inv',
+        "question": '怎么退出理财产品？',
+        "answer": '提前赎回 / 到期赎回 / 转让',
+        "tags": [],
+        "metadata": {'intent': 'marketing_inv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
     },
 
-    # --- 1.3 开户行查询 ---
+    # ========== 支付结算 (payment) — 40 条 ==========
+
     {
-        "id": "KB_Q_005",
-        "category": "query",
-        "sub_category": "bank_info",
-        "question": "我的开户行在哪？",
-        "answer": """查询开户行的方式：
-
-【手机银行】
-1. 登录 → 我的账户
-2. 点击「账户详情」
-3. 查看「开户网点」信息
-
-【网上银行】
-1. 登录 → 我的账户
-2. 点击账户卡片查看开户行信息
-
-【客服电话】
-拨打 95555 → 人工客服查询
-
-【短信查询】
-发送「KH卡号末4位」到 95555
-
-【温馨提示】
-开户行是指您首次办理该账户的网点名称，用于跨行转账时填写。""",
-        "tags": ["开户行", "开户网点", "查询", "网点"],
-        "metadata": {"intent": "query_bank_info", "frequency": "medium", "risk_disclosure": False}
+        "id": 'KB_PAY_001',
+        "category": 'transaction',
+        "domain": 'payment',
+        "domain_zh": '支付结算',
+        "sub_category": 'pay',
+        "question": '怎么转账？',
+        "answer": '手机银行 / 网银 / 柜台',
+        "tags": [],
+        "metadata": {'intent': 'transaction_pay', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PAY_002',
+        "category": 'transaction',
+        "domain": 'payment',
+        "domain_zh": '支付结算',
+        "sub_category": 'pay',
+        "question": '转账限额多少？',
+        "answer": '手机银行单笔 50 万 / 日累计 100 万',
+        "tags": [],
+        "metadata": {'intent': 'transaction_pay', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PAY_003',
+        "category": 'transaction',
+        "domain": 'payment',
+        "domain_zh": '支付结算',
+        "sub_category": 'pay',
+        "question": '跨行转账收手续费吗？',
+        "answer": '本行免费 / 跨行按金额阶梯',
+        "tags": [],
+        "metadata": {'intent': 'transaction_pay', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PAY_004',
+        "category": 'transaction',
+        "domain": 'payment',
+        "domain_zh": '支付结算',
+        "sub_category": 'pay',
+        "question": '转账多久到账？',
+        "answer": '本行实时 / 跨行实时或几小时',
+        "tags": [],
+        "metadata": {'intent': 'transaction_pay', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PAY_005',
+        "category": 'transaction',
+        "domain": 'payment',
+        "domain_zh": '支付结算',
+        "sub_category": 'pay',
+        "question": '转账一直没到账？',
+        "answer": '核实收款信息 / 95555 查询',
+        "tags": [],
+        "metadata": {'intent': 'transaction_pay', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PAY_006',
+        "category": 'transaction',
+        "domain": 'payment',
+        "domain_zh": '支付结算',
+        "sub_category": 'pay',
+        "question": '转账输错账号怎么办？',
+        "answer": '联系 95555，**不能直接转回**',
+        "tags": [],
+        "metadata": {'intent': 'transaction_pay', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PAY_007',
+        "category": 'transaction',
+        "domain": 'payment',
+        "domain_zh": '支付结算',
+        "sub_category": 'pay',
+        "question": '怎么撤回转账？',
+        "answer": '收款人未确认时联系银行',
+        "tags": [],
+        "metadata": {'intent': 'transaction_pay', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PAY_008',
+        "category": 'transaction',
+        "domain": 'payment',
+        "domain_zh": '支付结算',
+        "sub_category": 'pay',
+        "question": '大额转账怎么操作？',
+        "answer": '提前开通大额 / 网点办理',
+        "tags": [],
+        "metadata": {'intent': 'transaction_pay', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PAY_009',
+        "category": 'transaction',
+        "domain": 'payment',
+        "domain_zh": '支付结算',
+        "sub_category": 'pay',
+        "question": '怎么用云闪付？',
+        "answer": '绑定银行卡 → 扫码支付',
+        "tags": [],
+        "metadata": {'intent': 'transaction_pay', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PAY_010',
+        "category": 'transaction',
+        "domain": 'payment',
+        "domain_zh": '支付结算',
+        "sub_category": 'pay',
+        "question": '怎么用手机 PAY？',
+        "answer": 'Apple Pay / Huawei Pay / 小米 Pay',
+        "tags": [],
+        "metadata": {'intent': 'transaction_pay', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PAY_011',
+        "category": 'transaction',
+        "domain": 'payment',
+        "domain_zh": '支付结算',
+        "sub_category": 'pay',
+        "question": '招行手机银行闪付？',
+        "answer": '二维码 / NFC',
+        "tags": [],
+        "metadata": {'intent': 'transaction_pay', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PAY_012',
+        "category": 'transaction',
+        "domain": 'payment',
+        "domain_zh": '支付结算',
+        "sub_category": 'pay',
+        "question": '银联云闪付和银联在线区别？',
+        "answer": '线下扫码 vs 线上支付',
+        "tags": [],
+        "metadata": {'intent': 'transaction_pay', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PAY_013',
+        "category": 'transaction',
+        "domain": 'payment',
+        "domain_zh": '支付结算',
+        "sub_category": 'pay',
+        "question": '招行 App 怎么扫码付款？',
+        "answer": '首页"扫一扫"',
+        "tags": [],
+        "metadata": {'intent': 'transaction_pay', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PAY_014',
+        "category": 'transaction',
+        "domain": 'payment',
+        "domain_zh": '支付结算',
+        "sub_category": 'pay',
+        "question": '二维码付款被骗？',
+        "answer": '立即 95555 / 报警',
+        "tags": ['P0'],
+        "metadata": {'intent': 'transaction_pay', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PAY_015',
+        "category": 'transaction',
+        "domain": 'payment',
+        "domain_zh": '支付结算',
+        "sub_category": 'pay',
+        "question": '快捷支付是什么？',
+        "answer": '绑定银行卡到第三方平台',
+        "tags": [],
+        "metadata": {'intent': 'transaction_pay', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PAY_016',
+        "category": 'transaction',
+        "domain": 'payment',
+        "domain_zh": '支付结算',
+        "sub_category": 'pay',
+        "question": '怎么关闭快捷支付？',
+        "answer": '手机银行 → 支付管理 → 关闭',
+        "tags": [],
+        "metadata": {'intent': 'transaction_pay', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PAY_017',
+        "category": 'transaction',
+        "domain": 'payment',
+        "domain_zh": '支付结算',
+        "sub_category": 'pay',
+        "question": '快捷支付安全吗？',
+        "answer": '限额 + 短信验证，谨慎授权',
+        "tags": [],
+        "metadata": {'intent': 'transaction_pay', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PAY_018',
+        "category": 'transaction',
+        "domain": 'payment',
+        "domain_zh": '支付结算',
+        "sub_category": 'pay',
+        "question": '支付宝/微信能绑招行卡吗？',
+        "answer": '可以，需短信验证',
+        "tags": [],
+        "metadata": {'intent': 'transaction_pay', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PAY_019',
+        "category": 'transaction',
+        "domain": 'payment',
+        "domain_zh": '支付结算',
+        "sub_category": 'pay',
+        "question": '招行卡支付失败？',
+        "answer": '限额 / 余额不足 / 银行风控',
+        "tags": [],
+        "metadata": {'intent': 'transaction_pay', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PAY_020',
+        "category": 'transaction',
+        "domain": 'payment',
+        "domain_zh": '支付结算',
+        "sub_category": 'pay',
+        "question": '怎么查快捷支付记录？',
+        "answer": '手机银行 → 交易明细',
+        "tags": [],
+        "metadata": {'intent': 'transaction_pay', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PAY_021',
+        "category": 'transaction',
+        "domain": 'payment',
+        "domain_zh": '支付结算',
+        "sub_category": 'pay',
+        "question": '跨境汇款怎么操作？',
+        "answer": '网点 / 手机银行跨境版',
+        "tags": [],
+        "metadata": {'intent': 'transaction_pay', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PAY_022',
+        "category": 'transaction',
+        "domain": 'payment',
+        "domain_zh": '支付结算',
+        "sub_category": 'pay',
+        "question": '跨境汇款手续费？',
+        "answer": '80-150 元/笔 + 电报费',
+        "tags": [],
+        "metadata": {'intent': 'transaction_pay', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PAY_023',
+        "category": 'transaction',
+        "domain": 'payment',
+        "domain_zh": '支付结算',
+        "sub_category": 'pay',
+        "question": '跨境汇款多久到账？',
+        "answer": '1-5 工作日',
+        "tags": [],
+        "metadata": {'intent': 'transaction_pay', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PAY_024',
+        "category": 'transaction',
+        "domain": 'payment',
+        "domain_zh": '支付结算',
+        "sub_category": 'pay',
+        "question": '跨境汇款附言规范？',
+        "answer": '写明用途 / 收款人信息',
+        "tags": [],
+        "metadata": {'intent': 'transaction_pay', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PAY_025',
+        "category": 'transaction',
+        "domain": 'payment',
+        "domain_zh": '支付结算',
+        "sub_category": 'pay',
+        "question": '跨境支付有什么限制？',
+        "answer": '5 万美元额度 / 用途证明',
+        "tags": [],
+        "metadata": {'intent': 'transaction_pay', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PAY_026',
+        "category": 'transaction',
+        "domain": 'payment',
+        "domain_zh": '支付结算',
+        "sub_category": 'pay',
+        "question": '留学缴费怎么操作？',
+        "answer": '招行跨境金融 / 留学付',
+        "tags": [],
+        "metadata": {'intent': 'transaction_pay', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PAY_027',
+        "category": 'transaction',
+        "domain": 'payment',
+        "domain_zh": '支付结算',
+        "sub_category": 'pay',
+        "question": '怎么开商户收款？',
+        "answer": '营业执照 + 法人身份证 + 网点',
+        "tags": [],
+        "metadata": {'intent': 'transaction_pay', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PAY_028',
+        "category": 'transaction',
+        "domain": 'payment',
+        "domain_zh": '支付结算',
+        "sub_category": 'pay',
+        "question": '招行"聚合支付"是什么？',
+        "answer": '一码多扫，对接微信/支付宝/银联',
+        "tags": [],
+        "metadata": {'intent': 'transaction_pay', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PAY_029',
+        "category": 'transaction',
+        "domain": 'payment',
+        "domain_zh": '支付结算',
+        "sub_category": 'pay',
+        "question": '商户收款手续费？',
+        "answer": '0.38%-0.6%',
+        "tags": [],
+        "metadata": {'intent': 'transaction_pay', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PAY_030',
+        "category": 'transaction',
+        "domain": 'payment',
+        "domain_zh": '支付结算',
+        "sub_category": 'pay',
+        "question": '怎么查商户收款明细？',
+        "answer": '招行企业银行 / 对公网银',
+        "tags": [],
+        "metadata": {'intent': 'transaction_pay', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PAY_031',
+        "category": 'transaction',
+        "domain": 'payment',
+        "domain_zh": '支付结算',
+        "sub_category": 'pay',
+        "question": '转账被骗了？',
+        "answer": '立即 95555 / 报警（黄金 30 分钟）',
+        "tags": ['P0'],
+        "metadata": {'intent': 'transaction_pay', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PAY_032',
+        "category": 'transaction',
+        "domain": 'payment',
+        "domain_zh": '支付结算',
+        "sub_category": 'pay',
+        "question": '收到陌生付款？',
+        "answer": '不点击链接，95555 核实',
+        "tags": ['反诈'],
+        "metadata": {'intent': 'transaction_pay', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PAY_033',
+        "category": 'transaction',
+        "domain": 'payment',
+        "domain_zh": '支付结算',
+        "sub_category": 'pay',
+        "question": '重复扣款怎么办？',
+        "answer": '保留凭证 → 95555 → 申诉退款',
+        "tags": [],
+        "metadata": {'intent': 'transaction_pay', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PAY_034',
+        "category": 'transaction',
+        "domain": 'payment',
+        "domain_zh": '支付结算',
+        "sub_category": 'pay',
+        "question": '招行卡在境外被盗刷？',
+        "answer": '立即挂失 + 报警 + 申请争议',
+        "tags": ['P0'],
+        "metadata": {'intent': 'transaction_pay', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PAY_035',
+        "category": 'transaction',
+        "domain": 'payment',
+        "domain_zh": '支付结算',
+        "sub_category": 'pay',
+        "question": '银行卡限额被降？',
+        "answer": '致电 95555 申请恢复 / 网点',
+        "tags": [],
+        "metadata": {'intent': 'transaction_pay', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PAY_036',
+        "category": 'transaction',
+        "domain": 'payment',
+        "domain_zh": '支付结算',
+        "sub_category": 'pay',
+        "question": '招行"一网通"支付？',
+        "answer": '招行自有支付品牌',
+        "tags": [],
+        "metadata": {'intent': 'transaction_pay', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PAY_037',
+        "category": 'transaction',
+        "domain": 'payment',
+        "domain_zh": '支付结算',
+        "sub_category": 'pay',
+        "question": '招行 App"付款码"？',
+        "answer": '二维码 / 被扫 / 主扫',
+        "tags": [],
+        "metadata": {'intent': 'transaction_pay', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PAY_038',
+        "category": 'transaction',
+        "domain": 'payment',
+        "domain_zh": '支付结算',
+        "sub_category": 'pay',
+        "question": '招行"刷脸支付"？',
+        "answer": '试点中，部分商户支持',
+        "tags": [],
+        "metadata": {'intent': 'transaction_pay', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PAY_039',
+        "category": 'transaction',
+        "domain": 'payment',
+        "domain_zh": '支付结算',
+        "sub_category": 'pay',
+        "question": '招行"碰一碰"支付？',
+        "answer": 'NFC 标签支付',
+        "tags": [],
+        "metadata": {'intent': 'transaction_pay', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PAY_040',
+        "category": 'transaction',
+        "domain": 'payment',
+        "domain_zh": '支付结算',
+        "sub_category": 'pay',
+        "question": '招行"数字人民币"支付？',
+        "answer": '详见数字人民币专题',
+        "tags": [],
+        "metadata": {'intent': 'transaction_pay', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
     },
 
-    # --- 1.4 进度查询 ---
+    # ========== 数字人民币 (dcep) — 30 条 ==========
+
     {
-        "id": "KB_Q_006",
-        "category": "query",
-        "sub_category": "progress",
-        "question": "我的信用卡申请进度怎么查？",
-        "answer": """查询信用卡申请进度：
-
-【手机银行】
-1. 登录 → 信用卡 → 申请进度
-2. 输入身份证号查询
-
-【招商银行信用卡官网】
-1. 进入 https://creditcard.cmbchina.com/
-2. 点击「进度查询」
-3. 输入身份证号码
-
-【客服电话】
-拨打 400-880-8805 → 申请进度查询
-
-【微信查询】
-关注「招商银行信用卡」公众号 → 我 → 进度查询
-
-【进度状态说明】
-- 审核中：资料审核中，预计3-5个工作日
-- 已通过：审核通过，待制卡
-- 制卡中：卡片制作中
-- 已寄出：卡片已邮寄，可查快递单号
-- 已激活：卡片已激活使用""",
-        "tags": ["信用卡申请", "进度查询", "申请进度", "状态"],
-        "metadata": {"intent": "query_progress", "frequency": "high", "risk_disclosure": False}
+        "id": 'KB_DCEP_001',
+        "category": 'transaction',
+        "domain": 'dcep',
+        "domain_zh": '数字人民币',
+        "sub_category": 'dcep',
+        "question": '数字人民币是什么？',
+        "answer": '央行数字货币，DC/EP',
+        "tags": [],
+        "metadata": {'intent': 'transaction_dcep', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_DCEP_002',
+        "category": 'transaction',
+        "domain": 'dcep',
+        "domain_zh": '数字人民币',
+        "sub_category": 'dcep',
+        "question": '数字人民币和余额宝区别？',
+        "answer": '央行发行 vs 基金产品',
+        "tags": [],
+        "metadata": {'intent': 'transaction_dcep', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_DCEP_003',
+        "category": 'transaction',
+        "domain": 'dcep',
+        "domain_zh": '数字人民币',
+        "sub_category": 'dcep',
+        "question": '数字人民币是货币吗？',
+        "answer": '是法定货币，等同纸币',
+        "tags": [],
+        "metadata": {'intent': 'transaction_dcep', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_DCEP_004',
+        "category": 'transaction',
+        "domain": 'dcep',
+        "domain_zh": '数字人民币',
+        "sub_category": 'dcep',
+        "question": '数字人民币会替代纸币吗？',
+        "answer": '长期共存',
+        "tags": [],
+        "metadata": {'intent': 'transaction_dcep', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_DCEP_005',
+        "category": 'transaction',
+        "domain": 'dcep',
+        "domain_zh": '数字人民币',
+        "sub_category": 'dcep',
+        "question": '数字人民币会付息吗？',
+        "answer": '暂不计息',
+        "tags": [],
+        "metadata": {'intent': 'transaction_dcep', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_DCEP_006',
+        "category": 'transaction',
+        "domain": 'dcep',
+        "domain_zh": '数字人民币',
+        "sub_category": 'dcep',
+        "question": '怎么开通数字人民币？',
+        "answer": '招行 App → 数字人民币 → 开通',
+        "tags": [],
+        "metadata": {'intent': 'transaction_dcep', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_DCEP_007',
+        "category": 'transaction',
+        "domain": 'dcep',
+        "domain_zh": '数字人民币',
+        "sub_category": 'dcep',
+        "question": '数字人民币需要什么资料？',
+        "answer": '身份证 + 手机号 + 银行卡',
+        "tags": [],
+        "metadata": {'intent': 'transaction_dcep', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_DCEP_008',
+        "category": 'transaction',
+        "domain": 'dcep',
+        "domain_zh": '数字人民币',
+        "sub_category": 'dcep',
+        "question": '数字人民币钱包分几类？',
+        "answer": '一类 / 二类 / 三类 / 四类',
+        "tags": [],
+        "metadata": {'intent': 'transaction_dcep', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_DCEP_009',
+        "category": 'transaction',
+        "domain": 'dcep',
+        "domain_zh": '数字人民币',
+        "sub_category": 'dcep',
+        "question": '一类钱包额度？',
+        "answer": '无限额，需现场面签',
+        "tags": [],
+        "metadata": {'intent': 'transaction_dcep', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_DCEP_010',
+        "category": 'transaction',
+        "domain": 'dcep',
+        "domain_zh": '数字人民币',
+        "sub_category": 'dcep',
+        "question": '二类钱包额度？',
+        "answer": '单日 1 万，年 50 万',
+        "tags": [],
+        "metadata": {'intent': 'transaction_dcep', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_DCEP_011',
+        "category": 'transaction',
+        "domain": 'dcep',
+        "domain_zh": '数字人民币',
+        "sub_category": 'dcep',
+        "question": '数字人民币怎么充值？',
+        "answer": '银行卡转账到数币钱包',
+        "tags": [],
+        "metadata": {'intent': 'transaction_dcep', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_DCEP_012',
+        "category": 'transaction',
+        "domain": 'dcep',
+        "domain_zh": '数字人民币',
+        "sub_category": 'dcep',
+        "question": '数字人民币怎么兑出？',
+        "answer": '转回绑定银行卡',
+        "tags": [],
+        "metadata": {'intent': 'transaction_dcep', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_DCEP_013',
+        "category": 'transaction',
+        "domain": 'dcep',
+        "domain_zh": '数字人民币',
+        "sub_category": 'dcep',
+        "question": '充值/兑出收手续费吗？',
+        "answer": '暂不收',
+        "tags": [],
+        "metadata": {'intent': 'transaction_dcep', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_DCEP_014',
+        "category": 'transaction',
+        "domain": 'dcep',
+        "domain_zh": '数字人民币',
+        "sub_category": 'dcep',
+        "question": '数币钱包余额能提现吗？',
+        "answer": '可以，转回银行卡',
+        "tags": [],
+        "metadata": {'intent': 'transaction_dcep', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_DCEP_015',
+        "category": 'transaction',
+        "domain": 'dcep',
+        "domain_zh": '数字人民币',
+        "sub_category": 'dcep',
+        "question": '哪些商户支持数字人民币？',
+        "answer": '试点城市主流商户，名单持续扩展',
+        "tags": [],
+        "metadata": {'intent': 'transaction_dcep', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_DCEP_016',
+        "category": 'transaction',
+        "domain": 'dcep',
+        "domain_zh": '数字人民币',
+        "sub_category": 'dcep',
+        "question": '数字人民币能线上用吗？',
+        "answer": '可以，京东 / 美团 / 滴滴等',
+        "tags": [],
+        "metadata": {'intent': 'transaction_dcep', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_DCEP_017',
+        "category": 'transaction',
+        "domain": 'dcep',
+        "domain_zh": '数字人民币',
+        "sub_category": 'dcep',
+        "question": '数字人民币能转给朋友吗？',
+        "answer": '可以，扫码 / 手机号转账',
+        "tags": [],
+        "metadata": {'intent': 'transaction_dcep', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_DCEP_018',
+        "category": 'transaction',
+        "domain": 'dcep',
+        "domain_zh": '数字人民币',
+        "sub_category": 'dcep',
+        "question": '数字人民币支持双离线支付吗？',
+        "answer": '支持，NFC 模式',
+        "tags": [],
+        "metadata": {'intent': 'transaction_dcep', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_DCEP_019',
+        "category": 'transaction',
+        "domain": 'dcep',
+        "domain_zh": '数字人民币',
+        "sub_category": 'dcep',
+        "question": '数字人民币计名 vs 不计名？',
+        "answer": '钱包可分，小额匿名',
+        "tags": [],
+        "metadata": {'intent': 'transaction_dcep', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_DCEP_020',
+        "category": 'transaction',
+        "domain": 'dcep',
+        "domain_zh": '数字人民币',
+        "sub_category": 'dcep',
+        "question": '数字人民币能跨境吗？',
+        "answer": 'mBridge 项目试点中',
+        "tags": [],
+        "metadata": {'intent': 'transaction_dcep', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_DCEP_021',
+        "category": 'transaction',
+        "domain": 'dcep',
+        "domain_zh": '数字人民币',
+        "sub_category": 'dcep',
+        "question": '数币智能合约是什么？',
+        "answer": '编程化的支付条件控制',
+        "tags": ['招行全国首创'],
+        "metadata": {'intent': 'transaction_dcep', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_DCEP_022',
+        "category": 'transaction',
+        "domain": 'dcep',
+        "domain_zh": '数字人民币',
+        "sub_category": 'dcep',
+        "question": '二手房首付资金监管？',
+        "answer": '招行基于数币智能合约，青岛试点',
+        "tags": ['全国首创'],
+        "metadata": {'intent': 'transaction_dcep', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_DCEP_023',
+        "category": 'transaction',
+        "domain": 'dcep',
+        "domain_zh": '数字人民币',
+        "sub_category": 'dcep',
+        "question": '数币智能合约应用场景？',
+        "answer": '资金监管 / 补贴定向使用 / 供应链金融',
+        "tags": [],
+        "metadata": {'intent': 'transaction_dcep', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_DCEP_024',
+        "category": 'transaction',
+        "domain": 'dcep',
+        "domain_zh": '数字人民币',
+        "sub_category": 'dcep',
+        "question": '招行数币智能合约优势？',
+        "answer": '资金流转透明 / 不可篡改 / 自动执行',
+        "tags": [],
+        "metadata": {'intent': 'transaction_dcep', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_DCEP_025',
+        "category": 'transaction',
+        "domain": 'dcep',
+        "domain_zh": '数字人民币',
+        "sub_category": 'dcep',
+        "question": '数币智能合约有风险吗？',
+        "answer": '智能合约代码风险，需审计',
+        "tags": [],
+        "metadata": {'intent': 'transaction_dcep', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_DCEP_026',
+        "category": 'transaction',
+        "domain": 'dcep',
+        "domain_zh": '数字人民币',
+        "sub_category": 'dcep',
+        "question": '招行数币红包怎么领？',
+        "answer": '招行 App → 数字人民币活动',
+        "tags": [],
+        "metadata": {'intent': 'transaction_dcep', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_DCEP_027',
+        "category": 'transaction',
+        "domain": 'dcep',
+        "domain_zh": '数字人民币',
+        "sub_category": 'dcep',
+        "question": '数币支付有立减吗？',
+        "answer": '试点期间活动多',
+        "tags": [],
+        "metadata": {'intent': 'transaction_dcep', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_DCEP_028',
+        "category": 'transaction',
+        "domain": 'dcep',
+        "domain_zh": '数字人民币',
+        "sub_category": 'dcep',
+        "question": '数币红包能提现吗？',
+        "answer": '部分可，需满足活动条件',
+        "tags": [],
+        "metadata": {'intent': 'transaction_dcep', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_DCEP_029',
+        "category": 'transaction',
+        "domain": 'dcep',
+        "domain_zh": '数字人民币',
+        "sub_category": 'dcep',
+        "question": '数字人民币安全吗？',
+        "answer": '央行背书，可控匿名',
+        "tags": [],
+        "metadata": {'intent': 'transaction_dcep', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_DCEP_030',
+        "category": 'transaction',
+        "domain": 'dcep',
+        "domain_zh": '数字人民币',
+        "sub_category": 'dcep',
+        "question": '数币被盗刷？',
+        "answer": '立即 95555 / 报警',
+        "tags": ['P0'],
+        "metadata": {'intent': 'transaction_dcep', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
     },
 
+    # ========== 个人养老金 (pension) — 40 条 ==========
+
     {
-        "id": "KB_Q_007",
-        "category": "query",
-        "sub_category": "progress",
-        "question": "贷款审批进度怎么查？",
-        "answer": """查询贷款审批进度：
-
-【手机银行】
-1. 登录 → 贷款 → 我的贷款
-2. 查看贷款申请状态
-
-【网上银行】
-1. 登录 → 贷款 → 进度查询
-2. 输入贷款申请编号
-
-【客服电话】
-拨打 95555 → 个贷服务 → 进度查询
-
-【客户经理】
-如有专属客户经理，可直接联系查询
-
-【进度节点】
-1. 资料提交：贷款申请资料已提交
-2. 初审批：贷款初步审批中
-3. 终审批：贷款最终审批中
-4. 审批通过：审批通过，待签约
-5. 已签约：合同已签订，等待放款
-6. 已放款：贷款已发放至账户""",
-        "tags": ["贷款审批", "进度查询", "贷款状态"],
-        "metadata": {"intent": "query_progress", "frequency": "high", "risk_disclosure": False}
+        "id": 'KB_PEN_001',
+        "category": 'consult',
+        "domain": 'pension',
+        "domain_zh": '个人养老金',
+        "sub_category": 'pen',
+        "question": '什么是个人养老金？',
+        "answer": '第三支柱，个人自愿储蓄养老',
+        "tags": [],
+        "metadata": {'intent': 'consult_pen', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PEN_002',
+        "category": 'consult',
+        "domain": 'pension',
+        "domain_zh": '个人养老金',
+        "sub_category": 'pen',
+        "question": '招行个人养老金开户数？',
+        "answer": '500 万+（截至 2024）',
+        "tags": [],
+        "metadata": {'intent': 'consult_pen', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PEN_003',
+        "category": 'consult',
+        "domain": 'pension',
+        "domain_zh": '个人养老金',
+        "sub_category": 'pen',
+        "question": '个人养老金税优多少？',
+        "answer": '每年 12000 元额度，最高节税 5400 元',
+        "tags": [],
+        "metadata": {'intent': 'consult_pen', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PEN_004',
+        "category": 'consult',
+        "domain": 'pension',
+        "domain_zh": '个人养老金',
+        "sub_category": 'pen',
+        "question": '个人养老金怎么开户？',
+        "answer": '招行 App / 全国任一网点',
+        "tags": [],
+        "metadata": {'intent': 'consult_pen', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PEN_005',
+        "category": 'consult',
+        "domain": 'pension',
+        "domain_zh": '个人养老金',
+        "sub_category": 'pen',
+        "question": '个人养老金账户唯一吗？',
+        "answer": '每人只能开 1 个',
+        "tags": [],
+        "metadata": {'intent': 'consult_pen', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PEN_006',
+        "category": 'consult',
+        "domain": 'pension',
+        "domain_zh": '个人养老金',
+        "sub_category": 'pen',
+        "question": '个人养老金资金账户？',
+        "answer": '缴存 / 投资 / 支取',
+        "tags": [],
+        "metadata": {'intent': 'consult_pen', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PEN_007',
+        "category": 'consult',
+        "domain": 'pension',
+        "domain_zh": '个人养老金',
+        "sub_category": 'pen',
+        "question": '个人养老金能转银行吗？',
+        "answer": '可以，每年可变更 1 次',
+        "tags": [],
+        "metadata": {'intent': 'consult_pen', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PEN_008',
+        "category": 'consult',
+        "domain": 'pension',
+        "domain_zh": '个人养老金',
+        "sub_category": 'pen',
+        "question": '缴存后什么时候能取？',
+        "answer": '达到领取条件（退休/出境/完全丧失）',
+        "tags": [],
+        "metadata": {'intent': 'consult_pen', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PEN_009',
+        "category": 'consult',
+        "domain": 'pension',
+        "domain_zh": '个人养老金',
+        "sub_category": 'pen',
+        "question": '怎么缴存？',
+        "answer": '招行 App → 个人养老金 → 缴存',
+        "tags": [],
+        "metadata": {'intent': 'consult_pen', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PEN_010',
+        "category": 'consult',
+        "domain": 'pension',
+        "domain_zh": '个人养老金',
+        "sub_category": 'pen',
+        "question": '缴存上限？',
+        "answer": '12000 元/年',
+        "tags": [],
+        "metadata": {'intent': 'consult_pen', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PEN_011',
+        "category": 'consult',
+        "domain": 'pension',
+        "domain_zh": '个人养老金',
+        "sub_category": 'pen',
+        "question": '缴存能中断吗？',
+        "answer": '可以，中断不影响已缴部分',
+        "tags": [],
+        "metadata": {'intent': 'consult_pen', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PEN_012',
+        "category": 'consult',
+        "domain": 'pension',
+        "domain_zh": '个人养老金',
+        "sub_category": 'pen',
+        "question": '怎么查询缴存？',
+        "answer": '招行 App / 国家社保平台',
+        "tags": [],
+        "metadata": {'intent': 'consult_pen', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PEN_013',
+        "category": 'consult',
+        "domain": 'pension',
+        "domain_zh": '个人养老金',
+        "sub_category": 'pen',
+        "question": '怎么领取？',
+        "answer": '招行 App → 申请领取 → 转入银行卡',
+        "tags": [],
+        "metadata": {'intent': 'consult_pen', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PEN_014',
+        "category": 'consult',
+        "domain": 'pension',
+        "domain_zh": '个人养老金',
+        "sub_category": 'pen',
+        "question": '领取要交税吗？',
+        "answer": '单独计税，3% 税率（优惠）',
+        "tags": [],
+        "metadata": {'intent': 'consult_pen', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PEN_015',
+        "category": 'consult',
+        "domain": 'pension',
+        "domain_zh": '个人养老金',
+        "sub_category": 'pen',
+        "question": '领取方式？',
+        "answer": '一次性 / 分次 / 定期',
+        "tags": [],
+        "metadata": {'intent': 'consult_pen', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PEN_016',
+        "category": 'consult',
+        "domain": 'pension',
+        "domain_zh": '个人养老金',
+        "sub_category": 'pen',
+        "question": '税优怎么算？',
+        "answer": '12000 元 × 边际税率',
+        "tags": [],
+        "metadata": {'intent': 'consult_pen', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PEN_017',
+        "category": 'consult',
+        "domain": 'pension',
+        "domain_zh": '个人养老金',
+        "sub_category": 'pen',
+        "question": '怎么报税？',
+        "answer": '招行 App 一键申报 / 个税 APP',
+        "tags": [],
+        "metadata": {'intent': 'consult_pen', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PEN_018',
+        "category": 'consult',
+        "domain": 'pension',
+        "domain_zh": '个人养老金',
+        "sub_category": 'pen',
+        "question": '税优能累计吗？',
+        "answer": '当年额度当年用，不累计',
+        "tags": [],
+        "metadata": {'intent': 'consult_pen', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PEN_019',
+        "category": 'consult',
+        "domain": 'pension',
+        "domain_zh": '个人养老金',
+        "sub_category": 'pen',
+        "question": '缴存不超 12000 也享受税优？',
+        "answer": '是，按实际缴存',
+        "tags": [],
+        "metadata": {'intent': 'consult_pen', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PEN_020',
+        "category": 'consult',
+        "domain": 'pension',
+        "domain_zh": '个人养老金',
+        "sub_category": 'pen',
+        "question": '提前领取会怎样？',
+        "answer": '失去税优 + 3% 补缴',
+        "tags": [],
+        "metadata": {'intent': 'consult_pen', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PEN_021',
+        "category": 'consult',
+        "domain": 'pension',
+        "domain_zh": '个人养老金',
+        "sub_category": 'pen',
+        "question": '招行个人养老金产品有多少？',
+        "answer": '160+ 只',
+        "tags": [],
+        "metadata": {'intent': 'consult_pen', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PEN_022',
+        "category": 'consult',
+        "domain": 'pension',
+        "domain_zh": '个人养老金',
+        "sub_category": 'pen',
+        "question": '哪类适合年轻人？',
+        "answer": '权益基金 / 指数基金',
+        "tags": ['⚠️', '风险'],
+        "metadata": {'intent': 'consult_pen', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PEN_023',
+        "category": 'consult',
+        "domain": 'pension',
+        "domain_zh": '个人养老金',
+        "sub_category": 'pen',
+        "question": '哪类适合中年人？',
+        "answer": '混合基金 / 稳健理财',
+        "tags": ['⚠️', '风险'],
+        "metadata": {'intent': 'consult_pen', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PEN_024',
+        "category": 'consult',
+        "domain": 'pension',
+        "domain_zh": '个人养老金',
+        "sub_category": 'pen',
+        "question": '哪类适合临近退休？',
+        "answer": '存款 / 货币基金 / 保险',
+        "tags": [],
+        "metadata": {'intent': 'consult_pen', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PEN_025',
+        "category": 'consult',
+        "domain": 'pension',
+        "domain_zh": '个人养老金',
+        "sub_category": 'pen',
+        "question": '储蓄型保险怎么样？',
+        "answer": '锁定利率，长期稳健',
+        "tags": [],
+        "metadata": {'intent': 'consult_pen', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PEN_026',
+        "category": 'consult',
+        "domain": 'pension',
+        "domain_zh": '个人养老金',
+        "sub_category": 'pen',
+        "question": '目标日期基金 TDF？',
+        "answer": '越接近退休越保守',
+        "tags": [],
+        "metadata": {'intent': 'consult_pen', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PEN_027',
+        "category": 'consult',
+        "domain": 'pension',
+        "domain_zh": '个人养老金',
+        "sub_category": 'pen',
+        "question": '招行"养老 FOF"产品？',
+        "answer": '投资多只基金，分散风险',
+        "tags": ['⚠️', '风险'],
+        "metadata": {'intent': 'consult_pen', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PEN_028',
+        "category": 'consult',
+        "domain": 'pension',
+        "domain_zh": '个人养老金',
+        "sub_category": 'pen',
+        "question": '怎么选适合自己的产品？',
+        "answer": '风险测评 + 投资期限',
+        "tags": [],
+        "metadata": {'intent': 'consult_pen', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PEN_029',
+        "category": 'consult',
+        "domain": 'pension',
+        "domain_zh": '个人养老金',
+        "sub_category": 'pen',
+        "question": '"金葵花丰润人生"是什么？',
+        "answer": '招行年长客户服务体系',
+        "tags": [],
+        "metadata": {'intent': 'consult_pen', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PEN_030',
+        "category": 'consult',
+        "domain": 'pension',
+        "domain_zh": '个人养老金',
+        "sub_category": 'pen',
+        "question": '丰润人生服务多少客户？',
+        "answer": '近百万',
+        "tags": [],
+        "metadata": {'intent': 'consult_pen', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PEN_031',
+        "category": 'consult',
+        "domain": 'pension',
+        "domain_zh": '个人养老金',
+        "sub_category": 'pen',
+        "question": '颐享系列理财？',
+        "answer": '10 万客户选择',
+        "tags": [],
+        "metadata": {'intent': 'consult_pen', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PEN_032',
+        "category": 'consult',
+        "domain": 'pension',
+        "domain_zh": '个人养老金',
+        "sub_category": 'pen',
+        "question": '长辈版 App 特色？',
+        "answer": '大字 / 简化 / 一键呼叫',
+        "tags": [],
+        "metadata": {'intent': 'consult_pen', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PEN_033',
+        "category": 'consult',
+        "domain": 'pension',
+        "domain_zh": '个人养老金',
+        "sub_category": 'pen',
+        "question": '同屏服务是什么？',
+        "answer": '客服共享屏幕指导',
+        "tags": [],
+        "metadata": {'intent': 'consult_pen', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PEN_034',
+        "category": 'consult',
+        "domain": 'pension',
+        "domain_zh": '个人养老金',
+        "sub_category": 'pen',
+        "question": '方言服务？',
+        "answer": '招行广州/东莞分行粤语服务',
+        "tags": [],
+        "metadata": {'intent': 'consult_pen', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PEN_035',
+        "category": 'consult',
+        "domain": 'pension',
+        "domain_zh": '个人养老金',
+        "sub_category": 'pen',
+        "question": '招行养老"四步服务"？',
+        "answer": '看清 → 算清 → 配好 → 检视',
+        "tags": [],
+        "metadata": {'intent': 'consult_pen', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PEN_036',
+        "category": 'consult',
+        "domain": 'pension',
+        "domain_zh": '个人养老金',
+        "sub_category": 'pen',
+        "question": 'TREE 资产配置？',
+        "answer": '活/稳/长/保',
+        "tags": [],
+        "metadata": {'intent': 'consult_pen', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PEN_037',
+        "category": 'consult',
+        "domain": 'pension',
+        "domain_zh": '个人养老金',
+        "sub_category": 'pen',
+        "question": '招行个人统一视角主账户？',
+        "answer": '一二三支柱 + 自备',
+        "tags": [],
+        "metadata": {'intent': 'consult_pen', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PEN_038',
+        "category": 'consult',
+        "domain": 'pension',
+        "domain_zh": '个人养老金',
+        "sub_category": 'pen',
+        "question": '招行康养服务？',
+        "answer": '旅居养老 / 健康管理',
+        "tags": [],
+        "metadata": {'intent': 'consult_pen', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PEN_039',
+        "category": 'consult',
+        "domain": 'pension',
+        "domain_zh": '个人养老金',
+        "sub_category": 'pen',
+        "question": '招行"养老金融"战略？',
+        "answer": '全行战略性业务',
+        "tags": [],
+        "metadata": {'intent': 'consult_pen', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PEN_040',
+        "category": 'consult',
+        "domain": 'pension',
+        "domain_zh": '个人养老金',
+        "sub_category": 'pen',
+        "question": '招行企业年金？',
+        "answer": '雇主发起，第二支柱',
+        "tags": [],
+        "metadata": {'intent': 'consult_pen', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
     },
 
+    # ========== 五险一金/政务 (gov) — 50 条 ==========
 
-    # ============================================================
-    # 二、交易操作类 (category: transaction)
-    # ============================================================
-
-    # --- 2.1 转账汇款 ---
     {
-        "id": "KB_T_001",
-        "category": "transaction",
-        "sub_category": "transfer",
-        "question": "怎么转账给他人？",
-        "answer": """转账操作步骤：
-
-【手机银行】
-1. 打开APP → 首页「转账」
-2. 选择转账方式：
-   - 招商银行转账：实时到账，免费
-   - 跨行转账：选择收款银行，输入收款信息
-3. 输入收款人姓名、卡号
-4. 输入转账金额
-5. 选择收款银行（跨行必填）
-6. 确认信息，输入密码完成转账
-
-【转账限额】
-| 渠道 | 单笔限额 | 日累计限额 |
-|------|---------|-----------|
-| 手机银行 | 50万 | 100万 |
-| 网银证书版 | 50万 | 100万 |
-| 网银无证书 | 1000元 | 5000元 |
-
-【到账时间】
-- 本行转账：实时到账
-- 跨行转账：工作日9:00-16:30发起，当日到账；其余时间顺延
-
-【注意事项】
-- 跨行转账需填写正确的收款银行名称
-- 大额转账可能需要人脸识别验证""",
-        "tags": ["转账", "汇款", "操作", "步骤", "限额"],
-        "metadata": {"intent": "transfer", "frequency": "high", "risk_disclosure": False}
+        "id": 'KB_GOV_001',
+        "category": 'consult',
+        "domain": 'gov',
+        "domain_zh": '五险一金/政务',
+        "sub_category": 'gov',
+        "question": '怎么查社保？',
+        "answer": '招行 App → 我的 → 五险一金',
+        "tags": [],
+        "metadata": {'intent': 'consult_gov', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_GOV_002',
+        "category": 'consult',
+        "domain": 'gov',
+        "domain_zh": '五险一金/政务',
+        "sub_category": 'gov',
+        "question": '社保账户余额？',
+        "answer": '招行 App 一屏通览',
+        "tags": [],
+        "metadata": {'intent': 'consult_gov', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_GOV_003',
+        "category": 'consult',
+        "domain": 'gov',
+        "domain_zh": '五险一金/政务',
+        "sub_category": 'gov',
+        "question": '社保缴费基数？',
+        "answer": '当地社平工资 60%-300%',
+        "tags": [],
+        "metadata": {'intent': 'consult_gov', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_GOV_004',
+        "category": 'consult',
+        "domain": 'gov',
+        "domain_zh": '五险一金/政务',
+        "sub_category": 'gov',
+        "question": '社保断缴影响？',
+        "answer": '影响医疗 / 生育 / 购房资格',
+        "tags": [],
+        "metadata": {'intent': 'consult_gov', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_GOV_005',
+        "category": 'consult',
+        "domain": 'gov',
+        "domain_zh": '五险一金/政务',
+        "sub_category": 'gov',
+        "question": '怎么补缴社保？',
+        "answer": '单位补缴 / 个人灵活就业',
+        "tags": [],
+        "metadata": {'intent': 'consult_gov', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_GOV_006',
+        "category": 'consult',
+        "domain": 'gov',
+        "domain_zh": '五险一金/政务',
+        "sub_category": 'gov',
+        "question": '社保卡怎么激活？',
+        "answer": '银行激活金融功能 + 社保功能',
+        "tags": [],
+        "metadata": {'intent': 'consult_gov', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_GOV_007',
+        "category": 'consult',
+        "domain": 'gov',
+        "domain_zh": '五险一金/政务',
+        "sub_category": 'gov',
+        "question": '社保卡金融功能？',
+        "answer": '银行卡功能，可存钱转账',
+        "tags": [],
+        "metadata": {'intent': 'consult_gov', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_GOV_008',
+        "category": 'consult',
+        "domain": 'gov',
+        "domain_zh": '五险一金/政务',
+        "sub_category": 'gov',
+        "question": '社保卡和银行卡区别？',
+        "answer": '二合一，同时有社保和金融功能',
+        "tags": [],
+        "metadata": {'intent': 'consult_gov', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_GOV_009',
+        "category": 'consult',
+        "domain": 'gov',
+        "domain_zh": '五险一金/政务',
+        "sub_category": 'gov',
+        "question": '社保卡丢了？',
+        "answer": '网点挂失 + 补办',
+        "tags": [],
+        "metadata": {'intent': 'consult_gov', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_GOV_010',
+        "category": 'consult',
+        "domain": 'gov',
+        "domain_zh": '五险一金/政务',
+        "sub_category": 'gov',
+        "question": '异地社保转移？',
+        "answer": '国家社保平台 / 招行 App',
+        "tags": [],
+        "metadata": {'intent': 'consult_gov', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_GOV_011',
+        "category": 'consult',
+        "domain": 'gov',
+        "domain_zh": '五险一金/政务',
+        "sub_category": 'gov',
+        "question": '怎么查医保余额？',
+        "answer": '招行 App → 五险一金 → 医保',
+        "tags": [],
+        "metadata": {'intent': 'consult_gov', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_GOV_012',
+        "category": 'consult',
+        "domain": 'gov',
+        "domain_zh": '五险一金/政务',
+        "sub_category": 'gov',
+        "question": '医保怎么报销？',
+        "answer": '门诊统筹 / 住院统筹 / 大病保险',
+        "tags": [],
+        "metadata": {'intent': 'consult_gov', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_GOV_013',
+        "category": 'consult',
+        "domain": 'gov',
+        "domain_zh": '五险一金/政务',
+        "sub_category": 'gov',
+        "question": '医保异地就医？',
+        "answer": '提前备案 / 直接结算',
+        "tags": [],
+        "metadata": {'intent': 'consult_gov', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_GOV_014',
+        "category": 'consult',
+        "domain": 'gov',
+        "domain_zh": '五险一金/政务',
+        "sub_category": 'gov',
+        "question": '医保电子凭证？',
+        "answer": '国家医保局 App / 招行 App',
+        "tags": [],
+        "metadata": {'intent': 'consult_gov', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_GOV_015',
+        "category": 'consult',
+        "domain": 'gov',
+        "domain_zh": '五险一金/政务',
+        "sub_category": 'gov',
+        "question": '个人账户家庭共济？',
+        "answer": '配偶 / 父母 / 子女可共用',
+        "tags": [],
+        "metadata": {'intent': 'consult_gov', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_GOV_016',
+        "category": 'consult',
+        "domain": 'gov',
+        "domain_zh": '五险一金/政务',
+        "sub_category": 'gov',
+        "question": '商业保险和医保冲突？',
+        "answer": '互补，不冲突',
+        "tags": [],
+        "metadata": {'intent': 'consult_gov', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_GOV_017',
+        "category": 'consult',
+        "domain": 'gov',
+        "domain_zh": '五险一金/政务',
+        "sub_category": 'gov',
+        "question": '医保断缴影响？',
+        "answer": '次月起医疗待遇暂停',
+        "tags": [],
+        "metadata": {'intent': 'consult_gov', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_GOV_018',
+        "category": 'consult',
+        "domain": 'gov',
+        "domain_zh": '五险一金/政务',
+        "sub_category": 'gov',
+        "question": '慢病医保备案？',
+        "answer": '医院 / 当地医保局',
+        "tags": [],
+        "metadata": {'intent': 'consult_gov', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_GOV_019',
+        "category": 'consult',
+        "domain": 'gov',
+        "domain_zh": '五险一金/政务',
+        "sub_category": 'gov',
+        "question": '异地安置退休？',
+        "answer": '长期异地居住的医保安排',
+        "tags": [],
+        "metadata": {'intent': 'consult_gov', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_GOV_020',
+        "category": 'consult',
+        "domain": 'gov',
+        "domain_zh": '五险一金/政务',
+        "sub_category": 'gov',
+        "question": '异地急诊抢救？',
+        "answer": '视同备案，可直接结算',
+        "tags": [],
+        "metadata": {'intent': 'consult_gov', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_GOV_021',
+        "category": 'consult',
+        "domain": 'gov',
+        "domain_zh": '五险一金/政务',
+        "sub_category": 'gov',
+        "question": '怎么查公积金？',
+        "answer": '招行 App → 五险一金 → 公积金',
+        "tags": [],
+        "metadata": {'intent': 'consult_gov', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_GOV_022',
+        "category": 'consult',
+        "domain": 'gov',
+        "domain_zh": '五险一金/政务',
+        "sub_category": 'gov',
+        "question": '公积金贷款额度？',
+        "answer": '余额 × 倍数 / 当地上限',
+        "tags": [],
+        "metadata": {'intent': 'consult_gov', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_GOV_023',
+        "category": 'consult',
+        "domain": 'gov',
+        "domain_zh": '五险一金/政务',
+        "sub_category": 'gov',
+        "question": '公积金贷款年限？',
+        "answer": '最长 30 年，男 65 / 女 60',
+        "tags": [],
+        "metadata": {'intent': 'consult_gov', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_GOV_024',
+        "category": 'consult',
+        "domain": 'gov',
+        "domain_zh": '五险一金/政务',
+        "sub_category": 'gov',
+        "question": '公积金怎么提取？',
+        "answer": '购房 / 租房 / 退休 / 离职',
+        "tags": [],
+        "metadata": {'intent': 'consult_gov', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_GOV_025',
+        "category": 'consult',
+        "domain": 'gov',
+        "domain_zh": '五险一金/政务',
+        "sub_category": 'gov',
+        "question": '公积金租房提取额度？',
+        "answer": '按当地标准',
+        "tags": [],
+        "metadata": {'intent': 'consult_gov', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_GOV_026',
+        "category": 'consult',
+        "domain": 'gov',
+        "domain_zh": '五险一金/政务',
+        "sub_category": 'gov',
+        "question": '公积金买二手房首付（数币监管）？',
+        "answer": '招行青岛试点，全国首创',
+        "tags": ['招行特色'],
+        "metadata": {'intent': 'consult_gov', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_GOV_027',
+        "category": 'consult',
+        "domain": 'gov',
+        "domain_zh": '五险一金/政务',
+        "sub_category": 'gov',
+        "question": '公积金可以异地贷款吗？',
+        "answer": '部分城市互认',
+        "tags": [],
+        "metadata": {'intent': 'consult_gov', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_GOV_028',
+        "category": 'consult',
+        "domain": 'gov',
+        "domain_zh": '五险一金/政务',
+        "sub_category": 'gov',
+        "question": '离职后公积金怎么办？',
+        "answer": '封存 / 转移 / 提取',
+        "tags": [],
+        "metadata": {'intent': 'consult_gov', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_GOV_029',
+        "category": 'consult',
+        "domain": 'gov',
+        "domain_zh": '五险一金/政务',
+        "sub_category": 'gov',
+        "question": '公积金能取出来吗？',
+        "answer": '满足条件（购房 / 退休）',
+        "tags": [],
+        "metadata": {'intent': 'consult_gov', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_GOV_030',
+        "category": 'consult',
+        "domain": 'gov',
+        "domain_zh": '五险一金/政务',
+        "sub_category": 'gov',
+        "question": '公积金贷款利率？',
+        "answer": '首套 3.1% / 二套 3.575%（5 年以上）',
+        "tags": [],
+        "metadata": {'intent': 'consult_gov', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_GOV_031',
+        "category": 'consult',
+        "domain": 'gov',
+        "domain_zh": '五险一金/政务',
+        "sub_category": 'gov',
+        "question": '失业金怎么领？',
+        "answer": '当地社保局 / 招行 App',
+        "tags": [],
+        "metadata": {'intent': 'consult_gov', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_GOV_032',
+        "category": 'consult',
+        "domain": 'gov',
+        "domain_zh": '五险一金/政务',
+        "sub_category": 'gov',
+        "question": '失业金领多久？',
+        "answer": '1-24 个月，按缴费年限',
+        "tags": [],
+        "metadata": {'intent': 'consult_gov', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_GOV_033',
+        "category": 'consult',
+        "domain": 'gov',
+        "domain_zh": '五险一金/政务',
+        "sub_category": 'gov',
+        "question": '工伤认定流程？',
+        "answer": '单位 30 日内申报',
+        "tags": [],
+        "metadata": {'intent': 'consult_gov', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_GOV_034',
+        "category": 'consult',
+        "domain": 'gov',
+        "domain_zh": '五险一金/政务',
+        "sub_category": 'gov',
+        "question": '生育津贴怎么算？',
+        "answer": '单位上年度月均工资',
+        "tags": [],
+        "metadata": {'intent': 'consult_gov', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_GOV_035',
+        "category": 'consult',
+        "domain": 'gov',
+        "domain_zh": '五险一金/政务',
+        "sub_category": 'gov',
+        "question": '产假多少天？',
+        "answer": '各地不同，98 天 + 各地奖励',
+        "tags": [],
+        "metadata": {'intent': 'consult_gov', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_GOV_036',
+        "category": 'consult',
+        "domain": 'gov',
+        "domain_zh": '五险一金/政务',
+        "sub_category": 'gov',
+        "question": '男方护理假？',
+        "answer": '各地不同，10-30 天',
+        "tags": [],
+        "metadata": {'intent': 'consult_gov', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_GOV_037',
+        "category": 'consult',
+        "domain": 'gov',
+        "domain_zh": '五险一金/政务',
+        "sub_category": 'gov',
+        "question": '生育保险断缴影响？',
+        "answer": '次月起不能享受',
+        "tags": [],
+        "metadata": {'intent': 'consult_gov', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_GOV_038',
+        "category": 'consult',
+        "domain": 'gov',
+        "domain_zh": '五险一金/政务',
+        "sub_category": 'gov',
+        "question": '招行对接多少政务服务？',
+        "answer": '1767 项（2024）',
+        "tags": [],
+        "metadata": {'intent': 'consult_gov', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_GOV_039',
+        "category": 'consult',
+        "domain": 'gov',
+        "domain_zh": '五险一金/政务',
+        "sub_category": 'gov',
+        "question": '怎么查询政务服务？',
+        "answer": '招行 App → 城市服务',
+        "tags": [],
+        "metadata": {'intent': 'consult_gov', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_GOV_040',
+        "category": 'consult',
+        "domain": 'gov',
+        "domain_zh": '五险一金/政务',
+        "sub_category": 'gov',
+        "question": '公积金"边聊边办"？',
+        "answer": 'AI 智能客服 + 政务办理融合，招行首创',
+        "tags": [],
+        "metadata": {'intent': 'consult_gov', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_GOV_041',
+        "category": 'consult',
+        "domain": 'gov',
+        "domain_zh": '五险一金/政务',
+        "sub_category": 'gov',
+        "question": '招行政务服务覆盖城市？',
+        "answer": '一二线城市为主，扩展中',
+        "tags": [],
+        "metadata": {'intent': 'consult_gov', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_GOV_042',
+        "category": 'consult',
+        "domain": 'gov',
+        "domain_zh": '五险一金/政务',
+        "sub_category": 'gov',
+        "question": '招行年服务政务用户？',
+        "answer": '4000 万人次/年',
+        "tags": [],
+        "metadata": {'intent': 'consult_gov', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_GOV_043',
+        "category": 'consult',
+        "domain": 'gov',
+        "domain_zh": '五险一金/政务',
+        "sub_category": 'gov',
+        "question": '个税怎么申报？',
+        "answer": '个税 App / 自然人电子税务局',
+        "tags": [],
+        "metadata": {'intent': 'consult_gov', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_GOV_044',
+        "category": 'consult',
+        "domain": 'gov',
+        "domain_zh": '五险一金/政务',
+        "sub_category": 'gov',
+        "question": '专项附加扣除有哪些？',
+        "answer": '子女教育 / 继续教育 / 大病 / 房贷 / 房租 / 养老 / 婴幼儿',
+        "tags": [],
+        "metadata": {'intent': 'consult_gov', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_GOV_045',
+        "category": 'consult',
+        "domain": 'gov',
+        "domain_zh": '五险一金/政务',
+        "sub_category": 'gov',
+        "question": '房贷利息扣除？',
+        "answer": '1000 元/月，首套房贷',
+        "tags": [],
+        "metadata": {'intent': 'consult_gov', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_GOV_046',
+        "category": 'consult',
+        "domain": 'gov',
+        "domain_zh": '五险一金/政务',
+        "sub_category": 'gov',
+        "question": '房租扣除？',
+        "answer": '800-1500 元/月，按城市',
+        "tags": [],
+        "metadata": {'intent': 'consult_gov', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_GOV_047',
+        "category": 'consult',
+        "domain": 'gov',
+        "domain_zh": '五险一金/政务',
+        "sub_category": 'gov',
+        "question": '子女教育扣除？',
+        "answer": '每个子女 1000 元/月',
+        "tags": [],
+        "metadata": {'intent': 'consult_gov', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_GOV_048',
+        "category": 'consult',
+        "domain": 'gov',
+        "domain_zh": '五险一金/政务',
+        "sub_category": 'gov',
+        "question": '大病医疗扣除？',
+        "answer": '超过 15000 元据实',
+        "tags": [],
+        "metadata": {'intent': 'consult_gov', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_GOV_049',
+        "category": 'consult',
+        "domain": 'gov',
+        "domain_zh": '五险一金/政务',
+        "sub_category": 'gov',
+        "question": '招行"五险一金"专区？',
+        "answer": '社保 / 医保 / 公积金一屏通览',
+        "tags": [],
+        "metadata": {'intent': 'consult_gov', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_GOV_050',
+        "category": 'consult',
+        "domain": 'gov',
+        "domain_zh": '五险一金/政务',
+        "sub_category": 'gov',
+        "question": '招行"政务+"模式？',
+        "answer": '政银合作，AI + 政务服务融合',
+        "tags": [],
+        "metadata": {'intent': 'consult_gov', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
     },
 
+    # ========== 跨境/外汇 (cross_border) — 35 条 ==========
+
     {
-        "id": "KB_T_002",
-        "category": "transaction",
-        "sub_category": "transfer",
-        "question": "转账失败了怎么办？",
-        "answer": """转账失败的处理方法：
-
-【常见原因】
-1. 收款银行信息错误（卡号、银行名称）
-2. 收款银行系统维护
-3. 超出转账限额
-4. 账户状态异常
-5. 收款账户已注销
-
-【处理步骤】
-1. 查询转账记录确认状态
-2. 检查收款信息是否正确
-3. 如信息正确但仍失败，等待资金自动退回（通常1-3个工作日）
-
-【转账退回】
-- 跨行转账失败后，资金自动退回原账户
-- 退款时间根据收款银行处理速度而定
-
-【联系客服】
-如超过3个工作日未退回，请拨打 95555 转人工客服查询。""",
-        "tags": ["转账失败", "退款", "处理", "问题"],
-        "metadata": {"intent": "transfer", "frequency": "medium", "risk_disclosure": False}
+        "id": 'KB_CB_001',
+        "category": 'consult',
+        "domain": 'cross_border',
+        "domain_zh": '跨境/外汇',
+        "sub_category": 'cb',
+        "question": '怎么换外汇？',
+        "answer": '网点 / 手机银行 / 95555',
+        "tags": [],
+        "metadata": {'intent': 'consult_cb', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CB_002',
+        "category": 'consult',
+        "domain": 'cross_border',
+        "domain_zh": '跨境/外汇',
+        "sub_category": 'cb',
+        "question": '外汇汇率怎么定？',
+        "answer": '实时牌价，参考中行外汇牌价',
+        "tags": [],
+        "metadata": {'intent': 'consult_cb', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CB_003',
+        "category": 'consult',
+        "domain": 'cross_border',
+        "domain_zh": '跨境/外汇',
+        "sub_category": 'cb',
+        "question": '现钞和现汇区别？',
+        "answer": '现钞纸币 / 现汇电子',
+        "tags": [],
+        "metadata": {'intent': 'consult_cb', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CB_004',
+        "category": 'consult',
+        "domain": 'cross_border',
+        "domain_zh": '跨境/外汇',
+        "sub_category": 'cb',
+        "question": '个人购汇额度？',
+        "answer": '5 万美元/年',
+        "tags": [],
+        "metadata": {'intent': 'consult_cb', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CB_005',
+        "category": 'consult',
+        "domain": 'cross_border',
+        "domain_zh": '跨境/外汇',
+        "sub_category": 'cb',
+        "question": '购汇需要什么材料？',
+        "answer": '身份证 / 用途证明（大额）',
+        "tags": [],
+        "metadata": {'intent': 'consult_cb', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CB_006',
+        "category": 'consult',
+        "domain": 'cross_border',
+        "domain_zh": '跨境/外汇',
+        "sub_category": 'cb',
+        "question": '留学怎么换汇？',
+        "answer": '凭录取通知 / 学费单',
+        "tags": [],
+        "metadata": {'intent': 'consult_cb', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CB_007',
+        "category": 'consult',
+        "domain": 'cross_border',
+        "domain_zh": '跨境/外汇',
+        "sub_category": 'cb',
+        "question": '境外汇款怎么操作？',
+        "answer": '网点 / 手机银行 → 跨境金融',
+        "tags": [],
+        "metadata": {'intent': 'consult_cb', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CB_008',
+        "category": 'consult',
+        "domain": 'cross_border',
+        "domain_zh": '跨境/外汇',
+        "sub_category": 'cb',
+        "question": '跨境汇款手续费？',
+        "answer": '80-150 元/笔 + 电报费',
+        "tags": [],
+        "metadata": {'intent': 'consult_cb', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CB_009',
+        "category": 'consult',
+        "domain": 'cross_border',
+        "domain_zh": '跨境/外汇',
+        "sub_category": 'cb',
+        "question": '跨境汇款多久到账？',
+        "answer": '1-5 工作日',
+        "tags": [],
+        "metadata": {'intent': 'consult_cb', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CB_010',
+        "category": 'consult',
+        "domain": 'cross_border',
+        "domain_zh": '跨境/外汇',
+        "sub_category": 'cb',
+        "question": '跨境汇款附言规范？',
+        "answer": '写明用途 / 收款人信息',
+        "tags": [],
+        "metadata": {'intent': 'consult_cb', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CB_011',
+        "category": 'consult',
+        "domain": 'cross_border',
+        "domain_zh": '跨境/外汇',
+        "sub_category": 'cb',
+        "question": '跨境汇款被退回？',
+        "answer": '收款行信息错误 / 用途不清',
+        "tags": [],
+        "metadata": {'intent': 'consult_cb', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CB_012',
+        "category": 'consult',
+        "domain": 'cross_border',
+        "domain_zh": '跨境/外汇',
+        "sub_category": 'cb',
+        "question": '招行 SWIFT 代码？',
+        "answer": 'CMBCCNBS',
+        "tags": [],
+        "metadata": {'intent': 'consult_cb', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CB_013',
+        "category": 'consult',
+        "domain": 'cross_border',
+        "domain_zh": '跨境/外汇',
+        "sub_category": 'cb',
+        "question": '怎么查汇款进度？',
+        "answer": '95555 / 手机银行',
+        "tags": [],
+        "metadata": {'intent': 'consult_cb', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CB_014',
+        "category": 'consult',
+        "domain": 'cross_border',
+        "domain_zh": '跨境/外汇',
+        "sub_category": 'cb',
+        "question": '跨境汇出 5 万美元以上？',
+        "answer": '提供用途证明',
+        "tags": [],
+        "metadata": {'intent': 'consult_cb', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CB_015',
+        "category": 'consult',
+        "domain": 'cross_border',
+        "domain_zh": '跨境/外汇',
+        "sub_category": 'cb',
+        "question": '跨境理财通是什么？',
+        "answer": '粤港澳大湾区试点',
+        "tags": [],
+        "metadata": {'intent': 'consult_cb', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CB_016',
+        "category": 'consult',
+        "domain": 'cross_border',
+        "domain_zh": '跨境/外汇',
+        "sub_category": 'cb',
+        "question": '怎么开通跨境理财通？',
+        "answer": '招行 App → 跨境理财通',
+        "tags": [],
+        "metadata": {'intent': 'consult_cb', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CB_017',
+        "category": 'consult',
+        "domain": 'cross_border',
+        "domain_zh": '跨境/外汇',
+        "sub_category": 'cb',
+        "question": '跨境理财通额度？',
+        "answer": '100 万人民币（北向）+ 100 万（南向）',
+        "tags": [],
+        "metadata": {'intent': 'consult_cb', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CB_018',
+        "category": 'consult',
+        "domain": 'cross_border',
+        "domain_zh": '跨境/外汇',
+        "sub_category": 'cb',
+        "question": '北向 / 南向？',
+        "answer": '北向：港澳买内地 / 南向：内地买港澳',
+        "tags": [],
+        "metadata": {'intent': 'consult_cb', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CB_019',
+        "category": 'consult',
+        "domain": 'cross_border',
+        "domain_zh": '跨境/外汇',
+        "sub_category": 'cb',
+        "question": '招行跨境理财通产品？',
+        "answer": '内地公募基金 + 香港合规基金',
+        "tags": [],
+        "metadata": {'intent': 'consult_cb', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CB_020',
+        "category": 'consult',
+        "domain": 'cross_border',
+        "domain_zh": '跨境/外汇',
+        "sub_category": 'cb',
+        "question": '自助境外汇款怎么用？',
+        "answer": '招行 App → 跨境金融',
+        "tags": [],
+        "metadata": {'intent': 'consult_cb', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CB_021',
+        "category": 'consult',
+        "domain": 'cross_border',
+        "domain_zh": '跨境/外汇',
+        "sub_category": 'cb',
+        "question": '自助 vs 网点汇款？',
+        "answer": '自助免填单 / 7×24h',
+        "tags": [],
+        "metadata": {'intent': 'consult_cb', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CB_022',
+        "category": 'consult',
+        "domain": 'cross_border',
+        "domain_zh": '跨境/外汇',
+        "sub_category": 'cb',
+        "question": '自助境外汇款额度？',
+        "answer": '单笔 5 万美元',
+        "tags": [],
+        "metadata": {'intent': 'consult_cb', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CB_023',
+        "category": 'consult',
+        "domain": 'cross_border',
+        "domain_zh": '跨境/外汇',
+        "sub_category": 'cb',
+        "question": '招行"留学付"？',
+        "answer": '一站式留学缴费',
+        "tags": [],
+        "metadata": {'intent': 'consult_cb', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CB_024',
+        "category": 'consult',
+        "domain": 'cross_border',
+        "domain_zh": '跨境/外汇',
+        "sub_category": 'cb',
+        "question": '怎么换留学学费？',
+        "answer": '购汇 + 跨境汇款',
+        "tags": [],
+        "metadata": {'intent': 'consult_cb', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CB_025',
+        "category": 'consult',
+        "domain": 'cross_border',
+        "domain_zh": '跨境/外汇',
+        "sub_category": 'cb',
+        "question": '留学信用卡？',
+        "answer": '多币种 / 免货币转换费',
+        "tags": [],
+        "metadata": {'intent': 'consult_cb', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CB_026',
+        "category": 'consult',
+        "domain": 'cross_border',
+        "domain_zh": '跨境/外汇',
+        "sub_category": 'cb',
+        "question": '父母怎么给留学生打钱？',
+        "answer": '境外汇款 / 附属卡 / 留学付',
+        "tags": [],
+        "metadata": {'intent': 'consult_cb', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CB_027',
+        "category": 'consult',
+        "domain": 'cross_border',
+        "domain_zh": '跨境/外汇',
+        "sub_category": 'cb',
+        "question": '旅行支票怎么买？',
+        "answer": '网点 / 招行合作机构',
+        "tags": [],
+        "metadata": {'intent': 'consult_cb', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CB_028',
+        "category": 'consult',
+        "domain": 'cross_border',
+        "domain_zh": '跨境/外汇',
+        "sub_category": 'cb',
+        "question": '境外取现手续费？',
+        "answer": '10-20 元/笔 + 1% 货币转换费',
+        "tags": [],
+        "metadata": {'intent': 'consult_cb', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CB_029',
+        "category": 'consult',
+        "domain": 'cross_border',
+        "domain_zh": '跨境/外汇',
+        "sub_category": 'cb',
+        "question": '境外能用银联吗？',
+        "answer": '全球 180+ 国家 / 地区',
+        "tags": [],
+        "metadata": {'intent': 'consult_cb', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CB_030',
+        "category": 'consult',
+        "domain": 'cross_border',
+        "domain_zh": '跨境/外汇',
+        "sub_category": 'cb',
+        "question": '境外消费选什么卡？',
+        "answer": '双币卡 / 全币种卡',
+        "tags": [],
+        "metadata": {'intent': 'consult_cb', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CB_031',
+        "category": 'consult',
+        "domain": 'cross_border',
+        "domain_zh": '跨境/外汇',
+        "sub_category": 'cb',
+        "question": 'VTM 远程柜员机？',
+        "answer": '招行远程视频办理跨境业务',
+        "tags": [],
+        "metadata": {'intent': 'consult_cb', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CB_032',
+        "category": 'consult',
+        "domain": 'cross_border',
+        "domain_zh": '跨境/外汇',
+        "sub_category": 'cb',
+        "question": 'VTM 能办什么？',
+        "answer": '开户 / 跨境汇款 / 外汇兑换',
+        "tags": [],
+        "metadata": {'intent': 'consult_cb', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CB_033',
+        "category": 'consult',
+        "domain": 'cross_border',
+        "domain_zh": '跨境/外汇',
+        "sub_category": 'cb',
+        "question": 'VTM 在哪？',
+        "answer": '招行指定网点',
+        "tags": [],
+        "metadata": {'intent': 'consult_cb', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CB_034',
+        "category": 'consult',
+        "domain": 'cross_border',
+        "domain_zh": '跨境/外汇',
+        "sub_category": 'cb',
+        "question": '跨境汇款被骗？',
+        "answer": '立即 95555 / 报警',
+        "tags": ['P0'],
+        "metadata": {'intent': 'consult_cb', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_CB_035',
+        "category": 'consult',
+        "domain": 'cross_border',
+        "domain_zh": '跨境/外汇',
+        "sub_category": 'cb',
+        "question": '外汇违规出境？',
+        "answer": '大额可疑上报合规',
+        "tags": ['P0'],
+        "metadata": {'intent': 'consult_cb', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
     },
 
-    # --- 2.2 密码管理 ---
+    # ========== 便民生活 (life) — 30 条 ==========
+
     {
-        "id": "KB_T_003",
-        "category": "transaction",
-        "sub_category": "password",
-        "question": "忘记银行卡密码怎么办？",
-        "answer": """忘记密码的解决方法：
-
-【手机银行重置】
-1. 打开登录页面 → 「忘记密码」
-2. 输入身份证号、卡号后4位
-3. 接收并输入短信验证码
-4. 设置新密码（6位数字）
-5. 重置成功
-
-【网上银行重置】
-1. 点击「忘记密码」
-2. 验证身份后设置新密码
-
-【电话银行重置】
-拨打 95555 → 客服协助重置
-
-【网点办理】
-携带有效身份证件和银行卡到任意网点办理密码重置。
-
-【注意事项】
-- 密码为6位数字
-- 不能设置为简单密码（如123456、000000）
-- 连续输错5次密码，卡片会被锁定，需网点解锁""",
-        "tags": ["忘记密码", "密码重置", "密码找回"],
-        "metadata": {"intent": "password_manage", "frequency": "high", "risk_disclosure": False}
+        "id": 'KB_LIFE_001',
+        "category": 'query',
+        "domain": 'life',
+        "domain_zh": '便民生活',
+        "sub_category": 'life',
+        "question": '怎么交水电费？',
+        "answer": '招行 App → 生活缴费',
+        "tags": [],
+        "metadata": {'intent': 'query_life', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LIFE_002',
+        "category": 'query',
+        "domain": 'life',
+        "domain_zh": '便民生活',
+        "sub_category": 'life',
+        "question": '招行能交哪些费？',
+        "answer": '水电 / 燃气 / 物业 / 通讯 / 有线电视',
+        "tags": [],
+        "metadata": {'intent': 'query_life', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LIFE_003',
+        "category": 'query',
+        "domain": 'life',
+        "domain_zh": '便民生活',
+        "sub_category": 'life',
+        "question": '缴费有手续费吗？',
+        "answer": '大部分免费',
+        "tags": [],
+        "metadata": {'intent': 'query_life', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LIFE_004',
+        "category": 'query',
+        "domain": 'life',
+        "domain_zh": '便民生活',
+        "sub_category": 'life',
+        "question": '怎么设置自动缴费？',
+        "answer": '招行 App → 生活缴费 → 签约',
+        "tags": [],
+        "metadata": {'intent': 'query_life', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LIFE_005',
+        "category": 'query',
+        "domain": 'life',
+        "domain_zh": '便民生活',
+        "sub_category": 'life',
+        "question": '缴费记录怎么查？',
+        "answer": '招行 App → 生活缴费 → 缴费记录',
+        "tags": [],
+        "metadata": {'intent': 'query_life', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LIFE_006',
+        "category": 'query',
+        "domain": 'life',
+        "domain_zh": '便民生活',
+        "sub_category": 'life',
+        "question": '招行 App 能打车吗？',
+        "answer": '集成高德 / 曹操 / T3 等',
+        "tags": [],
+        "metadata": {'intent': 'query_life', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LIFE_007',
+        "category": 'query',
+        "domain": 'life',
+        "domain_zh": '便民生活',
+        "sub_category": 'life',
+        "question": '信用卡积分换里程？',
+        "answer": '兑换航司里程',
+        "tags": [],
+        "metadata": {'intent': 'query_life', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LIFE_008',
+        "category": 'query',
+        "domain": 'life',
+        "domain_zh": '便民生活',
+        "sub_category": 'life',
+        "question": '招行"两票"消费平台？',
+        "answer": '餐饮 / 电影高频消费场景',
+        "tags": [],
+        "metadata": {'intent': 'query_life', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LIFE_009',
+        "category": 'query',
+        "domain": 'life',
+        "domain_zh": '便民生活',
+        "sub_category": 'life',
+        "question": '招行信用卡加油有优惠？',
+        "answer": '联名卡 / 活动返现',
+        "tags": [],
+        "metadata": {'intent': 'query_life', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LIFE_010',
+        "category": 'query',
+        "domain": 'life',
+        "domain_zh": '便民生活',
+        "sub_category": 'life',
+        "question": '招行高铁贵宾厅？',
+        "answer": '钻石 / 经典白信用卡权益',
+        "tags": [],
+        "metadata": {'intent': 'query_life', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LIFE_011',
+        "category": 'query',
+        "domain": 'life',
+        "domain_zh": '便民生活',
+        "sub_category": 'life',
+        "question": '招行"周三五折"活动？',
+        "answer": '掌上生活 → 美食 / 餐饮',
+        "tags": [],
+        "metadata": {'intent': 'query_life', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LIFE_012',
+        "category": 'query',
+        "domain": 'life',
+        "domain_zh": '便民生活',
+        "sub_category": 'life',
+        "question": '招行信用卡影票优惠？',
+        "answer": '掌上生活 → 电影',
+        "tags": [],
+        "metadata": {'intent': 'query_life', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LIFE_013',
+        "category": 'query',
+        "domain": 'life',
+        "domain_zh": '便民生活',
+        "sub_category": 'life',
+        "question": '招行酒店权益？',
+        "answer": '经典白 / 钻石卡酒店礼遇',
+        "tags": [],
+        "metadata": {'intent': 'query_life', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LIFE_014',
+        "category": 'query',
+        "domain": 'life',
+        "domain_zh": '便民生活',
+        "sub_category": 'life',
+        "question": '招行"非常三亚"？',
+        "answer": '信用卡 + 旅游生态',
+        "tags": [],
+        "metadata": {'intent': 'query_life', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LIFE_015',
+        "category": 'query',
+        "domain": 'life',
+        "domain_zh": '便民生活',
+        "sub_category": 'life',
+        "question": '招行信用卡境外返现？',
+        "answer": '全球返现活动',
+        "tags": [],
+        "metadata": {'intent': 'query_life', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LIFE_016',
+        "category": 'query',
+        "domain": 'life',
+        "domain_zh": '便民生活',
+        "sub_category": 'life',
+        "question": '招行 App "出行"？',
+        "answer": '打车 / 共享单车 / 高铁 / 机票',
+        "tags": [],
+        "metadata": {'intent': 'query_life', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LIFE_017',
+        "category": 'query',
+        "domain": 'life',
+        "domain_zh": '便民生活',
+        "sub_category": 'life',
+        "question": '招行 App "生活"？',
+        "answer": '美食 / 电影 / 文旅 / 缴费',
+        "tags": [],
+        "metadata": {'intent': 'query_life', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LIFE_018',
+        "category": 'query',
+        "domain": 'life',
+        "domain_zh": '便民生活',
+        "sub_category": 'life',
+        "question": '招行 App "健康"？',
+        "answer": '体检 / 在线问诊 / 保险',
+        "tags": [],
+        "metadata": {'intent': 'query_life', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LIFE_019',
+        "category": 'query',
+        "domain": 'life',
+        "domain_zh": '便民生活',
+        "sub_category": 'life',
+        "question": '招行 App "购物"？',
+        "answer": '掌上生活 / 积分商城',
+        "tags": [],
+        "metadata": {'intent': 'query_life', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LIFE_020',
+        "category": 'query',
+        "domain": 'life',
+        "domain_zh": '便民生活',
+        "sub_category": 'life',
+        "question": '招行 App 老年版？',
+        "answer": '大字 / 简化 / 一键呼叫',
+        "tags": [],
+        "metadata": {'intent': 'query_life', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LIFE_021',
+        "category": 'query',
+        "domain": 'life',
+        "domain_zh": '便民生活',
+        "sub_category": 'life',
+        "question": '怎么查找附近网点？',
+        "answer": '招行 App → 网点服务 / 95555',
+        "tags": [],
+        "metadata": {'intent': 'query_life', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LIFE_022',
+        "category": 'query',
+        "domain": 'life',
+        "domain_zh": '便民生活',
+        "sub_category": 'life',
+        "question": '网点营业时间？',
+        "answer": '周一至周五 9:00-17:00 / 部分周末',
+        "tags": [],
+        "metadata": {'intent': 'query_life', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LIFE_023',
+        "category": 'query',
+        "domain": 'life',
+        "domain_zh": '便民生活',
+        "sub_category": 'life',
+        "question": '怎么预约网点？',
+        "answer": '招行 App → 预约服务',
+        "tags": [],
+        "metadata": {'intent': 'query_life', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LIFE_024',
+        "category": 'query',
+        "domain": 'life',
+        "domain_zh": '便民生活',
+        "sub_category": 'life',
+        "question": '怎么查网点排队？',
+        "answer": '招行 App → 实时排队',
+        "tags": [],
+        "metadata": {'intent': 'query_life', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LIFE_025',
+        "category": 'query',
+        "domain": 'life',
+        "domain_zh": '便民生活',
+        "sub_category": 'life',
+        "question": '怎么查 ATM？',
+        "answer": '招行 App → ATM 查询',
+        "tags": [],
+        "metadata": {'intent': 'query_life', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LIFE_026',
+        "category": 'query',
+        "domain": 'life',
+        "domain_zh": '便民生活',
+        "sub_category": 'life',
+        "question": '招行"五险一金"专区？',
+        "answer": '1767 项政务服务',
+        "tags": [],
+        "metadata": {'intent': 'query_life', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LIFE_027',
+        "category": 'query',
+        "domain": 'life',
+        "domain_zh": '便民生活',
+        "sub_category": 'life',
+        "question": '招行"长辈版"？',
+        "answer": '适老化改造',
+        "tags": [],
+        "metadata": {'intent': 'query_life', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LIFE_028',
+        "category": 'query',
+        "domain": 'life',
+        "domain_zh": '便民生活',
+        "sub_category": 'life',
+        "question": '招行"同屏服务"？',
+        "answer": '客服共享屏幕指导',
+        "tags": [],
+        "metadata": {'intent': 'query_life', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LIFE_029',
+        "category": 'query',
+        "domain": 'life',
+        "domain_zh": '便民生活',
+        "sub_category": 'life',
+        "question": '招行"上门 PAD 柜台"？',
+        "answer": '行动不便客户的居家服务',
+        "tags": [],
+        "metadata": {'intent': 'query_life', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_LIFE_030',
+        "category": 'query',
+        "domain": 'life',
+        "domain_zh": '便民生活',
+        "sub_category": 'life',
+        "question": '招行"爱心驿站"？',
+        "answer": '户外工作者休息 / 充电 / 饮水',
+        "tags": [],
+        "metadata": {'intent': 'query_life', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
     },
 
+    # ========== 新就业/普惠 (new_worker) — 20 条 ==========
+
     {
-        "id": "KB_T_004",
-        "category": "transaction",
-        "sub_category": "password",
-        "question": "手机银行登录密码忘了怎么改？",
-        "answer": """手机银行登录密码重置：
-
-【APP内重置】
-1. 打开招商银行APP
-2. 点击「登录」→「忘记密码」
-3. 输入身份证号和绑定手机号
-4. 接收短信验证码
-5. 设置新密码（8-20位字母+数字组合）
-
-【网上银行重置】
-1. 登录 www.cmbchina.com
-2. 点击「忘记密码」
-3. 按提示完成身份验证
-4. 设置新登录密码
-
-【注意】
-- 登录密码与支付密码不同
-- 新密码需包含字母和数字
-- 为保障账户安全，建议定期更换密码""",
-        "tags": ["登录密码", "忘记密码", "重置", "手机银行"],
-        "metadata": {"intent": "password_manage", "frequency": "high", "risk_disclosure": False}
+        "id": 'KB_NW_001',
+        "category": 'consult',
+        "domain": 'new_worker',
+        "domain_zh": '新就业/普惠',
+        "sub_category": 'nw',
+        "question": '哪些是新就业群体？',
+        "answer": '快递员 / 外卖骑手 / 网约车司机 / 货车司机',
+        "tags": [],
+        "metadata": {'intent': 'consult_nw', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_NW_002',
+        "category": 'consult',
+        "domain": 'new_worker',
+        "domain_zh": '新就业/普惠',
+        "sub_category": 'nw',
+        "question": '招行对新就业群体服务？',
+        "answer": '招行成都分行反诈讲座（2026）',
+        "tags": [],
+        "metadata": {'intent': 'consult_nw', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_NW_003',
+        "category": 'consult',
+        "domain": 'new_worker',
+        "domain_zh": '新就业/普惠',
+        "sub_category": 'nw',
+        "question": '怎么参加反诈讲座？',
+        "answer": '关注招行分行活动',
+        "tags": [],
+        "metadata": {'intent': 'consult_nw', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_NW_004',
+        "category": 'consult',
+        "domain": 'new_worker',
+        "domain_zh": '新就业/普惠',
+        "sub_category": 'nw',
+        "question": '招行"爱心驿站"在哪？',
+        "answer": '全国招行网点',
+        "tags": [],
+        "metadata": {'intent': 'consult_nw', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_NW_005',
+        "category": 'consult',
+        "domain": 'new_worker',
+        "domain_zh": '新就业/普惠',
+        "sub_category": 'nw',
+        "question": '网约车司机反诈要点？',
+        "answer": '不点陌生链接 / 不转账陌生人',
+        "tags": ['反诈'],
+        "metadata": {'intent': 'consult_nw', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_NW_006',
+        "category": 'consult',
+        "domain": 'new_worker',
+        "domain_zh": '新就业/普惠',
+        "sub_category": 'nw',
+        "question": '骑手反诈提示？',
+        "answer": '客服不会索要密码 / 验证码',
+        "tags": ['反诈'],
+        "metadata": {'intent': 'consult_nw', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_NW_007',
+        "category": 'consult',
+        "domain": 'new_worker',
+        "domain_zh": '新就业/普惠',
+        "sub_category": 'nw',
+        "question": '"刷单返利"骗局？',
+        "answer": '任何刷单都是诈骗',
+        "tags": ['反诈'],
+        "metadata": {'intent': 'consult_nw', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_NW_008',
+        "category": 'consult',
+        "domain": 'new_worker',
+        "domain_zh": '新就业/普惠',
+        "sub_category": 'nw',
+        "question": '"冒充客服退款"？',
+        "answer": '任何退款走原支付渠道',
+        "tags": ['反诈'],
+        "metadata": {'intent': 'consult_nw', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_NW_009',
+        "category": 'consult',
+        "domain": 'new_worker',
+        "domain_zh": '新就业/普惠',
+        "sub_category": 'nw',
+        "question": '"虚假投资群"？',
+        "answer": '高收益保本 = 诈骗',
+        "tags": ['反诈'],
+        "metadata": {'intent': 'consult_nw', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_NW_010',
+        "category": 'consult',
+        "domain": 'new_worker',
+        "domain_zh": '新就业/普惠',
+        "sub_category": 'nw',
+        "question": '"网贷征信洗白"？',
+        "answer": '不存在',
+        "tags": ['反诈'],
+        "metadata": {'intent': 'consult_nw', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_NW_011',
+        "category": 'consult',
+        "domain": 'new_worker',
+        "domain_zh": '新就业/普惠',
+        "sub_category": 'nw',
+        "question": '招行小微贷款产品？',
+        "answer": '招行小微贷 / 经营贷 / 抵押贷',
+        "tags": [],
+        "metadata": {'intent': 'consult_nw', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_NW_012',
+        "category": 'consult',
+        "domain": 'new_worker',
+        "domain_zh": '新就业/普惠',
+        "sub_category": 'nw',
+        "question": '个体工商户怎么贷款？',
+        "answer": '招行个人经营贷 / 营业执照',
+        "tags": [],
+        "metadata": {'intent': 'consult_nw', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_NW_013',
+        "category": 'consult',
+        "domain": 'new_worker',
+        "domain_zh": '新就业/普惠',
+        "sub_category": 'nw',
+        "question": '招行"小微之家"？',
+        "answer": '一站式小微服务',
+        "tags": [],
+        "metadata": {'intent': 'consult_nw', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_NW_014',
+        "category": 'consult',
+        "domain": 'new_worker',
+        "domain_zh": '新就业/普惠',
+        "sub_category": 'nw',
+        "question": '普惠金融降费让利？',
+        "answer": '监管要求，账户管理费减免',
+        "tags": [],
+        "metadata": {'intent': 'consult_nw', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_NW_015',
+        "category": 'consult',
+        "domain": 'new_worker',
+        "domain_zh": '新就业/普惠',
+        "sub_category": 'nw',
+        "question": '新市民怎么开招行卡？',
+        "answer": '凭身份证 / 居住证',
+        "tags": [],
+        "metadata": {'intent': 'consult_nw', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_NW_016',
+        "category": 'consult',
+        "domain": 'new_worker',
+        "domain_zh": '新就业/普惠',
+        "sub_category": 'nw',
+        "question": '招行"新市民"金融？',
+        "answer": '招行网点 + 流动惠民小站',
+        "tags": [],
+        "metadata": {'intent': 'consult_nw', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_NW_017',
+        "category": 'consult',
+        "domain": 'new_worker',
+        "domain_zh": '新就业/普惠',
+        "sub_category": 'nw',
+        "question": '招行"网格驿站"？',
+        "answer": '重庆 / 深圳试点',
+        "tags": [],
+        "metadata": {'intent': 'consult_nw', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_NW_018',
+        "category": 'consult',
+        "domain": 'new_worker',
+        "domain_zh": '新就业/普惠',
+        "sub_category": 'nw',
+        "question": '招行反诈"四步走"？',
+        "answer": '不信 / 不点 / 不说 / 不转',
+        "tags": [],
+        "metadata": {'intent': 'consult_nw', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_NW_019',
+        "category": 'consult',
+        "domain": 'new_worker',
+        "domain_zh": '新就业/普惠',
+        "sub_category": 'nw',
+        "question": '招行"金融知识普及"？',
+        "answer": '消保 + 反诈 + 普惠',
+        "tags": [],
+        "metadata": {'intent': 'consult_nw', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_NW_020',
+        "category": 'consult',
+        "domain": 'new_worker',
+        "domain_zh": '新就业/普惠',
+        "sub_category": 'nw',
+        "question": '招行适老化服务？',
+        "answer": '颐享专线 / 长辈版 / 同屏',
+        "tags": [],
+        "metadata": {'intent': 'consult_nw', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
     },
 
-    # --- 2.3 卡片挂失 ---
+    # ========== 服务与反馈 (service) — 30 条 ==========
+
     {
-        "id": "KB_T_005",
-        "category": "transaction",
-        "sub_category": "card_loss",
-        "question": "信用卡丢了怎么挂失？",
-        "answer": """信用卡挂失方式：
-
-【手机银行挂失】
-1. 登录 → 信用卡 → 卡片管理 → 选择卡片
-2. 点击「挂失」
-3. 确认挂失
-
-【网上银行挂失】
-1. 登录 → 信用卡 → 卡片管理 → 挂失
-
-【电话挂失】
-拨打 95555 → 信用卡服务 → 挂失
-
-【网点挂失】
-携带身份证到任意网点办理
-
-【挂失费用】
-- 挂失手续费：50元/卡
-- 紧急挂失免费（部分高端卡）
-
-【补卡流程】
-1. 挂失后自动进入补卡流程
-2. 新卡3-5个工作日寄出
-3. 收到新卡后需激活才能使用
-
-【温馨提示】
-- 建议立即挂失，防止盗刷
-- 挂失前产生的盗刷不赔付（部分责任卡种除外）
-- 挂失后，原卡已冻结，无法使用""",
-        "tags": ["挂失", "信用卡丢失", "补卡", "盗刷"],
-        "metadata": {"intent": "card_loss", "frequency": "high", "risk_disclosure": False}
+        "id": 'KB_SV_001',
+        "category": 'service_transfer',
+        "domain": 'service',
+        "domain_zh": '服务与反馈',
+        "sub_category": 'sv',
+        "question": '对服务不满意怎么投诉？',
+        "answer": '95555 转 7 / 网点 / 招行 App',
+        "tags": [],
+        "metadata": {'intent': 'service_transfer_sv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_SV_002',
+        "category": 'service_transfer',
+        "domain": 'service',
+        "domain_zh": '服务与反馈',
+        "sub_category": 'sv',
+        "question": '招行投诉处理时效？',
+        "answer": '15 个工作日内回复（监管要求）',
+        "tags": [],
+        "metadata": {'intent': 'service_transfer_sv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_SV_003',
+        "category": 'service_transfer',
+        "domain": 'service',
+        "domain_zh": '服务与反馈',
+        "sub_category": 'sv',
+        "question": '怎么向银保监投诉？',
+        "answer": '12378',
+        "tags": [],
+        "metadata": {'intent': 'service_transfer_sv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_SV_004',
+        "category": 'service_transfer',
+        "domain": 'service',
+        "domain_zh": '服务与反馈',
+        "sub_category": 'sv',
+        "question": '怎么向央行投诉？',
+        "answer": '12363',
+        "tags": [],
+        "metadata": {'intent': 'service_transfer_sv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_SV_005',
+        "category": 'service_transfer',
+        "domain": 'service',
+        "domain_zh": '服务与反馈',
+        "sub_category": 'sv',
+        "question": '招行总行投诉受理邮箱？',
+        "answer": 'xfzts@cmbchina.com',
+        "tags": [],
+        "metadata": {'intent': 'service_transfer_sv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_SV_006',
+        "category": 'service_transfer',
+        "domain": 'service',
+        "domain_zh": '服务与反馈',
+        "sub_category": 'sv',
+        "question": '现场投诉在哪？',
+        "answer": '任一网点现场受理',
+        "tags": [],
+        "metadata": {'intent': 'service_transfer_sv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_SV_007',
+        "category": 'service_transfer',
+        "domain": 'service',
+        "domain_zh": '服务与反馈',
+        "sub_category": 'sv',
+        "question": '怎么转人工？',
+        "answer": '说"转人工" / 说"人工客服" / 按 0',
+        "tags": [],
+        "metadata": {'intent': 'service_transfer_sv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_SV_008',
+        "category": 'service_transfer',
+        "domain": 'service',
+        "domain_zh": '服务与反馈',
+        "sub_category": 'sv',
+        "question": '人工服务时间？',
+        "answer": '7×24h',
+        "tags": [],
+        "metadata": {'intent': 'service_transfer_sv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_SV_009',
+        "category": 'service_transfer',
+        "domain": 'service',
+        "domain_zh": '服务与反馈',
+        "sub_category": 'sv',
+        "question": '等待人工多久？',
+        "answer": '一般 < 1 分钟，高峰 5-10 分钟',
+        "tags": [],
+        "metadata": {'intent': 'service_transfer_sv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_SV_010',
+        "category": 'service_transfer',
+        "domain": 'service',
+        "domain_zh": '服务与反馈',
+        "sub_category": 'sv',
+        "question": '怎么预约人工电话？',
+        "answer": '招行 App → 客服 → 预约回电',
+        "tags": [],
+        "metadata": {'intent': 'service_transfer_sv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_SV_011',
+        "category": 'service_transfer',
+        "domain": 'service',
+        "domain_zh": '服务与反馈',
+        "sub_category": 'sv',
+        "question": '招行"颐享专线"？',
+        "answer": '95555 长辈版一键接入',
+        "tags": [],
+        "metadata": {'intent': 'service_transfer_sv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_SV_012',
+        "category": 'service_transfer',
+        "domain": 'service',
+        "domain_zh": '服务与反馈',
+        "sub_category": 'sv',
+        "question": '招行长辈版 App？',
+        "answer": '大字 / 简化 / 适老',
+        "tags": [],
+        "metadata": {'intent': 'service_transfer_sv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_SV_013',
+        "category": 'service_transfer',
+        "domain": 'service',
+        "domain_zh": '服务与反馈',
+        "sub_category": 'sv',
+        "question": '"同屏服务"是什么？',
+        "answer": '客服共享屏幕指导',
+        "tags": [],
+        "metadata": {'intent': 'service_transfer_sv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_SV_014',
+        "category": 'service_transfer',
+        "domain": 'service',
+        "domain_zh": '服务与反馈',
+        "sub_category": 'sv',
+        "question": '招行方言服务？',
+        "answer": '广州分行粤语 / 各地分行',
+        "tags": [],
+        "metadata": {'intent': 'service_transfer_sv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_SV_015',
+        "category": 'service_transfer',
+        "domain": 'service',
+        "domain_zh": '服务与反馈',
+        "sub_category": 'sv',
+        "question": '招行"上门 PAD 柜台"？',
+        "answer": '行动不便客户居家办理',
+        "tags": [],
+        "metadata": {'intent': 'service_transfer_sv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_SV_016',
+        "category": 'service_transfer',
+        "domain": 'service',
+        "domain_zh": '服务与反馈',
+        "sub_category": 'sv',
+        "question": '招行有数字人客服吗？',
+        "answer": '部分场景试点中',
+        "tags": [],
+        "metadata": {'intent': 'service_transfer_sv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_SV_017',
+        "category": 'service_transfer',
+        "domain": 'service',
+        "domain_zh": '服务与反馈',
+        "sub_category": 'sv',
+        "question": '数字人客服能办业务吗？',
+        "answer": '现阶段以咨询为主',
+        "tags": [],
+        "metadata": {'intent': 'service_transfer_sv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_SV_018',
+        "category": 'service_transfer',
+        "domain": 'service',
+        "domain_zh": '服务与反馈',
+        "sub_category": 'sv',
+        "question": '工行"工小智"数字员工？',
+        "answer": '工行部署的 AI 数字员工',
+        "tags": [],
+        "metadata": {'intent': 'service_transfer_sv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_SV_019',
+        "category": 'service_transfer',
+        "domain": 'service',
+        "domain_zh": '服务与反馈',
+        "sub_category": 'sv',
+        "question": '招行"小招"AI 助理？',
+        "answer": '招行 App 智能客服',
+        "tags": [],
+        "metadata": {'intent': 'service_transfer_sv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_SV_020',
+        "category": 'service_transfer',
+        "domain": 'service',
+        "domain_zh": '服务与反馈',
+        "sub_category": 'sv',
+        "question": '数字人 vs 文字客服？',
+        "answer": '数字人更亲切，文字更高效',
+        "tags": [],
+        "metadata": {'intent': 'service_transfer_sv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_SV_021',
+        "category": 'service_transfer',
+        "domain": 'service',
+        "domain_zh": '服务与反馈',
+        "sub_category": 'sv',
+        "question": '怎么评价客服？',
+        "answer": '招行 App → 服务评价',
+        "tags": [],
+        "metadata": {'intent': 'service_transfer_sv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_SV_022',
+        "category": 'service_transfer',
+        "domain": 'service',
+        "domain_zh": '服务与反馈',
+        "sub_category": 'sv',
+        "question": 'CSAT 评分规则？',
+        "answer": '1-5 星，4.5+ 优秀',
+        "tags": [],
+        "metadata": {'intent': 'service_transfer_sv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_SV_023',
+        "category": 'service_transfer',
+        "domain": 'service',
+        "domain_zh": '服务与反馈',
+        "sub_category": 'sv',
+        "question": 'NPS 评分？',
+        "answer": '推荐者 - 贬损者',
+        "tags": [],
+        "metadata": {'intent': 'service_transfer_sv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_SV_024',
+        "category": 'service_transfer',
+        "domain": 'service',
+        "domain_zh": '服务与反馈',
+        "sub_category": 'sv',
+        "question": '怎么提建议？',
+        "answer": '招行 App → 意见反馈',
+        "tags": [],
+        "metadata": {'intent': 'service_transfer_sv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_SV_025',
+        "category": 'service_transfer',
+        "domain": 'service',
+        "domain_zh": '服务与反馈',
+        "sub_category": 'sv',
+        "question": '怎么查处理进度？',
+        "answer": '招行 App → 投诉记录',
+        "tags": [],
+        "metadata": {'intent': 'service_transfer_sv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_SV_026',
+        "category": 'service_transfer',
+        "domain": 'service',
+        "domain_zh": '服务与反馈',
+        "sub_category": 'sv',
+        "question": '紧急挂失？',
+        "answer": '95555 → 1 → 紧急挂失',
+        "tags": ['P0'],
+        "metadata": {'intent': 'service_transfer_sv', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_SV_027',
+        "category": 'service_transfer',
+        "domain": 'service',
+        "domain_zh": '服务与反馈',
+        "sub_category": 'sv',
+        "question": '紧急冻结账户？',
+        "answer": '招行 App → 账户安全 → 冻结',
+        "tags": ['P0'],
+        "metadata": {'intent': 'service_transfer_sv', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_SV_028',
+        "category": 'service_transfer',
+        "domain": 'service',
+        "domain_zh": '服务与反馈',
+        "sub_category": 'sv',
+        "question": '紧急止付？',
+        "answer": '招行 App → 支付管理 → 暂停',
+        "tags": ['P0'],
+        "metadata": {'intent': 'service_transfer_sv', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_SV_029',
+        "category": 'service_transfer',
+        "domain": 'service',
+        "domain_zh": '服务与反馈',
+        "sub_category": 'sv',
+        "question": '招行 App 客服在哪？',
+        "answer": '首页右上角"小招客服"',
+        "tags": [],
+        "metadata": {'intent': 'service_transfer_sv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_SV_030',
+        "category": 'service_transfer',
+        "domain": 'service',
+        "domain_zh": '服务与反馈',
+        "sub_category": 'sv',
+        "question": '招行"小招"是谁？',
+        "answer": '招行 AI 智能助理',
+        "tags": [],
+        "metadata": {'intent': 'service_transfer_sv', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
     },
 
-    # --- 2.4 卡片激活 ---
+    # ========== 风控/合规 (risk) — 40 条 ==========
+
     {
-        "id": "KB_T_006",
-        "category": "transaction",
-        "sub_category": "card_activate",
-        "question": "新卡如何激活？",
-        "answer": """新卡激活方式：
-
-【手机银行激活】
-1. 打开招商银行APP
-2. 点击「卡片激活」或「开卡」
-3. 输入卡号、身份证号
-4. 设置交易密码（6位数字）
-5. 激活成功
-
-【电话激活】
-拨打 400-880-8805
-按语音提示输入卡号、身份证号、有效期
-设置交易密码完成激活
-
-【网上银行激活】
-1. 登录网上银行
-2. 点击「卡片激活」
-3. 按提示完成激活
-
-【激活注意事项】
-- 新卡需先激活才能使用
-- 设置的交易密码用于消费和取现
-- 激活时请设置安全的密码（避免简单数字）
-- 卡片激活后立即生效""",
-        "tags": ["激活", "开卡", "新卡", "卡片激活"],
-        "metadata": {"intent": "card_activate", "frequency": "high", "risk_disclosure": False}
+        "id": 'KB_RISK_001',
+        "category": 'risk',
+        "domain": 'risk',
+        "domain_zh": '风控/合规',
+        "sub_category": 'risk',
+        "question": '什么是反洗钱？',
+        "answer": '反洗钱法律法规',
+        "tags": [],
+        "metadata": {'intent': 'risk_risk', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_RISK_002',
+        "category": 'risk',
+        "domain": 'risk',
+        "domain_zh": '风控/合规',
+        "sub_category": 'risk',
+        "question": '招行反洗钱义务？',
+        "answer": '客户身份识别 / 大额可疑上报',
+        "tags": ['P0'],
+        "metadata": {'intent': 'risk_risk', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_RISK_003',
+        "category": 'risk',
+        "domain": 'risk',
+        "domain_zh": '风控/合规',
+        "sub_category": 'risk',
+        "question": '反洗钱关键词？',
+        "answer": '分多笔 / 拆单 / 兑换外币 / 大额现金',
+        "tags": ['P0'],
+        "metadata": {'intent': 'risk_risk', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_RISK_004',
+        "category": 'risk',
+        "domain": 'risk',
+        "domain_zh": '风控/合规',
+        "sub_category": 'risk',
+        "question": '客户身份识别？',
+        "answer": '实名 / 证件 / 联网核查',
+        "tags": ['P0'],
+        "metadata": {'intent': 'risk_risk', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_RISK_005',
+        "category": 'risk',
+        "domain": 'risk',
+        "domain_zh": '风控/合规',
+        "sub_category": 'risk',
+        "question": '大额交易报告？',
+        "answer": '单笔 20 万 / 当日 50 万',
+        "tags": ['P0'],
+        "metadata": {'intent': 'risk_risk', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_RISK_006',
+        "category": 'risk',
+        "domain": 'risk',
+        "domain_zh": '风控/合规',
+        "sub_category": 'risk',
+        "question": '可疑交易报告？',
+        "answer": '异常模式 / 触发规则',
+        "tags": ['P0'],
+        "metadata": {'intent': 'risk_risk', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_RISK_007',
+        "category": 'risk',
+        "domain": 'risk',
+        "domain_zh": '风控/合规',
+        "sub_category": 'risk',
+        "question": '跨境反洗钱？',
+        "answer": '跨境汇款 ≥ 1 万美元需报告',
+        "tags": ['P0'],
+        "metadata": {'intent': 'risk_risk', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_RISK_008',
+        "category": 'risk',
+        "domain": 'risk',
+        "domain_zh": '风控/合规',
+        "sub_category": 'risk',
+        "question": '反洗钱客户风险等级？',
+        "answer": '高 / 中 / 低，定期审核',
+        "tags": [],
+        "metadata": {'intent': 'risk_risk', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_RISK_009',
+        "category": 'risk',
+        "domain": 'risk',
+        "domain_zh": '风控/合规',
+        "sub_category": 'risk',
+        "question": '怎么举报洗钱？',
+        "answer": '央行反洗钱 12363 / 招行 95555',
+        "tags": [],
+        "metadata": {'intent': 'risk_risk', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_RISK_010',
+        "category": 'risk',
+        "domain": 'risk',
+        "domain_zh": '风控/合规',
+        "sub_category": 'risk',
+        "question": '反洗钱法律法规？',
+        "answer": '《反洗钱法》2007',
+        "tags": [],
+        "metadata": {'intent': 'risk_risk', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_RISK_011',
+        "category": 'risk',
+        "domain": 'risk',
+        "domain_zh": '风控/合规',
+        "sub_category": 'risk',
+        "question": '电信诈骗识别？',
+        "answer": '客服不会索要密码 / 验证码',
+        "tags": ['P0'],
+        "metadata": {'intent': 'risk_risk', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_RISK_012',
+        "category": 'risk',
+        "domain": 'risk',
+        "domain_zh": '风控/合规',
+        "sub_category": 'risk',
+        "question": '反诈骗关键词？',
+        "answer": '被骗 / 盗刷 / 账户冻结 / 给陌生人转',
+        "tags": ['P0'],
+        "metadata": {'intent': 'risk_risk', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_RISK_013',
+        "category": 'risk',
+        "domain": 'risk',
+        "domain_zh": '风控/合规',
+        "sub_category": 'risk',
+        "question": '假冒公检法？',
+        "answer": '任何要求转账到"安全账户"都是诈骗',
+        "tags": ['P0'],
+        "metadata": {'intent': 'risk_risk', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_RISK_014',
+        "category": 'risk',
+        "domain": 'risk',
+        "domain_zh": '风控/合规',
+        "sub_category": 'risk',
+        "question": '假冒招行网站？',
+        "answer": '警惕仿冒链接，认准 cmbchina.com',
+        "tags": ['P0'],
+        "metadata": {'intent': 'risk_risk', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_RISK_015',
+        "category": 'risk',
+        "domain": 'risk',
+        "domain_zh": '风控/合规',
+        "sub_category": 'risk',
+        "question": '"兼职刷单"？',
+        "answer": '任何刷单都是诈骗',
+        "tags": ['P0'],
+        "metadata": {'intent': 'risk_risk', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_RISK_016',
+        "category": 'risk',
+        "domain": 'risk',
+        "domain_zh": '风控/合规',
+        "sub_category": 'risk',
+        "question": '"投资大师"？',
+        "answer": '代客理财 = 诈骗',
+        "tags": ['P0'],
+        "metadata": {'intent': 'risk_risk', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_RISK_017',
+        "category": 'risk',
+        "domain": 'risk',
+        "domain_zh": '风控/合规',
+        "sub_category": 'risk',
+        "question": '"注销校园贷"？',
+        "answer": '不存在，诈骗',
+        "tags": ['P0'],
+        "metadata": {'intent': 'risk_risk', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_RISK_018',
+        "category": 'risk',
+        "domain": 'risk',
+        "domain_zh": '风控/合规',
+        "sub_category": 'risk',
+        "question": '反诈"三不一多"？',
+        "answer": '不信 / 不点 / 不说 / 不转',
+        "tags": [],
+        "metadata": {'intent': 'risk_risk', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_RISK_019',
+        "category": 'risk',
+        "domain": 'risk',
+        "domain_zh": '风控/合规',
+        "sub_category": 'risk',
+        "question": '反诈中心 96110？',
+        "answer": '全国反诈劝阻专线',
+        "tags": [],
+        "metadata": {'intent': 'risk_risk', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_RISK_020',
+        "category": 'risk',
+        "domain": 'risk',
+        "domain_zh": '风控/合规',
+        "sub_category": 'risk',
+        "question": '国家反诈中心 App？',
+        "answer": '举报 / 预警 / 身份核实',
+        "tags": [],
+        "metadata": {'intent': 'risk_risk', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_RISK_021',
+        "category": 'risk',
+        "domain": 'risk',
+        "domain_zh": '风控/合规',
+        "sub_category": 'risk',
+        "question": '越权访问是什么？',
+        "answer": '非本人查询 / 操作他人账户',
+        "tags": ['P0'],
+        "metadata": {'intent': 'risk_risk', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_RISK_022',
+        "category": 'risk',
+        "domain": 'risk',
+        "domain_zh": '风控/合规',
+        "sub_category": 'risk',
+        "question": '怎么识别越权？',
+        "answer": '"帮 XX 查账户" / "代 XX 转账"',
+        "tags": ['P0'],
+        "metadata": {'intent': 'risk_risk', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_RISK_023',
+        "category": 'risk',
+        "domain": 'risk',
+        "domain_zh": '风控/合规',
+        "sub_category": 'risk',
+        "question": '越权处理？',
+        "answer": '强制身份核验 + 转人工',
+        "tags": ['P0'],
+        "metadata": {'intent': 'risk_risk', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_RISK_024',
+        "category": 'risk',
+        "domain": 'risk',
+        "domain_zh": '风控/合规',
+        "sub_category": 'risk',
+        "question": '代理人办业务？',
+        "answer": '需公证授权 / 网点面签',
+        "tags": [],
+        "metadata": {'intent': 'risk_risk', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_RISK_025',
+        "category": 'risk',
+        "domain": 'risk',
+        "domain_zh": '风控/合规',
+        "sub_category": 'risk',
+        "question": '监护人代办？',
+        "answer": '出示监护证明',
+        "tags": [],
+        "metadata": {'intent': 'risk_risk', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_RISK_026',
+        "category": 'risk',
+        "domain": 'risk',
+        "domain_zh": '风控/合规',
+        "sub_category": 'risk',
+        "question": '哪些是敏感信息？',
+        "answer": '身份证 / 银行卡 / CVV / 验证码 / 密码',
+        "tags": ['P0'],
+        "metadata": {'intent': 'risk_risk', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_RISK_027',
+        "category": 'risk',
+        "domain": 'risk',
+        "domain_zh": '风控/合规',
+        "sub_category": 'risk',
+        "question": '银行卡号 16-19 位？',
+        "answer": '16 位借记卡 / 16 位信用卡',
+        "tags": ['P0'],
+        "metadata": {'intent': 'risk_risk', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_RISK_028',
+        "category": 'risk',
+        "domain": 'risk',
+        "domain_zh": '风控/合规',
+        "sub_category": 'risk',
+        "question": 'CVV 是什么？',
+        "answer": '信用卡背面 3 位数',
+        "tags": ['P0'],
+        "metadata": {'intent': 'risk_risk', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_RISK_029',
+        "category": 'risk',
+        "domain": 'risk',
+        "domain_zh": '风控/合规',
+        "sub_category": 'risk',
+        "question": '验证码是什么？',
+        "answer": '银行发送的 6 位数',
+        "tags": ['P0'],
+        "metadata": {'intent': 'risk_risk', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_RISK_030',
+        "category": 'risk',
+        "domain": 'risk',
+        "domain_zh": '风控/合规',
+        "sub_category": 'risk',
+        "question": 'AI 客服能问密码吗？',
+        "answer": '**绝对不能**',
+        "tags": ['P0'],
+        "metadata": {'intent': 'risk_risk', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_RISK_031',
+        "category": 'risk',
+        "domain": 'risk',
+        "domain_zh": '风控/合规',
+        "sub_category": 'risk',
+        "question": '客服会索要密码吗？',
+        "answer": '**绝对不会**',
+        "tags": ['P0'],
+        "metadata": {'intent': 'risk_risk', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_RISK_032',
+        "category": 'risk',
+        "domain": 'risk',
+        "domain_zh": '风控/合规',
+        "sub_category": 'risk',
+        "question": '怎么保护敏感信息？',
+        "answer": '不在聊天中透露 / 不截图',
+        "tags": ['P0'],
+        "metadata": {'intent': 'risk_risk', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_RISK_033',
+        "category": 'risk',
+        "domain": 'risk',
+        "domain_zh": '风控/合规',
+        "sub_category": 'risk',
+        "question": '贷款年化利率披露？',
+        "answer": '必须说"年化利率"',
+        "tags": ['P0'],
+        "metadata": {'intent': 'risk_risk', 'frequency': 'medium', 'risk_disclosure': True, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_RISK_034',
+        "category": 'risk',
+        "domain": 'risk',
+        "domain_zh": '风控/合规',
+        "sub_category": 'risk',
+        "question": '反诈骗话术？',
+        "answer": '"请注意防范电信诈骗"',
+        "tags": [],
+        "metadata": {'intent': 'risk_risk', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_RISK_035',
+        "category": 'risk',
+        "domain": 'risk',
+        "domain_zh": '风控/合规',
+        "sub_category": 'risk',
+        "question": '反洗钱话术？',
+        "answer": '"根据反洗钱法律法规"',
+        "tags": [],
+        "metadata": {'intent': 'risk_risk', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_RISK_036',
+        "category": 'risk',
+        "domain": 'risk',
+        "domain_zh": '风控/合规',
+        "sub_category": 'risk',
+        "question": '数据隐私话术？',
+        "answer": '"我行严格遵守《个人信息保护法》"',
+        "tags": [],
+        "metadata": {'intent': 'risk_risk', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_RISK_037',
+        "category": 'risk',
+        "domain": 'risk',
+        "domain_zh": '风控/合规',
+        "sub_category": 'risk',
+        "question": '个人信息保护法？',
+        "answer": '2021 年实施',
+        "tags": [],
+        "metadata": {'intent': 'risk_risk', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_RISK_038',
+        "category": 'risk',
+        "domain": 'risk',
+        "domain_zh": '风控/合规',
+        "sub_category": 'risk',
+        "question": '银行业监督管理法？',
+        "answer": '银保监 2003 / 2023 修订',
+        "tags": [],
+        "metadata": {'intent': 'risk_risk', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_RISK_039',
+        "category": 'risk',
+        "domain": 'risk',
+        "domain_zh": '风控/合规',
+        "sub_category": 'risk',
+        "question": 'AI 客服"听不懂"？',
+        "answer": '转人工兜底设计（招行 L0-L3）',
+        "tags": [],
+        "metadata": {'intent': 'risk_risk', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_RISK_040',
+        "category": 'risk',
+        "domain": 'risk',
+        "domain_zh": '风控/合规',
+        "sub_category": 'risk',
+        "question": 'AI 客服"服务断层"？',
+        "answer": '上下文保持 / 异常转人工',
+        "tags": [],
+        "metadata": {'intent': 'risk_risk', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
     },
 
+    # ========== 产品矩阵 (product) — 30 条 ==========
 
-    # ============================================================
-    # 三、咨询类 (category: consult)
-    # ============================================================
-
-    # --- 3.1 利率咨询 ---
     {
-        "id": "KB_C_001",
-        "category": "consult",
-        "sub_category": "rate",
-        "question": "定期存款利率是多少？",
-        "answer": """招商银行人民币定期存款利率（参考，以实际公布为准）：
-
-【活期存款】
-- 年利率：0.30%
-
-【定期存款整存整取】
-| 存期 | 年利率 |
-|------|--------|
-| 3个月 | 1.50% |
-| 6个月 | 1.70% |
-| 1年期 | 1.90% |
-| 2年期 | 2.40% |
-| 3年期 | 2.75% |
-| 5年期 | 2.75% |
-
-【大额存单（20万起存）】
-| 存期 | 年利率 |
-|------|--------|
-| 1个月 | 约1.65% |
-| 3个月 | 约1.70% |
-| 6个月 | 约1.90% |
-| 1年期 | 约2.10% |
-| 3年期 | 约2.90% |
-
-【温馨提示】
-- 具体利率以手机银行实际显示为准
-- 利率会随市场情况调整
-- 提前支取按活期利率计算""",
-        "tags": ["存款利率", "定期存款", "利率", "利息"],
-        "metadata": {"intent": "consult_rate", "frequency": "high", "risk_disclosure": False}
+        "id": 'KB_PROD_001',
+        "category": 'marketing',
+        "domain": 'product',
+        "domain_zh": '产品矩阵',
+        "sub_category": 'prod',
+        "question": '招行 App 12.0 核心？',
+        "answer": '云 + AI + 中台数智底座',
+        "tags": [],
+        "metadata": {'intent': 'marketing_prod', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
     },
-
     {
-        "id": "KB_C_002",
-        "category": "consult",
-        "sub_category": "rate",
-        "question": "信用贷款利率是多少？",
-        "answer": """⚠️ 贷款有风险，请确保按时还款，避免影响信用记录
-
-招商银行信用贷款利率（参考）：
-
-【基本利率】
-- 年化利率范围：4.35%-18%
-- 具体利率根据个人资质审批
-
-【贷款额度】
-- 最高额度：30万元
-- 贷款期限：最长5年
-
-【影响利率的因素】
-1. 个人征信记录
-2. 收入水平
-3. 工作单位性质
-4. 在招行的资产和业务往来
-5. 历史还款记录
-
-【申请方式】
-手机银行 → 贷款 → 信用贷款 → 查看额度和利率
-
-【温馨提示】
-- 实际利率以审批合同为准
-- 请根据自身还款能力合理贷款
-- 逾期会影响个人征信记录
-- 可提前还款，部分产品免收违约金""",
-        "tags": ["信用贷款利率", "贷款利率", "利息", "贷款"],
-        "metadata": {"intent": "consult_rate", "frequency": "high", "risk_disclosure": True}
+        "id": 'KB_PROD_002',
+        "category": 'marketing',
+        "domain": 'product',
+        "domain_zh": '产品矩阵',
+        "sub_category": 'prod',
+        "question": '招行"五险一金"专区？',
+        "answer": '1767 项政务服务',
+        "tags": [],
+        "metadata": {'intent': 'marketing_prod', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
     },
-
-    # --- 3.2 手续费咨询 ---
     {
-        "id": "KB_C_003",
-        "category": "consult",
-        "sub_category": "fee",
-        "question": "跨行转账收手续费吗？",
-        "answer": """跨行转账手续费标准：
-
-【手机银行】
-- 每月前3笔免费
-- 第4笔起：0.1%收取（最低0.2元，最高50元）
-
-【网上银行】
-- 0.1%收取（最低0.2元，最高50元）
-
-【柜台办理】
-- 0.2%收取（最低1元，最高50元）
-
-【本行转账】
-- 免费，无手续费
-
-【VIP优惠】
-- 金卡客户：每月前10笔免费
-- 金葵花客户：免费
-
-【实时到账】
-工作日9:00-16:30发起的跨行转账可实时到账，其余时间顺延。""",
-        "tags": ["跨行转账", "手续费", "费用", "免费"],
-        "metadata": {"intent": "consult_fee", "frequency": "high", "risk_disclosure": False}
+        "id": 'KB_PROD_003',
+        "category": 'marketing',
+        "domain": 'product',
+        "domain_zh": '产品矩阵',
+        "sub_category": 'prod',
+        "question": '招行"长辈版"？',
+        "answer": '大字 / 简化 / 一键呼叫',
+        "tags": [],
+        "metadata": {'intent': 'marketing_prod', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
     },
-
     {
-        "id": "KB_C_004",
-        "category": "consult",
-        "sub_category": "fee",
-        "question": "ATM取款手续费怎么算？",
-        "answer": """ATM取款手续费：
-
-【本行取款】
-- 境内本行ATM：免费
-- 境外本行ATM：按取款金额的0.5%收取，最低10元
-
-【跨行取款】
-- 每月前2笔免费（部分城市银行卡种有差异）
-- 第3笔起：4元/笔
-
-【境外取款】
-- 按取款金额的0.5%收取，最低10元
-- 另加货币转换费（如适用）
-
-【温馨提示】
-- 招行城市信用卡：每月前3笔跨行免费
-- 金葵花客户：每月前10笔跨行免费
-- ATM单笔最高取款限额：2000-10000元（视机型而定）""",
-        "tags": ["取款手续费", "ATM取款", "跨行取款"],
-        "metadata": {"intent": "consult_fee", "frequency": "medium", "risk_disclosure": False}
+        "id": 'KB_PROD_004',
+        "category": 'marketing',
+        "domain": 'product',
+        "domain_zh": '产品矩阵',
+        "sub_category": 'prod',
+        "question": '招行"颐享专线"？',
+        "answer": '95555 长辈版',
+        "tags": [],
+        "metadata": {'intent': 'marketing_prod', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
     },
-
-    # --- 3.3 规则咨询 ---
     {
-        "id": "KB_C_005",
-        "category": "consult",
-        "sub_category": "rule",
-        "question": "信用卡还款有什么规则？",
-        "answer": """信用卡还款规则：
-
-【还款方式】
-1. 全额还款：账单日后至还款日还清全部欠款
-2. 最低还款：只还最低应付金额，剩余计入下期账单
-   - 最低还款额 = 消费金额×10% + 预借现金×100% + 上期最低还款额未还部分 + 费用利息
-3. 分期还款：将欠款分成多期偿还
-
-【还款日】
-- 固定还款日：每月账单日后约18-20天
-- 可在手机银行查看具体还款日
-
-【逾期后果】
-1. 产生逾期利息（日息万分之五）
-2. 影响个人征信记录
-3. 可能影响贷款审批
-
-【温馨提示】
-- 建议设置自动还款，避免忘记还款日
-- 逾期1-3天通常有宽限期，但建议按时还款
-- 如有困难无法全额还款，可申请分期或联系客服协商""",
-        "tags": ["还款规则", "最低还款", "全额还款", "逾期"],
-        "metadata": {"intent": "consult_rule", "frequency": "high", "risk_disclosure": False}
+        "id": 'KB_PROD_005',
+        "category": 'marketing',
+        "domain": 'product',
+        "domain_zh": '产品矩阵',
+        "sub_category": 'prod',
+        "question": '招行"同屏服务"？',
+        "answer": '客服共享屏幕',
+        "tags": [],
+        "metadata": {'intent': 'marketing_prod', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
     },
-
     {
-        "id": "KB_C_006",
-        "category": "consult",
-        "sub_category": "rule",
-        "question": "网上银行转账限额是多少？",
-        "answer": """网上银行转账限额：
-
-【无证书版（大众版）】
-| 单笔限额 | 日累计限额 |
-|---------|-----------|
-| 1000元 | 5000元 |
-
-【证书版（专业版）】
-| 单笔限额 | 日累计限额 |
-|---------|-----------|
-| 50万元 | 100万元 |
-
-【U盾用户】
-| 单笔限额 | 日累计限额 |
-|---------|-----------|
-| 100万元 | 200万元 |
-
-【提升限额】
-如需提升限额，请携带身份证和银行卡到网点办理：
-- 可申请提升网银转账限额
-- 开通U盾可获得更高限额
-
-【手机银行限额】
-| 限额类型 | 限额 |
-|---------|------|
-| 单笔最高 | 50万 |
-| 日累计最高 | 100万 |""",
-        "tags": ["转账限额", "网银限额", "限额", "规则"],
-        "metadata": {"intent": "consult_rule", "frequency": "high", "risk_disclosure": False}
+        "id": 'KB_PROD_006',
+        "category": 'marketing',
+        "domain": 'product',
+        "domain_zh": '产品矩阵',
+        "sub_category": 'prod',
+        "question": '招行"AI 小研"？',
+        "answer": '阿里云通义大模型（2024 InfoQ 最佳实践）',
+        "tags": [],
+        "metadata": {'intent': 'marketing_prod', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
     },
-
-    # --- 3.4 活动咨询 ---
     {
-        "id": "KB_C_007",
-        "category": "consult",
-        "sub_category": "activity",
-        "question": "最近有什么优惠活动？",
-        "answer": """招商银行近期优惠活动：
-
-【信用卡活动】
-1. 饭票优惠：周三5折饭票，平日满50减10
-2. 超市满减：指定超市满100减20
-3. 加油返现：绑定中石化卡加油返现5%
-4. 电影票：周二19.9元看大片
-5. 积分兑换：积分抵现、礼品兑换
-
-【手机银行活动】
-1. 新户有礼：首次注册送优惠券
-2. 转账抽奖：每月转账满额参与抽奖
-3. 生活缴费：缴水电费随机减
-
-【参与方式】
-1. 手机银行 → 热门活动
-2. 掌上生活 → 活动中心
-3. 微信公众号「招商银行信用卡」
-
-【温馨提示】
-- 活动详情以官方公告为准
-- 部分活动需抢名额，先到先得
-- 活动可能有地区限制""",
-        "tags": ["优惠活动", "活动", "折扣", "满减"],
-        "metadata": {"intent": "consult_activity", "frequency": "high", "risk_disclosure": False}
+        "id": 'KB_PROD_007',
+        "category": 'marketing',
+        "domain": 'product',
+        "domain_zh": '产品矩阵',
+        "sub_category": 'prod',
+        "question": '招行"小招"AI 助理？',
+        "answer": 'App 内智能客服',
+        "tags": [],
+        "metadata": {'intent': 'marketing_prod', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
     },
-
-
-    # ============================================================
-    # 四、服务转接类 (category: service_transfer)
-    # ============================================================
-
-    # --- 4.1 转人工 ---
     {
-        "id": "KB_S_001",
-        "category": "service_transfer",
-        "sub_category": "human_service",
-        "question": "我要转人工客服",
-        "answer": """正在为您转接人工客服...
-
-【转接方式】
-- 电话：请拨打 95555，说"转人工"或按"0"
-- 手机银行：我的 → 客服 → 转人工
-- 网上银行：在线客服 → 转人工
-
-【预计等待时间】
-- 工作日：1-3分钟
-- 非工作日或高峰期：3-10分钟
-
-【温馨提示】
-- 请简要准备好您的问题
-- 如需身份验证，请准备身份证号和卡号后4位
-- 人工客服将根据您的问题转接相应专员
-
-感谢您的耐心等待，人工客服将尽快为您服务。""",
-        "tags": ["转人工", "人工客服", "人工服务"],
-        "metadata": {"intent": "human_service", "frequency": "high", "risk_disclosure": False, "transfer": True}
+        "id": 'KB_PROD_008',
+        "category": 'marketing',
+        "domain": 'product',
+        "domain_zh": '产品矩阵',
+        "sub_category": 'prod',
+        "question": '招银理财定位？',
+        "answer": '招行全资理财子公司',
+        "tags": [],
+        "metadata": {'intent': 'marketing_prod', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
     },
-
-    # --- 4.2 投诉 ---
     {
-        "id": "KB_S_002",
-        "category": "service_transfer",
-        "sub_category": "complaint",
-        "question": "我对服务不满意要投诉",
-        "answer": """非常抱歉给您带来不好的体验，我们非常重视您的反馈。
-
-【投诉渠道】
-1. 电话投诉：拨打 95555 转人工，说明情况
-2. 手机银行：我的 → 意见反馈 → 投诉建议
-3. 网上银行：帮助与反馈 → 投诉建议
-4. 网点投诉：到任意网点向工作人员反映
-5. 来信投诉：寄信至招行消费者权益保护中心
-
-【处理流程】
-1. 客服记录您的投诉内容
-2. 1-3个工作日内专人联系您
-3. 7个工作日内给出处理结果
-
-【温馨提示】
-- 请提供具体的日期、网点、涉事员工姓名
-- 如有相关凭证（截图、录音）请保留
-- 我们会认真处理每一件投诉""",
-        "tags": ["投诉", "不满", "反馈", "意见"],
-        "metadata": {"intent": "complaint", "frequency": "low", "risk_disclosure": False, "transfer": True}
+        "id": 'KB_PROD_009',
+        "category": 'marketing',
+        "domain": 'product',
+        "domain_zh": '产品矩阵',
+        "sub_category": 'prod',
+        "question": '招银理财日日金？',
+        "answer": '现金管理类理财',
+        "tags": [],
+        "metadata": {'intent': 'marketing_prod', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
     },
-
-    # --- 4.3 紧急求助 ---
     {
-        "id": "KB_S_003",
-        "category": "service_transfer",
-        "sub_category": "urgent",
-        "question": "账户异常需要紧急处理",
-        "answer": """【紧急服务】
-
-您的账户安全是我们的首要关注。
-
-【紧急挂失】
-如卡片丢失或被盗，请立即：
-1. 手机银行：信用卡 → 卡片管理 → 挂失
-2. 拨打 95555 转人工紧急挂失
-3. 携带身份证到就近网点
-
-【账户冻结】
-如发现异常交易，请：
-1. 立即冻结账户
-2. 拨打 95555 报案
-3. 保留相关证据（截图、短信等）
-
-【人工服务】
-如需紧急人工服务，请拨打：
-- 95555（境内）
-- +86-755-86273887（境外）
-
-请简要说明您的情况，人工客服将优先处理。""",
-        "tags": ["紧急", "账户异常", "紧急处理", "安全"],
-        "metadata": {"intent": "urgent_help", "frequency": "low", "risk_disclosure": False, "transfer": True}
+        "id": 'KB_PROD_010',
+        "category": 'marketing',
+        "domain": 'product',
+        "domain_zh": '产品矩阵',
+        "sub_category": 'prod',
+        "question": '招银理财增利系列？',
+        "answer": '固定收益类',
+        "tags": [],
+        "metadata": {'intent': 'marketing_prod', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
     },
-
-
-    # ============================================================
-    # 五、营销咨询类 (category: marketing)
-    # ============================================================
-
-    # --- 5.1 理财产品 ---
     {
-        "id": "KB_M_001",
-        "category": "marketing",
-        "sub_category": "wealth",
-        "question": "有什么理财产品推荐？",
-        "answer": """⚠️ 理财有风险，投资需谨慎
-
-招商银行主要理财产品类型：
-
-【现金管理类】
-- 特点：灵活存取，T+0/T+1赎回
-- 示例：天天宝、朝招利、日日盈
-- 起点：1元起
-- 适合：日常备用金管理
-
-【固定收益类】
-- 特点：预期收益稳定，期限固定
-- 期限：1个月-1年
-- 起点：1万元起
-- 适合：稳健型投资者
-
-【净值型理财】
-- 特点：收益随净值波动
-- 起点：1万元起
-- 适合：有一定投资经验的投资者
-
-【如何选择】
-1. 评估自身风险承受能力
-2. 确定资金使用时间
-3. 分散配置不同类型产品
-
-【购买方式】
-手机银行 → 理财 → 在售产品""",
-        "tags": ["理财产品", "理财", "推荐", "购买"],
-        "metadata": {"intent": "marketing_wealth", "frequency": "high", "risk_disclosure": True}
+        "id": 'KB_PROD_011',
+        "category": 'marketing',
+        "domain": 'product',
+        "domain_zh": '产品矩阵',
+        "sub_category": 'prod',
+        "question": '招银理财私行产品？',
+        "answer": '600 万起步',
+        "tags": [],
+        "metadata": {'intent': 'marketing_prod', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
     },
-
     {
-        "id": "KB_M_002",
-        "category": "marketing",
-        "sub_category": "wealth",
-        "question": "理财收益是怎么计算的？",
-        "answer": """⚠️ 历史收益不代表未来表现，投资有风险
-
-理财收益计算方式：
-
-【计算公式】
-预期收益 = 购买金额 × 年化收益率 × 持有天数 / 365
-
-【示例】
-购买10万元增利系列（年化4.5%），持有90天：
-收益 = 100000 × 4.5% × 90 / 365 ≈ 1109元
-
-【关键日期】
-- 认购期：产品募集期
-- 起息日：开始计算收益的日期
-- 到期日：产品结束日期
-- 到账日：本金和收益返还日期
-
-【注意事项】
-- 预期收益不等于实际收益
-- 净值型产品收益随市场波动
-- 赎回时可能需要等待1-3个工作日
-- 持有期内提前赎回可能收取违约金""",
-        "tags": ["理财收益", "收益计算", "年化收益"],
-        "metadata": {"intent": "marketing_wealth", "frequency": "high", "risk_disclosure": True}
+        "id": 'KB_PROD_012',
+        "category": 'marketing',
+        "domain": 'product',
+        "domain_zh": '产品矩阵',
+        "sub_category": 'prod',
+        "question": '招银理财业绩？',
+        "answer": '行业第一梯队',
+        "tags": [],
+        "metadata": {'intent': 'marketing_prod', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
     },
-
     {
-        "id": "KB_M_003",
-        "category": "marketing",
-        "sub_category": "wealth",
-        "question": "基金和理财有什么区别？",
-        "answer": """⚠️ 基金非存款，市场有风险，投资需谨慎
-
-基金与理财产品的区别：
-
-| 对比项 | 银行理财 | 基金 |
-|--------|---------|------|
-| 管理人 | 银行理财子公司 | 基金公司 |
-| 收益 | 预期收益（部分有业绩基准） | 浮动收益 |
-| 风险 | 中低风险（净值型逐步转型） | 风险等级多样 |
-| 流动性 | 有固定期限 | 部分可灵活申赎 |
-| 起点 | 1万元 | 1元/10元起 |
-| 信息披露 | 按产品披露 | 每日净值 |
-
-【银行理财优势】
-- 产品线丰富，可选范围广
-- 银行渠道购买方便
-- 适合稳健型投资者
-
-【基金优势】
-- 专业基金经理管理
-- 投资范围更广
-- 长期投资可能获得更高收益
-
-【建议】
-- 风险偏好低：银行理财为主
-- 能承受波动：可配置部分基金
-- 分散投资，降低单一风险""",
-        "tags": ["基金", "理财", "区别", "对比"],
-        "metadata": {"intent": "marketing_wealth", "frequency": "high", "risk_disclosure": True}
+        "id": 'KB_PROD_013',
+        "category": 'marketing',
+        "domain": 'product',
+        "domain_zh": '产品矩阵',
+        "sub_category": 'prod',
+        "question": '一卡通普通卡？',
+        "answer": '0 资产门槛',
+        "tags": [],
+        "metadata": {'intent': 'marketing_prod', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
     },
-
-    # --- 5.2 信用卡咨询 ---
     {
-        "id": "KB_M_004",
-        "category": "marketing",
-        "sub_category": "credit",
-        "question": "怎么办一张信用卡？",
-        "answer": """招商银行信用卡申请方式：
-
-【手机银行申请】
-1. 打开APP → 信用卡 → 申请信用卡
-2. 选择卡种（经典白、车卡、城市卡等）
-3. 填写个人信息
-4. 提交申请
-5. 等待审批（约3-7个工作日）
-
-【官网申请】
-进入 creditcard.cmbchina.com 选择卡种申请
-
-【线下申请】
-携带身份证到任意招行网点申请
-
-【热门的卡种推荐】
-1. 经典版信用卡：权益全面，适合日常消费
-2. Car Card：加油返现，适合有车一族
-3. 城市卡：本地生活优惠多
-4. 全币种卡：出国旅行必备
-
-【申请条件】
-- 年满18周岁
-- 有稳定工作收入
-- 信用记录良好
-
-【申请进度】
-可在手机银行 → 信用卡 → 申请进度查询""",
-        "tags": ["申请信用卡", "办卡", "信用卡申请"],
-        "metadata": {"intent": "marketing_credit", "frequency": "high", "risk_disclosure": False}
+        "id": 'KB_PROD_014',
+        "category": 'marketing',
+        "domain": 'product',
+        "domain_zh": '产品矩阵',
+        "sub_category": 'prod',
+        "question": '一卡通金卡？',
+        "answer": '5 万-50 万',
+        "tags": [],
+        "metadata": {'intent': 'marketing_prod', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
     },
-
     {
-        "id": "KB_M_005",
-        "category": "marketing",
-        "sub_category": "credit",
-        "question": "信用卡有什么权益？",
-        "answer": """招商银行信用卡主要权益：
-
-【积分权益】
-- 消费积分：每消费1元累计1积分（部分渠道2倍）
-- 积分永久有效（经典白等高端卡）
-- 积分可兑换礼品、航空里程、刷卡金
-
-【出行权益】
-- 航空延误险：延误2小时起赔付
-- 机场贵宾厅：部分卡种免费使用
-- 接送机服务：部分高端卡提供
-
-【生活权益】
-- 美食优惠：周三5折饭票
-- 购物返现：指定商户最高10%返现
-- 电影票：周二19.9元起
-
-【安全保障】
-- 交易短信提醒
-- 失卡保障（挂失前48小时盗刷赔付）
-- 境外盗刷零风险
-
-【各卡种权益】
-不同卡种权益有差异，建议登录手机银行查看各卡种详情。""",
-        "tags": ["信用卡权益", "权益", "积分", "优惠"],
-        "metadata": {"intent": "marketing_credit", "frequency": "high", "risk_disclosure": False}
+        "id": 'KB_PROD_015',
+        "category": 'marketing',
+        "domain": 'product',
+        "domain_zh": '产品矩阵',
+        "sub_category": 'prod',
+        "question": '一卡通金葵花？',
+        "answer": '50 万-500 万',
+        "tags": [],
+        "metadata": {'intent': 'marketing_prod', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
     },
-
-    # --- 5.3 贷款产品 ---
     {
-        "id": "KB_M_006",
-        "category": "marketing",
-        "sub_category": "loan",
-        "question": "贷款怎么办理？",
-        "answer": """⚠️ 贷款有风险，请确保按时还款
-
-招商银行贷款产品类型：
-
-【信用贷款】
-- 额度：最高30万
-- 期限：最长5年
-- 利率：年化4.35%-18%
-- 特点：无需抵押担保
-
-【抵押贷款】
-- 额度：按抵押物价值评估
-- 期限：最长30年
-- 用途：购房、装修、经营等
-- 特点：额度高，利率低
-
-【消费贷款】
-- 额度：最高50万
-- 期限：最长5年
-- 用途：消费支出
-- 特点：审批快
-
-【申请方式】
-1. 手机银行 → 贷款 → 选择产品
-2. 查看可申请额度
-3. 在线提交申请
-4. 审批通过后签约放款
-
-【申请材料】
-- 身份证明
-- 收入证明
-- 征信授权
-
-【温馨提示】
-- 贷款前请评估还款能力
-- 保持良好还款记录有利于额度提升""",
-        "tags": ["贷款办理", "贷款", "信用贷款", "申请"],
-        "metadata": {"intent": "marketing_loan", "frequency": "high", "risk_disclosure": True}
+        "id": 'KB_PROD_016',
+        "category": 'marketing',
+        "domain": 'product',
+        "domain_zh": '产品矩阵',
+        "sub_category": 'prod',
+        "question": '一卡通钻石？',
+        "answer": '500 万-1000 万',
+        "tags": [],
+        "metadata": {'intent': 'marketing_prod', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
     },
-
-
-    # ============================================================
-    # 六、风险类 (category: risk)
-    # ============================================================
-
-    # --- 6.1 反诈举报 ---
     {
-        "id": "KB_R_001",
-        "category": "risk",
-        "sub_category": "anti_fraud",
-        "question": "我遇到诈骗了怎么办？",
-        "answer": """【紧急处理】
-
-如果您遇到诈骗，请立即采取以下措施：
-
-【第一步：冻结账户】
-1. 手机银行：账户管理 → 冻结账户
-2. 或拨打 95555 立即挂失
-3. 防止进一步损失
-
-【第二步：报警】
-1. 拨打110或到就近派出所报案
-2. 保留相关证据（聊天记录、转账记录、截图）
-3. 获取报案回执
-
-【第三步：联系招行】
-1. 拨打 95555 说明情况
-2. 提供转账凭证
-3. 配合银行调查
-
-【常见诈骗手法】
-- 冒充客服要求转账
-- 钓鱼短信/链接
-- 虚假投资平台
-- 刷单返利诈骗
-
-【防范建议】
-- 不轻信陌生来电/短信
-- 不向陌生人转账
-- 不点击不明链接
-- 官方渠道核实信息""",
-        "tags": ["诈骗", "被骗", "举报", "反诈"],
-        "metadata": {"intent": "anti_fraud", "frequency": "low", "risk_disclosure": False, "transfer": True}
+        "id": 'KB_PROD_017',
+        "category": 'marketing',
+        "domain": 'product',
+        "domain_zh": '产品矩阵',
+        "sub_category": 'prod',
+        "question": '一卡通私人银行？',
+        "answer": '1000 万+',
+        "tags": [],
+        "metadata": {'intent': 'marketing_prod', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
     },
-
-    # --- 6.2 盗刷反馈 ---
     {
-        "id": "KB_R_002",
-        "category": "risk",
-        "sub_category": "theft",
-        "question": "卡片被盗刷了怎么办？",
-        "answer": """【紧急处理】
-
-如发现信用卡被盗刷，请立即：
-
-【第一步：挂失卡片】
-1. 手机银行：信用卡 → 卡片管理 → 挂失
-2. 或拨打 95555 立即挂失
-3. 防止进一步盗刷
-
-【第二步：冻结账户】
-如借记卡也被盗刷，立即：
-手机银行 → 账户管理 → 冻结账户
-
-【第三步：报警】
-1. 拨打110报案
-2. 打印交易流水
-3. 保留相关证据
-
-【第四步：联系招行】
-1. 拨打 95555 转信用卡客服
-2. 提供盗刷时间、金额、地点
-3. 填写否认交易申请表
-
-【赔付说明】
-- 挂失前48小时因盗刷产生的损失，在符合理赔条件时可申请赔付
-- 需提供公安局报案回执
-
-【防范建议】
-- 开启交易短信提醒
-- 信用卡设置签名+密码
-- 境外消费可设置"关闭境外无卡支付"
-- 不透露卡号、CVV码、验证码""",
-        "tags": ["盗刷", "卡片盗刷", "被盗", "损失"],
-        "metadata": {"intent": "theft_report", "frequency": "low", "risk_disclosure": False, "transfer": True}
+        "id": 'KB_PROD_018',
+        "category": 'marketing',
+        "domain": 'product',
+        "domain_zh": '产品矩阵',
+        "sub_category": 'prod',
+        "question": '招行经典白金卡？',
+        "answer": '经典白，年费可免',
+        "tags": [],
+        "metadata": {'intent': 'marketing_prod', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
     },
-
-    # --- 6.3 账户冻结 ---
     {
-        "id": "KB_R_003",
-        "category": "risk",
-        "sub_category": "freeze",
-        "question": "我的账户被冻结了怎么解冻？",
-        "answer": """账户冻结的处理方法：
-
-【常见冻结原因】
-1. 密码连续输错（输错5次自动锁定）
-2. 异常交易触发了风控
-3. 司法冻结（涉及案件）
-4. 客户主动申请冻结
-
-【密码锁定处理】
-1. 手机银行：忘记密码 → 重置密码
-2. 或携带身份证和银行卡到网点解锁
-
-【风控冻结处理】
-1. 拨打 95555 转人工客服
-2. 说明账户使用情况
-3. 配合身份核实
-4. 如核实通过，通常1-3个工作日解冻
-
-【司法冻结处理】
-需要联系冻结机关处理，招行无法单方面解冻。
-
-【温馨提示】
-- 如账户异常无法使用，请立即联系客服
-- 不要向陌生人转账，防止被骗
-- 提供真实的账户使用信息有利于快速解冻""",
-        "tags": ["账户冻结", "解冻", "锁定", "冻结"],
-        "metadata": {"intent": "freeze_request", "frequency": "low", "risk_disclosure": False, "transfer": True}
+        "id": 'KB_PROD_019',
+        "category": 'marketing',
+        "domain": 'product',
+        "domain_zh": '产品矩阵',
+        "sub_category": 'prod',
+        "question": '招行钻石信用卡？',
+        "answer": '高端权益',
+        "tags": [],
+        "metadata": {'intent': 'marketing_prod', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
     },
-
-
-    # ============================================================
-    # 七、复杂需求 (category: complex)
-    # ============================================================
-
-    # --- 7.1 定制理财 ---
     {
-        "id": "KB_X_001",
-        "category": "complex",
-        "sub_category": "custom_plan",
-        "question": "我想做一个理财规划",
-        "answer": """感谢您的信任。为了给您提供更专业的理财规划，建议您：
-
-【专业服务】
-建议联系招行专属客户经理获取一对一服务：
-1. 手机银行 → 我的 → 专属客户经理
-2. 查看您的客户经理联系方式
-
-【理财规划要素】
-1. 风险测评：了解您的风险承受能力
-2. 资金需求：短期/中期/长期资金规划
-3. 收益预期：合理的收益目标
-4. 资产配置：存款、理财、基金、保险等配置
-
-【自助工具】
-手机银行提供理财评估工具：
-1. 风险测评问卷
-2. 理财计算器
-3. 产品筛选器
-
-【温馨提示】
-- 投资有风险，请根据自身情况选择产品
-- 不建议将所有资金投入单一高风险产品
-- 建议分散配置，降低风险
-
-如需进一步咨询，请转接人工客服。""",
-        "tags": ["理财规划", "资产配置", "投资建议", "规划"],
-        "metadata": {"intent": "custom_plan", "frequency": "low", "risk_disclosure": True, "transfer": True}
+        "id": 'KB_PROD_020',
+        "category": 'marketing',
+        "domain": 'product',
+        "domain_zh": '产品矩阵',
+        "sub_category": 'prod',
+        "question": '招行 AE 白金？',
+        "answer": '美国运通品牌',
+        "tags": [],
+        "metadata": {'intent': 'marketing_prod', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
     },
-
-    # --- 7.2 贷款方案对比 ---
     {
-        "id": "KB_X_002",
-        "category": "complex",
-        "sub_category": "loan_compare",
-        "question": "信用贷款和抵押贷款哪个更适合我？",
-        "answer": """⚠️ 贷款有风险，请根据实际情况选择
-
-信用贷款 vs 抵押贷款对比：
-
-| 对比项 | 信用贷款 | 抵押贷款 |
-|--------|---------|---------|
-| 额度 | 最高30万 | 按抵押物价值 |
-| 利率 | 4.35%-18% | 3.5%-8% |
-| 期限 | 最长5年 | 最长30年 |
-| 放款速度 | 快速（当天） | 较慢（需评估） |
-| 抵押物 | 无需 | 需要 |
-| 用途 | 消费、应急 | 购房、装修、经营 |
-
-【信用贷款适合】
-- 小额资金需求（30万以下）
-- 无抵押物
-- 需要快速到账
-- 短期使用
-
-【抵押贷款适合】
-- 大额资金需求
-- 有房产等抵押物
-- 利率敏感
-- 长期资金需求
-
-【建议】
-- 根据实际需求选择
-- 综合考虑利率和还款压力
-- 建议先咨询客户经理获取专业建议
-
-如需进一步了解，请转接贷款专员。""",
-        "tags": ["贷款对比", "信用贷款", "抵押贷款", "贷款选择"],
-        "metadata": {"intent": "loan_compare", "frequency": "low", "risk_disclosure": True, "transfer": True}
+        "id": 'KB_PROD_021',
+        "category": 'marketing',
+        "domain": 'product',
+        "domain_zh": '产品矩阵',
+        "sub_category": 'prod',
+        "question": '招行车主卡？',
+        "answer": '汽车场景',
+        "tags": [],
+        "metadata": {'intent': 'marketing_prod', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
     },
-
-
-    # ============================================================
-    # 八、模糊/无效意图 (category: invalid)
-    # ============================================================
-
     {
-        "id": "KB_V_001",
-        "category": "invalid",
-        "sub_category": "invalid_query",
-        "question": "asdfgh123",
-        "answer": """抱歉，我没有理解您的问题。
-
-请尝试：
-1. 用简洁的语言描述您的问题
-2. 参考以下常见问题：
-   - 余额查询、转账操作
-   - 信用卡账单、还款
-   - 理财产品、贷款咨询
-
-如果您的问题比较复杂，可以直接说"转人工"，人工客服将为您提供帮助。""",
-        "tags": ["乱码", "无效输入", "无法理解"],
-        "metadata": {"intent": "semantic_invalid", "frequency": "low", "risk_disclosure": False}
+        "id": 'KB_PROD_022',
+        "category": 'marketing',
+        "domain": 'product',
+        "domain_zh": '产品矩阵',
+        "sub_category": 'prod',
+        "question": '招行校园卡？',
+        "answer": '学生群体',
+        "tags": [],
+        "metadata": {'intent': 'marketing_prod', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
     },
-
     {
-        "id": "KB_V_002",
-        "category": "invalid",
-        "sub_category": "accidental_touch",
-        "question": "嗯嗯好的谢谢",
-        "answer": """不客气！很高兴能帮到您。
-
-如果您还有其他问题，随时可以问我。
-如需人工服务，请说"转人工"，我将为您转接。""",
-        "tags": ["误触", "结束语", "无意义"],
-"metadata": {"intent": "accidental_touch", "frequency": "low", "risk_disclosure": False}
+        "id": 'KB_PROD_023',
+        "category": 'marketing',
+        "domain": 'product',
+        "domain_zh": '产品矩阵',
+        "sub_category": 'prod',
+        "question": '招行企业银行 App？',
+        "answer": '对公 App',
+        "tags": [],
+        "metadata": {'intent': 'marketing_prod', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
     },
-
-    # --- 1.5 交易记录查询 ---
     {
-        "id": "KB_Q_008",
-        "category": "query",
-        "sub_category": "transaction_record",
-        "question": "怎么查交易明细？",
-        "answer": """查询交易明细的方式：
-
-【手机银行】
-1. 登录 → 我的账户 → 交易明细
-2. 选择时间段（近1个月/3个月/6个月/1年）
-3. 可按金额、类型筛选
-4. 支持导出Excel
-
-【网上银行】
-1. 登录 → 我的账户 → 交易记录
-2. 设置查询时间段
-3. 查看或下载明细
-
-【微信银行】
-1. 关注「招商银行」公众号
-2. 点击「我的」→「交易记录」
-
-【短信通知】
-开通交易提醒后，每笔消费会自动短信通知
-
-【温馨提示】
-- 可查询近3年的交易明细
-- 如发现异常交易，请及时联系客服""",
-        "tags": ["交易明细", "消费记录", "交易记录", "查询"],
-        "metadata": {"intent": "query_transaction", "frequency": "high", "risk_disclosure": False}
+        "id": 'KB_PROD_024',
+        "category": 'marketing',
+        "domain": 'product',
+        "domain_zh": '产品矩阵',
+        "sub_category": 'prod',
+        "question": '"数字产品经理"是什么？',
+        "answer": 'RPA + 数字人技术智能识别',
+        "tags": [],
+        "metadata": {'intent': 'marketing_prod', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
     },
-
     {
-        "id": "KB_Q_009",
-        "category": "query",
-        "sub_category": "interest_rate",
-        "question": "信用卡利息怎么算？",
-        "answer": """信用卡利息计算方式：
-
-【透支利息】
-- 透支出账日起，按日息万分之五计算
-- 年化利率约18.25%
-
-【逾期利息】
-- 未在还款日前还清最低还款额
-- 未还金额从记账日起，按日息万分之五
-
-【分期利息】
-- 手续费率：0%-1.2%/期（根据分期期数）
-- 可选3/6/9/12/18/24期
-
-【示例】
-账单金额5000元，只还最低还款额1000元：
-- 未还4000元从还款日起计息
-- 日息 = 4000 × 0.05% = 2元/天
-
-【避免利息】
-- 全额还款可免息
-- 按时还款避免逾期
-- 最低还款会产生利息
-
-【温馨提示】
-如有还款困难，可申请分期或联系客服协商""",
-        "tags": ["信用卡利息", "利息计算", "逾期利息", "日息"],
-        "metadata": {"intent": "consult_interest", "frequency": "high", "risk_disclosure": True}
+        "id": 'KB_PROD_025',
+        "category": 'marketing',
+        "domain": 'product',
+        "domain_zh": '产品矩阵',
+        "sub_category": 'prod',
+        "question": '对公客户怎么用？',
+        "answer": '自动化业务办理',
+        "tags": [],
+        "metadata": {'intent': 'marketing_prod', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
     },
-
     {
-        "id": "KB_Q_010",
-        "category": "query",
-        "sub_category": "point",
-        "question": "积分怎么用？",
-        "answer": """招商银行信用卡积分使用方法：
-
-【积分查询】
-- 手机银行：信用卡 → 我的积分
-- 掌上生活：我的 → 积分
-
-【积分兑换】
-1. 航空里程：600积分 = 1里程（国航/东航/南航等）
-2. 刷卡金：1000积分 = 10元
-3. 实物礼品：手机银行 → 积分商城
-4. 优惠券：星巴克、电影票等
-
-【积分有效期】
-- 普卡：累计周期内有效（如当年1月-12月）
-- 金卡：3年有效期
-- 经典白：积分永久有效
-
-【积分规则】
-- 消费1元 = 1积分（部分渠道2倍）
-- 房产、汽车、批发等不累计积分
-- 积分不可转让给他人
-
-【温馨提示】
-积分兑换以实际可兑换商品为准，请关注手机银行活动更新""",
-        "tags": ["积分使用", "积分兑换", "积分查询", "积分"],
-        "metadata": {"intent": "consult_point", "frequency": "high", "risk_disclosure": False}
+        "id": 'KB_PROD_026',
+        "category": 'marketing',
+        "domain": 'product',
+        "domain_zh": '产品矩阵',
+        "sub_category": 'prod',
+        "question": 'TREE 资产配置？',
+        "answer": '招行方法论',
+        "tags": [],
+        "metadata": {'intent': 'marketing_prod', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
     },
-
-    # --- 1.6 网点营业时间 ---
     {
-        "id": "KB_Q_011",
-        "category": "query",
-        "sub_category": "branch_info",
-        "question": "网点几点开门？",
-        "answer": """招商银行网点营业时间：
-
-【标准营业时间】
-- 周一至周五：9:00 - 17:00
-- 周六、周日：部分网点营业（通常10:00 - 16:00）
-- 节假日：按公告时间营业
-
-【查询方式】
-1. 手机银行：网点查询 → 查看营业时间
-2. 官网：www.cmbchina.com → 网点查询
-3. 客服电话：95555
-
-【自助服务】
-- 24小时自助银行：可办理取款、存款、转账
-- 自助终端可办理缴费、打印等业务
-
-【温馨提示】
-- 具体营业时间以各网点公告为准
-- 建议前往前先电话确认
-- 高峰期（如月末、季末）可能排队较长""",
-        "tags": ["营业时间", "网点营业", "开门时间", "几点开门"],
-        "metadata": {"intent": "query_branch", "frequency": "medium", "risk_disclosure": False}
+        "id": 'KB_PROD_027',
+        "category": 'marketing',
+        "domain": 'product',
+        "domain_zh": '产品矩阵',
+        "sub_category": 'prod',
+        "question": '招财号？',
+        "answer": '财富开放平台，150+ 资管',
+        "tags": [],
+        "metadata": {'intent': 'marketing_prod', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PROD_028',
+        "category": 'marketing',
+        "domain": 'product',
+        "domain_zh": '产品矩阵',
+        "sub_category": 'prod',
+        "question": '招行"投资仪表盘"？',
+        "answer": '进取类资产定量',
+        "tags": [],
+        "metadata": {'intent': 'marketing_prod', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PROD_029',
+        "category": 'marketing',
+        "domain": 'product',
+        "domain_zh": '产品矩阵',
+        "sub_category": 'prod',
+        "question": '招行"动态检视"？',
+        "answer": '季度再平衡',
+        "tags": [],
+        "metadata": {'intent': 'marketing_prod', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
+    },
+    {
+        "id": 'KB_PROD_030',
+        "category": 'marketing',
+        "domain": 'product',
+        "domain_zh": '产品矩阵',
+        "sub_category": 'prod',
+        "question": '招行"智能财富管家"？',
+        "answer": 'AI 财富陪伴',
+        "tags": [],
+        "metadata": {'intent': 'marketing_prod', 'frequency': 'medium', 'risk_disclosure': False, 'version': 'v2.0'},
     },
 
 ]
 
-# ============================================================
-# 二、交易操作类 (category: transaction)
-# ============================================================
-
-# --- 2.5 跨行转账 ---
-{
-    "id": "KB_T_007",
-    "category": "transaction",
-    "sub_category": "cross_bank_transfer",
-    "question": "跨行转账要多久到账？",
-    "answer": """跨行转账到账时间：
-
-【工作日转账】
-- 9:00 - 16:30发起：一般2小时内到账
-- 16:30后发起：下一工作日处理
-
-【非工作日转账】
-- 周六周日及节假日发起：顺延至下一个工作日
-
-【转账方式】
-| 转账方式 | 到账时间 | 手续费 |
-|---------|---------|-------|
-| 普通跨行 | 1-2个工作日 | 按标准收费 |
-| 加急跨行 | 2小时内 | 加收手续费 |
-| 实时到账 | 即时到账 | 按标准收费 |
-
-【影响因素】
-1. 收款银行处理速度
-2. 转账金额（大额可能需要人行审批）
-3. 节假日顺延
-
-【查询转账状态】
-手机银行 → 转账记录 → 查看处理进度
-
-【温馨提示】
-- 请确保收款信息准确
-- 如超过2个工作日未到账，请联系客服查询""",
-    "tags": ["跨行转账", "到账时间", "转账时间", "多久到账"],
-    "metadata": {"intent": "query_transfer_time", "frequency": "high", "risk_disclosure": False}
-},
-
-# --- 2.6 卡片补办 ---
-{
-    "id": "KB_T_008",
-    "category": "transaction",
-    "sub_category": "card_reissue",
-    "question": "卡片坏了怎么补办？",
-    "answer": """卡片补办流程：
-
-【手机银行申请】
-1. 登录 → 信用卡 → 卡片管理
-2. 选择"损坏换卡"
-3. 确认地址并提交
-4. 新卡3-5个工作日寄出
-
-【网点办理】
-携带身份证到任意招行网点办理
-
-【费用说明】
-- 损坏换卡：15元（部分卡种免费）
-- 丢失补卡：50元
-
-【收到新卡后】
-1. 新卡卡号会变更
-2. 原卡自动失效
-3. 需重新绑定第三方支付
-4. 旧卡请剪断销毁
-
-【温馨提示】
-- 如卡片芯片损坏或磁条消磁，建议尽快更换
-- 新卡激活前原卡无法使用
-- 换卡后旧卡账单债务由新卡继承""",
-    "tags": ["卡片补办", "损坏换卡", "补卡", "换卡"],
-    "metadata": {"intent": "card_reissue", "frequency": "medium", "risk_disclosure": False}
-},
-
-# --- 2.7 自动还款设置 ---
-{
-    "id": "KB_T_009",
-    "category": "transaction",
-    "sub_category": "auto_repay",
-    "question": "怎么设置自动还款？",
-    "answer": """设置信用卡自动还款：
-
-【手机银行设置】
-1. 登录 → 信用卡 → 自动还款设置
-2. 选择还款账户（绑定借记卡）
-3. 选择还款方式：
-   - 全额还款：每月还款日自动还清全部欠款
-   - 最低还款：自动还最低还款额
-4. 确认设置
-
-【注意事项】
-- 还款账户余额需充足
-- 还款日自动扣款，请提前1天确保账户有钱
-- 如扣款失败，会发送短信提醒
-
-【修改/取消】
-手机银行 → 信用卡 → 自动还款设置 → 修改/关闭
-
-【支持的借记卡】
-- 招行借记卡：免费
-- 他行借记卡：可能收取手续费（以银行公告为准）
-
-【温馨提示】
-- 设置自动还款可避免忘记还款
-- 建议设置全额自动还款，避免利息""",
-    "tags": ["自动还款", "设置自动还款", "还款绑定", "自动扣款"],
-    "metadata": {"intent": "auto_repay", "frequency": "medium", "risk_disclosure": False}
-},
 
 # ============================================================
-# 三、咨询类 (category: consult)
+# 统计
 # ============================================================
-
-# --- 3.5 分期咨询 ---
-{
-    "id": "KB_C_008",
-    "category": "consult",
-    "sub_category": "installment",
-    "question": "分期手续费是多少？",
-    "answer": """信用卡分期手续费：
-
-【账单分期】
-| 期数 | 手续费率（参考） |
-|------|-----------------|
-| 3期 | 0.90% - 1.50% |
-| 6期 | 1.50% - 2.40% |
-| 9期 | 2.10% - 3.00% |
-| 12期 | 2.70% - 3.60% |
-| 18期 | 3.60% - 4.50% |
-| 24期 | 4.20% - 5.40% |
-
-【消费分期】
-- 与账单分期类似
-- 单笔消费≥1000元可申请
-
-【现金分期】
-- 利率略高于消费分期
-- 手续费按期数分摊
-
-【计算示例】
-消费12000元，分12期，手续费率2.7%：
-- 一次性手续费 = 12000 × 2.7% = 324元
-- 每月本金 = 12000 / 12 = 1000元
-
-【申请方式】
-手机银行 → 信用卡 → 分期还款
-
-【温馨提示】
-- 实际手续费率以审批为准
-- 提前还款可能收取剩余手续费
-- 请根据还款能力选择分期期数""",
-    "tags": ["分期手续费", "分期利率", "账单分期", "消费分期"],
-    "metadata": {"intent": "consult_installment", "frequency": "high", "risk_disclosure": True}
-},
-
-# --- 3.6 信用卡额度咨询 ---
-{
-    "id": "KB_C_009",
-    "category": "consult",
-    "sub_category": "credit_limit",
-    "question": "我的信用卡额度多少？",
-    "answer": """查询信用卡额度：
-
-【额度类型】
-- 固定额度：长期有效额度
-- 临时额度：银行主动提升的短期额度
-- 可用额度：当前可使用的额度
-
-【查询方式】
-1. 手机银行：信用卡 → 额度管理
-2. 掌上生活：我的 → 额度
-3. 短信：发送「ED卡号末4位」到95555
-
-【额度说明】
-- 总额度 = 已用额度 + 可用额度
-- 预借现金额度通常为总额度的50%
-
-【影响额度的因素】
-1. 个人征信记录
-2. 收入和工作情况
-3. 招行资产和业务往来
-4. 历史用卡和还款记录
-
-【提升额度】
-- 正常用卡3-6个月后可能提额
-- 可在手机银行申请临时提额
-- 保持良好还款有助于提额
-
-【温馨提示】
-请理性使用额度，按时还款保持良好信用""",
-    "tags": ["信用卡额度", "额度查询", "可用额度", "额度"],
-    "metadata": {"intent": "consult_credit_limit", "frequency": "high", "risk_disclosure": False}
-},
-
-
-# ============================================================
-# 辅助函数
-# ============================================================
-
-def get_knowledge_by_category(category: str) -> List[Dict]:
-    """根据一级分类获取知识"""
-    return [item for item in KNOWLEDGE_BASE if item["category"] == category]
+_STATS = {
+    "total": 565,
+    "by_domain": {
+        'account': 50,
+        'credit_card': 60,
+        'loan': 50,
+        'investment': 60,
+        'payment': 40,
+        'dcep': 30,
+        'pension': 40,
+        'gov': 50,
+        'cross_border': 35,
+        'life': 30,
+        'new_worker': 20,
+        'service': 30,
+        'risk': 40,
+        'product': 30,
+    },
+    "by_intent": {
+        'query': 140,
+        'consult': 195,
+        'marketing': 90,
+        'transaction': 70,
+        'service_transfer': 30,
+        'risk': 40,
+    },
+}
 
 
 def get_knowledge_by_intent(intent: str) -> List[Dict]:
-    """根据意图获取知识"""
-    return [item for item in KNOWLEDGE_BASE
-            if item.get("metadata", {}).get("intent") == intent]
+    """按意图分类过滤 (兼容 v1.0 调用)"""
+    return [k for k in KNOWLEDGE_BASE if k["category"] == intent or k.get("metadata", {}).get("intent") == intent]
 
 
-def get_all_categories() -> List[str]:
-    """获取所有一级分类"""
-    return ["query", "transaction", "consult", "service_transfer",
-            "marketing", "risk", "complex", "invalid"]
+def get_knowledge_by_domain(domain: str) -> List[Dict]:
+    """按业务领域过滤 (v2.0 新接口)"""
+    return [k for k in KNOWLEDGE_BASE if k["domain"] == domain]
 
 
-def needs_risk_disclosure(intent: str) -> bool:
-    """判断某意图是否需要风险提示"""
-    for item in KNOWLEDGE_BASE:
-        if item.get("metadata", {}).get("intent") == intent:
-            return item.get("metadata", {}).get("risk_disclosure", False)
-    return False
-
-
-def needs_human_transfer(intent: str) -> bool:
-    """判断某意图是否需要转人工"""
-    for item in KNOWLEDGE_BASE:
-        if item.get("metadata", {}).get("intent") == intent:
-            return item.get("metadata", {}).get("transfer", False)
-    return False
-
-
-def get_sub_categories() -> Dict[str, List[str]]:
-    """获取二级分类"""
-    return {
-        "query": ["balance", "bill", "bank_info", "progress"],
-        "transaction": ["transfer", "password", "card_loss", "card_activate"],
-        "consult": ["rate", "fee", "rule", "activity"],
-        "service_transfer": ["human_service", "complaint", "urgent"],
-        "marketing": ["wealth", "credit", "loan"],
-        "risk": ["anti_fraud", "theft", "freeze"],
-        "complex": ["custom_plan", "loan_compare"],
-        "invalid": ["invalid_query", "accidental_touch"],
-    }
+def get_knowledge_stats() -> Dict:
+    """统计 (供评测 / 文档展示)"""
+    return _STATS
