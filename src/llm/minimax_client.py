@@ -48,7 +48,7 @@ def _load_dotenv() -> None:
 _load_dotenv()
 
 
-DEFAULT_BASE_URL = "https://agent.minimaxi.com/mavis/api/v1/llm/v1"
+DEFAULT_BASE_URL = "https://api.minimaxi.com/v1"  # 2026-06 v3.3.6: 改用官方订阅端点
 DEFAULT_MODEL = "MiniMax-M3"
 DEFAULT_TIMEOUT = 120.0
 
