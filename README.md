@@ -45,7 +45,7 @@ flowchart TB
         end
 
         subgraph RAG["RAG 知识库"]
-            KB[知识库<br/>40条业务知识]
+            KB[知识库<br/>565条业务知识 v2.0]
             IR[Chroma + BM25<br/>混合检索]
         end
 
@@ -261,8 +261,8 @@ ROI = 净节省 / AI 投入 × 100%
 │   ├── 评测评分标准_v3.0.md
 │   ├── 评测指标体系_v1.0.md / v1.1.md
 │   ├── 业务指标体系_v2.0.md
-│   └── 银行业务知识库_v1.0.md
-├── knowledge_base/                        # 银行业务知识库
+│   └── 银行业务知识库_v2.0.md
+├── knowledge_base/                        # 银行业务知识库 v2.0 (565 条)
 ├── tests/
 ├── .github/workflows/                     # CI/CD
 ├── app.py                                 # Streamlit 前端

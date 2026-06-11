@@ -1,7 +1,7 @@
 """
 项目配置文件
 """
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 from typing import Optional
 
 
@@ -11,7 +11,8 @@ class Settings(BaseSettings):
     # MiniMax API (优先)
     minimax_api_key: str = ""
     minimax_base_url: str = "https://agent.minimaxi.com/mavis/api/v1/llm/v1"
-    
+    minimax_model: str = "MiniMax-M2.7"
+
     # DeepSeek API (备用)
     deepseek_api_key: str = ""
     deepseek_base_url: str = "https://api.deepseek.com"
@@ -33,15 +34,18 @@ class Settings(BaseSettings):
     app_name: str = "招商银行智能客服"
     log_level: str = "INFO"
 
-    class Config:
-        env_file = ".env"
-        case_sensitive = False
+    # 兜底: .env 里有未声明字段时不抛异常 (如 minimax_client 用的 MINIMAX_MODEL)
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        case_sensitive=False,
+        extra="ignore",
+    )
 
     def get_active_api_key(self) -> tuple:
         """获取当前可用的API配置"""
-        if self.minimax_api_key and self.minimax_api_key != "sk-xxx":
+        if self.minimax_api_key and self.minimax_api_key.startswith("sk-"):
             return self.minimax_api_key, self.minimax_base_url, "MiniMax"
-        elif self.deepseek_api_key:
+        elif self.deepseek_api_key and self.deepseek_api_key.startswith("sk-"):
             return self.deepseek_api_key, self.deepseek_base_url, "DeepSeek"
         else:
             return None, None, None
