@@ -38,13 +38,21 @@ class CustomerServiceAgent:
         # 初始化组件
         self.intent_recognizer = IntentRecognizer(settings)
 
-        # 使用简单检索器（不依赖外部模型）
+        # v3.3.5 升级: 业界标准 4 阶段 RAG pipeline
+        # 召回 (Multi-Query + Hybrid RRF) + 精排 (Reranker 多信号加权)
+        # 业界对应: Pinecone Hybrid / Elastic RRF / Cohere Rerank 3
+        # 0 外部模型依赖 (sklearn 1.2.1 + numpy 1.26.4 已有)
+        self.retriever = None
         try:
-            from ..rag.simple_retriever import create_retriever
-            self.retriever = create_retriever(KNOWLEDGE_BASE, k=5)
+            from ..rag.reranker import create_reranked_retriever
+            self.retriever = create_reranked_retriever(KNOWLEDGE_BASE, k=5)
         except ImportError:
-            # 完全无法创建检索器，使用空列表
-            self.retriever = None
+            # Fallback: 简单检索器
+            try:
+                from ..rag.simple_retriever import create_retriever
+                self.retriever = create_retriever(KNOWLEDGE_BASE, k=5)
+            except ImportError:
+                self.retriever = None
 
         self.conversation_manager = ConversationManager(max_history=20)
 
