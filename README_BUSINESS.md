@@ -176,7 +176,12 @@
 ## 项目边界（什么不在范围里）
 
 - ❌ 没用真实 LLM 服务（评测方法是 RAGAS 工业级，但实际跑数据时用了 mock LLM）
-- ❌ 知识库 565 条 vs 招行 1767 项政务/工行 1 万+/中行 20 万+——**结构对齐，条数还在缩小差距**
+- ⚠️ **知识库现状（v3.3.1 体检发现）**：
+  - **代码内联 `src/rag/knowledge_base.py` 是 v1.0 40 条**（当前 RAG 实际检索用）
+  - **v2.0 565 条已写入 `knowledge_base/银行零售业务知识库_v2.0.md`**（59KB，结构对齐招行 App 12.0），但**未接入代码**
+  - **v3.3.2 计划**：把 v2.0 565 条 markdown 解析 → 注入 `knowledge_base.py`，替换 v1.0 内联数据
+  - **本文档说的"565 条"指 v2.0 文档已就位**，实际 RAG 检索当前还是 v1.0 40 条
+- ❌ 招行 1767 项政务/工行 1 万+/中行 20 万+——**结构对齐，条数还在缩小差距**
 - ❌ 没接生产流量——这是面试作品集，不是分行真实落地
 - ✅ **L0 红线层 v3.3 已修复**（268 词词典 + 多轮 12/12 通过 + pytest 40/40）—— 见下方"最新进展"
 
@@ -187,7 +192,7 @@
 - **技术向 README**：[README.md](./README.md) — 代码架构、模块说明、技术栈
 - **评测方法论 v3.2**：[docs/评测评分标准_v3.2.md](./docs/评测评分标准_v3.2.md) — 23 页，Harness 7 层架构
 - **银行业务知识库 v2.0**：[knowledge_base/银行零售业务知识库_v2.0.md](./knowledge_base/银行零售业务知识库_v2.0.md) — 565 条
-- **评测报告 v3.2**：[data/eval_report.md](./data/eval_report.md) — 真实数据 + 行动项
+- **评测报告 v3.2 + v3.3 增量**：[data/eval_report.md](./data/eval_report.md) — 真实数据 + 行动项 (第十章 v3.3 增量修复)
 - **银行业 Adapter**：[src/eval/banking_adapter.py](./src/eval/banking_adapter.py) — 716 行银行业 5 项必调整
 - **L0 红线词典 v3.3**：[src/eval/banking_l0_dict.py](./src/eval/banking_l0_dict.py) — 268 词 / 22 子类
 - **多轮评测 v3.3**：[src/eval/multi_turn_eval.py](./src/eval/multi_turn_eval.py) — 12 场景 5 维度
