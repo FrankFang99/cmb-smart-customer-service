@@ -1,0 +1,156 @@
+{
+  "eval_version": "v3.5.3",
+  "eval_date": "2026-06-12T14:21:35",
+  "llm": "MiniMax-M2.7 via api.minimaxi.com/v1 (订阅 Key)",
+  "dataset_version": "v6.0",
+  "dataset": {
+    "total": 1500,
+    "train": 991,
+    "holdout": 509,
+    "p0_count": 214
+  },
+  "patches_applied": "v3.5.1 Badcase 修复 (L0 14 词 + 意图 8 条)",
+  "summary": {
+    "overall": {
+      "total": 1500,
+      "intent_accuracy": 0.8393,
+      "p0_recall": 0.5187,
+      "l0_compliance": 1.0,
+      "rag_hit_rate": 0.9928,
+      "transfer_accuracy": 0.1273,
+      "p0_samples": 214,
+      "l0_triggered": 111,
+      "by_intent_group": {
+        "info": {
+          "total": 433,
+          "correct": 343,
+          "accuracy": 0.7921
+        },
+        "sys": {
+          "total": 152,
+          "correct": 130,
+          "accuracy": 0.8553
+        },
+        "cons": {
+          "total": 311,
+          "correct": 230,
+          "accuracy": 0.7395
+        },
+        "biz": {
+          "total": 374,
+          "correct": 364,
+          "accuracy": 0.9733
+        },
+        "sec": {
+          "total": 122,
+          "correct": 122,
+          "accuracy": 1.0
+        },
+        "sales": {
+          "total": 108,
+          "correct": 70,
+          "accuracy": 0.6481
+        }
+      }
+    },
+    "train": {
+      "total": 991,
+      "intent_accuracy": 0.8375,
+      "p0_recall": 0.5143,
+      "l0_compliance": 1.0,
+      "rag_hit_rate": 0.9913,
+      "transfer_accuracy": 0.1231,
+      "p0_samples": 140,
+      "l0_triggered": 72,
+      "by_intent_group": {
+        "sys": {
+          "total": 100,
+          "correct": 82,
+          "accuracy": 0.82
+        },
+        "info": {
+          "total": 287,
+          "correct": 228,
+          "accuracy": 0.7944
+        },
+        "biz": {
+          "total": 249,
+          "correct": 242,
+          "accuracy": 0.9719
+        },
+        "cons": {
+          "total": 204,
+          "correct": 152,
+          "accuracy": 0.7451
+        },
+        "sec": {
+          "total": 80,
+          "correct": 80,
+          "accuracy": 1.0
+        },
+        "sales": {
+          "total": 71,
+          "correct": 46,
+          "accuracy": 0.6479
+        }
+      }
+    },
+    "holdout": {
+      "total": 509,
+      "intent_accuracy": 0.8428,
+      "p0_recall": 0.527,
+      "l0_compliance": 1.0,
+      "rag_hit_rate": 0.9957,
+      "transfer_accuracy": 0.1356,
+      "p0_samples": 74,
+      "l0_triggered": 39,
+      "by_intent_group": {
+        "info": {
+          "total": 146,
+          "correct": 115,
+          "accuracy": 0.7877
+        },
+        "cons": {
+          "total": 107,
+          "correct": 78,
+          "accuracy": 0.729
+        },
+        "sys": {
+          "total": 52,
+          "correct": 48,
+          "accuracy": 0.9231
+        },
+        "biz": {
+          "total": 125,
+          "correct": 122,
+          "accuracy": 0.976
+        },
+        "sec": {
+          "total": 42,
+          "correct": 42,
+          "accuracy": 1.0
+        },
+        "sales": {
+          "total": 37,
+          "correct": 24,
+          "accuracy": 0.6486
+        }
+      }
+    }
+  },
+  "comparison_with_v340_v352": {
+    "intent_accuracy": {
+      "v3.4.0": 0.83,
+      "v3.5.2": 0.8817,
+      "v3.5.3_overall": 0.8393,
+      "v3.5.3_holdout": 0.8428
+    },
+    "p0_recall": {
+      "v3.4.0": 0.5,
+      "v3.5.2": 0.5,
+      "v3.5.3_overall": 0.5187,
+      "v3.5.3_holdout": 0.527
+    }
+  },
+  "total_elapsed_ms": 732227.4
+}
