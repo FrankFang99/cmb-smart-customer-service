@@ -196,7 +196,14 @@ class E2EPipeline:
             }
         else:
             # 4. RAG 检索
-            retrieval_results = self.retriever.retrieve(user_input, top_k=3)
+            # v3.5.6: LLM 兜底前预处理 (去除"你好"/"谢谢"等寒暄词)
+            try:
+                from src.eval.badcase_patches_v356 import preprocess_user_input
+                clean_user_input = preprocess_user_input(user_input)
+            except ImportError:
+                clean_user_input = user_input
+
+            retrieval_results = self.retriever.retrieve(clean_user_input, top_k=3)
             sources = [r["id"] for r in retrieval_results]
             knowledge_context = "\n\n".join([
                 f"【参考知识 {i+1}】\nID: {r['id']} [{r.get('domain', 'N/A')}]\n问题: {r['question']}\n回答: {r['answer']}"
@@ -217,7 +224,7 @@ class E2EPipeline:
                 # LLM 路由
                 action = "answer"
                 system_prompt = self._build_system_prompt(intent, needs_risk)
-                user_prompt = self._build_user_prompt(user_input, knowledge_context, history)
+                user_prompt = self._build_user_prompt(clean_user_input, knowledge_context, history)
 
                 t_llm = time.time()
                 try:

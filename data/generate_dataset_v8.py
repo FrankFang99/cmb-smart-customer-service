@@ -26,14 +26,14 @@ from typing import Dict, List
 _ROOT = Path(__file__).resolve().parents[1]
 OUTPUT_PATH = _ROOT / "data" / "evaluation_dataset_v8.0.json"
 
-# 6 种清晰模板 (不再口语化过头)
+# 6 种清晰模板 (v3.5.6 修复: 去掉"你好"/"谢谢"前缀, 这些让 LLM 误判为 sys_greeting/thanks)
 TEMPLATES = [
     lambda q: q,  # 原句
     lambda q: "请问" + q,  # 加请问
     lambda q: q + "?",  # 加问号
     lambda q: "想问一下" + q,  # 加想问一下
-    lambda q: q + "谢谢",  # 加谢谢
-    lambda q: "你好, " + q,  # 加你好
+    lambda q: "那个" + q,  # 加那个
+    lambda q: q.replace("我", "我的"),  # 我 -> 我的
 ]
 
 

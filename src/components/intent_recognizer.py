@@ -609,6 +609,10 @@ class IntentRecognizer:
                 V351_L0_PATCHES,
                 V351_INTENT_RULES,
             )
+            from src.eval.badcase_patches_v356 import (
+                V356_INTENT_RULES,
+            )
+            intent_rules = list(V351_INTENT_RULES) + list(V356_INTENT_RULES)
         except ImportError:
             return None
 
@@ -630,8 +634,8 @@ class IntentRecognizer:
                     reasoning=f"v3.5.1 L0 补丁触发 [{info['category']}]: {kw}",
                 )
 
-        # 2. 意图规则补全 (8 条口语化 query)
-        for rule in V351_INTENT_RULES:
+        # 2. 意图规则补全 (8 条口语化 query, v3.5.6 扩到 20 条)
+        for rule in intent_rules:
             for pattern in rule["patterns"]:
                 if pattern in text:
                     intent_str = rule["intent"]
