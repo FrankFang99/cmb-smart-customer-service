@@ -537,6 +537,110 @@ python -m src.eval.badcase_pool summary
 
 ---
 
+## 七、v3.4.0-b 知识库分类 + 5 路径路由 + 多模板管理 (2026-06-12)
+
+> 继 v3.4.0 Cascade 路由 + Badcase 闭环后,本次从"扁平 565 条"升级为"分类 + 路由 + 多模板"实战架构。对标招行 / 微众 / 蚂蚁 2025-2026 工业级做法。
+
+### 7.1 知识库 3 类库分类 (v3.4.0-b-1)
+
+**业界对齐**: 银行业实战必须 3 类起步 —— 文档库 / FAQ 库 / 业务数据库 (up 主 BV1vKuJzpEbc 原话)
+
+**实现** (`src/rag/knowledge_base_v2.py`):
+- 565 条 v2.0 自动拆分为 **3 类 + 7 chunk 策略**:
+  - `doc_kb` 280 条 (query/transaction/risk 类)
+  - `faq_kb` 285 条 (consult/marketing 类, qa_pair 策略)
+  - `biz_db` 0 条 (招行实战 3 表 mock: orders/products/logistics)
+- **Chunking 策略选择器** (7 种):
+  - `smart` 智能语义 (默认)
+  - `by_heading` 按标题 (Markdown / 文档)
+  - `qa_pair` 按 QA 对 (FAQ)
+  - `by_row` 按行 (CSV / 表格)
+  - `full_table` 整表 (小型参数表)
+  - `by_endpoint` 按 endpoint (API 文档)
+  - `by_dialogue` 按对话回合 (客服录音)
+
+**业务数据库 mock** (招行实战 3 类):
+- 5 个示例客户 (C001-C005)
+- 4 个订单 (信用卡账单 + 交易订单)
+- 5 个产品 (2 信用卡 + 1 贷款 + 2 理财)
+- 2 个物流 (卡片邮寄 + 对账单邮寄)
+- API 接口: `query_bill_amount / query_transaction_record / query_logistics / query_product`
+
+### 7.2 5 路径路由决策器 (v3.4.0-b-2)
+
+**业界对齐**: 招行小招 / 微众银行 / 蚂蚁客服 2025-2026 都在转向 5 路径路由
+
+**5 条路径** (按优先级):
+| 优先级 | 路径 | 触发条件 | 响应 |
+|--------|------|---------|------|
+| 1 | `L0_HUMAN` | L0 红线 / 紧急转人工 | 100% 转人工 |
+| 2 | `BIZ_DB_API` | 账单/余额/物流查询 | 调业务数据库 (Text2SQL/API) |
+| 3 | `AGENT_TOOL` | 激活/挂失/还款等工具意图 | **v3.4.0 暂不做, 给跳转接口** |
+| 4 | `RAG_KB` | 信息咨询/营销 | RAG 4 阶段检索 |
+| 5 | `CASCADE_TEMPLATE` | 业务办理/兜底 | Cascade 模板 |
+
+**产品决策** (面试必讲):
+> "工具意图 v3.4.0 暂不做真实工具调用 —— 银行真实工具调用涉及身份鉴权 4 要素 / 工单审批 3 级 / 银保监审计 6 年 / 灾备 SLA 99.99% 4 大风险。**业务上'不确定能交付的能力不要承诺'**。v3.4.0 替代方案: 给跳转接口 (招行 App / 95555)。v3.5.0 计划加 mock read-only 工具。"
+
+**实现** (`src/agent/route_decision.py`):
+- `RouteDecision` 数据类: path / reason / priority / intent / target_resource / fallback
+- 决策可观测: `_decision_log` 记录每条 query 走的路径
+- 路径分布统计: `get_path_distribution()` (给 Badcase 分析用)
+- 0 依赖 (纯 dict + str 决策)
+
+**测试覆盖**: 10 个 case, 10/10 通过 (含 L0 / 业务库 / Agent / RAG / Cascade 全路径)
+
+### 7.3 多套 Prompt 模板管理 (v3.4.0-b-3)
+
+**业界对齐**: 招行 / 微众 / 蚂蚁 2025-2026 把"一个大 Prompt"拆为"按业务类型定制的多套 Prompt 模板" (10-30 套)
+
+**12 套业务模板** (`src/agent/prompt_templates.py`):
+| ID | 名称 | 必含话术 |
+|----|------|---------|
+| `loan_consult` | 贷款咨询 | "年化利率" / "以审批结果为准" |
+| `fraud_warning` | 反诈骗 | "请注意防范电信诈骗" / "95555" |
+| `aml_check` | 反洗钱 | "根据反洗钱法律法规" |
+| `card_loss` | 挂失 | "立即挂失" / "报警 110" |
+| `balance_query` | 余额查询 | "请登录 App" |
+| `investment_risk` | 投资理财 | "非存款" / "不保本" / "风险承受能力" |
+| `privacy` | 个人信息保护 | "《个人信息保护法》" |
+| `complaint` | 投诉 | "非常理解" / "深表歉意" |
+| `transfer_limit` | 转账限额 | "单笔/单日/单月" |
+| `human_transfer` | 转人工 | "正在为您转接" |
+| `apology` | 道歉/服务异常 | "非常抱歉" |
+| `general` | 通用兜底 | - |
+
+**实现**:
+- `PromptTemplateManager.build_system_prompt(intent, user_query, knowledge_context)` 一键生成完整 prompt
+- 自动按 intent 前缀匹配 + 通用兜底
+- 每套模板含 `system_prompt` + `post_process` 规则 + `risk_phrases` 必含话术
+- 0 依赖, 可扩展 (新业务直接加)
+
+### 7.4 v3.4.0-b vs v3.4.0 vs v3.2
+
+| 维度 | v3.2 | v3.4.0 | v3.4.0-b |
+|------|------|--------|----------|
+| 知识库分类 | 1 类 (565 扁平) | 1 类 | **3 类 + 7 chunk 策略** |
+| 业务数据库 | 无 | 无 | **mock 5 客户 + 3 表** |
+| 路由策略 | 全走 RAG | 全走 RAG | **5 路径决策** |
+| 工具意图 | 无 | 无 | **跳转接口 (v3.4.0 替代方案)** |
+| Prompt 模板 | 1 个 `_build_system_prompt` | 35+ L1 模板 | **12 套业务模板** |
+| 后处理 | banking_adapter | banking_adapter | **模板 + 必含话术** |
+| pytest | 40 (100% pass) | 53 (100% pass) | **108 (100% pass)** |
+| 新增文件 | - | - | **3 代码 + 3 测试** |
+
+### 7.5 业界对齐 (v3.4.0-b 优势)
+
+| 业界做法 | 本项目实现 | 备注 |
+|---------|-----------|------|
+| **招行小招 5 路径路由** | RouteDecisionMaker | 优先级 1-5 固定 |
+| **微众 Text2SQL** | BizDBMock (订单/产品/物流) | mock 雏形 |
+| **蚂蚁客服多模板** | 12 套业务模板 | 0 依赖 |
+| **大厂 PM "为什么不做" 决策** | 工具意图 v3.4.0 暂不做 | 面试加分 |
+| **大厂周会机制** | BadcasePool (v3.4.0-a) | 闭环 |
+
+---
+
 ## 七、AI 产品运营能力映射（面试可讲）
 
 | 能力 | 在项目中的体现 | 业界方法论 |
@@ -581,6 +685,7 @@ python -m src.eval.badcase_pool summary
 | **(待 push)** | **★ v3.3.7 L0 误伤降级 + 投诉意图补全** |
 | **(待 push)** | **★ v3.3.8 端到端 Pipeline 串联 (意图 + L0 + RAG + LLM 真业务流)** |
 | **(待 push)** | **★ v3.4.0 Cascade 路由 (L1 模板 + L2 RAG + L3 LLM, LLM 调用率 6.83%, 节省 93.2%) + Badcase 标注池 (13 条 + 演示标注 4 条 + 入 KB 1 条)** |
+| **(待 push)** | **★ v3.4.0-b 知识库分类 (3 类 + 7 chunk 策略 + 业务数据库 mock) + 5 路径路由决策器 + 12 套业务 Prompt 模板 (108 测试全过)** |
 
 ---
 
@@ -719,6 +824,7 @@ MIT
 
 ---
 
-**更新时间**：2026-06-11
-**v3.4.0 新增** (待 push)：Cascade 路由 (L1 模板 + L2 RAG + L3 LLM) + 真 LLM 600 样本评测 (意图 83% / L0 100% / RAG 98.75% / LLM 调用率 6.83%) + Badcase 标注池 (13 条 + 演示标注 4 条 + 一键入 KB)
+**更新时间**：2026-06-12
+**v3.4.0-b 新增** (待 push)：知识库 3 类分类 (doc_kb 280 / faq_kb 285 / biz_db 5客户 3表) + 7 种 Chunking 策略 + 5 路径路由决策器 (L0_HUMAN / BIZ_DB_API / AGENT_TOOL / RAG_KB / CASCADE_TEMPLATE) + 12 套业务 Prompt 模板 (贷款/反诈/反洗钱/挂失/余额/投资/隐私/投诉/限额/转人工/道歉/通用) + pytest 108/108 通过
+**v3.4.0** (待 push)：Cascade 路由 (L1 模板 + L2 RAG + L3 LLM) + 真 LLM 600 样本评测 (意图 83% / L0 100% / RAG 98.75% / LLM 调用率 6.83%) + Badcase 标注池 (13 条 + 演示标注 4 条 + 一键入 KB)
 **v3.3.6-v3.3.8** (待 push)：LLM 接入 (订阅 Key + api.minimaxi.com 端点) + L0 误伤降级 + 端到端 Pipeline 串联
