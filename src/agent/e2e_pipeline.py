@@ -140,27 +140,34 @@ class E2EPipeline:
         is_p0_intent = intent_result.is_p0
         needs_risk = intent_result.needs_risk_disclosure
 
-        # 2. L0 红线检测 (v3.5.4: 双重检测)
+        # 2. L0 红线检测 (v3.5.5: 双重检测, 词典扩到 42 词)
         # 2a. 原 banking_l0_dict (268 词)
         l0 = check_l0(user_input)
         l0_triggered = l0["l0_triggered"]
         l0_categories = l0.get("categories", [])
-        # 2b. v3.5.1 补丁的 14 词 (v3.5.3 发现 cascade L3 漏触发)
+        # 2b. v3.5.1 补丁 (14 词) + v3.5.5 扩展 (28 词) = 42 词
         try:
-            from src.eval.badcase_patches_v351 import V351_L0_PATCHES
-            for kw, info in V351_L0_PATCHES.items():
+            from src.eval.badcase_patches_v355 import V355_L0_KEYWORDS
+            for kw, info in V355_L0_KEYWORDS.items():
                 if kw in user_input:
                     l0_triggered = True
-                    # 补到 categories
                     if not any(c.get("sub_category") == info["category"] for c in l0_categories):
                         l0_categories.append({
-                            "category": "v351_patch",
+                            "category": "v355_patch",
                             "sub_category": info["category"],
-                            "human_readable": f"v3.5.1 补丁触发: {kw}",
+                            "human_readable": f"v3.5.5 补丁触发: {kw}",
                         })
                     break
         except ImportError:
-            pass
+            # 回退到 v3.5.1 补丁
+            try:
+                from src.eval.badcase_patches_v351 import V351_L0_PATCHES
+                for kw, info in V351_L0_PATCHES.items():
+                    if kw in user_input:
+                        l0_triggered = True
+                        break
+            except ImportError:
+                pass
 
         # 3. 分流: L0 触发 -> 标准话术 + 转人工 (不调 LLM)
         if l0_triggered:
