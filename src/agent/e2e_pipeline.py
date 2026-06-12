@@ -140,9 +140,27 @@ class E2EPipeline:
         is_p0_intent = intent_result.is_p0
         needs_risk = intent_result.needs_risk_disclosure
 
-        # 2. L0 红线检测
+        # 2. L0 红线检测 (v3.5.4: 双重检测)
+        # 2a. 原 banking_l0_dict (268 词)
         l0 = check_l0(user_input)
         l0_triggered = l0["l0_triggered"]
+        l0_categories = l0.get("categories", [])
+        # 2b. v3.5.1 补丁的 14 词 (v3.5.3 发现 cascade L3 漏触发)
+        try:
+            from src.eval.badcase_patches_v351 import V351_L0_PATCHES
+            for kw, info in V351_L0_PATCHES.items():
+                if kw in user_input:
+                    l0_triggered = True
+                    # 补到 categories
+                    if not any(c.get("sub_category") == info["category"] for c in l0_categories):
+                        l0_categories.append({
+                            "category": "v351_patch",
+                            "sub_category": info["category"],
+                            "human_readable": f"v3.5.1 补丁触发: {kw}",
+                        })
+                    break
+        except ImportError:
+            pass
 
         # 3. 分流: L0 触发 -> 标准话术 + 转人工 (不调 LLM)
         if l0_triggered:
@@ -241,7 +259,7 @@ class E2EPipeline:
         return result
 
     def _build_system_prompt(self, intent: str, needs_risk: bool) -> str:
-        """构建系统提示"""
+        """构建系统提示 (v3.5.4 注入 L0 关键词 + 必含话术)"""
         base = (
             "你是招商银行智能客服小招. 简洁专业地回答用户问题, 控制在 200 字内. "
             "基于参考知识回答, 避免编造. 不在回答里说自己是 AI 助手."
@@ -253,6 +271,25 @@ class E2EPipeline:
             )
         if "loan" in intent or "credit" in intent:
             base += " 涉及贷款/信用卡, 必须说年化利率, 实际利率以审批为准."
+
+        # v3.5.4: 注入 L0 关键词 + 转人工规则 (P0 红线)
+        # 原因: v3.5.3 发现 LLM cascade L3 兜底没看到 v3.5.1 L0 规则补丁, P0 Recall 50%
+        # 修复: 把 L0 关键词直接注入 system_prompt, 让 LLM 也认这些词触发转人工
+        try:
+            from src.eval.badcase_patches_v351 import V351_L0_PATCHES
+            l0_keywords = list(V351_L0_PATCHES.keys())[:14]  # 14 个 P0 关键词
+            l0_categories = sorted(set(
+                info["category"] for info in V351_L0_PATCHES.values()
+            ))
+            base += (
+                "\n\n【P0 红线 - 必须 100% 触发转人工】"
+                f"\n以下关键词一旦出现, 必须立即建议转人工 (不要尝试自己回答): "
+                f"{', '.join(l0_keywords)}"
+                f"\n触发类别: {', '.join(l0_categories)}"
+                "\n回复话术: '您的问题涉及账户安全/紧急情况, 我已为您转接 95555 客服专员处理.'"
+            )
+        except ImportError:
+            pass
         return base
 
     def _decide_cascade(

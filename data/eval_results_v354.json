@@ -1,0 +1,217 @@
+{
+  "eval_version": "v3.5.4",
+  "eval_date": "2026-06-12T15:51:21",
+  "llm": "MiniMax-M2.7 via api.minimaxi.com/v1 (订阅 Key)",
+  "dataset_version": "v7.0",
+  "patches_applied": "v3.5.4-2: e2e_pipeline L0 Prompt 注入 (v3.5.1 L0 词典 14 词 + 5 类 P0)",
+  "summary": {
+    "overall": {
+      "total": 3560,
+      "intent_accuracy": 0.7298,
+      "p0_recall": 0.6975,
+      "l0_compliance": 1.0,
+      "rag_hit_rate": 0.9967,
+      "transfer_accuracy": 0.198,
+      "p0_samples": 714,
+      "l0_triggered": 498,
+      "by_intent_group": {
+        "info": {
+          "total": 853,
+          "correct": 649,
+          "accuracy": 0.7608
+        },
+        "sys": {
+          "total": 392,
+          "correct": 260,
+          "accuracy": 0.6633
+        },
+        "sec": {
+          "total": 422,
+          "correct": 302,
+          "accuracy": 0.7156
+        },
+        "biz": {
+          "total": 854,
+          "correct": 811,
+          "accuracy": 0.9496
+        },
+        "sales": {
+          "total": 288,
+          "correct": 114,
+          "accuracy": 0.3958
+        },
+        "cons": {
+          "total": 751,
+          "correct": 462,
+          "accuracy": 0.6152
+        }
+      },
+      "p0_by_intent": {
+        "sec_fraud_report": {
+          "total": 152,
+          "recalled": 152,
+          "recall": 1.0
+        },
+        "sec_freeze_unexpected": {
+          "total": 130,
+          "recalled": 45,
+          "recall": 0.3462
+        },
+        "cons_urg_human": {
+          "total": 158,
+          "recalled": 94,
+          "recall": 0.5949
+        },
+        "sec_stolen_card": {
+          "total": 140,
+          "recalled": 119,
+          "recall": 0.85
+        },
+        "cons_urg_loss": {
+          "total": 134,
+          "recalled": 88,
+          "recall": 0.6567
+        }
+      }
+    },
+    "train": {
+      "total": 2371,
+      "intent_accuracy": 0.7322,
+      "p0_recall": 0.6884,
+      "l0_compliance": 1.0,
+      "rag_hit_rate": 0.9976,
+      "transfer_accuracy": 0.1949,
+      "p0_samples": 475,
+      "l0_triggered": 327,
+      "by_intent_group": {
+        "sys": {
+          "total": 260,
+          "correct": 173,
+          "accuracy": 0.6654
+        },
+        "sec": {
+          "total": 281,
+          "correct": 202,
+          "accuracy": 0.7189
+        },
+        "biz": {
+          "total": 569,
+          "correct": 542,
+          "accuracy": 0.9525
+        },
+        "sales": {
+          "total": 191,
+          "correct": 78,
+          "accuracy": 0.4084
+        },
+        "info": {
+          "total": 569,
+          "correct": 433,
+          "accuracy": 0.761
+        },
+        "cons": {
+          "total": 501,
+          "correct": 308,
+          "accuracy": 0.6148
+        }
+      },
+      "p0_by_intent": {
+        "sec_fraud_report": {
+          "total": 101,
+          "recalled": 101,
+          "recall": 1.0
+        },
+        "sec_freeze_unexpected": {
+          "total": 87,
+          "recalled": 32,
+          "recall": 0.3678
+        },
+        "cons_urg_human": {
+          "total": 105,
+          "recalled": 59,
+          "recall": 0.5619
+        },
+        "cons_urg_loss": {
+          "total": 89,
+          "recalled": 59,
+          "recall": 0.6629
+        },
+        "sec_stolen_card": {
+          "total": 93,
+          "recalled": 76,
+          "recall": 0.8172
+        }
+      }
+    },
+    "holdout": {
+      "total": 1189,
+      "intent_accuracy": 0.725,
+      "p0_recall": 0.7155,
+      "l0_compliance": 1.0,
+      "rag_hit_rate": 0.9951,
+      "transfer_accuracy": 0.2044,
+      "p0_samples": 239,
+      "l0_triggered": 171,
+      "by_intent_group": {
+        "info": {
+          "total": 284,
+          "correct": 216,
+          "accuracy": 0.7606
+        },
+        "biz": {
+          "total": 285,
+          "correct": 269,
+          "accuracy": 0.9439
+        },
+        "cons": {
+          "total": 250,
+          "correct": 154,
+          "accuracy": 0.616
+        },
+        "sec": {
+          "total": 141,
+          "correct": 100,
+          "accuracy": 0.7092
+        },
+        "sales": {
+          "total": 97,
+          "correct": 36,
+          "accuracy": 0.3711
+        },
+        "sys": {
+          "total": 132,
+          "correct": 87,
+          "accuracy": 0.6591
+        }
+      },
+      "p0_by_intent": {
+        "sec_freeze_unexpected": {
+          "total": 43,
+          "recalled": 13,
+          "recall": 0.3023
+        },
+        "cons_urg_human": {
+          "total": 53,
+          "recalled": 35,
+          "recall": 0.6604
+        },
+        "sec_stolen_card": {
+          "total": 47,
+          "recalled": 43,
+          "recall": 0.9149
+        },
+        "cons_urg_loss": {
+          "total": 45,
+          "recalled": 29,
+          "recall": 0.6444
+        },
+        "sec_fraud_report": {
+          "total": 51,
+          "recalled": 51,
+          "recall": 1.0
+        }
+      }
+    }
+  },
+  "total_elapsed_ms": 2446344.9
+}
