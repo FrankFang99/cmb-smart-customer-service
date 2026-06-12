@@ -560,7 +560,12 @@ class IntentRecognizer:
     def _match_rules(self, text: str) -> Optional['IntentResult']:
         """规则匹配"""
         import re
-        
+
+        # v3.5.1 补丁: 优先匹配 (口语化 query + L0 触发)
+        v351_result = self._match_v351_patches(text)
+        if v351_result:
+            return v351_result
+
         for group_name, rules in self._rule_groups:
             for pattern, intent_str in rules:
                 if re.search(pattern, text.lower()):
@@ -589,7 +594,61 @@ class IntentRecognizer:
                     )
         
         return None
-    
+
+    def _match_v351_patches(self, text: str) -> Optional['IntentResult']:
+        """
+        v3.5.1 Badcase 修复补丁 (优先匹配)
+
+        覆盖 8 类 Badcase:
+        - 5 类 L0 触发 (转人工/账户异常/陌生消费/被诈骗)
+        - 8 类意图规则 (口语化 query)
+        """
+        import re
+        try:
+            from src.eval.badcase_patches_v351 import (
+                V351_L0_PATCHES,
+                V351_INTENT_RULES,
+            )
+        except ImportError:
+            return None
+
+        # 1. L0 词典补全 (5 类 P0 关键词)
+        for kw, info in V351_L0_PATCHES.items():
+            if kw in text:
+                # 强触发 L0
+                intent_str = info["triggered_by"]
+                try:
+                    intent = IntentType(intent_str)
+                except (ValueError, KeyError):
+                    intent = IntentType.SYS_INVALID
+                return IntentResult(
+                    intent=intent,
+                    confidence=0.95,
+                    should_transfer=True,
+                    is_p0=True,
+                    needs_risk_disclosure=False,
+                    reasoning=f"v3.5.1 L0 补丁触发 [{info['category']}]: {kw}",
+                )
+
+        # 2. 意图规则补全 (8 条口语化 query)
+        for rule in V351_INTENT_RULES:
+            for pattern in rule["patterns"]:
+                if pattern in text:
+                    intent_str = rule["intent"]
+                    try:
+                        intent = IntentType(intent_str)
+                    except (ValueError, KeyError):
+                        intent = IntentType.SYS_INVALID
+                    return IntentResult(
+                        intent=intent,
+                        confidence=0.95,
+                        should_transfer=False,
+                        is_p0=False,
+                        needs_risk_disclosure=intent_str in IntentCategory.NEED_RISK_DISCLOSURE,
+                        reasoning=f"v3.5.1 意图规则补丁: {pattern} -> {intent_str}",
+                    )
+        return None
+
     def _match_with_model(self, text: str) -> Optional['IntentResult']:
         """轻量模型匹配（待实现）"""
         # TODO: 集成轻量模型（如MiniLM）
