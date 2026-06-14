@@ -19,7 +19,7 @@ import time
 from typing import Optional, Tuple, Dict, Any
 from pathlib import Path
 
-_PROJECT_ROOT = Path(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+_PROJECT_ROOT = Path(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 
 class BertL2Classifier:
@@ -27,8 +27,14 @@ class BertL2Classifier:
 
     def __init__(self, model_path: str = None, confidence_threshold: float = 0.85):
         if model_path is None:
-            # 默认 M3 路径
-            model_path = os.path.join(_PROJECT_ROOT, "models", "M3-bert-base-chinese")
+            # 默认 v3.5.6 训的 M3 旧模型 (val 100% / holdout 99.65% 过拟合, 但 Cascade L2 流程验证够用)
+            # M3 5件套重训完 (models/M3-bert-base-chinese) 后切到这个
+            v356_path = os.path.join(_PROJECT_ROOT, "models", "bert-intent-finetuned")
+            m3_path = os.path.join(_PROJECT_ROOT, "models", "M3-bert-base-chinese")
+            if os.path.exists(os.path.join(m3_path, "config.json")):
+                model_path = m3_path
+            else:
+                model_path = v356_path
         self.model_path = model_path
         self.confidence_threshold = confidence_threshold
         self.tokenizer = None

@@ -1,0 +1,47 @@
+{
+  "eval_version": "v3.6.0-cascade-l2",
+  "eval_date": "2026-06-14T15:19:38",
+  "bert_l2_available": true,
+  "confidence_threshold": 0.85,
+  "summary": {
+    "holdout_acc": 0.8036618620958317,
+    "llm_fallback_pct": 0.0,
+    "by_intent_group": {
+      "sys": {
+        "total": 116,
+        "correct": 63,
+        "accuracy": 0.5431
+      },
+      "cons": {
+        "total": 556,
+        "correct": 422,
+        "accuracy": 0.759
+      },
+      "biz": {
+        "total": 489,
+        "correct": 453,
+        "accuracy": 0.9264
+      },
+      "info": {
+        "total": 587,
+        "correct": 489,
+        "accuracy": 0.833
+      },
+      "sec": {
+        "total": 620,
+        "correct": 479,
+        "accuracy": 0.7726
+      },
+      "sales": {
+        "total": 199,
+        "correct": 157,
+        "accuracy": 0.7889
+      }
+    },
+    "cascade_source_count": {
+      "L1_rule": 2225,
+      "L2_bert": 342
+    }
+  },
+  "total_elapsed_s": 707.5
+}
