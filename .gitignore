@@ -39,3 +39,10 @@ Thumbs.db
 .pytest_cache/
 .coverage
 htmlcov/
+
+# Models (大文件, 不入库, README 注明本地下载)
+models/
+
+# 训练后台 log
+train_bert_intent.log
+train_bert_intent.log.err
