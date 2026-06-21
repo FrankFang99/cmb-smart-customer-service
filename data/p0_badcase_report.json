@@ -1,0 +1,102 @@
+{
+  "dataset_version": "v3.2",
+  "total_samples": 1500,
+  "p0_total": 631,
+  "p0_group_correct_fine_wrong": 105,
+  "p0_group_wrong": 69,
+  "attr_distribution": {
+    "correct": 457,
+    "L1_rule_fine_miss": 62,
+    "L3_llm_pending_fine_miss": 43,
+    "L1_rule_group_miss": 53,
+    "L3_llm_pending_group_miss": 15,
+    "L2_bert_group_miss": 1
+  },
+  "confusion_group_top20": [
+    {
+      "expected": "security",
+      "actual": "safety",
+      "count": 23
+    },
+    {
+      "expected": "biz",
+      "actual": "security",
+      "count": 19
+    },
+    {
+      "expected": "security",
+      "actual": "sys",
+      "count": 17
+    },
+    {
+      "expected": "sys",
+      "actual": "consult",
+      "count": 5
+    },
+    {
+      "expected": "biz",
+      "actual": "sys",
+      "count": 3
+    },
+    {
+      "expected": "sys",
+      "actual": "biz",
+      "count": 1
+    },
+    {
+      "expected": "security",
+      "actual": "14",
+      "count": 1
+    }
+  ],
+  "confusion_fine_top20": [
+    {
+      "expected": "sys_service_route_human",
+      "actual": "sys_invalid",
+      "count": 43
+    },
+    {
+      "expected": "security_fraud_report",
+      "actual": "sec_fraud_report",
+      "count": 41
+    },
+    {
+      "expected": "sys_service_route_human",
+      "actual": "sys_greeting",
+      "count": 10
+    },
+    {
+      "expected": "sys_service_route_human",
+      "actual": "sys_thanks",
+      "count": 3
+    },
+    {
+      "expected": "security_fraud_report",
+      "actual": "security_fraud_recognize",
+      "count": 3
+    },
+    {
+      "expected": "security_fraud_report",
+      "actual": "sec_stolen_info",
+      "count": 3
+    },
+    {
+      "expected": "sys_service_route_human",
+      "actual": "sys_service_complaint",
+      "count": 2
+    }
+  ],
+  "fine_miss_by_group": {
+    "sys": 58,
+    "security": 47
+  },
+  "group_miss_by_group": {
+    "security": 41,
+    "biz": 22,
+    "sys": 6
+  },
+  "fine_miss_source_distribution": {
+    "L1_rule": 62,
+    "L3_llm_pending": 43
+  }
+}

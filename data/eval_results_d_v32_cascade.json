@@ -1,0 +1,150 @@
+{
+  "eval_version": "v3.6.0-cascade-l2-on-D-v3.2",
+  "eval_date": "2026-06-21T16:49:24",
+  "dataset_version": "v3.2",
+  "dataset_total": 1500,
+  "bert_l2_available": true,
+  "bert_l2_path": "D:\\Learning\\AI\\面试\\AI智能客服\\models\\M3-bert-base-chinese",
+  "confidence_threshold": 0.85,
+  "prefix_map": {
+    "cons": "consult",
+    "sales": "mkt",
+    "sec": "security"
+  },
+  "note": "评测指标用业务组 (prefix) 匹配, 已加 IR→D 前缀映射 (cons→consult, sales→mkt, sec→security)",
+  "core_kpi": {
+    "intent_accuracy_group": 0.6533,
+    "intent_accuracy_fine": 0.3573,
+    "p0_recall_group": 0.8906,
+    "p0_recall_fine": 0.7242,
+    "llm_fallback_pct": 23.27
+  },
+  "by_priority": {
+    "P3": {
+      "total": 237,
+      "group_correct": 153,
+      "fine_correct": 0,
+      "llm": 98,
+      "group_accuracy": 0.6456,
+      "fine_accuracy": 0.0,
+      "llm_pct": 41.35
+    },
+    "P0": {
+      "total": 631,
+      "group_correct": 562,
+      "fine_correct": 457,
+      "llm": 58,
+      "group_accuracy": 0.8906,
+      "fine_accuracy": 0.7242,
+      "llm_pct": 9.19
+    },
+    "P1": {
+      "total": 428,
+      "group_correct": 198,
+      "fine_correct": 79,
+      "llm": 112,
+      "group_accuracy": 0.4626,
+      "fine_accuracy": 0.1846,
+      "llm_pct": 26.17
+    },
+    "P2": {
+      "total": 204,
+      "group_correct": 67,
+      "fine_correct": 0,
+      "llm": 81,
+      "group_accuracy": 0.3284,
+      "fine_accuracy": 0.0,
+      "llm_pct": 39.71
+    }
+  },
+  "by_source_kind": {
+    "v8.0_reused": {
+      "total": 800,
+      "group_correct": 585,
+      "group_accuracy": 0.7312
+    },
+    "p0_variants": {
+      "total": 350,
+      "group_correct": 217,
+      "group_accuracy": 0.62
+    },
+    "multi_intent": {
+      "total": 200,
+      "group_correct": 92,
+      "group_accuracy": 0.46
+    },
+    "edge_cases": {
+      "total": 100,
+      "group_correct": 64,
+      "group_accuracy": 0.64
+    },
+    "colloquial": {
+      "total": 50,
+      "group_correct": 22,
+      "group_accuracy": 0.44
+    }
+  },
+  "by_intent_group": {
+    "sys": {
+      "total": 405,
+      "group_correct": 358,
+      "fine_correct": 147,
+      "group_accuracy": 0.884,
+      "fine_accuracy": 0.363
+    },
+    "security": {
+      "total": 233,
+      "group_correct": 192,
+      "fine_correct": 145,
+      "group_accuracy": 0.824,
+      "fine_accuracy": 0.6223
+    },
+    "safety": {
+      "total": 257,
+      "group_correct": 196,
+      "fine_correct": 188,
+      "group_accuracy": 0.7626,
+      "fine_accuracy": 0.7315
+    },
+    "consult": {
+      "total": 222,
+      "group_correct": 78,
+      "fine_correct": 0,
+      "group_accuracy": 0.3514,
+      "fine_accuracy": 0.0
+    },
+    "biz": {
+      "total": 210,
+      "group_correct": 119,
+      "fine_correct": 56,
+      "group_accuracy": 0.5667,
+      "fine_accuracy": 0.2667
+    },
+    "info": {
+      "total": 99,
+      "group_correct": 24,
+      "fine_correct": 0,
+      "group_accuracy": 0.2424,
+      "fine_accuracy": 0.0
+    },
+    "mkt": {
+      "total": 74,
+      "group_correct": 13,
+      "fine_correct": 0,
+      "group_accuracy": 0.1757,
+      "fine_accuracy": 0.0
+    }
+  },
+  "cascade_source_count": {
+    "L1_rule": 1121,
+    "L3_llm_pending": 349,
+    "L2_bert": 30
+  },
+  "comparison": {
+    "v355": 60.89,
+    "v356": 68.25,
+    "m4": 67.04,
+    "v360_d_v32_group": 65.33
+  },
+  "total_elapsed_s": 895.8
+}

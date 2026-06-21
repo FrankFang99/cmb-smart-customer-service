@@ -1,0 +1,93 @@
+{
+  "patch_version": "v3.6.4",
+  "total_samples": 1500,
+  "p0_total": 631,
+  "p0_group_recall": 0.9175911251980983,
+  "p0_fine_recall": 0.8605388272583201,
+  "by_group": {
+    "sys": {
+      "total": 211,
+      "g": 204,
+      "f": 200
+    },
+    "security": {
+      "total": 233,
+      "g": 206,
+      "f": 174
+    },
+    "safety": {
+      "total": 147,
+      "g": 130,
+      "f": 130
+    },
+    "biz": {
+      "total": 40,
+      "g": 39,
+      "f": 39
+    }
+  },
+  "group_miss_top10": [
+    {
+      "expected": "security",
+      "actual": "biz",
+      "count": 20
+    },
+    {
+      "expected": "safety",
+      "actual": "security",
+      "count": 17
+    },
+    {
+      "expected": "security",
+      "actual": "sys",
+      "count": 7
+    },
+    {
+      "expected": "sys",
+      "actual": "consult",
+      "count": 5
+    },
+    {
+      "expected": "sys",
+      "actual": "biz",
+      "count": 2
+    },
+    {
+      "expected": "biz",
+      "actual": "security",
+      "count": 1
+    }
+  ],
+  "fine_miss_top10": [
+    {
+      "expected": "security_fraud_recognize",
+      "actual": "security_fraud_report",
+      "count": 15
+    },
+    {
+      "expected": "security_fraud_report",
+      "actual": "sec_fraud_report",
+      "count": 11
+    },
+    {
+      "expected": "security_fraud_report",
+      "actual": "security_fraud_recognize",
+      "count": 3
+    },
+    {
+      "expected": "security_fraud_report",
+      "actual": "sec_stolen_info",
+      "count": 3
+    },
+    {
+      "expected": "sys_service_route_human",
+      "actual": "sys_service_complaint",
+      "count": 2
+    },
+    {
+      "expected": "sys_service_route_human",
+      "actual": "sys_invalid",
+      "count": 2
+    }
+  ]
+}

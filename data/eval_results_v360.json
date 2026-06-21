@@ -1,47 +1,48 @@
 {
   "eval_version": "v3.6.0-cascade-l2",
-  "eval_date": "2026-06-14T15:19:38",
+  "eval_date": "2026-06-14T23:55:21",
   "bert_l2_available": true,
   "confidence_threshold": 0.85,
   "summary": {
-    "holdout_acc": 0.8036618620958317,
-    "llm_fallback_pct": 0.0,
+    "holdout_acc": 0.6704324113751461,
+    "llm_fallback_pct": 10.596026490066226,
     "by_intent_group": {
       "sys": {
         "total": 116,
-        "correct": 63,
-        "accuracy": 0.5431
+        "correct": 41,
+        "accuracy": 0.3534
       },
       "cons": {
         "total": 556,
-        "correct": 422,
-        "accuracy": 0.759
+        "correct": 317,
+        "accuracy": 0.5701
       },
       "biz": {
         "total": 489,
-        "correct": 453,
-        "accuracy": 0.9264
+        "correct": 451,
+        "accuracy": 0.9223
       },
       "info": {
         "total": 587,
-        "correct": 489,
-        "accuracy": 0.833
+        "correct": 401,
+        "accuracy": 0.6831
       },
       "sec": {
         "total": 620,
-        "correct": 479,
-        "accuracy": 0.7726
+        "correct": 366,
+        "accuracy": 0.5903
       },
       "sales": {
         "total": 199,
-        "correct": 157,
-        "accuracy": 0.7889
+        "correct": 145,
+        "accuracy": 0.7286
       }
     },
     "cascade_source_count": {
       "L1_rule": 2225,
-      "L2_bert": 342
+      "L3_llm_pending": 272,
+      "L2_bert": 70
     }
   },
-  "total_elapsed_s": 707.5
+  "total_elapsed_s": 561.8
 }
