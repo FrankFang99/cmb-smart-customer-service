@@ -1,0 +1,15 @@
+{"q": "大额存单利率多少", "p1_intent": "cons_savings_rate", "risk": "high - 含'大额'可能被 v3.10.1 biz_transfer_large 误伤", "added_in": "v3.10.1_relax", "source": "p1_boundary_hand_crafted"}
+{"q": "贷款怎么办理", "p1_intent": "cons_loan_apply", "risk": "high - 含'怎么办'曾经被 biz_transfer_large 误伤 (v3.10.1 已收紧)", "added_in": "v3.10.1_relax", "source": "p1_boundary_hand_crafted"}
+{"q": "理财怎么办理", "p1_intent": "cons_wealth_product", "risk": "high - 含'怎么办'", "added_in": "v3.10.1_relax", "source": "p1_boundary_hand_crafted"}
+{"q": "主动还款怎么操作", "p1_intent": "cons_credit_card_repay", "risk": "medium - 含'怎么操作'历史误伤", "added_in": "v3.10.1_relax", "source": "p1_boundary_hand_crafted"}
+{"q": "大额存单提前支取", "p1_intent": "cons_savings_rate", "risk": "high - 含'大额'", "added_in": "v3.10.1_relax", "source": "p1_boundary_hand_crafted"}
+{"q": "怎么提前还款", "p1_intent": "biz_mortgage", "risk": "low - 历史无 v3.10.1 误伤记录", "added_in": "history", "source": "p1_boundary_hand_crafted"}
+{"q": "我要借钱", "p1_intent": "cons_loan_apply", "risk": "low", "added_in": "history", "source": "p1_boundary_hand_crafted"}
+{"q": "贷款额度怎么提高", "p1_intent": "cons_loan_rate", "risk": "medium - '提高'语义接近'大额'", "added_in": "history", "source": "p1_boundary_hand_crafted"}
+{"q": "信用卡怎么用", "p1_intent": "cons_credit_card_bill", "risk": "low", "added_in": "history", "source": "p1_boundary_hand_crafted"}
+{"q": "我要贷款", "p1_intent": "cons_loan_apply", "risk": "medium - '我要'+动词 接近 '我要转 50 万' 模式", "added_in": "history", "source": "p1_boundary_hand_crafted"}
+{"q": "我想办卡", "p1_intent": "cons_card_apply", "risk": "low", "added_in": "history", "source": "p1_boundary_hand_crafted"}
+{"q": "50 万存定期利息多少", "p1_intent": "cons_savings_rate", "risk": "high - 含数字 '50 万' 但不是转账意图", "added_in": "v3.10.1_relax", "source": "p1_boundary_hand_crafted"}
+{"q": "30 万理财哪个好", "p1_intent": "cons_wealth_product", "risk": "high - 含数字 '30 万'", "added_in": "v3.10.1_relax", "source": "p1_boundary_hand_crafted"}
+{"q": "转 100 给朋友怎么操作", "p1_intent": "cons_transfer_limit", "risk": "high - 含 '转 100' 接近 '转 100 万' 模式", "added_in": "v3.10.1_relax", "source": "p1_boundary_hand_crafted"}
+{"q": "我要办卡谢谢", "p1_intent": "cons_card_apply", "risk": "low - 但 '谢谢' 可能被 sys_route_human 抓", "added_in": "history", "source": "p1_boundary_hand_crafted"}

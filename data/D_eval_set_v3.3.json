@@ -1,0 +1,2101 @@
+{
+  "dataset_version": "v3.3-holdout-only",
+  "description": "Round 1 扩充: 全部为 D v3.2 未见过的新样本 (来自 v8.0 holdout + missed_analysis + e2e demo + 手写 FAQ)",
+  "generated_date": "2026-06-23",
+  "total_samples": 206,
+  "p0_count": 177,
+  "sources": {
+    "A_v8_holdout_p0": 148,
+    "B_missed_history": 0,
+    "C_e2e_demo": 10,
+    "D_faq_realistic": 48
+  },
+  "samples": [
+    {
+      "id": "V8_08099",
+      "intent": "cons_urg_human",
+      "question": "帮我转接人工",
+      "is_p0": true,
+      "p0_sub": "urg_human",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_08044",
+      "intent": "cons_urg_human",
+      "question": "帮我接人工?",
+      "is_p0": true,
+      "p0_sub": "urg_human",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_08236",
+      "intent": "cons_urg_human",
+      "question": "请问请帮我转人工",
+      "is_p0": true,
+      "p0_sub": "urg_human",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_08588",
+      "intent": "cons_urg_human",
+      "question": "请问转人工, 投诉",
+      "is_p0": true,
+      "p0_sub": "urg_human",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_08470",
+      "intent": "cons_urg_human",
+      "question": "想问一下转人工, 投诉",
+      "is_p0": true,
+      "p0_sub": "urg_human",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_08505",
+      "intent": "cons_urg_human",
+      "question": "想问一下我需要人工帮助",
+      "is_p0": true,
+      "p0_sub": "urg_human",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_08156",
+      "intent": "cons_urg_human",
+      "question": "我的要投诉你们的服务",
+      "is_p0": true,
+      "p0_sub": "urg_human",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_08166",
+      "intent": "cons_urg_human",
+      "question": "那个请转人工坐席",
+      "is_p0": true,
+      "p0_sub": "urg_human",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_08146",
+      "intent": "cons_urg_human",
+      "question": "那个在线客服转人工",
+      "is_p0": true,
+      "p0_sub": "urg_human",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_08175",
+      "intent": "cons_urg_human",
+      "question": "想问一下帮我接人工",
+      "is_p0": true,
+      "p0_sub": "urg_human",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_08420",
+      "intent": "cons_urg_human",
+      "question": "我的要和真人说话",
+      "is_p0": true,
+      "p0_sub": "urg_human",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_08123",
+      "intent": "cons_urg_human",
+      "question": "那个在线客服转人工",
+      "is_p0": true,
+      "p0_sub": "urg_human",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_08694",
+      "intent": "cons_urg_human",
+      "question": "我的要投诉, 转人工",
+      "is_p0": true,
+      "p0_sub": "urg_human",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_08233",
+      "intent": "cons_urg_human",
+      "question": "需要 95555 人工?",
+      "is_p0": true,
+      "p0_sub": "urg_human",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_08062",
+      "intent": "cons_urg_human",
+      "question": "那个在线客服转人工",
+      "is_p0": true,
+      "p0_sub": "urg_human",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_08094",
+      "intent": "cons_urg_human",
+      "question": "想问一下帮我接人工",
+      "is_p0": true,
+      "p0_sub": "urg_human",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_08021",
+      "intent": "cons_urg_human",
+      "question": "请帮我转人工?",
+      "is_p0": true,
+      "p0_sub": "urg_human",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_08096",
+      "intent": "cons_urg_human",
+      "question": "我的需要人工客服",
+      "is_p0": true,
+      "p0_sub": "urg_human",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_08563",
+      "intent": "cons_urg_human",
+      "question": "那个马上转人工, 别废话",
+      "is_p0": true,
+      "p0_sub": "urg_human",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_08205",
+      "intent": "cons_urg_human",
+      "question": "在线客服转人工?",
+      "is_p0": true,
+      "p0_sub": "urg_human",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_08637",
+      "intent": "cons_urg_human",
+      "question": "想问一下真人, 谢谢",
+      "is_p0": true,
+      "p0_sub": "urg_human",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_08131",
+      "intent": "cons_urg_human",
+      "question": "请问转人工客服",
+      "is_p0": true,
+      "p0_sub": "urg_human",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_08722",
+      "intent": "cons_urg_human",
+      "question": "找真人客服?",
+      "is_p0": true,
+      "p0_sub": "urg_human",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_08300",
+      "intent": "cons_urg_human",
+      "question": "我不跟机器人聊?",
+      "is_p0": true,
+      "p0_sub": "urg_human",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_08549",
+      "intent": "cons_urg_human",
+      "question": "我的要投诉你们的服务",
+      "is_p0": true,
+      "p0_sub": "urg_human",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_08161",
+      "intent": "cons_urg_human",
+      "question": "那个可以转人工吗",
+      "is_p0": true,
+      "p0_sub": "urg_human",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_08590",
+      "intent": "cons_urg_human",
+      "question": "帮我接人工?",
+      "is_p0": true,
+      "p0_sub": "urg_human",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_08065",
+      "intent": "cons_urg_human",
+      "question": "想问一下我要投诉你们的服务",
+      "is_p0": true,
+      "p0_sub": "urg_human",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_08081",
+      "intent": "cons_urg_human",
+      "question": "那个要 95555 人工服务",
+      "is_p0": true,
+      "p0_sub": "urg_human",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_08362",
+      "intent": "cons_urg_human",
+      "question": "想问一下帮我转接人工",
+      "is_p0": true,
+      "p0_sub": "urg_human",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_09120",
+      "intent": "sec_fraud_report",
+      "question": "请问我可能遇到诈骗了",
+      "is_p0": true,
+      "p0_sub": "fraud",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_09059",
+      "intent": "sec_fraud_report",
+      "question": "请问信用卡信息泄露了",
+      "is_p0": true,
+      "p0_sub": "fraud",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_09185",
+      "intent": "sec_fraud_report",
+      "question": "我可能遇到诈骗了",
+      "is_p0": true,
+      "p0_sub": "fraud",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_09237",
+      "intent": "sec_fraud_report",
+      "question": "卡里的钱被转走了?",
+      "is_p0": true,
+      "p0_sub": "fraud",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_08851",
+      "intent": "sec_fraud_report",
+      "question": "有人冒充招行客服要验证码?",
+      "is_p0": true,
+      "p0_sub": "fraud",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_08822",
+      "intent": "sec_fraud_report",
+      "question": "请问我可能遇到诈骗了",
+      "is_p0": true,
+      "p0_sub": "fraud",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_09249",
+      "intent": "sec_fraud_report",
+      "question": "那个卡被陌生人盗用",
+      "is_p0": true,
+      "p0_sub": "fraud",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_09330",
+      "intent": "sec_fraud_report",
+      "question": "我的好像被网络诈骗了",
+      "is_p0": true,
+      "p0_sub": "fraud",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_09155",
+      "intent": "sec_fraud_report",
+      "question": "那个短信说我中奖了, 是骗子吗",
+      "is_p0": true,
+      "p0_sub": "fraud",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_09110",
+      "intent": "sec_fraud_report",
+      "question": "请问信用卡被盗刷了",
+      "is_p0": true,
+      "p0_sub": "fraud",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_09225",
+      "intent": "sec_fraud_report",
+      "question": "被冒充公检法骗了?",
+      "is_p0": true,
+      "p0_sub": "fraud",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_08997",
+      "intent": "sec_fraud_report",
+      "question": "请问刚给骗子转了钱",
+      "is_p0": true,
+      "p0_sub": "fraud",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_09284",
+      "intent": "sec_fraud_report",
+      "question": "骗子让我转了 8 万",
+      "is_p0": true,
+      "p0_sub": "fraud",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_09024",
+      "intent": "sec_fraud_report",
+      "question": "那个账户里钱不见了",
+      "is_p0": true,
+      "p0_sub": "fraud",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_08906",
+      "intent": "sec_fraud_report",
+      "question": "刚接了一个诈骗电话",
+      "is_p0": true,
+      "p0_sub": "fraud",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_09369",
+      "intent": "sec_fraud_report",
+      "question": "我的好像碰到电信诈骗了",
+      "is_p0": true,
+      "p0_sub": "fraud",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_09165",
+      "intent": "sec_fraud_report",
+      "question": "那个陌生人让我转账到安全账户",
+      "is_p0": true,
+      "p0_sub": "fraud",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_09367",
+      "intent": "sec_fraud_report",
+      "question": "短信说我中奖了, 是骗子吗",
+      "is_p0": true,
+      "p0_sub": "fraud",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_09099",
+      "intent": "sec_fraud_report",
+      "question": "骗我输入了验证码?",
+      "is_p0": true,
+      "p0_sub": "fraud",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_09240",
+      "intent": "sec_fraud_report",
+      "question": "骗子让我的转了 8 万",
+      "is_p0": true,
+      "p0_sub": "fraud",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_09234",
+      "intent": "sec_fraud_report",
+      "question": "想问一下有人冒充招行客服要验证码",
+      "is_p0": true,
+      "p0_sub": "fraud",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_09321",
+      "intent": "sec_fraud_report",
+      "question": "陌生人让我转账到安全账户?",
+      "is_p0": true,
+      "p0_sub": "fraud",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_09101",
+      "intent": "sec_fraud_report",
+      "question": "那个短信说我中奖了, 是骗子吗",
+      "is_p0": true,
+      "p0_sub": "fraud",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_09293",
+      "intent": "sec_fraud_report",
+      "question": "请问我好像碰到电信诈骗了",
+      "is_p0": true,
+      "p0_sub": "fraud",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_08886",
+      "intent": "sec_fraud_report",
+      "question": "想问一下怀疑被钓鱼网站骗了",
+      "is_p0": true,
+      "p0_sub": "fraud",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_08869",
+      "intent": "sec_fraud_report",
+      "question": "想问一下我被骗了几万块",
+      "is_p0": true,
+      "p0_sub": "fraud",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_08766",
+      "intent": "sec_fraud_report",
+      "question": "骗我的输入了验证码",
+      "is_p0": true,
+      "p0_sub": "fraud",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_09239",
+      "intent": "sec_fraud_report",
+      "question": "那个我点了个链接, 卡被盗了",
+      "is_p0": true,
+      "p0_sub": "fraud",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_08872",
+      "intent": "sec_fraud_report",
+      "question": "我好像碰到电信诈骗了",
+      "is_p0": true,
+      "p0_sub": "fraud",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_08780",
+      "intent": "sec_fraud_report",
+      "question": "请问卡里的钱被转走了",
+      "is_p0": true,
+      "p0_sub": "fraud",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_10146",
+      "intent": "sec_stolen_card",
+      "question": "卡上扣了一笔不明的钱",
+      "is_p0": true,
+      "p0_sub": "stolen",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_10287",
+      "intent": "sec_stolen_card",
+      "question": "我没消费但卡被刷了",
+      "is_p0": true,
+      "p0_sub": "stolen",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_10620",
+      "intent": "sec_stolen_card",
+      "question": "陌生扣款?",
+      "is_p0": true,
+      "p0_sub": "stolen",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_10425",
+      "intent": "sec_stolen_card",
+      "question": "卡上有一笔陌生消费",
+      "is_p0": true,
+      "p0_sub": "stolen",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_10382",
+      "intent": "sec_stolen_card",
+      "question": "收到陌生消费?",
+      "is_p0": true,
+      "p0_sub": "stolen",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_10232",
+      "intent": "sec_stolen_card",
+      "question": "收到陌生消费?",
+      "is_p0": true,
+      "p0_sub": "stolen",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_10458",
+      "intent": "sec_stolen_card",
+      "question": "信用卡有笔消费不是我的",
+      "is_p0": true,
+      "p0_sub": "stolen",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_10362",
+      "intent": "sec_stolen_card",
+      "question": "卡上出现陌生交易?",
+      "is_p0": true,
+      "p0_sub": "stolen",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_10285",
+      "intent": "sec_stolen_card",
+      "question": "那个我没消费但卡被刷了",
+      "is_p0": true,
+      "p0_sub": "stolen",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_10158",
+      "intent": "sec_stolen_card",
+      "question": "想问一下卡上扣了一笔不明的钱",
+      "is_p0": true,
+      "p0_sub": "stolen",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_10601",
+      "intent": "sec_stolen_card",
+      "question": "卡被刷了 500 元?",
+      "is_p0": true,
+      "p0_sub": "stolen",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_10270",
+      "intent": "sec_stolen_card",
+      "question": "信用卡有笔消费不是我的",
+      "is_p0": true,
+      "p0_sub": "stolen",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_10524",
+      "intent": "sec_stolen_card",
+      "question": "卡上有一笔陌生消费?",
+      "is_p0": true,
+      "p0_sub": "stolen",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_10313",
+      "intent": "sec_stolen_card",
+      "question": "想问一下陌生扣款",
+      "is_p0": true,
+      "p0_sub": "stolen",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_10519",
+      "intent": "sec_stolen_card",
+      "question": "想问一下陌生扣款",
+      "is_p0": true,
+      "p0_sub": "stolen",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_10380",
+      "intent": "sec_stolen_card",
+      "question": "我的没消费但卡被刷了",
+      "is_p0": true,
+      "p0_sub": "stolen",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_10174",
+      "intent": "sec_stolen_card",
+      "question": "那个信用卡不是我的消费",
+      "is_p0": true,
+      "p0_sub": "stolen",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_10493",
+      "intent": "sec_stolen_card",
+      "question": "卡被刷了 500 元",
+      "is_p0": true,
+      "p0_sub": "stolen",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_10445",
+      "intent": "sec_stolen_card",
+      "question": "想问一下卡上扣了一笔不明的钱",
+      "is_p0": true,
+      "p0_sub": "stolen",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_10496",
+      "intent": "sec_stolen_card",
+      "question": "信用卡不是我的消费?",
+      "is_p0": true,
+      "p0_sub": "stolen",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_10355",
+      "intent": "sec_stolen_card",
+      "question": "卡被刷 1000 元不是我?",
+      "is_p0": true,
+      "p0_sub": "stolen",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_10600",
+      "intent": "sec_stolen_card",
+      "question": "卡上有一笔陌生消费",
+      "is_p0": true,
+      "p0_sub": "stolen",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_10301",
+      "intent": "sec_stolen_card",
+      "question": "信用卡有笔消费不是我的",
+      "is_p0": true,
+      "p0_sub": "stolen",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_10590",
+      "intent": "sec_stolen_card",
+      "question": "卡上出现陌生交易",
+      "is_p0": true,
+      "p0_sub": "stolen",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_10467",
+      "intent": "sec_stolen_card",
+      "question": "想问一下卡上扣了一笔不明的钱",
+      "is_p0": true,
+      "p0_sub": "stolen",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_10292",
+      "intent": "sec_stolen_card",
+      "question": "信用卡不是我的消费",
+      "is_p0": true,
+      "p0_sub": "stolen",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_10198",
+      "intent": "sec_stolen_card",
+      "question": "请问卡被刷 1000 元不是我",
+      "is_p0": true,
+      "p0_sub": "stolen",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_10191",
+      "intent": "sec_stolen_card",
+      "question": "想问一下我没消费但卡被刷了",
+      "is_p0": true,
+      "p0_sub": "stolen",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_10212",
+      "intent": "sec_stolen_card",
+      "question": "卡上扣了一笔不明的钱",
+      "is_p0": true,
+      "p0_sub": "stolen",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_10407",
+      "intent": "sec_stolen_card",
+      "question": "那个卡上有一笔陌生消费",
+      "is_p0": true,
+      "p0_sub": "stolen",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_10078",
+      "intent": "sec_freeze_unexpected",
+      "question": "请问卡不能用了, 怎么解冻",
+      "is_p0": true,
+      "p0_sub": "freeze",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_09974",
+      "intent": "sec_freeze_unexpected",
+      "question": "想问一下我的账户被冻结",
+      "is_p0": true,
+      "p0_sub": "freeze",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_09950",
+      "intent": "sec_freeze_unexpected",
+      "question": "卡突然不能用了, 是不是被冻?",
+      "is_p0": true,
+      "p0_sub": "freeze",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_09785",
+      "intent": "sec_freeze_unexpected",
+      "question": "卡被冻结, 紧急",
+      "is_p0": true,
+      "p0_sub": "freeze",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_09707",
+      "intent": "sec_freeze_unexpected",
+      "question": "请问卡突然不能用了, 是不是被冻",
+      "is_p0": true,
+      "p0_sub": "freeze",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_09520",
+      "intent": "sec_freeze_unexpected",
+      "question": "账户状态不对",
+      "is_p0": true,
+      "p0_sub": "freeze",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_09450",
+      "intent": "sec_freeze_unexpected",
+      "question": "卡状态异常?",
+      "is_p0": true,
+      "p0_sub": "freeze",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_09873",
+      "intent": "sec_freeze_unexpected",
+      "question": "想问一下卡被冻了",
+      "is_p0": true,
+      "p0_sub": "freeze",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_09828",
+      "intent": "sec_freeze_unexpected",
+      "question": "请问为啥账户被锁",
+      "is_p0": true,
+      "p0_sub": "freeze",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_09608",
+      "intent": "sec_freeze_unexpected",
+      "question": "卡被冻了",
+      "is_p0": true,
+      "p0_sub": "freeze",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_09798",
+      "intent": "sec_freeze_unexpected",
+      "question": "卡突然不能用了, 是不是被冻",
+      "is_p0": true,
+      "p0_sub": "freeze",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_09756",
+      "intent": "sec_freeze_unexpected",
+      "question": "卡突然不能用了, 是不是被冻",
+      "is_p0": true,
+      "p0_sub": "freeze",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_09712",
+      "intent": "sec_freeze_unexpected",
+      "question": "卡被冻结, 紧急",
+      "is_p0": true,
+      "p0_sub": "freeze",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_10051",
+      "intent": "sec_freeze_unexpected",
+      "question": "想问一下为啥账户被冻",
+      "is_p0": true,
+      "p0_sub": "freeze",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_09839",
+      "intent": "sec_freeze_unexpected",
+      "question": "我的卡怎么锁住了?",
+      "is_p0": true,
+      "p0_sub": "freeze",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_09606",
+      "intent": "sec_freeze_unexpected",
+      "question": "卡被封了, 怎么办",
+      "is_p0": true,
+      "p0_sub": "freeze",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_09802",
+      "intent": "sec_freeze_unexpected",
+      "question": "请问账户被冻结了, 怎么办",
+      "is_p0": true,
+      "p0_sub": "freeze",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_09806",
+      "intent": "sec_freeze_unexpected",
+      "question": "卡状态异常",
+      "is_p0": true,
+      "p0_sub": "freeze",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_09711",
+      "intent": "sec_freeze_unexpected",
+      "question": "卡冻结怎么解",
+      "is_p0": true,
+      "p0_sub": "freeze",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_09508",
+      "intent": "sec_freeze_unexpected",
+      "question": "请问卡突然不能用了, 是不是被冻",
+      "is_p0": true,
+      "p0_sub": "freeze",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_09533",
+      "intent": "sec_freeze_unexpected",
+      "question": "想问一下我的卡怎么锁住了",
+      "is_p0": true,
+      "p0_sub": "freeze",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_09636",
+      "intent": "sec_freeze_unexpected",
+      "question": "我的的卡怎么锁住了",
+      "is_p0": true,
+      "p0_sub": "freeze",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_09536",
+      "intent": "sec_freeze_unexpected",
+      "question": "那个卡被封了, 怎么办",
+      "is_p0": true,
+      "p0_sub": "freeze",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_09406",
+      "intent": "sec_freeze_unexpected",
+      "question": "请问卡状态异常",
+      "is_p0": true,
+      "p0_sub": "freeze",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_09462",
+      "intent": "sec_freeze_unexpected",
+      "question": "那个账户异常冻结",
+      "is_p0": true,
+      "p0_sub": "freeze",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_09710",
+      "intent": "sec_freeze_unexpected",
+      "question": "那个卡不能用了, 怎么解冻",
+      "is_p0": true,
+      "p0_sub": "freeze",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_09431",
+      "intent": "sec_freeze_unexpected",
+      "question": "卡状态异常",
+      "is_p0": true,
+      "p0_sub": "freeze",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_09812",
+      "intent": "sec_freeze_unexpected",
+      "question": "我的卡怎么锁住了?",
+      "is_p0": true,
+      "p0_sub": "freeze",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_09862",
+      "intent": "sec_freeze_unexpected",
+      "question": "想问一下账户状态异常",
+      "is_p0": true,
+      "p0_sub": "freeze",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_10095",
+      "intent": "sec_freeze_unexpected",
+      "question": "卡被冻了",
+      "is_p0": true,
+      "p0_sub": "freeze",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_10990",
+      "intent": "cons_urg_loss",
+      "question": "那个账户的钱被转走了, 紧急",
+      "is_p0": true,
+      "p0_sub": "loss",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_10862",
+      "intent": "cons_urg_loss",
+      "question": "损失了 5 万, 紧急",
+      "is_p0": true,
+      "p0_sub": "loss",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_10666",
+      "intent": "cons_urg_loss",
+      "question": "我亏了 8 万, 紧急",
+      "is_p0": true,
+      "p0_sub": "loss",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_10789",
+      "intent": "cons_urg_loss",
+      "question": "卡里钱都没了, 紧急",
+      "is_p0": true,
+      "p0_sub": "loss",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_10684",
+      "intent": "cons_urg_loss",
+      "question": "损失了 5 万, 紧急",
+      "is_p0": true,
+      "p0_sub": "loss",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_10899",
+      "intent": "cons_urg_loss",
+      "question": "卡里钱都没了, 紧急?",
+      "is_p0": true,
+      "p0_sub": "loss",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_10911",
+      "intent": "cons_urg_loss",
+      "question": "被诈骗了, 紧急",
+      "is_p0": true,
+      "p0_sub": "loss",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_10626",
+      "intent": "cons_urg_loss",
+      "question": "我亏了 8 万, 紧急?",
+      "is_p0": true,
+      "p0_sub": "loss",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_10886",
+      "intent": "cons_urg_loss",
+      "question": "那个账户的钱被转走了, 紧急",
+      "is_p0": true,
+      "p0_sub": "loss",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_10636",
+      "intent": "cons_urg_loss",
+      "question": "卡里钱都没了, 紧急",
+      "is_p0": true,
+      "p0_sub": "loss",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_10731",
+      "intent": "cons_urg_loss",
+      "question": "卡丢了被刷了?",
+      "is_p0": true,
+      "p0_sub": "loss",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_10994",
+      "intent": "cons_urg_loss",
+      "question": "卡丢了被刷了?",
+      "is_p0": true,
+      "p0_sub": "loss",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_10839",
+      "intent": "cons_urg_loss",
+      "question": "我亏了 10 万?",
+      "is_p0": true,
+      "p0_sub": "loss",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_10730",
+      "intent": "cons_urg_loss",
+      "question": "被诈骗了, 紧急",
+      "is_p0": true,
+      "p0_sub": "loss",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_10694",
+      "intent": "cons_urg_loss",
+      "question": "账户被扣款, 不是我的",
+      "is_p0": true,
+      "p0_sub": "loss",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_10655",
+      "intent": "cons_urg_loss",
+      "question": "卡里钱都没了, 紧急",
+      "is_p0": true,
+      "p0_sub": "loss",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_10693",
+      "intent": "cons_urg_loss",
+      "question": "请问账户被扣款, 不是我的",
+      "is_p0": true,
+      "p0_sub": "loss",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_10836",
+      "intent": "cons_urg_loss",
+      "question": "我的卡里钱被转走了, 紧急",
+      "is_p0": true,
+      "p0_sub": "loss",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_10905",
+      "intent": "cons_urg_loss",
+      "question": "想问一下刚被骗了怎么办",
+      "is_p0": true,
+      "p0_sub": "loss",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_10782",
+      "intent": "cons_urg_loss",
+      "question": "那个账户的钱被转走了, 紧急",
+      "is_p0": true,
+      "p0_sub": "loss",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_10837",
+      "intent": "cons_urg_loss",
+      "question": "我亏了 10 万?",
+      "is_p0": true,
+      "p0_sub": "loss",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_10891",
+      "intent": "cons_urg_loss",
+      "question": "请问账户被扣款, 不是我的",
+      "is_p0": true,
+      "p0_sub": "loss",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_10714",
+      "intent": "cons_urg_loss",
+      "question": "请问我亏了钱, 紧急",
+      "is_p0": true,
+      "p0_sub": "loss",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_10750",
+      "intent": "cons_urg_loss",
+      "question": "请问我亏了钱, 紧急",
+      "is_p0": true,
+      "p0_sub": "loss",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_10842",
+      "intent": "cons_urg_loss",
+      "question": "请问我亏了钱, 紧急",
+      "is_p0": true,
+      "p0_sub": "loss",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_10660",
+      "intent": "cons_urg_loss",
+      "question": "我亏了 10 万?",
+      "is_p0": true,
+      "p0_sub": "loss",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_10861",
+      "intent": "cons_urg_loss",
+      "question": "想问一下刚被骗了怎么办",
+      "is_p0": true,
+      "p0_sub": "loss",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V8_10709",
+      "intent": "cons_urg_loss",
+      "question": "想问一下卡里钱突然没了",
+      "is_p0": true,
+      "p0_sub": "loss",
+      "source": "seed_v8.0",
+      "split": "holdout"
+    },
+    {
+      "id": "V311_E2E_0001",
+      "intent": "sec_freeze_unexpected",
+      "question": "我刚给一个自称是公安的人转了 5 万块, 他说我不转就冻结我账户, 现在我慌了",
+      "is_p0": true,
+      "p0_sub": "",
+      "source": "e2e_demo",
+      "split": "holdout",
+      "tags": [
+        "e2e_realistic",
+        "category:L0_HUMAN (银行业 P0 红线)"
+      ]
+    },
+    {
+      "id": "V311_E2E_0002",
+      "intent": "safety_card_loss",
+      "question": "我的信用卡刚才在商场丢了, 我担心被人盗刷",
+      "is_p0": true,
+      "p0_sub": "",
+      "source": "e2e_demo",
+      "split": "holdout",
+      "tags": [
+        "e2e_realistic",
+        "category:L0_HUMAN (银行业 P0 红线)"
+      ]
+    },
+    {
+      "id": "V311_E2E_0003",
+      "intent": "info_bill_amount",
+      "question": "我这个月信用卡账单多少钱?",
+      "is_p0": false,
+      "p0_sub": "",
+      "source": "e2e_demo",
+      "split": "holdout",
+      "tags": [
+        "e2e_realistic",
+        "category:BIZ_DB (业务数据库查询)"
+      ]
+    },
+    {
+      "id": "V311_E2E_0004",
+      "intent": "biz_other",
+      "question": "我新办的信用卡寄到哪了?",
+      "is_p0": false,
+      "p0_sub": "",
+      "source": "e2e_demo",
+      "split": "holdout",
+      "tags": [
+        "e2e_realistic",
+        "category:BIZ_DB (业务数据库查询)"
+      ]
+    },
+    {
+      "id": "V311_E2E_0005",
+      "intent": "biz_card_activate",
+      "question": "我刚收到新卡, 怎么激活?",
+      "is_p0": false,
+      "p0_sub": "",
+      "source": "e2e_demo",
+      "split": "holdout",
+      "tags": [
+        "e2e_realistic",
+        "category:AGENT_TOOL (工具意图, 跳转 App)"
+      ]
+    },
+    {
+      "id": "V311_E2E_0006",
+      "intent": "biz_tran_limit",
+      "question": "我手机银行一天能转多少钱?",
+      "is_p0": false,
+      "p0_sub": "",
+      "source": "e2e_demo",
+      "split": "holdout",
+      "tags": [
+        "e2e_realistic",
+        "category:CASCADE L1 (业务办理, 模板直接答)"
+      ]
+    },
+    {
+      "id": "V311_E2E_0007",
+      "intent": "sales_credit_prod",
+      "question": "稳健一点的理财产品有哪些? 收益大概多少?",
+      "is_p0": false,
+      "p0_sub": "",
+      "source": "e2e_demo",
+      "split": "holdout",
+      "tags": [
+        "e2e_realistic",
+        "category:CASCADE L2 (中等置信, RAG 命中)"
+      ]
+    },
+    {
+      "id": "V311_E2E_0008",
+      "intent": "info_phone",
+      "question": "招行信用卡客服电话多少?",
+      "is_p0": false,
+      "p0_sub": "",
+      "source": "e2e_demo",
+      "split": "holdout",
+      "tags": [
+        "e2e_realistic",
+        "category:RAG_KB (信息咨询)"
+      ]
+    },
+    {
+      "id": "V311_E2E_0009",
+      "intent": "biz_tran_internal",
+      "question": "我要转一笔钱",
+      "is_p0": false,
+      "p0_sub": "",
+      "source": "e2e_demo",
+      "split": "holdout",
+      "tags": [
+        "e2e_realistic",
+        "category:CASCADE 多轮澄清 (槽位缺失)"
+      ]
+    },
+    {
+      "id": "V311_E2E_0010",
+      "intent": "sys_service_complaint",
+      "question": "你们这个 AI 客服太差了, 完全答非所问! 我要投诉!",
+      "is_p0": true,
+      "p0_sub": "",
+      "source": "e2e_demo",
+      "split": "holdout",
+      "tags": [
+        "e2e_realistic",
+        "category:L0_HUMAN (银行业 P0 红线 - 投诉)"
+      ]
+    },
+    {
+      "id": "V311_FAQ_0001",
+      "intent": "security_fraud_report",
+      "question": "我妈刚被一个自称公检法的人骗了 20 万怎么办",
+      "is_p0": true,
+      "p0_sub": "urg_fraud",
+      "source": "cmb_faq_realistic",
+      "split": "holdout",
+      "tags": [
+        "real_scenario",
+        "hand_crafted"
+      ]
+    },
+    {
+      "id": "V311_FAQ_0002",
+      "intent": "security_fraud_report",
+      "question": "刚收到一条说医保账户异常的短信是骗子吗",
+      "is_p0": true,
+      "p0_sub": "urg_fraud",
+      "source": "cmb_faq_realistic",
+      "split": "holdout",
+      "tags": [
+        "real_scenario",
+        "hand_crafted"
+      ]
+    },
+    {
+      "id": "V311_FAQ_0003",
+      "intent": "security_fraud_report",
+      "question": "接到电话说我涉嫌洗钱要我转账到安全账户",
+      "is_p0": true,
+      "p0_sub": "urg_fraud",
+      "source": "cmb_faq_realistic",
+      "split": "holdout",
+      "tags": [
+        "real_scenario",
+        "hand_crafted"
+      ]
+    },
+    {
+      "id": "V311_FAQ_0004",
+      "intent": "security_fraud_report",
+      "question": "我在刷单平台被骗了 3 万能不能追回",
+      "is_p0": true,
+      "p0_sub": "urg_fraud",
+      "source": "cmb_faq_realistic",
+      "split": "holdout",
+      "tags": [
+        "real_scenario",
+        "hand_crafted"
+      ]
+    },
+    {
+      "id": "V311_FAQ_0005",
+      "intent": "security_fraud_report",
+      "question": "刚才有人冒充招行客服让我报验证码",
+      "is_p0": true,
+      "p0_sub": "urg_fraud",
+      "source": "cmb_faq_realistic",
+      "split": "holdout",
+      "tags": [
+        "real_scenario",
+        "hand_crafted"
+      ]
+    },
+    {
+      "id": "V311_FAQ_0006",
+      "intent": "security_fraud_report",
+      "question": "有人冒充反诈中心的工作人员让我转账",
+      "is_p0": true,
+      "p0_sub": "urg_fraud",
+      "source": "cmb_faq_realistic",
+      "split": "holdout",
+      "tags": [
+        "real_scenario",
+        "hand_crafted"
+      ]
+    },
+    {
+      "id": "V311_FAQ_0007",
+      "intent": "security_fraud_report",
+      "question": "客服说让我把钱转到反诈账户是真是假",
+      "is_p0": true,
+      "p0_sub": "urg_fraud",
+      "source": "cmb_faq_realistic",
+      "split": "holdout",
+      "tags": [
+        "real_scenario",
+        "hand_crafted"
+      ]
+    },
+    {
+      "id": "V311_FAQ_0008",
+      "intent": "security_fraud_report",
+      "question": "我爸刚被骗了 50 万报警了能追回吗",
+      "is_p0": true,
+      "p0_sub": "urg_fraud",
+      "source": "cmb_faq_realistic",
+      "split": "holdout",
+      "tags": [
+        "real_scenario",
+        "hand_crafted"
+      ]
+    },
+    {
+      "id": "V311_FAQ_0009",
+      "intent": "security_fraud_report",
+      "question": "我误点了诈骗链接账户里的钱会不会被转走",
+      "is_p0": true,
+      "p0_sub": "urg_fraud",
+      "source": "cmb_faq_realistic",
+      "split": "holdout",
+      "tags": [
+        "real_scenario",
+        "hand_crafted"
+      ]
+    },
+    {
+      "id": "V311_FAQ_0010",
+      "intent": "security_fraud_report",
+      "question": "我儿子刚被网络刷单骗了 10 万",
+      "is_p0": true,
+      "p0_sub": "urg_fraud",
+      "source": "cmb_faq_realistic",
+      "split": "holdout",
+      "tags": [
+        "real_scenario",
+        "hand_crafted"
+      ]
+    },
+    {
+      "id": "V311_FAQ_0011",
+      "intent": "security_aml_large_transfer",
+      "question": "我要转 30 万到一个新公司账户是骗子吗",
+      "is_p0": true,
+      "p0_sub": "urg_aml",
+      "source": "cmb_faq_realistic",
+      "split": "holdout",
+      "tags": [
+        "real_scenario",
+        "hand_crafted"
+      ]
+    },
+    {
+      "id": "V311_FAQ_0012",
+      "intent": "security_aml_large_transfer",
+      "question": "我朋友让我帮他转 50 万到他朋友账户",
+      "is_p0": true,
+      "p0_sub": "urg_aml",
+      "source": "cmb_faq_realistic",
+      "split": "holdout",
+      "tags": [
+        "real_scenario",
+        "hand_crafted"
+      ]
+    },
+    {
+      "id": "V311_FAQ_0013",
+      "intent": "security_aml_large_transfer",
+      "question": "有人让我转 20 万到一个对公账户说是投资款",
+      "is_p0": true,
+      "p0_sub": "urg_aml",
+      "source": "cmb_faq_realistic",
+      "split": "holdout",
+      "tags": [
+        "real_scenario",
+        "hand_crafted"
+      ]
+    },
+    {
+      "id": "V311_FAQ_0014",
+      "intent": "security_aml_cross_border",
+      "question": "我刚向一个海外账户汇了 3 万美元",
+      "is_p0": true,
+      "p0_sub": "urg_aml",
+      "source": "cmb_faq_realistic",
+      "split": "holdout",
+      "tags": [
+        "real_scenario",
+        "hand_crafted"
+      ]
+    },
+    {
+      "id": "V311_FAQ_0015",
+      "intent": "security_aml_cross_border",
+      "question": "跨境汇钱给留学的儿子有限额吗",
+      "is_p0": true,
+      "p0_sub": "urg_aml",
+      "source": "cmb_faq_realistic",
+      "split": "holdout",
+      "tags": [
+        "real_scenario",
+        "hand_crafted"
+      ]
+    },
+    {
+      "id": "V311_FAQ_0016",
+      "intent": "safety_card_loss",
+      "question": "我钱包掉了里面有招行卡怎么办",
+      "is_p0": true,
+      "p0_sub": "urg_safety",
+      "source": "cmb_faq_realistic",
+      "split": "holdout",
+      "tags": [
+        "real_scenario",
+        "hand_crafted"
+      ]
+    },
+    {
+      "id": "V311_FAQ_0017",
+      "intent": "safety_card_loss",
+      "question": "信用卡丢了被人刷了 5 笔",
+      "is_p0": true,
+      "p0_sub": "urg_safety",
+      "source": "cmb_faq_realistic",
+      "split": "holdout",
+      "tags": [
+        "real_scenario",
+        "hand_crafted"
+      ]
+    },
+    {
+      "id": "V311_FAQ_0018",
+      "intent": "safety_card_freeze",
+      "question": "我想把招行卡冻结了",
+      "is_p0": true,
+      "p0_sub": "urg_safety",
+      "source": "cmb_faq_realistic",
+      "split": "holdout",
+      "tags": [
+        "real_scenario",
+        "hand_crafted"
+      ]
+    },
+    {
+      "id": "V311_FAQ_0019",
+      "intent": "safety_card_freeze",
+      "question": "我的卡可能泄露了先冻结下",
+      "is_p0": true,
+      "p0_sub": "urg_safety",
+      "source": "cmb_faq_realistic",
+      "split": "holdout",
+      "tags": [
+        "real_scenario",
+        "hand_crafted"
+      ]
+    },
+    {
+      "id": "V311_FAQ_0020",
+      "intent": "sys_service_route_human",
+      "question": "我要找招行客服投诉",
+      "is_p0": true,
+      "p0_sub": "urg_human",
+      "source": "cmb_faq_realistic",
+      "split": "holdout",
+      "tags": [
+        "real_scenario",
+        "hand_crafted"
+      ]
+    },
+    {
+      "id": "V311_FAQ_0021",
+      "intent": "sys_service_route_human",
+      "question": "那个我不要跟机器人说话了",
+      "is_p0": true,
+      "p0_sub": "urg_human",
+      "source": "cmb_faq_realistic",
+      "split": "holdout",
+      "tags": [
+        "real_scenario",
+        "hand_crafted"
+      ]
+    },
+    {
+      "id": "V311_FAQ_0022",
+      "intent": "sys_service_route_human",
+      "question": "我这边着急能不能直接转人工",
+      "is_p0": true,
+      "p0_sub": "urg_human",
+      "source": "cmb_faq_realistic",
+      "split": "holdout",
+      "tags": [
+        "real_scenario",
+        "hand_crafted"
+      ]
+    },
+    {
+      "id": "V311_FAQ_0023",
+      "intent": "sys_service_route_human",
+      "question": "刚才那个机器人根本不懂让我转 95555 真人",
+      "is_p0": true,
+      "p0_sub": "urg_human",
+      "source": "cmb_faq_realistic",
+      "split": "holdout",
+      "tags": [
+        "real_scenario",
+        "hand_crafted"
+      ]
+    },
+    {
+      "id": "V311_FAQ_0024",
+      "intent": "sys_service_route_human",
+      "question": "麻烦帮我转个真人客服处理",
+      "is_p0": true,
+      "p0_sub": "urg_human",
+      "source": "cmb_faq_realistic",
+      "split": "holdout",
+      "tags": [
+        "real_scenario",
+        "hand_crafted"
+      ]
+    },
+    {
+      "id": "V311_FAQ_0025",
+      "intent": "biz_optout_outbound",
+      "question": "我不想接招行的营销电话了",
+      "is_p0": true,
+      "p0_sub": "urg_optout",
+      "source": "cmb_faq_realistic",
+      "split": "holdout",
+      "tags": [
+        "real_scenario",
+        "hand_crafted"
+      ]
+    },
+    {
+      "id": "V311_FAQ_0026",
+      "intent": "biz_optout_outbound",
+      "question": "请取消我的短信通知",
+      "is_p0": true,
+      "p0_sub": "urg_optout",
+      "source": "cmb_faq_realistic",
+      "split": "holdout",
+      "tags": [
+        "real_scenario",
+        "hand_crafted"
+      ]
+    },
+    {
+      "id": "V311_FAQ_0027",
+      "intent": "cons_balance_query",
+      "question": "我卡里还剩多少钱",
+      "is_p0": false,
+      "p0_sub": "",
+      "source": "cmb_faq_realistic",
+      "split": "holdout",
+      "tags": [
+        "real_scenario",
+        "hand_crafted"
+      ]
+    },
+    {
+      "id": "V311_FAQ_0029",
+      "intent": "cons_balance_query",
+      "question": "帮我看下活期余额",
+      "is_p0": false,
+      "p0_sub": "",
+      "source": "cmb_faq_realistic",
+      "split": "holdout",
+      "tags": [
+        "real_scenario",
+        "hand_crafted"
+      ]
+    },
+    {
+      "id": "V311_FAQ_0030",
+      "intent": "cons_transfer_limit",
+      "question": "我每天能转多少钱",
+      "is_p0": false,
+      "p0_sub": "",
+      "source": "cmb_faq_realistic",
+      "split": "holdout",
+      "tags": [
+        "real_scenario",
+        "hand_crafted"
+      ]
+    },
+    {
+      "id": "V311_FAQ_0031",
+      "intent": "cons_transfer_limit",
+      "question": "单笔转账最多多少",
+      "is_p0": false,
+      "p0_sub": "",
+      "source": "cmb_faq_realistic",
+      "split": "holdout",
+      "tags": [
+        "real_scenario",
+        "hand_crafted"
+      ]
+    },
+    {
+      "id": "V311_FAQ_0032",
+      "intent": "cons_loan_rate",
+      "question": "招行房贷利率是多少",
+      "is_p0": false,
+      "p0_sub": "",
+      "source": "cmb_faq_realistic",
+      "split": "holdout",
+      "tags": [
+        "real_scenario",
+        "hand_crafted"
+      ]
+    },
+    {
+      "id": "V311_FAQ_0033",
+      "intent": "cons_loan_rate",
+      "question": "信用贷款利率多少",
+      "is_p0": false,
+      "p0_sub": "",
+      "source": "cmb_faq_realistic",
+      "split": "holdout",
+      "tags": [
+        "real_scenario",
+        "hand_crafted"
+      ]
+    },
+    {
+      "id": "V311_FAQ_0034",
+      "intent": "cons_credit_card_bill",
+      "question": "我这期信用卡账单多少钱",
+      "is_p0": false,
+      "p0_sub": "",
+      "source": "cmb_faq_realistic",
+      "split": "holdout",
+      "tags": [
+        "real_scenario",
+        "hand_crafted"
+      ]
+    },
+    {
+      "id": "V311_FAQ_0035",
+      "intent": "cons_credit_card_bill",
+      "question": "信用卡账单日是哪天",
+      "is_p0": false,
+      "p0_sub": "",
+      "source": "cmb_faq_realistic",
+      "split": "holdout",
+      "tags": [
+        "real_scenario",
+        "hand_crafted"
+      ]
+    },
+    {
+      "id": "V311_FAQ_0036",
+      "intent": "cons_credit_card_repay",
+      "question": "怎么还信用卡",
+      "is_p0": false,
+      "p0_sub": "",
+      "source": "cmb_faq_realistic",
+      "split": "holdout",
+      "tags": [
+        "real_scenario",
+        "hand_crafted"
+      ]
+    },
+    {
+      "id": "V311_FAQ_0037",
+      "intent": "cons_credit_card_repay",
+      "question": "信用卡还款日可以改吗",
+      "is_p0": false,
+      "p0_sub": "",
+      "source": "cmb_faq_realistic",
+      "split": "holdout",
+      "tags": [
+        "real_scenario",
+        "hand_crafted"
+      ]
+    },
+    {
+      "id": "V311_FAQ_0038",
+      "intent": "cons_savings_rate",
+      "question": "现在定期存款利率是多少",
+      "is_p0": false,
+      "p0_sub": "",
+      "source": "cmb_faq_realistic",
+      "split": "holdout",
+      "tags": [
+        "real_scenario",
+        "hand_crafted"
+      ]
+    },
+    {
+      "id": "V311_FAQ_0039",
+      "intent": "cons_fund_query",
+      "question": "我买的基金今天涨了多少",
+      "is_p0": false,
+      "p0_sub": "",
+      "source": "cmb_faq_realistic",
+      "split": "holdout",
+      "tags": [
+        "real_scenario",
+        "hand_crafted"
+      ]
+    },
+    {
+      "id": "V311_FAQ_0040",
+      "intent": "cons_wealth_product",
+      "question": "招行有什么好的理财",
+      "is_p0": false,
+      "p0_sub": "",
+      "source": "cmb_faq_realistic",
+      "split": "holdout",
+      "tags": [
+        "real_scenario",
+        "hand_crafted"
+      ]
+    },
+    {
+      "id": "V311_FAQ_0041",
+      "intent": "cons_app_login",
+      "question": "手机银行登录不上",
+      "is_p0": false,
+      "p0_sub": "",
+      "source": "cmb_faq_realistic",
+      "split": "holdout",
+      "tags": [
+        "real_scenario",
+        "hand_crafted"
+      ]
+    },
+    {
+      "id": "V311_FAQ_0042",
+      "intent": "cons_app_login",
+      "question": "App 提示登录过期怎么办",
+      "is_p0": false,
+      "p0_sub": "",
+      "source": "cmb_faq_realistic",
+      "split": "holdout",
+      "tags": [
+        "real_scenario",
+        "hand_crafted"
+      ]
+    },
+    {
+      "id": "V311_FAQ_0043",
+      "intent": "cons_card_apply",
+      "question": "我想办一张信用卡",
+      "is_p0": false,
+      "p0_sub": "",
+      "source": "cmb_faq_realistic",
+      "split": "holdout",
+      "tags": [
+        "real_scenario",
+        "hand_crafted"
+      ]
+    },
+    {
+      "id": "V311_FAQ_0044",
+      "intent": "cons_card_apply",
+      "question": "白金卡怎么办理",
+      "is_p0": false,
+      "p0_sub": "",
+      "source": "cmb_faq_realistic",
+      "split": "holdout",
+      "tags": [
+        "real_scenario",
+        "hand_crafted"
+      ]
+    },
+    {
+      "id": "V311_FAQ_0045",
+      "intent": "biz_loan_apply",
+      "question": "我想申请 30 万的信用贷款",
+      "is_p0": false,
+      "p0_sub": "",
+      "source": "cmb_faq_realistic",
+      "split": "holdout",
+      "tags": [
+        "real_scenario",
+        "hand_crafted"
+      ]
+    },
+    {
+      "id": "V311_FAQ_0046",
+      "intent": "biz_mortgage",
+      "question": "我想咨询房贷提前还款",
+      "is_p0": false,
+      "p0_sub": "",
+      "source": "cmb_faq_realistic",
+      "split": "holdout",
+      "tags": [
+        "real_scenario",
+        "hand_crafted"
+      ]
+    },
+    {
+      "id": "V311_FAQ_0047",
+      "intent": "biz_overseas",
+      "question": "我下周要去美国需要换外汇",
+      "is_p0": false,
+      "p0_sub": "",
+      "source": "cmb_faq_realistic",
+      "split": "holdout",
+      "tags": [
+        "real_scenario",
+        "hand_crafted"
+      ]
+    },
+    {
+      "id": "V311_FAQ_0051",
+      "intent": "sys_invalid",
+      "question": "test",
+      "is_p0": false,
+      "p0_sub": "",
+      "source": "cmb_faq_realistic",
+      "split": "holdout",
+      "tags": [
+        "real_scenario",
+        "hand_crafted"
+      ]
+    },
+    {
+      "id": "V311_FAQ_0052",
+      "intent": "sys_invalid",
+      "question": "asdf",
+      "is_p0": false,
+      "p0_sub": "",
+      "source": "cmb_faq_realistic",
+      "split": "holdout",
+      "tags": [
+        "real_scenario",
+        "hand_crafted"
+      ]
+    }
+  ]
+}

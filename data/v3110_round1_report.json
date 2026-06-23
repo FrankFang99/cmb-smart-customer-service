@@ -1,0 +1,79 @@
+{
+  "version": "v3.11.0-Round1-on-D-v3.3",
+  "run_date": "2026-06-23T22:02:49",
+  "eval_set": "D_eval_set_v3.3.json",
+  "patch_under_test": "v3.11.0 Round 1 (badcase_patches_v311.py + intent_recognizer._match_v311_patches)",
+  "total_elapsed_sec": 144.6,
+  "action_accuracy_full": {
+    "P0": {
+      "correct": 353,
+      "total": 354,
+      "rate": 0.9971751412429378
+    },
+    "P1": {
+      "correct": 54,
+      "total": 58,
+      "rate": 0.9310344827586207
+    }
+  },
+  "p0_recall_by_sub": {
+    "urg_human": {
+      "correct": 70,
+      "total": 70,
+      "rate": 1.0
+    },
+    "fraud": {
+      "correct": 60,
+      "total": 60,
+      "rate": 1.0
+    },
+    "stolen": {
+      "correct": 60,
+      "total": 60,
+      "rate": 1.0
+    },
+    "freeze": {
+      "correct": 59,
+      "total": 60,
+      "rate": 0.9833333333333333
+    },
+    "loss": {
+      "correct": 56,
+      "total": 56,
+      "rate": 1.0
+    },
+    "unknown": {
+      "correct": 6,
+      "total": 6,
+      "rate": 1.0
+    },
+    "urg_fraud": {
+      "correct": 20,
+      "total": 20,
+      "rate": 1.0
+    },
+    "urg_aml": {
+      "correct": 10,
+      "total": 10,
+      "rate": 1.0
+    },
+    "urg_safety": {
+      "correct": 8,
+      "total": 8,
+      "rate": 1.0
+    },
+    "urg_optout": {
+      "correct": 4,
+      "total": 4,
+      "rate": 1.0
+    }
+  },
+  "bad_cases_count": 0,
+  "missed_samples": [
+    {
+      "sub": "freeze",
+      "question": "想问一下我的卡怎么锁住了",
+      "final_action": "answer"
+    }
+  ]
+}

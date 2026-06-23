@@ -56,16 +56,20 @@ from typing import Dict, List
 
 V364_BIZ_TRANSFER_LARGE_RULES = {
     "patterns": [
-        # === A. 强咨询信号 (含"问词": 手续/资料/操作/怎么办/怎么) ===
+        # === A. 强咨询信号 (含"问词": 手续/资料) ===
         "要什么手续", "要什么资料", "要什么证件",
-        "怎么操作", "怎么办理", "怎么办",
+        # v3.10.1 收紧: 删除 "怎么办/怎么操作/怎么办理" 宽匹配
+        # 原因: A2 发现 "贷款怎么办"/"理财怎么办"/"主动还款怎么操作"
+        #        这种 P1 业务咨询 query 被 biz_transfer_large 误吞, 错答 transfer_human
+        # 修复: 把 "怎么办/怎么操作" 留给更具体的上下文 (万手续费/给公司) 抢匹配
         "需要什么", "需要啥",
         "手续费多少", "手续费怎么", "手续费",
         "能不能转", "可以转吗",
         "限额多少", "限额是", "限额",
         # === B. 大额转账 + 公司/个人 (D v3.2 设计: 用户表达大额转账意图) ===
         # 这些 D v3.2 期望 biz_transfer_large, 不期望 security_aml
-        "大额转账", "大额转", "大额",
+        "大额转账", "大额转",
+        # v3.10.1 收紧: 删除单独的 "大额" — 误伤 "大额存单" (产品咨询, 不是大额转账)
         "50 万给公司", "100 万给公司",
         "我要转个 50 万", "我要转 50 万",
         "我要转 100 万", "我要转个 100 万",
@@ -75,13 +79,15 @@ V364_BIZ_TRANSFER_LARGE_RULES = {
         # X 万给公司 (强信号, 在 "30 万" 之前抢)
         "30 万要给公司", "50 万要给公司", "100 万要给公司",
         "30 万给公司", "20 万给公司",
-        # X 万手续费 (强咨询)
+        # X 万手续费 (强咨询) — 这里可以保留 "万怎么办" 因为上下文已经是 "X 万"
         "万手续费", "万怎么", "万需要", "万要什么", "万怎么办",
         "50 万手续费", "100 万手续费",
         # 我要给公司转 + 金额 (口语化)
         "我给个人转",
         # 纯数字金额 (D "我要转 50000")
         "50000",
+        # === C. v3.10.1 新增: "我要转" + 5位以上数字 (强转人工意图) ===
+        "我要转 5", "我要转 6", "我要转 7", "我要转 8", "我要转 9",
     ],
     "intent": "biz_transfer_large",
     "priority": "P0",
@@ -231,6 +237,38 @@ V364_SEC_FRAUD_REPORT_EXTRA = [
 # 这里暂不扩展
 
 
+# ============================================================
+# 5. security_aml_cross_border 短 query 扩展 (v3.10.1 落地版)
+# ============================================================
+# v3.6.4 注释里说"+9 短 query patterns (给国外汇钱/汇美元/...)", 但 v3.6.4
+# 实际未实现 (注释只是规划). v3.10.1 实测发现: "给国外汇钱" 这条 P0 query 在
+# v3.10.1 全量跑中 L0/L1 都未识别, 走到 L3 又遇到 MiniMax API 超时, 最终
+# fallback_to_human 而不是 transfer_human → P0 被破 1 条.
+#
+# 根因:
+#   - L0 dict `cross_border_suspicious` 缺: "给国外" / "汇钱" / "跨境转账"
+#   - L1 v3.6.1 `security_aml_cross_border` patterns 全部含 "汇到/汇给/给美国"
+#     这类明确方向, 不含 "给国外汇钱" 这种口语化表达
+#   - L1 漏命中 → L2 BERT 预测 "22" 低置信度 → L3 调用 MiniMax → 120s 超时
+#
+# 修复: 9 个口语化短 query, 必须排在 security_aml_large_transfer 之前抢匹配.
+#       也覆盖其他相似的 "汇钱 + 国外/境外/美国" 变体.
+V364_SEC_AML_CROSS_BORDER_EXTRA = [
+    # === A. "给国外/境外" 短 query (L0 dict 也补, 这里 L1 兜底) ===
+    "给国外汇钱", "给国外汇款", "给国外汇",
+    "汇钱给国外", "汇钱给境外", "汇钱出国",
+    "汇钱给外国", "汇钱到国外", "汇钱到境外",
+    # === B. "境外汇款 + 手续/操作/怎么办" 业务咨询 ===
+    "境外汇款怎么", "境外汇款手续", "境外汇款怎么办",
+    "跨境转账怎么", "跨境转账手续", "跨境转账怎么办",
+    # === C. "汇钱给 + 美国" 系列 (D query 模式) ===
+    "汇钱给美国汇率", "汇钱给美国多少", "汇钱到美国",
+    "我要汇钱给美国", "我汇钱给美国",
+    # === D. 极短 query (D v3.2 设计: 5 字以内也算 P0) ===
+    "汇钱出国", "汇钱到美国",
+]
+
+
 def apply_v364_patches_to_v363_rules(rules: List[Dict]) -> List[Dict]:
     """
     把 v3.6.4 patterns 扩展合并进 v3.6.3 rules (返回新列表, 重排顺序).
@@ -297,6 +335,9 @@ def apply_v364_patches_to_v363_rules(rules: List[Dict]) -> List[Dict]:
             r["patterns"] = list(r["patterns"]) + V364_SYS_ROUTE_HUMAN_EXTRA
         elif intent_name == "security_fraud_report":
             r["patterns"] = list(r["patterns"]) + V364_SEC_FRAUD_REPORT_EXTRA
+        elif intent_name == "security_aml_cross_border":
+            # v3.10.1: 加 9 个短 query patterns (给国外汇钱等)
+            r["patterns"] = list(r["patterns"]) + V364_SEC_AML_CROSS_BORDER_EXTRA
         new_rules.append(r)
 
     # 兜底: 任何未在 intent_order 中的规则追加到末尾
@@ -314,6 +355,7 @@ def get_v364_extra_patterns() -> Dict[str, List[str]]:
         "biz_transfer_large": V364_BIZ_TRANSFER_LARGE_RULES["patterns"],
         "sys_service_route_human_extra": V364_SYS_ROUTE_HUMAN_EXTRA,
         "security_fraud_report_extra": V364_SEC_FRAUD_REPORT_EXTRA,
+        "security_aml_cross_border_extra": V364_SEC_AML_CROSS_BORDER_EXTRA,
     }
 
 

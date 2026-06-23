@@ -1,0 +1,21 @@
+{
+  "version": "v3.11.0-Round2-final",
+  "eval_set": "D_eval_set_v3.2_dedup.json (1076 条)",
+  "stats_method": "按 user_input 取最后一条 trace",
+  "p0_accuracy": "431/431 = 100.00%",
+  "p1_accuracy": "243/332 = 73.19%",
+  "p2_accuracy": "144/155 = 92.90%",
+  "p3_accuracy": "158/158 = 100.00%",
+  "p0_missed_count": 0,
+  "p1_misjudged_count": 89,
+  "freeze_misjudge_count": 62,
+  "aml_misjudge_count": 11,
+  "comparison": {
+    "v3_10_1_p0": 99.77,
+    "v3_10_1_p1": 72.89,
+    "round_1_p0": 100.0,
+    "round_1_p1": 71.99,
+    "round_2_p0": 100.0,
+    "round_2_p1": 73.19
+  }
+}

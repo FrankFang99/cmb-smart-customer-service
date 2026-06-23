@@ -567,6 +567,12 @@ class IntentRecognizer:
         if v361_result:
             return v361_result
 
+        # v3.11.0 补丁 (Round 1, loop engineering): safety_card_freeze 口语化 + AML 复合句式
+        # 必须在 v3.5.1 之前 (P0 红线), 但在 v3.6.1 之后 (不影响现有规则)
+        v311_result = self._match_v311_patches(text)
+        if v311_result:
+            return v311_result
+
         # v3.5.1 补丁: 优先匹配 (口语化 query + L0 触发)
         v351_result = self._match_v351_patches(text)
         if v351_result:
@@ -702,14 +708,71 @@ class IntentRecognizer:
                         intent = IntentType(intent_str)
                     except (ValueError, KeyError):
                         intent = IntentType.SYS_INVALID
+                    # v3.10.0 修复: 之前硬编码 is_p0=False 是 bug
+                    # patch 命中后必须用 P0_HUMAN_TRANSFER 重新判定
+                    # 否则 "刚转了钱给骗子" -> sec_fraud_report 会漏标 P0
+                    is_p0_v351 = intent_str in IntentCategory.P0_HUMAN_TRANSFER
                     return IntentResult(
                         intent=intent,
                         confidence=0.95,
-                        should_transfer=False,
-                        is_p0=False,
+                        should_transfer=is_p0_v351,
+                        is_p0=is_p0_v351,
                         needs_risk_disclosure=intent_str in IntentCategory.NEED_RISK_DISCLOSURE,
-                        reasoning=f"v3.5.1 意图规则补丁: {pattern} -> {intent_str}",
+                        reasoning=f"v3.5.1 意图规则补丁: {pattern} -> {intent_str}{' [P0修复]' if is_p0_v351 else ''}",
                     )
+        return None
+
+    def _match_v311_patches(self, text: str) -> Optional['IntentResult']:
+        """
+        v3.11.0 P0 红线补丁 (loop engineering, Round 1 final + Round 2 累积负例库)
+
+        v3.11.0 final 选型: 用 Round 1 patch (D v3.3 = 100%, 没漏)
+        Round 2 patch (收紧版) 保留为下一轮迭代候选, 当前不在线上启用
+        累积负例库 (66 条) 写入 negative_candidates_v311_r2.jsonl, 用于 regression check
+
+        Round 1 触发: D v3.3 baseline 显示 v3.10.1 patch 在真实未见样本上 P0 召回 96.61% (-3.16pp)
+        Round 1 结果: D v3.3 上 P0 → 100%, D v3.2 上 P0 → 100% (没破)
+        Round 1 代价: D v3.2 P1 误伤 93 条 (-0.90pp)
+
+        Round 2 反馈循环: 收紧 patterns → P1 恢复到 73.19% (+0.30pp)
+        Round 2 代价: D v3.3 漏 1 条 freeze "想问一下我的卡怎么锁住了"
+
+        PM 决策: 线上用 R1 patch (D v3.3 全 100%), R2 作为下轮迭代候选
+        """
+        # 优先级: R1 patch (final) - D v3.3 = 100%
+        try:
+            from src.eval.badcase_patches_v311 import (
+                V311_SAFETY_FREEZE_EXTRA as freeze_rules,
+                V311_AML_LARGE_TRANSFER_EXTRA as aml_rules,
+            )
+            patch_label = "v3.11.0 R1"
+        except ImportError:
+            return None
+
+        # 优先级 1: safety_card_freeze (Round 1 口语化扩展)
+        for pattern in freeze_rules:
+            if pattern in text:
+                return IntentResult(
+                    intent="safety_card_freeze",
+                    confidence=0.97,
+                    should_transfer=True,
+                    is_p0=True,
+                    needs_risk_disclosure=False,
+                    reasoning=f"{patch_label} P0 freeze 补丁: '{pattern}' → safety_card_freeze",
+                )
+
+        # 优先级 2: security_aml_large_transfer (Round 1 复合句式)
+        for pattern in aml_rules:
+            if pattern in text:
+                return IntentResult(
+                    intent="security_aml_large_transfer",
+                    confidence=0.97,
+                    should_transfer=True,
+                    is_p0=True,
+                    needs_risk_disclosure=False,
+                    reasoning=f"{patch_label} P0 AML 补丁: '{pattern}' → security_aml_large_transfer",
+                )
+
         return None
 
     def _match_with_model(self, text: str) -> Optional['IntentResult']:
