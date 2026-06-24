@@ -322,7 +322,8 @@ class MockMultiTurnAgent:
                 for m in self.manager.get_history(session_id, last_n=4)[:-1]  # 排除刚加的
             ]
             intent_result = self.recognizer.recognize(user_input, context=history)
-            intent = intent_result.intent.value
+            # v3.12.0: IntentResult.intent 现在是 Union[IntentType, str], 用 intent_value() 兼容
+            intent = intent_result.intent_value()
 
             # 4. 槽位收集
             self._update_slots(session_id, user_input)

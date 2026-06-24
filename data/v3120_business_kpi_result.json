@@ -1,0 +1,84 @@
+{
+  "version": "v3.12.0",
+  "timestamp": "2026-06-24T15:29:39.130654",
+  "eval_set": "D_v3.2_dedup (1076) trace db",
+  "latency": {
+    "all_n": 1076,
+    "all_mean_ms": 1971.02,
+    "all_p50_ms": 98.11,
+    "all_p95_ms": 11093.67,
+    "all_p99_ms": 13702.91,
+    "all_max_ms": 19066.75,
+    "by_priority": {
+      "P0": {
+        "n": 431,
+        "mean_ms": 133.04,
+        "p50_ms": 86.47,
+        "p95_ms": 164.05,
+        "p99_ms": 242.1
+      },
+      "P1": {
+        "n": 332,
+        "mean_ms": 2573.84,
+        "p50_ms": 104.22,
+        "p95_ms": 11598.96,
+        "p99_ms": 14115.33
+      },
+      "P2": {
+        "n": 155,
+        "mean_ms": 4223.98,
+        "p50_ms": 185.09,
+        "p95_ms": 12763.04,
+        "p99_ms": 15200.21
+      },
+      "P3": {
+        "n": 158,
+        "mean_ms": 3507.9,
+        "p50_ms": 1414.19,
+        "p95_ms": 11444.93,
+        "p99_ms": 13689.23
+      }
+    }
+  },
+  "transfer_rate": {
+    "total": "536/1076 = 49.81%",
+    "by_priority": {
+      "P0": "431/431 = 100.00%",
+      "P1": "96/332 = 28.92%",
+      "P2": "9/155 = 5.81%",
+      "P3": "0/158 = 0.00%"
+    }
+  },
+  "fcr": {
+    "overall_pct": 50.19,
+    "note": "FCR = (总数 - 转人工) / 总数"
+  },
+  "csat": {
+    "mean": 4.33,
+    "distribution": {
+      "5分(非常满意)": 8,
+      "4分(满意)": 1,
+      "3分(一般)": 2,
+      "2分(不满意)": 1,
+      "1分(差评)": 0
+    },
+    "benchmark_pass": true,
+    "note": "从 multi_turn_eval 12 场景 score 派生 (80%→5分, 75%→4分, 60%→3分)"
+  },
+  "nps": {
+    "score": 75.0,
+    "promoter": 9,
+    "passive": 3,
+    "detractor": 0,
+    "benchmark_pass": true,
+    "note": "从 multi_turn_eval 12 场景 score 派生 (>=80%=推荐者, <50%=贬损者)"
+  },
+  "multi_turn": {
+    "pass_rate": 66.67,
+    "dialogue_completion": 100.0,
+    "intent_tracking": 66.67,
+    "slot_filling": 100.0,
+    "compliance": 0,
+    "context_retention": 83.33
+  }
+}

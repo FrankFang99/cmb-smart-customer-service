@@ -1,0 +1,70 @@
+{
+  "version": "v3.12.0",
+  "timestamp": "2026-06-24T15:25:21.884575",
+  "eval_set": "D_v3.2_dedup (1076)",
+  "base_run": "v3.11.0 final trace db",
+  "weights": {
+    "P0": 10.0,
+    "P1": 5.0,
+    "P2": 2.0,
+    "P3": 1.0
+  },
+  "flat_accuracy": 90.24,
+  "flat_correct": 971,
+  "flat_total": 1076,
+  "weighted_accuracy": 92.26,
+  "weighted_correct": 5940.0,
+  "weighted_total": 6438.0,
+  "by_priority": {
+    "P0": {
+      "correct": 431,
+      "total": 431,
+      "accuracy_pct": 100.0,
+      "weight": 10.0
+    },
+    "P1": {
+      "correct": 236,
+      "total": 332,
+      "accuracy_pct": 71.08,
+      "weight": 5.0
+    },
+    "P2": {
+      "correct": 146,
+      "total": 155,
+      "accuracy_pct": 94.19,
+      "weight": 2.0
+    },
+    "P3": {
+      "correct": 158,
+      "total": 158,
+      "accuracy_pct": 100.0,
+      "weight": 1.0
+    }
+  },
+  "stability": {
+    "method": "5-run bootstrap (seed=42)",
+    "flat_round_accs": [
+      91.35687732342006,
+      90.61338289962825,
+      90.52044609665427,
+      90.24163568773234,
+      92.00743494423791
+    ],
+    "flat_mean": 90.95,
+    "flat_std": 0.72,
+    "flat_min": 90.24,
+    "flat_max": 92.01,
+    "flat_range_pp": 1.77,
+    "p0_round_no_miss": [
+      100.0,
+      100.0,
+      100.0,
+      100.0,
+      100.0
+    ],
+    "p0_mean": 100.0,
+    "p0_std": 0.0,
+    "p0_min_worst_case": 100.0,
+    "p0_max": 100.0
+  }
+}

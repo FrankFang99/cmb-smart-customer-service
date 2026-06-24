@@ -1,0 +1,247 @@
+{
+  "version": "v3.12.0",
+  "timestamp": "2026-06-24T15:22:30.987729",
+  "total_scenarios": 12,
+  "passed": 8,
+  "failed": 4,
+  "pass_rate": 0.6667,
+  "metric_avgs": {
+    "dialogue_completion": 1.0,
+    "intent_tracking": 0.6667,
+    "slot_filling": 1.0,
+    "compliance_safe": 0.8333,
+    "context_retention": 0.8333
+  },
+  "by_tier": {
+    "L0": {
+      "total": 4,
+      "passed": 3,
+      "pass_rate": 0.75
+    },
+    "L1": {
+      "total": 5,
+      "passed": 4,
+      "pass_rate": 0.8
+    },
+    "L2": {
+      "total": 2,
+      "passed": 0,
+      "pass_rate": 0.0
+    },
+    "L3": {
+      "total": 1,
+      "passed": 1,
+      "pass_rate": 1.0
+    }
+  },
+  "scenarios": [
+    {
+      "id": "MT_001",
+      "title": "信用卡挂失",
+      "tier": "L0",
+      "passed": false,
+      "score": 0.8,
+      "turns": 2,
+      "failures": [
+        "Turn 1: 意图不匹配 - expected=biz_card_loss, got=safety_card_loss"
+      ],
+      "metrics": {
+        "dialogue_completion": 1.0,
+        "intent_tracking": 0.0,
+        "slot_filling": 1.0,
+        "compliance_safe": 1.0,
+        "context_retention": 1.0
+      }
+    },
+    {
+      "id": "MT_002",
+      "title": "账户余额查询",
+      "tier": "L1",
+      "passed": true,
+      "score": 1.0,
+      "turns": 1,
+      "failures": [],
+      "metrics": {
+        "dialogue_completion": 1.0,
+        "intent_tracking": 1.0,
+        "slot_filling": 1.0,
+        "compliance_safe": 1.0,
+        "context_retention": 1.0
+      }
+    },
+    {
+      "id": "MT_003",
+      "title": "转账限额咨询",
+      "tier": "L1",
+      "passed": true,
+      "score": 0.9,
+      "turns": 2,
+      "failures": [
+        "上下文保持弱: 第 2+ 轮未明显引用前文"
+      ],
+      "metrics": {
+        "dialogue_completion": 1.0,
+        "intent_tracking": 1.0,
+        "slot_filling": 1.0,
+        "compliance_safe": 1.0,
+        "context_retention": 0.5
+      }
+    },
+    {
+      "id": "MT_004",
+      "title": "疑似诈骗咨询",
+      "tier": "L0",
+      "passed": true,
+      "score": 1.0,
+      "turns": 1,
+      "failures": [],
+      "metrics": {
+        "dialogue_completion": 1.0,
+        "intent_tracking": 1.0,
+        "slot_filling": 1.0,
+        "compliance_safe": 1.0,
+        "context_retention": 1.0
+      }
+    },
+    {
+      "id": "MT_005",
+      "title": "理财产品咨询",
+      "tier": "L2",
+      "passed": false,
+      "score": 0.6,
+      "turns": 1,
+      "failures": [
+        "Turn 1: 意图不匹配 - expected=sales_wealth_prod, got=cons_prod_wealth",
+        "缺失风险/利息披露"
+      ],
+      "metrics": {
+        "dialogue_completion": 1.0,
+        "intent_tracking": 0.0,
+        "slot_filling": 1.0,
+        "compliance_safe": 0.0,
+        "context_retention": 1.0
+      }
+    },
+    {
+      "id": "MT_006",
+      "title": "贷款条件咨询",
+      "tier": "L2",
+      "passed": false,
+      "score": 0.5,
+      "turns": 2,
+      "failures": [
+        "Turn 1: 意图不匹配 - expected=cons_prod_loan, got=security_aml_large_transfer",
+        "缺失风险/利息披露",
+        "上下文保持弱: 第 2+ 轮未明显引用前文"
+      ],
+      "metrics": {
+        "dialogue_completion": 1.0,
+        "intent_tracking": 0.0,
+        "slot_filling": 1.0,
+        "compliance_safe": 0.0,
+        "context_retention": 0.5
+      }
+    },
+    {
+      "id": "MT_007",
+      "title": "服务态度投诉",
+      "tier": "L3",
+      "passed": true,
+      "score": 1.0,
+      "turns": 1,
+      "failures": [],
+      "metrics": {
+        "dialogue_completion": 1.0,
+        "intent_tracking": 1.0,
+        "slot_filling": 1.0,
+        "compliance_safe": 1.0,
+        "context_retention": 1.0
+      }
+    },
+    {
+      "id": "MT_008",
+      "title": "信用卡激活",
+      "tier": "L1",
+      "passed": true,
+      "score": 1.0,
+      "turns": 1,
+      "failures": [],
+      "metrics": {
+        "dialogue_completion": 1.0,
+        "intent_tracking": 1.0,
+        "slot_filling": 1.0,
+        "compliance_safe": 1.0,
+        "context_retention": 1.0
+      }
+    },
+    {
+      "id": "MT_009",
+      "title": "大额转账分笔 (AML)",
+      "tier": "L0",
+      "passed": true,
+      "score": 1.0,
+      "turns": 1,
+      "failures": [],
+      "metrics": {
+        "dialogue_completion": 1.0,
+        "intent_tracking": 1.0,
+        "slot_filling": 1.0,
+        "compliance_safe": 1.0,
+        "context_retention": 1.0
+      }
+    },
+    {
+      "id": "MT_010",
+      "title": "代查他人账户 (L0)",
+      "tier": "L0",
+      "passed": true,
+      "score": 1.0,
+      "turns": 1,
+      "failures": [],
+      "metrics": {
+        "dialogue_completion": 1.0,
+        "intent_tracking": 1.0,
+        "slot_filling": 1.0,
+        "compliance_safe": 1.0,
+        "context_retention": 1.0
+      }
+    },
+    {
+      "id": "MT_011",
+      "title": "跨轮意图切换",
+      "tier": "L1",
+      "passed": true,
+      "score": 0.9,
+      "turns": 2,
+      "failures": [
+        "上下文保持弱: 第 2+ 轮未明显引用前文"
+      ],
+      "metrics": {
+        "dialogue_completion": 1.0,
+        "intent_tracking": 1.0,
+        "slot_filling": 1.0,
+        "compliance_safe": 1.0,
+        "context_retention": 0.5
+      }
+    },
+    {
+      "id": "MT_012",
+      "title": "含糊输入澄清",
+      "tier": "L1",
+      "passed": false,
+      "score": 0.7,
+      "turns": 2,
+      "failures": [
+        "Turn 2: 意图不匹配 - expected=biz_card_reissue, got=cons_prod_credit",
+        "上下文保持弱: 第 2+ 轮未明显引用前文"
+      ],
+      "metrics": {
+        "dialogue_completion": 1.0,
+        "intent_tracking": 0.0,
+        "slot_filling": 1.0,
+        "compliance_safe": 1.0,
+        "context_retention": 0.5
+      }
+    }
+  ]
+}
