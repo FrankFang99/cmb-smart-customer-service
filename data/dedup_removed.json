@@ -1,0 +1,306 @@
+{
+  "removed_count": 424,
+  "removed_samples": [
+    {
+      "query": "thx?",
+      "reason": "duplicate_query",
+      "first_seen_priority": "P3",
+      "this_priority": "P3"
+    },
+    {
+      "query": "多谢",
+      "reason": "duplicate_query",
+      "first_seen_priority": "P3",
+      "this_priority": "P3"
+    },
+    {
+      "query": "想问一下人工服务在哪里",
+      "reason": "duplicate_query",
+      "first_seen_priority": "P0",
+      "this_priority": "P0"
+    },
+    {
+      "query": "刚被骗了 10 万, 怎么办",
+      "reason": "duplicate_query",
+      "first_seen_priority": "P0",
+      "this_priority": "P0"
+    },
+    {
+      "query": "想问一下陌生人让我转账到安全账户",
+      "reason": "duplicate_query",
+      "first_seen_priority": "P0",
+      "this_priority": "P0"
+    },
+    {
+      "query": "账户的钱被转走了, 紧急",
+      "reason": "duplicate_query",
+      "first_seen_priority": "P0",
+      "this_priority": "P0"
+    },
+    {
+      "query": "客服态度差",
+      "reason": "duplicate_query",
+      "first_seen_priority": "P0",
+      "this_priority": "P0"
+    },
+    {
+      "query": "那个服务投诉",
+      "reason": "duplicate_query",
+      "first_seen_priority": "P0",
+      "this_priority": "P0"
+    },
+    {
+      "query": "怎么激活信用卡",
+      "reason": "duplicate_query",
+      "first_seen_priority": "P1",
+      "this_priority": "P1"
+    },
+    {
+      "query": "请问高收益理财",
+      "reason": "duplicate_query",
+      "first_seen_priority": "P1",
+      "this_priority": "P1"
+    },
+    {
+      "query": "请问陌生人让我转账到安全账户",
+      "reason": "duplicate_query",
+      "first_seen_priority": "P0",
+      "this_priority": "P0"
+    },
+    {
+      "query": "那个分期付款",
+      "reason": "duplicate_query",
+      "first_seen_priority": "P2",
+      "this_priority": "P2"
+    },
+    {
+      "query": "想问一下陌生人让我转账到安全账户",
+      "reason": "duplicate_query",
+      "first_seen_priority": "P0",
+      "this_priority": "P0"
+    },
+    {
+      "query": "招行 95555 人工",
+      "reason": "duplicate_query",
+      "first_seen_priority": "P0",
+      "this_priority": "P0"
+    },
+    {
+      "query": "卡被锁住了",
+      "reason": "duplicate_query",
+      "first_seen_priority": "P1",
+      "this_priority": "P1"
+    },
+    {
+      "query": "机器人解决不了, 转人",
+      "reason": "duplicate_query",
+      "first_seen_priority": "P0",
+      "this_priority": "P0"
+    },
+    {
+      "query": "那个hi",
+      "reason": "duplicate_query",
+      "first_seen_priority": "P3",
+      "this_priority": "P3"
+    },
+    {
+      "query": "想问一下人工服务在哪里",
+      "reason": "duplicate_query",
+      "first_seen_priority": "P0",
+      "this_priority": "P0"
+    },
+    {
+      "query": "想问一下在吗",
+      "reason": "duplicate_query",
+      "first_seen_priority": "P3",
+      "this_priority": "P3"
+    },
+    {
+      "query": "想问一下陌生人让我转账到安全账户",
+      "reason": "duplicate_query",
+      "first_seen_priority": "P0",
+      "this_priority": "P0"
+    },
+    {
+      "query": "想问一下我要还款",
+      "reason": "duplicate_query",
+      "first_seen_priority": "P1",
+      "this_priority": "P1"
+    },
+    {
+      "query": "请问可以转人工吗",
+      "reason": "duplicate_query",
+      "first_seen_priority": "P0",
+      "this_priority": "P0"
+    },
+    {
+      "query": "请问账户状态异常",
+      "reason": "duplicate_query",
+      "first_seen_priority": "P1",
+      "this_priority": "P1"
+    },
+    {
+      "query": "刚被骗了 10 万, 怎么办",
+      "reason": "duplicate_query",
+      "first_seen_priority": "P0",
+      "this_priority": "P0"
+    },
+    {
+      "query": "请问你好, 在吗",
+      "reason": "duplicate_query",
+      "first_seen_priority": "P3",
+      "this_priority": "P3"
+    },
+    {
+      "query": "想问一下收到陌生消费",
+      "reason": "duplicate_query",
+      "first_seen_priority": "P0",
+      "this_priority": "P0"
+    },
+    {
+      "query": "非常感谢",
+      "reason": "duplicate_query",
+      "first_seen_priority": "P3",
+      "this_priority": "P3"
+    },
+    {
+      "query": "麻烦转人工",
+      "reason": "duplicate_query",
+      "first_seen_priority": "P0",
+      "this_priority": "P0"
+    },
+    {
+      "query": "怎么激活信用卡",
+      "reason": "duplicate_query",
+      "first_seen_priority": "P1",
+      "this_priority": "P1"
+    },
+    {
+      "query": "那个请帮我转人工",
+      "reason": "duplicate_query",
+      "first_seen_priority": "P0",
+      "this_priority": "P0"
+    },
+    {
+      "query": "那个帮我接人工",
+      "reason": "duplicate_query",
+      "first_seen_priority": "P0",
+      "this_priority": "P0"
+    },
+    {
+      "query": "招行客服电话",
+      "reason": "duplicate_query",
+      "first_seen_priority": "P3",
+      "this_priority": "P3"
+    },
+    {
+      "query": "请问信用卡有笔消费不是我的",
+      "reason": "duplicate_query",
+      "first_seen_priority": "P0",
+      "this_priority": "P0"
+    },
+    {
+      "query": "人工服务在哪里",
+      "reason": "duplicate_query",
+      "first_seen_priority": "P0",
+      "this_priority": "P0"
+    },
+    {
+      "query": "我需要人工帮助?",
+      "reason": "duplicate_query",
+      "first_seen_priority": "P0",
+      "this_priority": "P0"
+    },
+    {
+      "query": "您好, 我的有问题咨询",
+      "reason": "duplicate_query",
+      "first_seen_priority": "P3",
+      "this_priority": "P3"
+    },
+    {
+      "query": "thx?",
+      "reason": "duplicate_query",
+      "first_seen_priority": "P3",
+      "this_priority": "P3"
+    },
+    {
+      "query": "办信用卡",
+      "reason": "duplicate_query",
+      "first_seen_priority": "P2",
+      "this_priority": "P2"
+    },
+    {
+      "query": "你好?",
+      "reason": "duplicate_query",
+      "first_seen_priority": "P3",
+      "this_priority": "P3"
+    },
+    {
+      "query": "请问你好",
+      "reason": "duplicate_query",
+      "first_seen_priority": "P3",
+      "this_priority": "P3"
+    },
+    {
+      "query": "那个账户状态不对",
+      "reason": "duplicate_query",
+      "first_seen_priority": "P1",
+      "this_priority": "P1"
+    },
+    {
+      "query": "非常感谢",
+      "reason": "duplicate_query",
+      "first_seen_priority": "P3",
+      "this_priority": "P3"
+    },
+    {
+      "query": "主动还款怎么操作",
+      "reason": "duplicate_query",
+      "first_seen_priority": "P1",
+      "this_priority": "P1"
+    },
+    {
+      "query": "信用卡怎么激活",
+      "reason": "duplicate_query",
+      "first_seen_priority": "P1",
+      "this_priority": "P1"
+    },
+    {
+      "query": "那个查附近网点",
+      "reason": "duplicate_query",
+      "first_seen_priority": "P3",
+      "this_priority": "P3"
+    },
+    {
+      "query": "收到陌生消费",
+      "reason": "duplicate_query",
+      "first_seen_priority": "P0",
+      "this_priority": "P0"
+    },
+    {
+      "query": "请问账户的钱被转走了, 紧急",
+      "reason": "duplicate_query",
+      "first_seen_priority": "P0",
+      "this_priority": "P0"
+    },
+    {
+      "query": "您好, 我的有问题咨询",
+      "reason": "duplicate_query",
+      "first_seen_priority": "P3",
+      "this_priority": "P3"
+    },
+    {
+      "query": "想问一下招行客服热线",
+      "reason": "duplicate_query",
+      "first_seen_priority": "P3",
+      "this_priority": "P3"
+    },
+    {
+      "query": "信用贷款",
+      "reason": "duplicate_query",
+      "first_seen_priority": "P1",
+      "this_priority": "P1"
+    }
+  ],
+  "note": "全部删除样本见 src/dedup_removed_full.jsonl (TODO)"
+}

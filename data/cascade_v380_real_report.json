@@ -1,0 +1,1113 @@
+{
+  "version": "v3.8.0-cascade-real",
+  "run_date": "2026-06-22T16:30:18",
+  "dataset_split": {
+    "train_source": "项目内部种子集 v3.5.5 (训练时已分 train/val/holdout)",
+    "test_source": "D_eval_set_v3.2.json",
+    "test_size": 1500,
+    "sample_tested": 50,
+    "sample_breakdown": {
+      "P0": 13,
+      "P1": 13,
+      "P2": 12,
+      "P3": 12
+    },
+    "bert_holdout_acc": 0.9871,
+    "honest_note": "D v3.2 与 BERT 训练集来源不同但有 label 空间重叠, 非纯 OOD"
+  },
+  "cascade_config": {
+    "L1": "IntentRecognizer + 4层 P0 红线兜底",
+    "L2": "M3-bert-base-chinese (holdout 98.71%)",
+    "L3": "MiniMax API (MiniMax-M2.7)",
+    "confidence_threshold": 0.85
+  },
+  "stats": {
+    "L1_rule_hit": 28,
+    "L1_rule_p0": 17,
+    "L2_bert_hit": 0,
+    "L2_bert_p0": 0,
+    "L3_llm_hit": 2,
+    "L3_llm_p0": 3,
+    "transfer_human_total": 20,
+    "llm_error": 0
+  },
+  "action_accuracy": {
+    "P0": {
+      "correct": 13,
+      "total": 13,
+      "rate": 1.0
+    },
+    "P1": {
+      "correct": 9,
+      "total": 13,
+      "rate": 0.6923076923076923
+    },
+    "P2": {
+      "correct": 11,
+      "total": 12,
+      "rate": 0.9166666666666666
+    },
+    "P3": {
+      "correct": 10,
+      "total": 12,
+      "rate": 0.8333333333333334
+    }
+  },
+  "p0_recall": {
+    "correct": 13,
+    "total": 13,
+    "rate": 1.0
+  },
+  "results_sample": [
+    {
+      "query": "麻烦转人工",
+      "priority": "P0",
+      "intent_top1": "sys_service_route_human",
+      "expected_action": "route_human",
+      "cascade_path": [
+        {
+          "layer": "L1_rule",
+          "intent": "sys_service_route_human",
+          "confidence": 0.98,
+          "is_p0": true,
+          "l0_triggered": true
+        }
+      ],
+      "final_action": "transfer_human",
+      "final_intent": "sys_service_route_human",
+      "final_confidence": 0.98,
+      "p0_triggered": true,
+      "elapsed_ms": 14.58
+    },
+    {
+      "query": "我的需要人工帮助",
+      "priority": "P0",
+      "intent_top1": "sys_service_route_human",
+      "expected_action": "route_human",
+      "cascade_path": [
+        {
+          "layer": "L1_rule",
+          "intent": "sys_service_route_human",
+          "confidence": 0.98,
+          "is_p0": true,
+          "l0_triggered": true
+        }
+      ],
+      "final_action": "transfer_human",
+      "final_intent": "sys_service_route_human",
+      "final_confidence": 0.98,
+      "p0_triggered": true,
+      "elapsed_ms": 0.0
+    },
+    {
+      "query": "想问一下人工服务在哪里",
+      "priority": "P0",
+      "intent_top1": "sys_service_route_human",
+      "expected_action": "route_human",
+      "cascade_path": [
+        {
+          "layer": "L1_rule",
+          "intent": "sys_service_route_human",
+          "confidence": 0.98,
+          "is_p0": true,
+          "l0_triggered": true
+        }
+      ],
+      "final_action": "transfer_human",
+      "final_intent": "sys_service_route_human",
+      "final_confidence": 0.98,
+      "p0_triggered": true,
+      "elapsed_ms": 0.0
+    },
+    {
+      "query": "请问可以转人工吗",
+      "priority": "P0",
+      "intent_top1": "sys_service_route_human",
+      "expected_action": "route_human",
+      "cascade_path": [
+        {
+          "layer": "L1_rule",
+          "intent": "sys_service_route_human",
+          "confidence": 0.98,
+          "is_p0": true,
+          "l0_triggered": true
+        }
+      ],
+      "final_action": "transfer_human",
+      "final_intent": "sys_service_route_human",
+      "final_confidence": 0.98,
+      "p0_triggered": true,
+      "elapsed_ms": 0.0
+    },
+    {
+      "query": "请问我要和客服说话",
+      "priority": "P0",
+      "intent_top1": "sys_service_route_human",
+      "expected_action": "route_human",
+      "cascade_path": [
+        {
+          "layer": "L1_rule",
+          "intent": "sys_service_route_human",
+          "confidence": 0.98,
+          "is_p0": true,
+          "l0_triggered": true
+        }
+      ],
+      "final_action": "transfer_human",
+      "final_intent": "sys_service_route_human",
+      "final_confidence": 0.98,
+      "p0_triggered": true,
+      "elapsed_ms": 0.0
+    },
+    {
+      "query": "想问一下人工服务在哪里",
+      "priority": "P0",
+      "intent_top1": "sys_service_route_human",
+      "expected_action": "route_human",
+      "cascade_path": [
+        {
+          "layer": "L1_rule",
+          "intent": "sys_service_route_human",
+          "confidence": 0.98,
+          "is_p0": true,
+          "l0_triggered": true
+        }
+      ],
+      "final_action": "transfer_human",
+      "final_intent": "sys_service_route_human",
+      "final_confidence": 0.98,
+      "p0_triggered": true,
+      "elapsed_ms": 0.0
+    },
+    {
+      "query": "那个找真人客服",
+      "priority": "P0",
+      "intent_top1": "sys_service_route_human",
+      "expected_action": "route_human",
+      "cascade_path": [
+        {
+          "layer": "L1_rule",
+          "intent": "sys_service_route_human",
+          "confidence": 0.98,
+          "is_p0": true,
+          "l0_triggered": true
+        }
+      ],
+      "final_action": "transfer_human",
+      "final_intent": "sys_service_route_human",
+      "final_confidence": 0.98,
+      "p0_triggered": true,
+      "elapsed_ms": 0.0
+    },
+    {
+      "query": "那个请帮我转人工",
+      "priority": "P0",
+      "intent_top1": "sys_service_route_human",
+      "expected_action": "route_human",
+      "cascade_path": [
+        {
+          "layer": "L1_rule",
+          "intent": "sys_service_route_human",
+          "confidence": 0.98,
+          "is_p0": true,
+          "l0_triggered": true
+        }
+      ],
+      "final_action": "transfer_human",
+      "final_intent": "sys_service_route_human",
+      "final_confidence": 0.98,
+      "p0_triggered": true,
+      "elapsed_ms": 1.51
+    },
+    {
+      "query": "请问我需要人工客服",
+      "priority": "P0",
+      "intent_top1": "sys_service_route_human",
+      "expected_action": "route_human",
+      "cascade_path": [
+        {
+          "layer": "L1_rule",
+          "intent": "sys_service_route_human",
+          "confidence": 0.98,
+          "is_p0": true,
+          "l0_triggered": true
+        }
+      ],
+      "final_action": "transfer_human",
+      "final_intent": "sys_service_route_human",
+      "final_confidence": 0.98,
+      "p0_triggered": true,
+      "elapsed_ms": 0.0
+    },
+    {
+      "query": "那个帮我转接人工",
+      "priority": "P0",
+      "intent_top1": "sys_service_route_human",
+      "expected_action": "route_human",
+      "cascade_path": [
+        {
+          "layer": "L1_rule",
+          "intent": "sys_service_route_human",
+          "confidence": 0.98,
+          "is_p0": true,
+          "l0_triggered": true
+        }
+      ],
+      "final_action": "transfer_human",
+      "final_intent": "sys_service_route_human",
+      "final_confidence": 0.98,
+      "p0_triggered": true,
+      "elapsed_ms": 0.0
+    },
+    {
+      "query": "真人, 谢谢?",
+      "priority": "P0",
+      "intent_top1": "sys_service_route_human",
+      "expected_action": "route_human",
+      "cascade_path": [
+        {
+          "layer": "L1_rule",
+          "intent": "sys_service_route_human",
+          "confidence": 0.98,
+          "is_p0": true,
+          "l0_triggered": true
+        }
+      ],
+      "final_action": "transfer_human",
+      "final_intent": "sys_service_route_human",
+      "final_confidence": 0.98,
+      "p0_triggered": true,
+      "elapsed_ms": 0.0
+    },
+    {
+      "query": "客服解决不了, 转人?",
+      "priority": "P0",
+      "intent_top1": "sys_service_route_human",
+      "expected_action": "route_human",
+      "cascade_path": [
+        {
+          "layer": "L1_rule",
+          "intent": "sys_service_route_human",
+          "confidence": 0.98,
+          "is_p0": true,
+          "l0_triggered": true
+        }
+      ],
+      "final_action": "transfer_human",
+      "final_intent": "sys_service_route_human",
+      "final_confidence": 0.98,
+      "p0_triggered": true,
+      "elapsed_ms": 0.0
+    },
+    {
+      "query": "转人工, 投诉",
+      "priority": "P0",
+      "intent_top1": "sys_service_route_human",
+      "expected_action": "route_human",
+      "cascade_path": [
+        {
+          "layer": "L1_rule",
+          "intent": "sys_service_route_human",
+          "confidence": 0.98,
+          "is_p0": true,
+          "l0_triggered": true
+        }
+      ],
+      "final_action": "transfer_human",
+      "final_intent": "sys_service_route_human",
+      "final_confidence": 0.98,
+      "p0_triggered": true,
+      "elapsed_ms": 0.0
+    },
+    {
+      "query": "请问账户状态异常",
+      "priority": "P1",
+      "intent_top1": "safety_card_freeze",
+      "expected_action": "card_freeze",
+      "cascade_path": [
+        {
+          "layer": "L1_rule",
+          "intent": "sys_greeting",
+          "confidence": 0.95,
+          "is_p0": false,
+          "l0_triggered": false
+        }
+      ],
+      "final_action": "answer",
+      "final_intent": "sys_greeting",
+      "final_confidence": 0.95,
+      "p0_triggered": false,
+      "elapsed_ms": 11.95
+    },
+    {
+      "query": "那个账户状态不对",
+      "priority": "P1",
+      "intent_top1": "safety_card_freeze",
+      "expected_action": "card_freeze",
+      "cascade_path": [
+        {
+          "layer": "L1_rule",
+          "intent": "sys_confirm",
+          "confidence": 0.95,
+          "is_p0": false,
+          "l0_triggered": false
+        }
+      ],
+      "final_action": "answer",
+      "final_intent": "sys_confirm",
+      "final_confidence": 0.95,
+      "p0_triggered": false,
+      "elapsed_ms": 0.0
+    },
+    {
+      "query": "卡被锁住了",
+      "priority": "P1",
+      "intent_top1": "safety_card_freeze",
+      "expected_action": "card_freeze",
+      "cascade_path": [
+        {
+          "layer": "L1_rule",
+          "intent": "sys_invalid",
+          "confidence": 0.0,
+          "is_p0": false,
+          "l0_triggered": false
+        },
+        {
+          "layer": "L2_bert",
+          "intent": "25",
+          "confidence": 0.7266700863838196,
+          "source": "L2_bert"
+        },
+        {
+          "layer": "L3_llm",
+          "response_preview": "<think>\n用户说\"卡被锁住了\"，这是一个关于银行卡被锁定的问题。\n\n根据我的规则：\n- 涉及账户冻结/锁定等红线问题，需要明确建议转人工 95555\n- 回答要简洁，200字以内\n\n我应该：\n1..."
+        }
+      ],
+      "final_action": "transfer_human",
+      "final_intent": null,
+      "final_confidence": 0.0,
+      "p0_triggered": true,
+      "elapsed_ms": 11966.41
+    },
+    {
+      "query": "我的账户怎么被冻了",
+      "priority": "P1",
+      "intent_top1": "safety_card_freeze",
+      "expected_action": "card_freeze",
+      "cascade_path": [
+        {
+          "layer": "L1_rule",
+          "intent": "sec_freeze_unexpected",
+          "confidence": 0.95,
+          "is_p0": true,
+          "l0_triggered": true
+        }
+      ],
+      "final_action": "transfer_human",
+      "final_intent": "sec_freeze_unexpected",
+      "final_confidence": 0.95,
+      "p0_triggered": true,
+      "elapsed_ms": 0.0
+    },
+    {
+      "query": "请问我的账户怎么被冻了",
+      "priority": "P1",
+      "intent_top1": "safety_card_freeze",
+      "expected_action": "card_freeze",
+      "cascade_path": [
+        {
+          "layer": "L1_rule",
+          "intent": "sec_freeze_unexpected",
+          "confidence": 0.95,
+          "is_p0": true,
+          "l0_triggered": true
+        }
+      ],
+      "final_action": "transfer_human",
+      "final_intent": "sec_freeze_unexpected",
+      "final_confidence": 0.95,
+      "p0_triggered": true,
+      "elapsed_ms": 0.51
+    },
+    {
+      "query": "想问一下卡被冻结, 紧急",
+      "priority": "P1",
+      "intent_top1": "safety_card_freeze",
+      "expected_action": "card_freeze",
+      "cascade_path": [
+        {
+          "layer": "L1_rule",
+          "intent": "safety_card_freeze",
+          "confidence": 0.98,
+          "is_p0": true,
+          "l0_triggered": true
+        }
+      ],
+      "final_action": "transfer_human",
+      "final_intent": "safety_card_freeze",
+      "final_confidence": 0.98,
+      "p0_triggered": true,
+      "elapsed_ms": 0.0
+    },
+    {
+      "query": "怎么激活信用卡?",
+      "priority": "P1",
+      "intent_top1": "biz_card_activate",
+      "expected_action": "card_activate",
+      "cascade_path": [
+        {
+          "layer": "L1_rule",
+          "intent": "biz_card_activate",
+          "confidence": 0.95,
+          "is_p0": false,
+          "l0_triggered": false
+        }
+      ],
+      "final_action": "answer",
+      "final_intent": "biz_card_activate",
+      "final_confidence": 0.95,
+      "p0_triggered": false,
+      "elapsed_ms": 0.0
+    },
+    {
+      "query": "新信用卡怎么开",
+      "priority": "P1",
+      "intent_top1": "biz_card_activate",
+      "expected_action": "card_activate",
+      "cascade_path": [
+        {
+          "layer": "L1_rule",
+          "intent": "cons_prod_credit",
+          "confidence": 0.95,
+          "is_p0": false,
+          "l0_triggered": false
+        }
+      ],
+      "final_action": "answer",
+      "final_intent": "cons_prod_credit",
+      "final_confidence": 0.95,
+      "p0_triggered": false,
+      "elapsed_ms": 0.0
+    },
+    {
+      "query": "卡怎么激活",
+      "priority": "P1",
+      "intent_top1": "biz_card_activate",
+      "expected_action": "card_activate",
+      "cascade_path": [
+        {
+          "layer": "L1_rule",
+          "intent": "biz_card_activate",
+          "confidence": 0.95,
+          "is_p0": false,
+          "l0_triggered": false
+        }
+      ],
+      "final_action": "answer",
+      "final_intent": "biz_card_activate",
+      "final_confidence": 0.95,
+      "p0_triggered": false,
+      "elapsed_ms": 0.0
+    },
+    {
+      "query": "信用卡激活方法",
+      "priority": "P1",
+      "intent_top1": "biz_card_activate",
+      "expected_action": "card_activate",
+      "cascade_path": [
+        {
+          "layer": "L1_rule",
+          "intent": "biz_card_activate",
+          "confidence": 0.95,
+          "is_p0": false,
+          "l0_triggered": false
+        }
+      ],
+      "final_action": "answer",
+      "final_intent": "biz_card_activate",
+      "final_confidence": 0.95,
+      "p0_triggered": false,
+      "elapsed_ms": 0.0
+    },
+    {
+      "query": "怎么激活信用卡",
+      "priority": "P1",
+      "intent_top1": "biz_card_activate",
+      "expected_action": "card_activate",
+      "cascade_path": [
+        {
+          "layer": "L1_rule",
+          "intent": "biz_card_activate",
+          "confidence": 0.95,
+          "is_p0": false,
+          "l0_triggered": false
+        }
+      ],
+      "final_action": "answer",
+      "final_intent": "biz_card_activate",
+      "final_confidence": 0.95,
+      "p0_triggered": false,
+      "elapsed_ms": 0.0
+    },
+    {
+      "query": "信用卡怎么激活",
+      "priority": "P1",
+      "intent_top1": "biz_card_activate",
+      "expected_action": "card_activate",
+      "cascade_path": [
+        {
+          "layer": "L1_rule",
+          "intent": "biz_card_activate",
+          "confidence": 0.95,
+          "is_p0": false,
+          "l0_triggered": false
+        }
+      ],
+      "final_action": "answer",
+      "final_intent": "biz_card_activate",
+      "final_confidence": 0.95,
+      "p0_triggered": false,
+      "elapsed_ms": 0.0
+    },
+    {
+      "query": "高收益理财?",
+      "priority": "P1",
+      "intent_top1": "consult_wealth_fund",
+      "expected_action": "consult_fund_risk",
+      "cascade_path": [
+        {
+          "layer": "L1_rule",
+          "intent": "sales_wealth_prod",
+          "confidence": 0.95,
+          "is_p0": false,
+          "l0_triggered": false
+        }
+      ],
+      "final_action": "answer",
+      "final_intent": "sales_wealth_prod",
+      "final_confidence": 0.95,
+      "p0_triggered": false,
+      "elapsed_ms": 0.0
+    },
+    {
+      "query": "信用卡分期",
+      "priority": "P2",
+      "intent_top1": "consult_credit_card_installment",
+      "expected_action": "consult_installment",
+      "cascade_path": [
+        {
+          "layer": "L1_rule",
+          "intent": "biz_installment",
+          "confidence": 0.95,
+          "is_p0": false,
+          "l0_triggered": false
+        }
+      ],
+      "final_action": "answer",
+      "final_intent": "biz_installment",
+      "final_confidence": 0.95,
+      "p0_triggered": false,
+      "elapsed_ms": 0.0
+    },
+    {
+      "query": "请问如何分期",
+      "priority": "P2",
+      "intent_top1": "consult_credit_card_installment",
+      "expected_action": "consult_installment",
+      "cascade_path": [
+        {
+          "layer": "L1_rule",
+          "intent": "biz_installment",
+          "confidence": 0.95,
+          "is_p0": false,
+          "l0_triggered": false
+        }
+      ],
+      "final_action": "answer",
+      "final_intent": "biz_installment",
+      "final_confidence": 0.95,
+      "p0_triggered": false,
+      "elapsed_ms": 0.0
+    },
+    {
+      "query": "账单分期手续费",
+      "priority": "P2",
+      "intent_top1": "consult_credit_card_installment",
+      "expected_action": "consult_installment",
+      "cascade_path": [
+        {
+          "layer": "L1_rule",
+          "intent": "biz_transfer_large",
+          "confidence": 0.98,
+          "is_p0": true,
+          "l0_triggered": true
+        }
+      ],
+      "final_action": "transfer_human",
+      "final_intent": "biz_transfer_large",
+      "final_confidence": 0.98,
+      "p0_triggered": true,
+      "elapsed_ms": 0.0
+    },
+    {
+      "query": "那个分期付款",
+      "priority": "P2",
+      "intent_top1": "consult_credit_card_installment",
+      "expected_action": "consult_installment",
+      "cascade_path": [
+        {
+          "layer": "L1_rule",
+          "intent": "biz_installment",
+          "confidence": 0.95,
+          "is_p0": false,
+          "l0_triggered": false
+        }
+      ],
+      "final_action": "answer",
+      "final_intent": "biz_installment",
+      "final_confidence": 0.95,
+      "p0_triggered": false,
+      "elapsed_ms": 0.0
+    },
+    {
+      "query": "想问一下信用卡推荐",
+      "priority": "P2",
+      "intent_top1": "consult_credit_card_product",
+      "expected_action": "consult_credit_card_pick",
+      "cascade_path": [
+        {
+          "layer": "L1_rule",
+          "intent": "sales_credit_prod",
+          "confidence": 0.95,
+          "is_p0": false,
+          "l0_triggered": false
+        }
+      ],
+      "final_action": "answer",
+      "final_intent": "sales_credit_prod",
+      "final_confidence": 0.95,
+      "p0_triggered": false,
+      "elapsed_ms": 0.0
+    },
+    {
+      "query": "那个哪张信用卡好",
+      "priority": "P2",
+      "intent_top1": "consult_credit_card_product",
+      "expected_action": "consult_credit_card_pick",
+      "cascade_path": [
+        {
+          "layer": "L1_rule",
+          "intent": "cons_prod_credit",
+          "confidence": 0.95,
+          "is_p0": false,
+          "l0_triggered": false
+        }
+      ],
+      "final_action": "answer",
+      "final_intent": "cons_prod_credit",
+      "final_confidence": 0.95,
+      "p0_triggered": false,
+      "elapsed_ms": 0.0
+    },
+    {
+      "query": "那个想申请信用卡",
+      "priority": "P2",
+      "intent_top1": "consult_credit_card_product",
+      "expected_action": "consult_credit_card_pick",
+      "cascade_path": [
+        {
+          "layer": "L1_rule",
+          "intent": "cons_prod_credit",
+          "confidence": 0.95,
+          "is_p0": false,
+          "l0_triggered": false
+        }
+      ],
+      "final_action": "answer",
+      "final_intent": "cons_prod_credit",
+      "final_confidence": 0.95,
+      "p0_triggered": false,
+      "elapsed_ms": 0.0
+    },
+    {
+      "query": "那个怎么申请信用卡",
+      "priority": "P2",
+      "intent_top1": "consult_credit_card_product",
+      "expected_action": "consult_credit_card_pick",
+      "cascade_path": [
+        {
+          "layer": "L1_rule",
+          "intent": "cons_prod_credit",
+          "confidence": 0.95,
+          "is_p0": false,
+          "l0_triggered": false
+        }
+      ],
+      "final_action": "answer",
+      "final_intent": "cons_prod_credit",
+      "final_confidence": 0.95,
+      "p0_triggered": false,
+      "elapsed_ms": 0.0
+    },
+    {
+      "query": "想问一下信用卡分期",
+      "priority": "P2",
+      "intent_top1": "consult_credit_card_installment",
+      "expected_action": "consult_installment",
+      "cascade_path": [
+        {
+          "layer": "L1_rule",
+          "intent": "biz_installment",
+          "confidence": 0.95,
+          "is_p0": false,
+          "l0_triggered": false
+        }
+      ],
+      "final_action": "answer",
+      "final_intent": "biz_installment",
+      "final_confidence": 0.95,
+      "p0_triggered": false,
+      "elapsed_ms": 0.0
+    },
+    {
+      "query": "想问一下信用卡申请",
+      "priority": "P2",
+      "intent_top1": "consult_credit_card_product",
+      "expected_action": "consult_credit_card_pick",
+      "cascade_path": [
+        {
+          "layer": "L1_rule",
+          "intent": "cons_prod_credit",
+          "confidence": 0.95,
+          "is_p0": false,
+          "l0_triggered": false
+        }
+      ],
+      "final_action": "answer",
+      "final_intent": "cons_prod_credit",
+      "final_confidence": 0.95,
+      "p0_triggered": false,
+      "elapsed_ms": 0.0
+    },
+    {
+      "query": "那个分期付款",
+      "priority": "P2",
+      "intent_top1": "consult_credit_card_installment",
+      "expected_action": "consult_installment",
+      "cascade_path": [
+        {
+          "layer": "L1_rule",
+          "intent": "biz_installment",
+          "confidence": 0.95,
+          "is_p0": false,
+          "l0_triggered": false
+        }
+      ],
+      "final_action": "answer",
+      "final_intent": "biz_installment",
+      "final_confidence": 0.95,
+      "p0_triggered": false,
+      "elapsed_ms": 0.0
+    },
+    {
+      "query": "请问办什么信用卡好",
+      "priority": "P2",
+      "intent_top1": "consult_credit_card_product",
+      "expected_action": "consult_credit_card_pick",
+      "cascade_path": [
+        {
+          "layer": "L1_rule",
+          "intent": "sales_credit_prod",
+          "confidence": 0.95,
+          "is_p0": false,
+          "l0_triggered": false
+        }
+      ],
+      "final_action": "answer",
+      "final_intent": "sales_credit_prod",
+      "final_confidence": 0.95,
+      "p0_triggered": false,
+      "elapsed_ms": 0.0
+    },
+    {
+      "query": "多谢?",
+      "priority": "P3",
+      "intent_top1": "sys_other_farewell",
+      "expected_action": "farewell",
+      "cascade_path": [
+        {
+          "layer": "L1_rule",
+          "intent": "sys_thanks",
+          "confidence": 0.95,
+          "is_p0": false,
+          "l0_triggered": false
+        }
+      ],
+      "final_action": "answer",
+      "final_intent": "sys_thanks",
+      "final_confidence": 0.95,
+      "p0_triggered": false,
+      "elapsed_ms": 0.0
+    },
+    {
+      "query": "请问谢谢",
+      "priority": "P3",
+      "intent_top1": "sys_other_farewell",
+      "expected_action": "farewell",
+      "cascade_path": [
+        {
+          "layer": "L1_rule",
+          "intent": "sys_greeting",
+          "confidence": 0.95,
+          "is_p0": false,
+          "l0_triggered": false
+        }
+      ],
+      "final_action": "answer",
+      "final_intent": "sys_greeting",
+      "final_confidence": 0.95,
+      "p0_triggered": false,
+      "elapsed_ms": 0.0
+    },
+    {
+      "query": "bye?",
+      "priority": "P3",
+      "intent_top1": "sys_other_farewell",
+      "expected_action": "farewell",
+      "cascade_path": [
+        {
+          "layer": "L1_rule",
+          "intent": "sys_invalid",
+          "confidence": 0.0,
+          "is_p0": false,
+          "l0_triggered": false
+        },
+        {
+          "layer": "L2_bert",
+          "intent": "27",
+          "confidence": 0.8440441489219666,
+          "source": "L2_bert"
+        },
+        {
+          "layer": "L3_llm",
+          "response_preview": "<think>用户发送了\"bye?\"，这看起来是一个简单的告别/再见的意思，但末尾有问号，可能是在询问是否要结束对话，或者只是随意输入。\n\n这是一个非常简单的问候/告别类的消息，不涉及任何银行业务问题..."
+        }
+      ],
+      "final_action": "transfer_human",
+      "final_intent": null,
+      "final_confidence": 0.0,
+      "p0_triggered": true,
+      "elapsed_ms": 4758.73
+    },
+    {
+      "query": "拜拜?",
+      "priority": "P3",
+      "intent_top1": "sys_other_farewell",
+      "expected_action": "farewell",
+      "cascade_path": [
+        {
+          "layer": "L1_rule",
+          "intent": "sys_bye",
+          "confidence": 0.95,
+          "is_p0": false,
+          "l0_triggered": false
+        }
+      ],
+      "final_action": "answer",
+      "final_intent": "sys_bye",
+      "final_confidence": 0.95,
+      "p0_triggered": false,
+      "elapsed_ms": 0.0
+    },
+    {
+      "query": "thx?",
+      "priority": "P3",
+      "intent_top1": "sys_other_farewell",
+      "expected_action": "farewell",
+      "cascade_path": [
+        {
+          "layer": "L1_rule",
+          "intent": "sys_invalid",
+          "confidence": 0.0,
+          "is_p0": false,
+          "l0_triggered": false
+        },
+        {
+          "layer": "L2_bert",
+          "intent": "29",
+          "confidence": 0.7131676077842712,
+          "source": "L2_bert"
+        },
+        {
+          "layer": "L3_llm",
+          "response_preview": "<think>\n用户的问题只是\"thx?\"，这是一个非标准的输入，thx是thanks的缩写，表示感谢。但后面有个问号，可能是在询问什么，或者只是简单地表示感谢后询问后续操作。\n\n从L1规则识别来看，..."
+        }
+      ],
+      "final_action": "answer",
+      "final_intent": null,
+      "final_confidence": 0.0,
+      "p0_triggered": false,
+      "elapsed_ms": 7392.89
+    },
+    {
+      "query": "bye",
+      "priority": "P3",
+      "intent_top1": "sys_other_farewell",
+      "expected_action": "farewell",
+      "cascade_path": [
+        {
+          "layer": "L1_rule",
+          "intent": "sys_invalid",
+          "confidence": 0.0,
+          "is_p0": false,
+          "l0_triggered": false
+        },
+        {
+          "layer": "L2_bert",
+          "intent": "27",
+          "confidence": 0.7994413375854492,
+          "source": "L2_bert"
+        },
+        {
+          "layer": "L3_llm",
+          "response_preview": "<think>用户只是输入了 \"bye\"，这是一个简单的告别语。\n\n作为招商银行智能客服助手，我应该友好地回应用户的告别。\n\n按照规则：\n- 回答简洁，200字以内\n- 这是正常的告别，不需要转人工\n..."
+        }
+      ],
+      "final_action": "answer",
+      "final_intent": null,
+      "final_confidence": 0.0,
+      "p0_triggered": false,
+      "elapsed_ms": 18389.51
+    },
+    {
+      "query": "多谢",
+      "priority": "P3",
+      "intent_top1": "sys_other_farewell",
+      "expected_action": "farewell",
+      "cascade_path": [
+        {
+          "layer": "L1_rule",
+          "intent": "sys_thanks",
+          "confidence": 0.95,
+          "is_p0": false,
+          "l0_triggered": false
+        }
+      ],
+      "final_action": "answer",
+      "final_intent": "sys_thanks",
+      "final_confidence": 0.95,
+      "p0_triggered": false,
+      "elapsed_ms": 2.75
+    },
+    {
+      "query": "thx?",
+      "priority": "P3",
+      "intent_top1": "sys_other_farewell",
+      "expected_action": "farewell",
+      "cascade_path": [
+        {
+          "layer": "L1_rule",
+          "intent": "sys_invalid",
+          "confidence": 0.0,
+          "is_p0": false,
+          "l0_triggered": false
+        },
+        {
+          "layer": "L2_bert",
+          "intent": "29",
+          "confidence": 0.7131676077842712,
+          "source": "L2_bert"
+        },
+        {
+          "layer": "L3_llm",
+          "response_preview": "<think>\n用户发送了 \"thx?\" 这是一个无效输入，系统置信度为0.00。\n\n根据规则:\n- 涉及反欺诈/反洗钱/账户冻结/投诉/隐私等红线问题，必须明确建议转人工 95555\n- 不知道答案..."
+        }
+      ],
+      "final_action": "transfer_human",
+      "final_intent": null,
+      "final_confidence": 0.0,
+      "p0_triggered": true,
+      "elapsed_ms": 8237.02
+    },
+    {
+      "query": "非常感谢",
+      "priority": "P3",
+      "intent_top1": "sys_other_farewell",
+      "expected_action": "farewell",
+      "cascade_path": [
+        {
+          "layer": "L1_rule",
+          "intent": "sys_thanks",
+          "confidence": 0.95,
+          "is_p0": false,
+          "l0_triggered": false
+        }
+      ],
+      "final_action": "answer",
+      "final_intent": "sys_thanks",
+      "final_confidence": 0.95,
+      "p0_triggered": false,
+      "elapsed_ms": 0.0
+    },
+    {
+      "query": "再见",
+      "priority": "P3",
+      "intent_top1": "sys_other_farewell",
+      "expected_action": "farewell",
+      "cascade_path": [
+        {
+          "layer": "L1_rule",
+          "intent": "sys_bye",
+          "confidence": 0.95,
+          "is_p0": false,
+          "l0_triggered": false
+        }
+      ],
+      "final_action": "answer",
+      "final_intent": "sys_bye",
+      "final_confidence": 0.95,
+      "p0_triggered": false,
+      "elapsed_ms": 0.0
+    },
+    {
+      "query": "多谢",
+      "priority": "P3",
+      "intent_top1": "sys_other_farewell",
+      "expected_action": "farewell",
+      "cascade_path": [
+        {
+          "layer": "L1_rule",
+          "intent": "sys_thanks",
+          "confidence": 0.95,
+          "is_p0": false,
+          "l0_triggered": false
+        }
+      ],
+      "final_action": "answer",
+      "final_intent": "sys_thanks",
+      "final_confidence": 0.95,
+      "p0_triggered": false,
+      "elapsed_ms": 0.0
+    },
+    {
+      "query": "请问谢谢, 拜拜",
+      "priority": "P3",
+      "intent_top1": "sys_other_farewell",
+      "expected_action": "farewell",
+      "cascade_path": [
+        {
+          "layer": "L1_rule",
+          "intent": "sys_greeting",
+          "confidence": 0.95,
+          "is_p0": false,
+          "l0_triggered": false
+        }
+      ],
+      "final_action": "answer",
+      "final_intent": "sys_greeting",
+      "final_confidence": 0.95,
+      "p0_triggered": false,
+      "elapsed_ms": 0.0
+    }
+  ]
+}

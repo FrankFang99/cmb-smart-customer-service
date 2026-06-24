@@ -1,0 +1,105 @@
+{
+  "version": "v3.9.0-full-1500",
+  "run_date": "2026-06-23T00:01:22",
+  "sample_size": 1076,
+  "processed": 1076,
+  "skipped": 0,
+  "errors_count": 0,
+  "total_elapsed_sec": 2324.9,
+  "per_query_avg_ms": 2160.6,
+  "layer_stats": {
+    "L0": {
+      "count": 1076,
+      "avg_elapsed_ms": 14.45,
+      "error_count": 0,
+      "error_rate": 0.0
+    },
+    "RAG": {
+      "count": 1076,
+      "avg_elapsed_ms": 46.92,
+      "error_count": 0,
+      "error_rate": 0.0
+    },
+    "TOTAL": {
+      "count": 1076,
+      "avg_elapsed_ms": 2138.14,
+      "error_count": 0,
+      "error_rate": 0.0
+    },
+    "L1": {
+      "count": 884,
+      "avg_elapsed_ms": 22.0,
+      "error_count": 0,
+      "error_rate": 0.0
+    },
+    "L3": {
+      "count": 444,
+      "avg_elapsed_ms": 6804.05,
+      "error_count": 0,
+      "error_rate": 0.0
+    },
+    "L2": {
+      "count": 244,
+      "avg_elapsed_ms": 2485.95,
+      "error_count": 0,
+      "error_rate": 0.0
+    },
+    "PROMPT": {
+      "count": 222,
+      "avg_elapsed_ms": 9.76,
+      "error_count": 0,
+      "error_rate": 0.0
+    }
+  },
+  "p0_recall": {
+    "P0": {
+      "total": 431,
+      "p0_caught": 431,
+      "recall_rate": 1.0
+    },
+    "P1": {
+      "total": 332,
+      "p0_caught": 102,
+      "recall_rate": 0.307
+    },
+    "P2": {
+      "total": 155,
+      "p0_caught": 14,
+      "recall_rate": 0.09
+    },
+    "P3": {
+      "total": 158,
+      "p0_caught": 0,
+      "recall_rate": 0.0
+    }
+  },
+  "bad_cases_count": 0,
+  "bad_cases_sample": [],
+  "action_accuracy_full": {
+    "P0": {
+      "correct": 431,
+      "total": 431,
+      "rate": 1.0
+    },
+    "P1": {
+      "correct": 230,
+      "total": 332,
+      "rate": 0.6927710843373494
+    },
+    "P2": {
+      "correct": 141,
+      "total": 155,
+      "rate": 0.9096774193548387
+    },
+    "P3": {
+      "correct": 158,
+      "total": 158,
+      "rate": 1.0
+    }
+  },
+  "storage_stats": {
+    "traces": 1076,
+    "spans": 5022,
+    "events": 7426
+  }
+}

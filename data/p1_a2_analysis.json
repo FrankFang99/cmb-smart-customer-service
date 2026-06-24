@@ -1,0 +1,1325 @@
+{
+  "version": "v3.10.1-p1-a2-analysis",
+  "source_db": "observability_v3101_full.db",
+  "source_report": "observable_v3101_full_report.json",
+  "p1_wrong_total": 90,
+  "p0_triggered_count": 90,
+  "p0_triggered_rate": 1.0,
+  "cluster_summary": [
+    {
+      "qtype": "other",
+      "n": 56
+    },
+    {
+      "qtype": "wealth_业务咨询",
+      "n": 8
+    },
+    {
+      "qtype": "transfer_业务咨询",
+      "n": 5
+    },
+    {
+      "qtype": "loan_业务咨询",
+      "n": 4
+    },
+    {
+      "qtype": "password_业务咨询",
+      "n": 4
+    },
+    {
+      "qtype": "how_to_操作咨询",
+      "n": 3
+    },
+    {
+      "qtype": "card_业务咨询",
+      "n": 3
+    },
+    {
+      "qtype": "repay_业务咨询",
+      "n": 3
+    },
+    {
+      "qtype": "deposit_业务咨询",
+      "n": 2
+    },
+    {
+      "qtype": "fx_业务咨询",
+      "n": 2
+    }
+  ],
+  "cluster_total_count": 90,
+  "expected_action_top": [
+    [
+      "card_freeze",
+      49
+    ],
+    [
+      "card_freeze_with_disambiguation",
+      6
+    ],
+    [
+      "password_reset",
+      4
+    ],
+    [
+      "consult_credit_loan",
+      3
+    ],
+    [
+      "consult_deposit_big_with_disambiguation",
+      3
+    ],
+    [
+      "consult_fx_rate_with_disambiguation",
+      3
+    ],
+    [
+      "loan_repay",
+      3
+    ],
+    [
+      "consult_fund_risk",
+      2
+    ],
+    [
+      "consult_fund_risk_with_disambiguation",
+      2
+    ],
+    [
+      "device_unbind_with_disambiguation",
+      2
+    ],
+    [
+      "transfer_cross_bank_with_disambiguation",
+      2
+    ],
+    [
+      "app_navigation_with_disambiguation",
+      1
+    ],
+    [
+      "app_setting_with_disambiguation",
+      1
+    ],
+    [
+      "consult_m_plus_upgrade_with_disambiguation",
+      1
+    ],
+    [
+      "consult_transfer_fee",
+      1
+    ],
+    [
+      "consult_transfer_fee_with_disambiguation",
+      1
+    ],
+    [
+      "credit_card_apply",
+      1
+    ],
+    [
+      "loan_apply",
+      1
+    ],
+    [
+      "password_forget_with_disambiguation",
+      1
+    ],
+    [
+      "password_locked_with_disambiguation",
+      1
+    ]
+  ],
+  "clusters": {
+    "wealth_业务咨询": [
+      {
+        "query": "理财在哪",
+        "final_intent": null,
+        "intent_top1": "sys_app_help_navigation",
+        "expected_action": "app_navigation_with_disambiguation",
+        "p0_triggered": true
+      },
+      {
+        "query": "大额存单收益纸黄金规则",
+        "final_intent": "l0_redline",
+        "intent_top1": "consult_wealth_deposit",
+        "expected_action": "consult_deposit_big_with_disambiguation",
+        "p0_triggered": true
+      },
+      {
+        "query": "理财怎么办",
+        "final_intent": "biz_transfer_large",
+        "intent_top1": "consult_wealth_fund",
+        "expected_action": "consult_fund_risk",
+        "p0_triggered": true
+      },
+      {
+        "query": "理财怎么办?",
+        "final_intent": "biz_transfer_large",
+        "intent_top1": "consult_wealth_fund",
+        "expected_action": "consult_fund_risk",
+        "p0_triggered": true
+      },
+      {
+        "query": "基金风险",
+        "final_intent": null,
+        "intent_top1": "consult_wealth_fund",
+        "expected_action": "consult_fund_risk_with_disambiguation",
+        "p0_triggered": true
+      },
+      {
+        "query": "基金风险等级多少",
+        "final_intent": null,
+        "intent_top1": "consult_wealth_fund",
+        "expected_action": "consult_fund_risk_with_disambiguation",
+        "p0_triggered": true
+      },
+      {
+        "query": "基金定投怎么操作",
+        "final_intent": "biz_transfer_large",
+        "intent_top1": "biz_wealth_buy",
+        "expected_action": "wealth_buy",
+        "p0_triggered": true
+      },
+      {
+        "query": "我要买理财顺便买保险",
+        "final_intent": null,
+        "intent_top1": "biz_wealth_buy",
+        "expected_action": "wealth_buy_with_disambiguation",
+        "p0_triggered": true
+      }
+    ],
+    "other": [
+      {
+        "query": "改默认卡",
+        "final_intent": null,
+        "intent_top1": "sys_app_help_setting",
+        "expected_action": "app_setting_with_disambiguation",
+        "p0_triggered": true
+      },
+      {
+        "query": "为什么我的卡被冻了?",
+        "final_intent": "safety_card_freeze",
+        "intent_top1": "safety_card_freeze",
+        "expected_action": "card_freeze",
+        "p0_triggered": true
+      },
+      {
+        "query": "为啥账户被冻",
+        "final_intent": "safety_card_freeze",
+        "intent_top1": "safety_card_freeze",
+        "expected_action": "card_freeze",
+        "p0_triggered": true
+      },
+      {
+        "query": "为啥账户被冻?",
+        "final_intent": "safety_card_freeze",
+        "intent_top1": "safety_card_freeze",
+        "expected_action": "card_freeze",
+        "p0_triggered": true
+      },
+      {
+        "query": "卡不能用了, 怎么解冻",
+        "final_intent": "safety_card_freeze",
+        "intent_top1": "safety_card_freeze",
+        "expected_action": "card_freeze",
+        "p0_triggered": true
+      },
+      {
+        "query": "卡不能用了, 是不是被冻?",
+        "final_intent": "safety_card_freeze",
+        "intent_top1": "safety_card_freeze",
+        "expected_action": "card_freeze",
+        "p0_triggered": true
+      },
+      {
+        "query": "卡冻结了",
+        "final_intent": "l0_redline",
+        "intent_top1": "safety_card_freeze",
+        "expected_action": "card_freeze",
+        "p0_triggered": true
+      },
+      {
+        "query": "卡冻结了?",
+        "final_intent": "l0_redline",
+        "intent_top1": "safety_card_freeze",
+        "expected_action": "card_freeze",
+        "p0_triggered": true
+      },
+      {
+        "query": "卡冻结怎么解?",
+        "final_intent": "safety_card_loss",
+        "intent_top1": "safety_card_freeze",
+        "expected_action": "card_freeze",
+        "p0_triggered": true
+      },
+      {
+        "query": "怎么账户被冻了",
+        "final_intent": "safety_card_freeze",
+        "intent_top1": "safety_card_freeze",
+        "expected_action": "card_freeze",
+        "p0_triggered": true
+      },
+      {
+        "query": "怎么账户被冻了?",
+        "final_intent": "safety_card_freeze",
+        "intent_top1": "safety_card_freeze",
+        "expected_action": "card_freeze",
+        "p0_triggered": true
+      },
+      {
+        "query": "想问一下卡不能用了, 是不是被冻",
+        "final_intent": "safety_card_freeze",
+        "intent_top1": "safety_card_freeze",
+        "expected_action": "card_freeze",
+        "p0_triggered": true
+      },
+      {
+        "query": "想问一下卡被冻结, 紧急",
+        "final_intent": "l0_redline",
+        "intent_top1": "safety_card_freeze",
+        "expected_action": "card_freeze",
+        "p0_triggered": true
+      },
+      {
+        "query": "想问一下我的账户怎么被冻了",
+        "final_intent": "sec_freeze_unexpected",
+        "intent_top1": "safety_card_freeze",
+        "expected_action": "card_freeze",
+        "p0_triggered": true
+      },
+      {
+        "query": "想问一下账户冻结, 怎么解",
+        "final_intent": "l0_redline",
+        "intent_top1": "safety_card_freeze",
+        "expected_action": "card_freeze",
+        "p0_triggered": true
+      },
+      {
+        "query": "我的卡怎么锁住了",
+        "final_intent": null,
+        "intent_top1": "safety_card_freeze",
+        "expected_action": "card_freeze",
+        "p0_triggered": true
+      },
+      {
+        "query": "我的卡被锁了",
+        "final_intent": "cons_urg_lock",
+        "intent_top1": "safety_card_freeze",
+        "expected_action": "card_freeze",
+        "p0_triggered": true
+      },
+      {
+        "query": "我的卡被锁了?",
+        "final_intent": "cons_urg_lock",
+        "intent_top1": "safety_card_freeze",
+        "expected_action": "card_freeze",
+        "p0_triggered": true
+      },
+      {
+        "query": "我的的账户怎么被冻了",
+        "final_intent": "sec_freeze_unexpected",
+        "intent_top1": "safety_card_freeze",
+        "expected_action": "card_freeze",
+        "p0_triggered": true
+      },
+      {
+        "query": "我的的账户被冻结",
+        "final_intent": "safety_card_freeze",
+        "intent_top1": "safety_card_freeze",
+        "expected_action": "card_freeze",
+        "p0_triggered": true
+      },
+      {
+        "query": "我的账户怎么被冻了",
+        "final_intent": "sec_freeze_unexpected",
+        "intent_top1": "safety_card_freeze",
+        "expected_action": "card_freeze",
+        "p0_triggered": true
+      },
+      {
+        "query": "请问为什么我的卡被冻了",
+        "final_intent": "safety_card_freeze",
+        "intent_top1": "safety_card_freeze",
+        "expected_action": "card_freeze",
+        "p0_triggered": true
+      },
+      {
+        "query": "请问为啥我的卡被冻",
+        "final_intent": "safety_card_freeze",
+        "intent_top1": "safety_card_freeze",
+        "expected_action": "card_freeze",
+        "p0_triggered": true
+      },
+      {
+        "query": "请问卡不能用了, 是不是被冻",
+        "final_intent": "safety_card_freeze",
+        "intent_top1": "safety_card_freeze",
+        "expected_action": "card_freeze",
+        "p0_triggered": true
+      },
+      {
+        "query": "请问卡冻结了",
+        "final_intent": "l0_redline",
+        "intent_top1": "safety_card_freeze",
+        "expected_action": "card_freeze",
+        "p0_triggered": true
+      },
+      {
+        "query": "请问卡被冻了",
+        "final_intent": "safety_card_freeze",
+        "intent_top1": "safety_card_freeze",
+        "expected_action": "card_freeze",
+        "p0_triggered": true
+      },
+      {
+        "query": "请问我的卡被锁了",
+        "final_intent": "cons_urg_lock",
+        "intent_top1": "safety_card_freeze",
+        "expected_action": "card_freeze",
+        "p0_triggered": true
+      },
+      {
+        "query": "请问我的账户怎么被冻了",
+        "final_intent": "sec_freeze_unexpected",
+        "intent_top1": "safety_card_freeze",
+        "expected_action": "card_freeze",
+        "p0_triggered": true
+      },
+      {
+        "query": "请问我的账户被冻结",
+        "final_intent": "safety_card_freeze",
+        "intent_top1": "safety_card_freeze",
+        "expected_action": "card_freeze",
+        "p0_triggered": true
+      },
+      {
+        "query": "请问账户冻结, 怎么解",
+        "final_intent": "l0_redline",
+        "intent_top1": "safety_card_freeze",
+        "expected_action": "card_freeze",
+        "p0_triggered": true
+      },
+      {
+        "query": "账户冻结, 怎么解",
+        "final_intent": "l0_redline",
+        "intent_top1": "safety_card_freeze",
+        "expected_action": "card_freeze",
+        "p0_triggered": true
+      },
+      {
+        "query": "账户异常, 怎么解冻",
+        "final_intent": "sec_freeze_unexpected",
+        "intent_top1": "safety_card_freeze",
+        "expected_action": "card_freeze",
+        "p0_triggered": true
+      },
+      {
+        "query": "账户异常冻结",
+        "final_intent": "safety_card_freeze",
+        "intent_top1": "safety_card_freeze",
+        "expected_action": "card_freeze",
+        "p0_triggered": true
+      },
+      {
+        "query": "账户异常冻结?",
+        "final_intent": "safety_card_freeze",
+        "intent_top1": "safety_card_freeze",
+        "expected_action": "card_freeze",
+        "p0_triggered": true
+      },
+      {
+        "query": "账户怎么锁住了",
+        "final_intent": null,
+        "intent_top1": "safety_card_freeze",
+        "expected_action": "card_freeze",
+        "p0_triggered": true
+      },
+      {
+        "query": "账户状态异常",
+        "final_intent": null,
+        "intent_top1": "safety_card_freeze",
+        "expected_action": "card_freeze",
+        "p0_triggered": true
+      },
+      {
+        "query": "账户状态异常?",
+        "final_intent": null,
+        "intent_top1": "safety_card_freeze",
+        "expected_action": "card_freeze",
+        "p0_triggered": true
+      },
+      {
+        "query": "那个为啥我的卡被冻",
+        "final_intent": "safety_card_freeze",
+        "intent_top1": "safety_card_freeze",
+        "expected_action": "card_freeze",
+        "p0_triggered": true
+      },
+      {
+        "query": "那个为啥账户被冻",
+        "final_intent": "safety_card_freeze",
+        "intent_top1": "safety_card_freeze",
+        "expected_action": "card_freeze",
+        "p0_triggered": true
+      },
+      {
+        "query": "那个卡冻结了",
+        "final_intent": "l0_redline",
+        "intent_top1": "safety_card_freeze",
+        "expected_action": "card_freeze",
+        "p0_triggered": true
+      },
+      {
+        "query": "那个卡状态异常",
+        "final_intent": null,
+        "intent_top1": "safety_card_freeze",
+        "expected_action": "card_freeze",
+        "p0_triggered": true
+      },
+      {
+        "query": "那个卡突然不能用了, 是不是被冻",
+        "final_intent": "safety_card_freeze",
+        "intent_top1": "safety_card_freeze",
+        "expected_action": "card_freeze",
+        "p0_triggered": true
+      },
+      {
+        "query": "那个怎么账户被冻了",
+        "final_intent": "safety_card_freeze",
+        "intent_top1": "safety_card_freeze",
+        "expected_action": "card_freeze",
+        "p0_triggered": true
+      },
+      {
+        "query": "那个我的卡被锁了",
+        "final_intent": "cons_urg_lock",
+        "intent_top1": "safety_card_freeze",
+        "expected_action": "card_freeze",
+        "p0_triggered": true
+      },
+      {
+        "query": "那个账户冻结, 怎么解",
+        "final_intent": "l0_redline",
+        "intent_top1": "safety_card_freeze",
+        "expected_action": "card_freeze",
+        "p0_triggered": true
+      },
+      {
+        "query": "那个账户异常",
+        "final_intent": "sec_freeze_unexpected",
+        "intent_top1": "safety_card_freeze",
+        "expected_action": "card_freeze",
+        "p0_triggered": true
+      },
+      {
+        "query": "那个账户异常, 怎么解冻",
+        "final_intent": "sec_freeze_unexpected",
+        "intent_top1": "safety_card_freeze",
+        "expected_action": "card_freeze",
+        "p0_triggered": true
+      },
+      {
+        "query": "卡突然不能用了是不是被冻",
+        "final_intent": "safety_card_freeze",
+        "intent_top1": "safety_card_freeze",
+        "expected_action": "card_freeze_with_disambiguation",
+        "p0_triggered": true
+      },
+      {
+        "query": "卡被冻结",
+        "final_intent": "l0_redline",
+        "intent_top1": "safety_card_freeze",
+        "expected_action": "card_freeze_with_disambiguation",
+        "p0_triggered": true
+      },
+      {
+        "query": "卡被冻结了",
+        "final_intent": "l0_redline",
+        "intent_top1": "safety_card_freeze",
+        "expected_action": "card_freeze_with_disambiguation",
+        "p0_triggered": true
+      },
+      {
+        "query": "我卡不能用了",
+        "final_intent": "safety_card_freeze",
+        "intent_top1": "safety_card_freeze",
+        "expected_action": "card_freeze_with_disambiguation",
+        "p0_triggered": true
+      },
+      {
+        "query": "我卡被冻结了想解冻",
+        "final_intent": "l0_redline",
+        "intent_top1": "safety_card_freeze",
+        "expected_action": "card_freeze_with_disambiguation",
+        "p0_triggered": true
+      },
+      {
+        "query": "账户冻结",
+        "final_intent": "l0_redline",
+        "intent_top1": "safety_card_freeze",
+        "expected_action": "card_freeze_with_disambiguation",
+        "p0_triggered": true
+      },
+      {
+        "query": "M+ 升级条件",
+        "final_intent": null,
+        "intent_top1": "consult_member_m_plus",
+        "expected_action": "consult_m_plus_upgrade_with_disambiguation",
+        "p0_triggered": true
+      },
+      {
+        "query": "怎么解绑手机我怀疑被盗了",
+        "final_intent": "l0_redline",
+        "intent_top1": "safety_device_unbind",
+        "expected_action": "device_unbind_with_disambiguation",
+        "p0_triggered": true
+      },
+      {
+        "query": "解绑手机",
+        "final_intent": null,
+        "intent_top1": "safety_device_unbind",
+        "expected_action": "device_unbind_with_disambiguation",
+        "p0_triggered": true
+      }
+    ],
+    "how_to_操作咨询": [
+      {
+        "query": "想问一下账户被冻结了, 怎么办",
+        "final_intent": "l0_redline",
+        "intent_top1": "safety_card_freeze",
+        "expected_action": "card_freeze",
+        "p0_triggered": true
+      },
+      {
+        "query": "请问卡被封了, 怎么办",
+        "final_intent": "biz_transfer_large",
+        "intent_top1": "safety_card_freeze",
+        "expected_action": "card_freeze",
+        "p0_triggered": true
+      },
+      {
+        "query": "账户被冻结了, 怎么办",
+        "final_intent": "l0_redline",
+        "intent_top1": "safety_card_freeze",
+        "expected_action": "card_freeze",
+        "p0_triggered": true
+      }
+    ],
+    "loan_业务咨询": [
+      {
+        "query": "想问一下贷款怎么办",
+        "final_intent": "biz_transfer_large",
+        "intent_top1": "consult_loan_credit",
+        "expected_action": "consult_credit_loan",
+        "p0_triggered": true
+      },
+      {
+        "query": "贷款怎么办",
+        "final_intent": "biz_transfer_large",
+        "intent_top1": "consult_loan_credit",
+        "expected_action": "consult_credit_loan",
+        "p0_triggered": true
+      },
+      {
+        "query": "那个贷款怎么办",
+        "final_intent": "biz_transfer_large",
+        "intent_top1": "consult_loan_credit",
+        "expected_action": "consult_credit_loan",
+        "p0_triggered": true
+      },
+      {
+        "query": "贷款怎么办信用卡怎么办贷款怎么办信用卡怎么办",
+        "final_intent": "biz_transfer_large",
+        "intent_top1": "biz_loan_apply",
+        "expected_action": "loan_apply",
+        "p0_triggered": true
+      }
+    ],
+    "deposit_业务咨询": [
+      {
+        "query": "大额存单",
+        "final_intent": "l0_redline",
+        "intent_top1": "consult_wealth_deposit",
+        "expected_action": "consult_deposit_big_with_disambiguation",
+        "p0_triggered": true
+      },
+      {
+        "query": "大额存单 三 年期 利率",
+        "final_intent": "l0_redline",
+        "intent_top1": "consult_wealth_deposit",
+        "expected_action": "consult_deposit_big_with_disambiguation",
+        "p0_triggered": true
+      }
+    ],
+    "fx_业务咨询": [
+      {
+        "query": "美元汇率",
+        "final_intent": "security_aml_cross_border",
+        "intent_top1": "consult_fx_rate",
+        "expected_action": "consult_fx_rate_with_disambiguation",
+        "p0_triggered": true
+      },
+      {
+        "query": "美元汇率多少我要汇 5 万美元给美国",
+        "final_intent": "security_aml_cross_border",
+        "intent_top1": "consult_fx_rate",
+        "expected_action": "consult_fx_rate_with_disambiguation",
+        "p0_triggered": true
+      }
+    ],
+    "transfer_业务咨询": [
+      {
+        "query": "美元汇率今天多少跨境汇款限额",
+        "final_intent": "biz_transfer_large",
+        "intent_top1": "consult_fx_rate",
+        "expected_action": "consult_fx_rate_with_disambiguation",
+        "p0_triggered": true
+      },
+      {
+        "query": "请问跨行转账手续费多少",
+        "final_intent": "biz_transfer_large",
+        "intent_top1": "consult_fee_transfer",
+        "expected_action": "consult_transfer_fee",
+        "p0_triggered": true
+      },
+      {
+        "query": "转账手续费",
+        "final_intent": "biz_transfer_large",
+        "intent_top1": "consult_fee_transfer",
+        "expected_action": "consult_transfer_fee_with_disambiguation",
+        "p0_triggered": true
+      },
+      {
+        "query": "跨行转账怎么操作现在帮我转",
+        "final_intent": "biz_transfer_large",
+        "intent_top1": "biz_transfer_cross_bank",
+        "expected_action": "transfer_cross_bank_with_disambiguation",
+        "p0_triggered": true
+      },
+      {
+        "query": "跨行转账手续费",
+        "final_intent": "biz_transfer_large",
+        "intent_top1": "biz_transfer_cross_bank",
+        "expected_action": "transfer_cross_bank_with_disambiguation",
+        "p0_triggered": true
+      }
+    ],
+    "card_业务咨询": [
+      {
+        "query": "信用卡",
+        "final_intent": null,
+        "intent_top1": "biz_credit_card_apply",
+        "expected_action": "credit_card_apply",
+        "p0_triggered": true
+      },
+      {
+        "query": "怎么修改银行卡密码",
+        "final_intent": null,
+        "intent_top1": "biz_password_reset",
+        "expected_action": "password_reset",
+        "p0_triggered": true
+      },
+      {
+        "query": "改银行卡密码",
+        "final_intent": null,
+        "intent_top1": "biz_password_reset",
+        "expected_action": "password_reset",
+        "p0_triggered": true
+      }
+    ],
+    "repay_业务咨询": [
+      {
+        "query": "主动还款怎么操作",
+        "final_intent": "biz_transfer_large",
+        "intent_top1": "biz_loan_repay",
+        "expected_action": "loan_repay",
+        "p0_triggered": true
+      },
+      {
+        "query": "主动还款怎么操作?",
+        "final_intent": "biz_transfer_large",
+        "intent_top1": "biz_loan_repay",
+        "expected_action": "loan_repay",
+        "p0_triggered": true
+      },
+      {
+        "query": "想问一下主动还款怎么操作",
+        "final_intent": "biz_transfer_large",
+        "intent_top1": "biz_loan_repay",
+        "expected_action": "loan_repay",
+        "p0_triggered": true
+      }
+    ],
+    "password_业务咨询": [
+      {
+        "query": "我登录密码忘了被锁了",
+        "final_intent": "cons_urg_lock",
+        "intent_top1": "safety_password_forget",
+        "expected_action": "password_forget_with_disambiguation",
+        "p0_triggered": true
+      },
+      {
+        "query": "我密码输错被锁了",
+        "final_intent": "cons_urg_lock",
+        "intent_top1": "safety_password_locked",
+        "expected_action": "password_locked_with_disambiguation",
+        "p0_triggered": true
+      },
+      {
+        "query": "密码",
+        "final_intent": null,
+        "intent_top1": "biz_password_reset",
+        "expected_action": "password_reset",
+        "p0_triggered": true
+      },
+      {
+        "query": "密码怎么改",
+        "final_intent": null,
+        "intent_top1": "biz_password_reset",
+        "expected_action": "password_reset",
+        "p0_triggered": true
+      }
+    ]
+  },
+  "patch_groups": {
+    "(none)": [
+      {
+        "query": "理财在哪",
+        "expected": "app_navigation_with_disambiguation",
+        "qtype": "wealth_业务咨询"
+      },
+      {
+        "query": "基金风险",
+        "expected": "consult_fund_risk_with_disambiguation",
+        "qtype": "wealth_业务咨询"
+      },
+      {
+        "query": "基金风险等级多少",
+        "expected": "consult_fund_risk_with_disambiguation",
+        "qtype": "wealth_业务咨询"
+      },
+      {
+        "query": "我要买理财顺便买保险",
+        "expected": "wealth_buy_with_disambiguation",
+        "qtype": "wealth_业务咨询"
+      },
+      {
+        "query": "改默认卡",
+        "expected": "app_setting_with_disambiguation",
+        "qtype": "other"
+      },
+      {
+        "query": "我的卡怎么锁住了",
+        "expected": "card_freeze",
+        "qtype": "other"
+      },
+      {
+        "query": "账户怎么锁住了",
+        "expected": "card_freeze",
+        "qtype": "other"
+      },
+      {
+        "query": "账户状态异常",
+        "expected": "card_freeze",
+        "qtype": "other"
+      },
+      {
+        "query": "账户状态异常?",
+        "expected": "card_freeze",
+        "qtype": "other"
+      },
+      {
+        "query": "那个卡状态异常",
+        "expected": "card_freeze",
+        "qtype": "other"
+      },
+      {
+        "query": "M+ 升级条件",
+        "expected": "consult_m_plus_upgrade_with_disambiguation",
+        "qtype": "other"
+      },
+      {
+        "query": "解绑手机",
+        "expected": "device_unbind_with_disambiguation",
+        "qtype": "other"
+      },
+      {
+        "query": "信用卡",
+        "expected": "credit_card_apply",
+        "qtype": "card_业务咨询"
+      },
+      {
+        "query": "怎么修改银行卡密码",
+        "expected": "password_reset",
+        "qtype": "card_业务咨询"
+      },
+      {
+        "query": "改银行卡密码",
+        "expected": "password_reset",
+        "qtype": "card_业务咨询"
+      },
+      {
+        "query": "密码",
+        "expected": "password_reset",
+        "qtype": "password_业务咨询"
+      },
+      {
+        "query": "密码怎么改",
+        "expected": "password_reset",
+        "qtype": "password_业务咨询"
+      }
+    ],
+    "l0_redline": [
+      {
+        "query": "大额存单收益纸黄金规则",
+        "expected": "consult_deposit_big_with_disambiguation",
+        "qtype": "wealth_业务咨询"
+      },
+      {
+        "query": "卡冻结了",
+        "expected": "card_freeze",
+        "qtype": "other"
+      },
+      {
+        "query": "卡冻结了?",
+        "expected": "card_freeze",
+        "qtype": "other"
+      },
+      {
+        "query": "想问一下卡被冻结, 紧急",
+        "expected": "card_freeze",
+        "qtype": "other"
+      },
+      {
+        "query": "想问一下账户冻结, 怎么解",
+        "expected": "card_freeze",
+        "qtype": "other"
+      },
+      {
+        "query": "请问卡冻结了",
+        "expected": "card_freeze",
+        "qtype": "other"
+      },
+      {
+        "query": "请问账户冻结, 怎么解",
+        "expected": "card_freeze",
+        "qtype": "other"
+      },
+      {
+        "query": "账户冻结, 怎么解",
+        "expected": "card_freeze",
+        "qtype": "other"
+      },
+      {
+        "query": "那个卡冻结了",
+        "expected": "card_freeze",
+        "qtype": "other"
+      },
+      {
+        "query": "那个账户冻结, 怎么解",
+        "expected": "card_freeze",
+        "qtype": "other"
+      },
+      {
+        "query": "卡被冻结",
+        "expected": "card_freeze_with_disambiguation",
+        "qtype": "other"
+      },
+      {
+        "query": "卡被冻结了",
+        "expected": "card_freeze_with_disambiguation",
+        "qtype": "other"
+      },
+      {
+        "query": "我卡被冻结了想解冻",
+        "expected": "card_freeze_with_disambiguation",
+        "qtype": "other"
+      },
+      {
+        "query": "账户冻结",
+        "expected": "card_freeze_with_disambiguation",
+        "qtype": "other"
+      },
+      {
+        "query": "怎么解绑手机我怀疑被盗了",
+        "expected": "device_unbind_with_disambiguation",
+        "qtype": "other"
+      },
+      {
+        "query": "想问一下账户被冻结了, 怎么办",
+        "expected": "card_freeze",
+        "qtype": "how_to_操作咨询"
+      },
+      {
+        "query": "账户被冻结了, 怎么办",
+        "expected": "card_freeze",
+        "qtype": "how_to_操作咨询"
+      },
+      {
+        "query": "大额存单",
+        "expected": "consult_deposit_big_with_disambiguation",
+        "qtype": "deposit_业务咨询"
+      },
+      {
+        "query": "大额存单 三 年期 利率",
+        "expected": "consult_deposit_big_with_disambiguation",
+        "qtype": "deposit_业务咨询"
+      }
+    ],
+    "biz_transfer_large": [
+      {
+        "query": "理财怎么办",
+        "expected": "consult_fund_risk",
+        "qtype": "wealth_业务咨询"
+      },
+      {
+        "query": "理财怎么办?",
+        "expected": "consult_fund_risk",
+        "qtype": "wealth_业务咨询"
+      },
+      {
+        "query": "基金定投怎么操作",
+        "expected": "wealth_buy",
+        "qtype": "wealth_业务咨询"
+      },
+      {
+        "query": "请问卡被封了, 怎么办",
+        "expected": "card_freeze",
+        "qtype": "how_to_操作咨询"
+      },
+      {
+        "query": "想问一下贷款怎么办",
+        "expected": "consult_credit_loan",
+        "qtype": "loan_业务咨询"
+      },
+      {
+        "query": "贷款怎么办",
+        "expected": "consult_credit_loan",
+        "qtype": "loan_业务咨询"
+      },
+      {
+        "query": "那个贷款怎么办",
+        "expected": "consult_credit_loan",
+        "qtype": "loan_业务咨询"
+      },
+      {
+        "query": "贷款怎么办信用卡怎么办贷款怎么办信用卡怎么办",
+        "expected": "loan_apply",
+        "qtype": "loan_业务咨询"
+      },
+      {
+        "query": "美元汇率今天多少跨境汇款限额",
+        "expected": "consult_fx_rate_with_disambiguation",
+        "qtype": "transfer_业务咨询"
+      },
+      {
+        "query": "请问跨行转账手续费多少",
+        "expected": "consult_transfer_fee",
+        "qtype": "transfer_业务咨询"
+      },
+      {
+        "query": "转账手续费",
+        "expected": "consult_transfer_fee_with_disambiguation",
+        "qtype": "transfer_业务咨询"
+      },
+      {
+        "query": "跨行转账怎么操作现在帮我转",
+        "expected": "transfer_cross_bank_with_disambiguation",
+        "qtype": "transfer_业务咨询"
+      },
+      {
+        "query": "跨行转账手续费",
+        "expected": "transfer_cross_bank_with_disambiguation",
+        "qtype": "transfer_业务咨询"
+      },
+      {
+        "query": "主动还款怎么操作",
+        "expected": "loan_repay",
+        "qtype": "repay_业务咨询"
+      },
+      {
+        "query": "主动还款怎么操作?",
+        "expected": "loan_repay",
+        "qtype": "repay_业务咨询"
+      },
+      {
+        "query": "想问一下主动还款怎么操作",
+        "expected": "loan_repay",
+        "qtype": "repay_业务咨询"
+      }
+    ],
+    "safety_card_freeze": [
+      {
+        "query": "为什么我的卡被冻了?",
+        "expected": "card_freeze",
+        "qtype": "other"
+      },
+      {
+        "query": "为啥账户被冻",
+        "expected": "card_freeze",
+        "qtype": "other"
+      },
+      {
+        "query": "为啥账户被冻?",
+        "expected": "card_freeze",
+        "qtype": "other"
+      },
+      {
+        "query": "卡不能用了, 怎么解冻",
+        "expected": "card_freeze",
+        "qtype": "other"
+      },
+      {
+        "query": "卡不能用了, 是不是被冻?",
+        "expected": "card_freeze",
+        "qtype": "other"
+      },
+      {
+        "query": "怎么账户被冻了",
+        "expected": "card_freeze",
+        "qtype": "other"
+      },
+      {
+        "query": "怎么账户被冻了?",
+        "expected": "card_freeze",
+        "qtype": "other"
+      },
+      {
+        "query": "想问一下卡不能用了, 是不是被冻",
+        "expected": "card_freeze",
+        "qtype": "other"
+      },
+      {
+        "query": "我的的账户被冻结",
+        "expected": "card_freeze",
+        "qtype": "other"
+      },
+      {
+        "query": "请问为什么我的卡被冻了",
+        "expected": "card_freeze",
+        "qtype": "other"
+      },
+      {
+        "query": "请问为啥我的卡被冻",
+        "expected": "card_freeze",
+        "qtype": "other"
+      },
+      {
+        "query": "请问卡不能用了, 是不是被冻",
+        "expected": "card_freeze",
+        "qtype": "other"
+      },
+      {
+        "query": "请问卡被冻了",
+        "expected": "card_freeze",
+        "qtype": "other"
+      },
+      {
+        "query": "请问我的账户被冻结",
+        "expected": "card_freeze",
+        "qtype": "other"
+      },
+      {
+        "query": "账户异常冻结",
+        "expected": "card_freeze",
+        "qtype": "other"
+      },
+      {
+        "query": "账户异常冻结?",
+        "expected": "card_freeze",
+        "qtype": "other"
+      },
+      {
+        "query": "那个为啥我的卡被冻",
+        "expected": "card_freeze",
+        "qtype": "other"
+      },
+      {
+        "query": "那个为啥账户被冻",
+        "expected": "card_freeze",
+        "qtype": "other"
+      },
+      {
+        "query": "那个卡突然不能用了, 是不是被冻",
+        "expected": "card_freeze",
+        "qtype": "other"
+      },
+      {
+        "query": "那个怎么账户被冻了",
+        "expected": "card_freeze",
+        "qtype": "other"
+      },
+      {
+        "query": "卡突然不能用了是不是被冻",
+        "expected": "card_freeze_with_disambiguation",
+        "qtype": "other"
+      },
+      {
+        "query": "我卡不能用了",
+        "expected": "card_freeze_with_disambiguation",
+        "qtype": "other"
+      }
+    ],
+    "safety_card_loss": [
+      {
+        "query": "卡冻结怎么解?",
+        "expected": "card_freeze",
+        "qtype": "other"
+      }
+    ],
+    "sec_freeze_unexpected": [
+      {
+        "query": "想问一下我的账户怎么被冻了",
+        "expected": "card_freeze",
+        "qtype": "other"
+      },
+      {
+        "query": "我的的账户怎么被冻了",
+        "expected": "card_freeze",
+        "qtype": "other"
+      },
+      {
+        "query": "我的账户怎么被冻了",
+        "expected": "card_freeze",
+        "qtype": "other"
+      },
+      {
+        "query": "请问我的账户怎么被冻了",
+        "expected": "card_freeze",
+        "qtype": "other"
+      },
+      {
+        "query": "账户异常, 怎么解冻",
+        "expected": "card_freeze",
+        "qtype": "other"
+      },
+      {
+        "query": "那个账户异常",
+        "expected": "card_freeze",
+        "qtype": "other"
+      },
+      {
+        "query": "那个账户异常, 怎么解冻",
+        "expected": "card_freeze",
+        "qtype": "other"
+      }
+    ],
+    "cons_urg_lock": [
+      {
+        "query": "我的卡被锁了",
+        "expected": "card_freeze",
+        "qtype": "other"
+      },
+      {
+        "query": "我的卡被锁了?",
+        "expected": "card_freeze",
+        "qtype": "other"
+      },
+      {
+        "query": "请问我的卡被锁了",
+        "expected": "card_freeze",
+        "qtype": "other"
+      },
+      {
+        "query": "那个我的卡被锁了",
+        "expected": "card_freeze",
+        "qtype": "other"
+      },
+      {
+        "query": "我登录密码忘了被锁了",
+        "expected": "password_forget_with_disambiguation",
+        "qtype": "password_业务咨询"
+      },
+      {
+        "query": "我密码输错被锁了",
+        "expected": "password_locked_with_disambiguation",
+        "qtype": "password_业务咨询"
+      }
+    ],
+    "security_aml_cross_border": [
+      {
+        "query": "美元汇率",
+        "expected": "consult_fx_rate_with_disambiguation",
+        "qtype": "fx_业务咨询"
+      },
+      {
+        "query": "美元汇率多少我要汇 5 万美元给美国",
+        "expected": "consult_fx_rate_with_disambiguation",
+        "qtype": "fx_业务咨询"
+      }
+    ]
+  },
+  "patch_summary": [
+    {
+      "patch": "safety_card_freeze",
+      "wrong_count": 22
+    },
+    {
+      "patch": "l0_redline",
+      "wrong_count": 19
+    },
+    {
+      "patch": "(none)",
+      "wrong_count": 17
+    },
+    {
+      "patch": "biz_transfer_large",
+      "wrong_count": 16
+    },
+    {
+      "patch": "sec_freeze_unexpected",
+      "wrong_count": 7
+    },
+    {
+      "patch": "cons_urg_lock",
+      "wrong_count": 6
+    },
+    {
+      "patch": "security_aml_cross_border",
+      "wrong_count": 2
+    },
+    {
+      "patch": "safety_card_loss",
+      "wrong_count": 1
+    }
+  ],
+  "suggestions": [
+    {
+      "patch": "safety_card_freeze",
+      "wrong_count": 22,
+      "root_cause": "P0 patch 把所有 '卡被冻/卡冻结/卡不能用了' 都路由转人工, 但 P1 用户实际想 '怎么解冻/为什么被冻'",
+      "fix_direction": "收紧: 在 safety_card_freeze patch 里加 '疑问型信号豁免' — 如果 query 含 '怎么/为什么/咋办/怎么办/如何', 降级到 P1 业务咨询",
+      "priority": "P0"
+    },
+    {
+      "patch": "biz_transfer_large",
+      "wrong_count": 16,
+      "root_cause": "P0 patch '我要转 X 万' / 'X 万给公司' 仍把部分业务咨询 query 误吞 (例如 '基金定投怎么操作'/'贷款怎么办'/'理财怎么办')",
+      "fix_direction": "收紧: 当 final_intent=biz_transfer_large 但 expected ≠ biz_transfer_large, 在 patch 里加白名单 (intent_top1 = biz_loan_repay / consult_loan_credit / consult_wealth_fund 时降级到 P1)",
+      "priority": "P0"
+    },
+    {
+      "patch": "l0_redline (大额 / 冻结 短词)",
+      "wrong_count": 19,
+      "root_cause": "L0 词典 '大额'/'冻结' 短词太宽 — '大额存单' (产品咨询, 不是大额转账) / '卡冻结了?' (用户描述状态, 不是冻结请求)",
+      "fix_direction": "收紧: L0 词典删 '大额' 单独 (v3.10.1 已做), 进一步删 '冻结' 单独 (用户描述状态 ≠ 冻结请求), 只保留 '冻结卡'/'紧急冻结'/'马上冻结'",
+      "priority": "P0"
+    },
+    {
+      "patch": "security_aml_cross_border",
+      "wrong_count": 2,
+      "root_cause": "P0 patch '境外/国外/美元' 把单纯查汇率 query 也误吞 (例: '美元汇率' / '美元汇率多少')",
+      "fix_direction": "收紧: cross_border patch 必须有 '汇款/汇钱/转给+境外/汇 X 元' 动作信号才触发; 单独 '美元汇率/外汇行情' 不触发",
+      "priority": "P1"
+    },
+    {
+      "patch": "cons_urg_lock",
+      "wrong_count": 6,
+      "root_cause": "P0 patch '被锁/锁了' 把 '密码输错被锁了' (P1 业务咨询) 也当 P0 转人工",
+      "fix_direction": "收紧: 当 query 含 '密码/登录' + '被锁' 时降级到 password_forget_with_disambiguation (P1)",
+      "priority": "P1"
+    }
+  ],
+  "total_suggested_p1_recovery": 57
+}

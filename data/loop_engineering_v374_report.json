@@ -1,0 +1,253 @@
+{
+  "loop_version": "v3.7.4-loop-engineering",
+  "run_date": "2026-06-22T13:23:47.259435",
+  "input_eval": "D:\\Learning\\AI\\面试\\AI智能客服\\data\\e2e_eval_results_v37.json",
+  "baseline_metrics": {
+    "version": "v3.7.0-e2e",
+    "dataset_total": 1500,
+    "path_accuracy": 0.912,
+    "p0_transfer_rate": 0.9826,
+    "hallucination_rate": 0.0,
+    "clarify_rate": 0.0573,
+    "avg_latency_ms": 8.0
+  },
+  "badcase_clusters": [
+    {
+      "cluster_id": "action_card_freeze",
+      "cluster_type": "expected_action",
+      "label": "card_freeze",
+      "miss_count": 25,
+      "total": 96,
+      "accuracy": 0.7396,
+      "severity": "P0"
+    },
+    {
+      "cluster_id": "action_loan_repay",
+      "cluster_type": "expected_action",
+      "label": "loan_repay",
+      "miss_count": 8,
+      "total": 35,
+      "accuracy": 0.7714,
+      "severity": "P2"
+    },
+    {
+      "cluster_id": "action_show_balance",
+      "cluster_type": "expected_action",
+      "label": "show_balance",
+      "miss_count": 7,
+      "total": 28,
+      "accuracy": 0.75,
+      "severity": "P2"
+    },
+    {
+      "cluster_id": "action_consult_credit_card_pick",
+      "cluster_type": "expected_action",
+      "label": "consult_credit_card_pick",
+      "miss_count": 6,
+      "total": 53,
+      "accuracy": 0.8868,
+      "severity": "P2"
+    },
+    {
+      "cluster_id": "action_consult_credit_loan",
+      "cluster_type": "expected_action",
+      "label": "consult_credit_loan",
+      "miss_count": 5,
+      "total": 38,
+      "accuracy": 0.8684,
+      "severity": "P2"
+    },
+    {
+      "cluster_id": "action_fraud_recognize",
+      "cluster_type": "expected_action",
+      "label": "fraud_recognize",
+      "miss_count": 5,
+      "total": 22,
+      "accuracy": 0.7727,
+      "severity": "P2"
+    },
+    {
+      "cluster_id": "action_consult_installment",
+      "cluster_type": "expected_action",
+      "label": "consult_installment",
+      "miss_count": 5,
+      "total": 20,
+      "accuracy": 0.75,
+      "severity": "P2"
+    },
+    {
+      "cluster_id": "action_card_activate",
+      "cluster_type": "expected_action",
+      "label": "card_activate",
+      "miss_count": 3,
+      "total": 40,
+      "accuracy": 0.925,
+      "severity": "P2"
+    },
+    {
+      "cluster_id": "action_consult_fund_risk",
+      "cluster_type": "expected_action",
+      "label": "consult_fund_risk",
+      "miss_count": 3,
+      "total": 40,
+      "accuracy": 0.925,
+      "severity": "P2"
+    },
+    {
+      "cluster_id": "action_route_human",
+      "cluster_type": "expected_action",
+      "label": "route_human",
+      "miss_count": 2,
+      "total": 152,
+      "accuracy": 0.9868,
+      "severity": "P2"
+    },
+    {
+      "cluster_id": "action_fraud_report",
+      "cluster_type": "expected_action",
+      "label": "fraud_report",
+      "miss_count": 2,
+      "total": 107,
+      "accuracy": 0.9813,
+      "severity": "P2"
+    },
+    {
+      "cluster_id": "action_aml_cross_border",
+      "cluster_type": "expected_action",
+      "label": "aml_cross_border",
+      "miss_count": 1,
+      "total": 19,
+      "accuracy": 0.9474,
+      "severity": "P2"
+    }
+  ],
+  "patch_candidates": [
+    {
+      "cluster_id": "action_card_freeze",
+      "target_action": "card_freeze",
+      "diagnosis": "账户冻结类 query 走 RAG_KB/CASCADE_TEMPLATE 而非 L0_HUMAN",
+      "patch_type": "L0_keyword_extension",
+      "patch_hint": "在 L0 红线词典增加卡冻结口语化变体（卡被锁了 / 卡片锁了 / 不能用卡了）",
+      "expected_miss_reduction": "miss 25 → ~3（参考招行口语化扩展经验）",
+      "priority": "P0"
+    },
+    {
+      "cluster_id": "action_loan_repay",
+      "target_action": "loan_repay",
+      "diagnosis": "未知失败模式，accuracy=0.7714, miss=8",
+      "patch_type": "manual_analysis_required",
+      "patch_hint": "需拉取该意图的错分 case 样本做人工根因分析",
+      "expected_miss_reduction": "TBD（依赖人工分析结果）",
+      "priority": "P2"
+    },
+    {
+      "cluster_id": "action_show_balance",
+      "target_action": "show_balance",
+      "diagnosis": "未知失败模式，accuracy=0.75, miss=7",
+      "patch_type": "manual_analysis_required",
+      "patch_hint": "需拉取该意图的错分 case 样本做人工根因分析",
+      "expected_miss_reduction": "TBD（依赖人工分析结果）",
+      "priority": "P2"
+    },
+    {
+      "cluster_id": "action_consult_credit_card_pick",
+      "target_action": "consult_credit_card_pick",
+      "diagnosis": "信用卡办理类 query 路径正确但 sub-intent 错（普通卡 vs 学生卡 vs 白金卡）",
+      "patch_type": "slot_clarification",
+      "patch_hint": "在 IntentRecognizer 增加卡类型上下文槽位追问逻辑",
+      "expected_miss_reduction": "miss 6 → ~2（槽位澄清）",
+      "priority": "P2"
+    },
+    {
+      "cluster_id": "action_consult_credit_loan",
+      "target_action": "consult_credit_loan",
+      "diagnosis": "未知失败模式，accuracy=0.8684, miss=5",
+      "patch_type": "manual_analysis_required",
+      "patch_hint": "需拉取该意图的错分 case 样本做人工根因分析",
+      "expected_miss_reduction": "TBD（依赖人工分析结果）",
+      "priority": "P2"
+    },
+    {
+      "cluster_id": "action_fraud_recognize",
+      "target_action": "fraud_recognize",
+      "diagnosis": "未知失败模式，accuracy=0.7727, miss=5",
+      "patch_type": "manual_analysis_required",
+      "patch_hint": "需拉取该意图的错分 case 样本做人工根因分析",
+      "expected_miss_reduction": "TBD（依赖人工分析结果）",
+      "priority": "P2"
+    },
+    {
+      "cluster_id": "action_consult_installment",
+      "target_action": "consult_installment",
+      "diagnosis": "未知失败模式，accuracy=0.75, miss=5",
+      "patch_type": "manual_analysis_required",
+      "patch_hint": "需拉取该意图的错分 case 样本做人工根因分析",
+      "expected_miss_reduction": "TBD（依赖人工分析结果）",
+      "priority": "P2"
+    },
+    {
+      "cluster_id": "action_card_activate",
+      "target_action": "card_activate",
+      "diagnosis": "未知失败模式，accuracy=0.925, miss=3",
+      "patch_type": "manual_analysis_required",
+      "patch_hint": "需拉取该意图的错分 case 样本做人工根因分析",
+      "expected_miss_reduction": "TBD（依赖人工分析结果）",
+      "priority": "P2"
+    },
+    {
+      "cluster_id": "action_consult_fund_risk",
+      "target_action": "consult_fund_risk",
+      "diagnosis": "未知失败模式，accuracy=0.925, miss=3",
+      "patch_type": "manual_analysis_required",
+      "patch_hint": "需拉取该意图的错分 case 样本做人工根因分析",
+      "expected_miss_reduction": "TBD（依赖人工分析结果）",
+      "priority": "P2"
+    },
+    {
+      "cluster_id": "action_route_human",
+      "target_action": "route_human",
+      "diagnosis": "未知失败模式，accuracy=0.9868, miss=2",
+      "patch_type": "manual_analysis_required",
+      "patch_hint": "需拉取该意图的错分 case 样本做人工根因分析",
+      "expected_miss_reduction": "TBD（依赖人工分析结果）",
+      "priority": "P2"
+    },
+    {
+      "cluster_id": "action_fraud_report",
+      "target_action": "fraud_report",
+      "diagnosis": "未知失败模式，accuracy=0.9813, miss=2",
+      "patch_type": "manual_analysis_required",
+      "patch_hint": "需拉取该意图的错分 case 样本做人工根因分析",
+      "expected_miss_reduction": "TBD（依赖人工分析结果）",
+      "priority": "P2"
+    },
+    {
+      "cluster_id": "action_aml_cross_border",
+      "target_action": "aml_cross_border",
+      "diagnosis": "未知失败模式，accuracy=0.9474, miss=1",
+      "patch_type": "manual_analysis_required",
+      "patch_hint": "需拉取该意图的错分 case 样本做人工根因分析",
+      "expected_miss_reduction": "TBD（依赖人工分析结果）",
+      "priority": "P2"
+    }
+  ],
+  "predicted_v374_metrics": {
+    "p0_transfer_rate": 0.9915,
+    "path_accuracy": 0.93,
+    "hallucination_rate": 0.0,
+    "clarify_rate": 0.08,
+    "avg_latency_ms": 9.0
+  },
+  "gating_result": {
+    "passed": true,
+    "violations": [],
+    "thresholds": {
+      "p0_recall_floor": 0.95,
+      "path_accuracy_floor": 0.85,
+      "hallucination_rate_ceiling": 0.05,
+      "clarify_rate_ceiling": 0.2,
+      "regression_tolerance_pp": 1.0
+    }
+  },
+  "next_action": "应用 P0 patch（card_freeze L0 扩展 + slot 澄清），重跑 D v3.2 验证真实指标，确认通过门控后发版 v3.7.4"
+}

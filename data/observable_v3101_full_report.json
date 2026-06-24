@@ -1,0 +1,53 @@
+{
+  "version": "v3.10.1-full-1076-dedup",
+  "run_date": "2026-06-23T18:42:00",
+  "sample_size": 1076,
+  "processed": 1076,
+  "errors_count": 0,
+  "total_elapsed_sec": 36487.0,
+  "action_accuracy_full": {
+    "P0": {
+      "correct": 430,
+      "total": 431,
+      "rate": 0.9976798143851509
+    },
+    "P1": {
+      "correct": 242,
+      "total": 332,
+      "rate": 0.7289156626506024
+    },
+    "P2": {
+      "correct": 142,
+      "total": 155,
+      "rate": 0.9161290322580645
+    },
+    "P3": {
+      "correct": 158,
+      "total": 158,
+      "rate": 1.0
+    }
+  },
+  "p0_recall": {
+    "P0": {
+      "total": 431,
+      "p0_caught": 430,
+      "recall_rate": 0.9976798143851509
+    },
+    "P1": {
+      "total": 332,
+      "p0_caught": 90,
+      "recall_rate": 0.2710843373493976
+    },
+    "P2": {
+      "total": 155,
+      "p0_caught": 13,
+      "recall_rate": 0.08387096774193549
+    },
+    "P3": {
+      "total": 158,
+      "p0_caught": 0,
+      "recall_rate": 0.0
+    }
+  },
+  "bad_cases_count": 0
+}

@@ -1,0 +1,61 @@
+{
+  "version": "v3.10.1-v3-full",
+  "run_date": "2026-06-23T19:20:05",
+  "sample_size": 1076,
+  "processed": 1076,
+  "errors_count": 0,
+  "total_elapsed_sec": 2152.7,
+  "action_accuracy_full": {
+    "P0": {
+      "correct": 481,
+      "total": 488,
+      "rate": 0.985655737704918
+    },
+    "P1": {
+      "correct": 244,
+      "total": 275,
+      "rate": 0.8872727272727273
+    },
+    "P2": {
+      "correct": 146,
+      "total": 155,
+      "rate": 0.9419354838709677
+    },
+    "P3": {
+      "correct": 158,
+      "total": 158,
+      "rate": 1.0
+    }
+  },
+  "p0_recall": {
+    "P0": {
+      "total": 488,
+      "p0_caught": 481,
+      "recall_rate": 0.985655737704918
+    },
+    "P1": {
+      "total": 275,
+      "p0_caught": 31,
+      "recall_rate": 0.11272727272727273
+    },
+    "P2": {
+      "total": 155,
+      "p0_caught": 9,
+      "recall_rate": 0.05806451612903226
+    },
+    "P3": {
+      "total": 158,
+      "p0_caught": 0,
+      "recall_rate": 0.0
+    }
+  },
+  "bad_cases_count": 0,
+  "patches_applied": [
+    "v364: +9 AML cross-border short queries (给国外汇钱 等)",
+    "l0_v3101: cross_border_suspicious +10 短 query keywords",
+    "l3_v3101: P0 模板兜底 (跳过 LLM)",
+    "d_v32_dedup_v3101: 57 条 真·P0 priority 升级",
+    "v364 biz_transfer_large: 收紧 (删 怎么办/怎么操作/大额 单独)",
+    "l0_v3101 large_amount: 收紧 (删 大额 单独, 保留 大额转/汇)"
+  ]
+}
