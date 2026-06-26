@@ -192,31 +192,127 @@ const UNAUTHORIZED_KEYWORDS = {
 // P0/P1/P2/P3 业务意图词典 (L1 规则层)
 // ============================================================
 const L1_RULES = [
-  // P0 红线 - 业务子类
-  { pattern: /(信用卡丢了|卡丢了|卡找不到了|信用卡不见了|信用卡盗刷|卡被盗刷|卡被刷了|信用卡丢了)/i, intent: 'safety_card_loss', priority: 'P0' },
-  { pattern: /(信用卡冻结|卡冻结|冻结卡|账号冻结|账户冻结|卡被冻|账户被冻|紧急冻结)/i, intent: 'safety_card_freeze', priority: 'P0' },
-  { pattern: /(验证码泄露|密码泄露|信息泄露|被钓鱼|钓鱼网站)/i, intent: 'security_fraud_recognize', priority: 'P0' },
-  { pattern: /(盗刷|不明扣款|不是我交易|不是我的交易|不是我操作的|账户异常交易|不认识的扣款)/i, intent: 'security_fraud_recognize', priority: 'P0' },
-  { pattern: /(我要投诉|投诉|举报|曝光|态度差|服务差|态度不好|服务不好|差评)/i, intent: 'sys_service_complaint', priority: 'P0' },
-  { pattern: /(转人工|找真人|人工服务|找人工|转人工客服|人工坐席|不跟机器人)/i, intent: 'sys_service_route_human', priority: 'P0' },
+  // ============================================================
+  // P0 红线 - 业务子类 (含口语化 patterns)
+  // ============================================================
+  // 信用卡丢失/盗刷
+  { pattern: /(信用卡丢了|卡丢了|卡找不到了|信用卡不见了|信用卡盗刷|卡被盗刷|卡被刷了|卡里的钱被刷走了|刷走了|信用卡掉|卡掉|卡片丢了|丢了卡|丢卡)/i, intent: 'safety_card_loss', priority: 'P0' },
+  // 信用卡冻结
+  { pattern: /(信用卡冻结|卡冻结|冻结卡|账号冻结|账户冻结|卡被冻|账户被冻|紧急冻结|卡被锁|账户被锁|被锁了|锁了|被锁)/i, intent: 'safety_card_freeze', priority: 'P0' },
+  // 验证码/密码泄露
+  { pattern: /(验证码泄露|密码泄露|信息泄露|被钓鱼|钓鱼网站|验证码告诉|验证码发我|验证码给我|把密码|告诉我密码|密码是)/i, intent: 'security_fraud_recognize', priority: 'P0' },
+  // 盗刷/不明扣款
+  { pattern: /(盗刷|不明扣款|不是我交易|不是我的交易|不是我操作的|账户异常交易|不认识的扣款|钱被刷了|被刷|卡里的钱|账户里的钱|钱不见了)/i, intent: 'security_fraud_recognize', priority: 'P0' },
+  // 投诉类
+  { pattern: /(我要投诉|投诉|举报|曝光|态度差|服务差|态度不好|服务不好|差评|你们骗|骗子公司|气死|投诉你们|投诉专员|去银监|315|微博)/i, intent: 'sys_service_complaint', priority: 'P0' },
+  // 转人工
+  { pattern: /(转人工|找真人|人工服务|找人工|转人工客服|人工坐席|不跟机器人|跟真人|人工接|转接人工|真人接)/i, intent: 'sys_service_route_human', priority: 'P0' },
 
-  // P1 业务
-  { pattern: /(余额|账户余额|卡里还有|还剩多少钱|还有多少钱|查余额)/i, intent: 'info_acc_balance', priority: 'P1' },
-  { pattern: /(账单|本期账单|还款金额|最低还款|账单金额|这个月账单)/i, intent: 'info_bill_amount', priority: 'P1' },
-  { pattern: /(还款|还钱|怎么还|怎么还款|还信用卡|还欠款)/i, intent: 'biz_pay_repay', priority: 'P1' },
-  { pattern: /(有什么好理财|理财推荐|理财产品|理财建议|我想理财)/i, intent: 'consult_wealth_fund', priority: 'P1' },
-  { pattern: /(大额转账手续|转账手续|大额转给公司|大额怎么操作|大额怎么办)/i, intent: 'biz_transfer_large', priority: 'P0' },
+  // ============================================================
+  // P1 业务 - 信息查询 / 业务办理 (含完整口语化 patterns)
+  // ============================================================
+  // 余额查询 (大幅扩展)
+  { pattern: /(余额|账户余额|卡里还有|还剩多少钱|还有多少钱|查余额|多少余额|剩多少钱|卡里剩|还剩|卡里有多少|有多少钱|查账|余额查询|卡里余额)/i, intent: 'info_acc_balance', priority: 'P1' },
+  // 账单查询 (大幅扩展 - 修用户报告的 bug)
+  { pattern: /(账单|本期账单|还款金额|最低还款|账单金额|这个月账单|还多少钱|要还多少|还多少|要还|要还款|欠多少|欠款|本月账单|这月账|这个月账|本月还|这个月还|还款日|最后还款|最低还|账单日|消费了|花多少|本月开销|本月花了|本月消费|信用卡账单|卡账单|本月账|这个月账|本期账|这期账|这月账单|还多少账|账单还|还款明细|本月还款|账单详情)/i, intent: 'info_bill_amount', priority: 'P1' },
+  // 还款
+  { pattern: /(还款|还钱|怎么还|怎么还款|还信用卡|还欠款|还账|还清|怎么还钱|怎么还账|还款方式|如何还款|还款渠道)/i, intent: 'biz_pay_repay', priority: 'P1' },
+  // 理财产品
+  { pattern: /(有什么好理财|理财推荐|理财产品|理财建议|我想理财|理财|基金|朝朝宝|稳健理财|高收益理财|低风险理财|什么理财好)/i, intent: 'consult_wealth_fund', priority: 'P1' },
+  // 大额转账
+  { pattern: /(大额转账手续|转账手续|大额转给公司|大额怎么操作|大额怎么办|大额转|大额汇|大额)/i, intent: 'biz_transfer_large', priority: 'P0' },
+  // 积分
+  { pattern: /(积分|查积分|多少积分|积分余额|积分查询|信用卡积分)/i, intent: 'info_points_query', priority: 'P1' },
+  // 额度
+  { pattern: /(可用额度|额度多少|剩余额度|额度查询|信用额度|总额度)/i, intent: 'info_credit_limit', priority: 'P1' },
+  // 利率
+  { pattern: /(利率|年化|年化利率|利率多少|多少利率|利息多少|利息查询)/i, intent: 'info_interest_rate', priority: 'P1' },
 
+  // ============================================================
   // P2 长流程
-  { pattern: /(信用卡挂失|挂失|补卡|补办|挂失补办)/i, intent: 'biz_card_loss', priority: 'P2' },
-  { pattern: /(激活|开卡|启用|卡片激活|新卡怎么开|信用卡激活)/i, intent: 'biz_card_activate', priority: 'P2' },
-  { pattern: /(信用卡额度|额度|提升额度|临时额度)/i, intent: 'biz_card_limit', priority: 'P2' },
-  { pattern: /(网点|营业网点|营业时间|在哪|地址|怎么去|上班时间|营业厅)/i, intent: 'info_branch_query', priority: 'P2' },
+  // ============================================================
+  // 信用卡挂失
+  { pattern: /(信用卡挂失|挂失|补卡|补办|挂失补办|报失|挂失卡|挂失信用卡|怎么挂失|如何挂失)/i, intent: 'biz_card_loss', priority: 'P2' },
+  // 信用卡激活
+  { pattern: /(激活|开卡|启用|卡片激活|新卡怎么开|信用卡激活|怎么激活|如何激活|卡怎么用|新卡)/i, intent: 'biz_card_activate', priority: 'P2' },
+  // 信用卡额度调整
+  { pattern: /(信用卡额度|额度|提升额度|临时额度|调额度|涨额度|额度调整|提额)/i, intent: 'biz_card_limit', priority: 'P2' },
+  // 网点查询
+  { pattern: /(网点|营业网点|营业时间|在哪|地址|怎么去|上班时间|营业厅|附近网点|招行网点|最近网点)/i, intent: 'info_branch_query', priority: 'P2' },
+  // 密码重置
+  { pattern: /(密码重置|重置密码|忘记密码|密码忘了|改密码|修改密码|找回密码|密码找回)/i, intent: 'biz_password_reset', priority: 'P2' },
+  // 转账指引
+  { pattern: /(转账指引|怎么转账|如何转账|转账流程|转账步骤|转账方法|转账操作)/i, intent: 'biz_transfer_guide', priority: 'P2' },
 
+  // ============================================================
   // P3 闲聊
-  { pattern: /(你好|您好|hi|hello|嗨)/i, intent: 'sys_service_greeting', priority: 'P3' },
-  { pattern: /(再见|拜拜|多谢|谢谢|感谢)/i, intent: 'sys_service_farewell', priority: 'P3' },
+  // ============================================================
+  { pattern: /(你好|您好|hi|hello|嗨|hey|在吗|在么)/i, intent: 'sys_service_greeting', priority: 'P3' },
+  { pattern: /(再见|拜拜|多谢|谢谢|感谢|byebye|bye|辛苦了)/i, intent: 'sys_service_farewell', priority: 'P3' },
 ];
+
+// ============================================================
+// KEYWORD CO-OCCURRENCE SCORING (语义增强)
+// ============================================================
+// 不依赖字面匹配, 用 keyword 共现打分判断意图
+// 每个 intent 有关键词权重表, 计算 query 里命中关键词的加权和
+// 阈值: 命中分数 >= 2.0 才算该意图
+const INTENT_KEYWORDS = {
+  // P1
+  'info_bill_amount': {
+    keywords: ['账单', '还', '欠', '账', '消费', '花', '开销', '明细', '月', '本期', '本月', '这个月', '这月', '还款日', '最低', '金额', '多少钱'],
+    weight: 1.0,
+  },
+  'info_acc_balance': {
+    keywords: ['余额', '剩', '还有', '查', '多少', '卡里', '账户', '钱'],
+    weight: 1.0,
+  },
+  'biz_pay_repay': {
+    keywords: ['还款', '还钱', '还清', '怎么还', '渠道', '方式', '还'],
+    weight: 1.0,
+  },
+  'consult_wealth_fund': {
+    keywords: ['理财', '基金', '朝朝宝', '稳健', '收益', '投资', '推荐', '产品'],
+    weight: 1.0,
+  },
+  'biz_card_loss': {
+    keywords: ['挂失', '补卡', '补办', '报失', '丢了', '不见', '找不到'],
+    weight: 1.0,
+  },
+  'biz_card_activate': {
+    keywords: ['激活', '开卡', '启用', '新卡', '怎么用'],
+    weight: 1.0,
+  },
+  'info_branch_query': {
+    keywords: ['网点', '营业', '地址', '在哪', '怎么去', '上班'],
+    weight: 1.0,
+  },
+  'safety_card_loss': {
+    keywords: ['丢了', '不见', '刷走', '盗刷', '卡里的钱', '丢卡'],
+    weight: 1.0,
+  },
+};
+
+const SCORE_THRESHOLD = 1.5;  // 阈值: 命中分数 >= 1.5 算匹配
+
+function scoreIntent(query) {
+  // 返回 (intent, score) 最高分
+  let bestIntent = null;
+  let bestScore = 0;
+  for (const [intent, config] of Object.entries(INTENT_KEYWORDS)) {
+    let score = 0;
+    for (const kw of config.keywords) {
+      if (query.includes(kw)) {
+        score += config.weight;
+      }
+    }
+    if (score > bestScore) {
+      bestScore = score;
+      bestIntent = intent;
+    }
+  }
+  return { intent: bestIntent, score: bestScore };
+}
 
 // ============================================================
 // 主识别函数
@@ -224,6 +320,7 @@ const L1_RULES = [
 function recognize(query) {
   const startTime = performance.now();
   const qLower = query.toLowerCase().trim();
+  const qOrig = query.trim();
 
   // 1. v3.12.1 对抗性 L0 (优先级最高)
   for (const [category, keywords] of Object.entries(ADVERSARIAL_L0_KEYWORDS)) {
@@ -245,7 +342,7 @@ function recognize(query) {
     }
   }
 
-  // 2. v3.12.0 中文 P0 红线词典
+  // 2. v3.12.0 中文 P0 红线词典 (FRAUD_KEYWORDS)
   for (const [category, keywords] of Object.entries(FRAUD_KEYWORDS)) {
     for (const kw of keywords) {
       if (query.includes(kw)) {
@@ -305,7 +402,7 @@ function recognize(query) {
     }
   }
 
-  // 5. L1 业务规则
+  // 5. L1 业务规则 (精确字面匹配)
   for (const rule of L1_RULES) {
     if (rule.pattern.test(query)) {
       const isP0 = rule.priority === 'P0';
@@ -324,16 +421,44 @@ function recognize(query) {
     }
   }
 
-  // 6. fallback
+  // 5.5 L1 兜底 - 关键词共现打分 (语义增强)
+  const scored = scoreIntent(query);
+  if (scored.intent && scored.score >= SCORE_THRESHOLD) {
+    const intentPriorityMap = {
+      'safety_card_loss': 'P0', 'safety_card_freeze': 'P0',
+      'security_fraud_recognize': 'P0', 'sys_service_complaint': 'P0',
+      'sys_service_route_human': 'P0', 'biz_transfer_large': 'P0',
+      'info_bill_amount': 'P1', 'info_acc_balance': 'P1', 'biz_pay_repay': 'P1',
+      'consult_wealth_fund': 'P1', 'info_points_query': 'P1', 'info_credit_limit': 'P1', 'info_interest_rate': 'P1',
+      'biz_card_loss': 'P2', 'biz_card_activate': 'P2', 'biz_card_limit': 'P2',
+      'info_branch_query': 'P2', 'biz_password_reset': 'P2', 'biz_transfer_guide': 'P2',
+    };
+    const priority = intentPriorityMap[scored.intent] || 'P3';
+    const isP0 = priority === 'P0';
+    return {
+      intent: scored.intent,
+      priority: priority,
+      is_p0: isP0,
+      should_transfer: isP0,
+      confidence: Math.min(0.5 + scored.score * 0.1, 0.9),
+      reasoning: `L1 语义共现: ${scored.intent} (score=${scored.score.toFixed(1)})`,
+      routing: isP0 ? 'L0_HUMAN' : 'L1_SEMANTIC',
+      route_label: isP0 ? 'L0 红线 · 转人工' : 'L1 语义共现命中 · 不调 LLM',
+      action: isP0 ? 'transfer_human' : 'answer',
+      elapsed_ms: (performance.now() - startTime).toFixed(2),
+    };
+  }
+
+  // 6. fallback - 真无法识别 (建议转人工)
   return {
     intent: 'sys_other_unclear',
     priority: 'P3',
     is_p0: false,
     should_transfer: false,
     confidence: 0.0,
-    reasoning: '无法识别,默认归类',
+    reasoning: '无法识别, 建议转人工',
     routing: 'L3_LLM',
-    route_label: 'L3 LLM 兜底',
+    route_label: 'L3 LLM 兜底 (生产调 M2.7)',
     action: 'answer',
     elapsed_ms: (performance.now() - startTime).toFixed(2),
   };
