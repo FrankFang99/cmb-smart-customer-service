@@ -1,0 +1,95 @@
+{
+  "version": "v3.12.1",
+  "timestamp": "2026-06-26T19:41:07.780522",
+  "eval_set": "D_v3.2_dedup (1076)",
+  "flat_accuracy": 90.71,
+  "flat_correct": 976,
+  "flat_total": 1076,
+  "weighted_accuracy": 91.86,
+  "weighted_correct": 5914.0,
+  "weighted_total": 6438.0,
+  "weights": {
+    "P0": 10.0,
+    "P1": 5.0,
+    "P2": 2.0,
+    "P3": 1.0
+  },
+  "by_priority": {
+    "P0": {
+      "correct": 422,
+      "total": 431,
+      "accuracy_pct": 97.91
+    },
+    "P1": {
+      "correct": 248,
+      "total": 332,
+      "accuracy_pct": 74.7
+    },
+    "P2": {
+      "correct": 148,
+      "total": 155,
+      "accuracy_pct": 95.48
+    },
+    "P3": {
+      "correct": 158,
+      "total": 158,
+      "accuracy_pct": 100.0
+    }
+  },
+  "stability": {
+    "round_accs": [
+      90.24163568773234,
+      92.4721189591078,
+      90.52044609665427,
+      91.82156133828995,
+      90.89219330855019
+    ],
+    "flat_mean": 91.19,
+    "flat_std": 0.93,
+    "flat_min": 90.24,
+    "flat_max": 92.47,
+    "p0_round_no_miss": [
+      98.36065573770492,
+      98.10874704491725,
+      97.2027972027972,
+      98.16091954022988,
+      97.46543778801843
+    ],
+    "p0_mean": 97.86,
+    "p0_std": 0.5,
+    "p0_min_worst_case": 97.2
+  },
+  "latency": {
+    "all_n": 1076,
+    "all_mean_ms": 0.66,
+    "all_p50_ms": 0.0,
+    "all_p95_ms": 1.0,
+    "all_p99_ms": 2.01,
+    "by_priority": {
+      "P0": {
+        "n": 431,
+        "mean_ms": 0.05,
+        "p50_ms": 0.0,
+        "p95_ms": 0.0
+      },
+      "P1": {
+        "n": 332,
+        "mean_ms": 0.12,
+        "p50_ms": 0.0,
+        "p95_ms": 1.04
+      },
+      "P2": {
+        "n": 155,
+        "mean_ms": 0.12,
+        "p50_ms": 0.0,
+        "p95_ms": 1.03
+      },
+      "P3": {
+        "n": 158,
+        "mean_ms": 4.0,
+        "p50_ms": 0.0,
+        "p95_ms": 1.01
+      }
+    }
+  }
+}

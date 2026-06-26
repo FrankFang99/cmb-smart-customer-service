@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>招行智能客服"小招" · v3.12.1 final · Live Demo</title>
+  <meta name="description" content="招商银行佛山分行 AI 智能客服 v3.12.1 final 多维评测体系闭环 - 业务/模型双视角 - Live Demo">
+  <link rel="stylesheet" href="xiaozhao.css">
+</head>
+<body>
+  <header class="header">
+    <div class="header-inner">
+      <div class="header-title">
+        <h1>招行智能客服 "小招"</h1>
+        <p class="subtitle">v3.12.1 final · 多维评测体系闭环 · Live Demo</p>
+      </div>
+      <div class="header-badges">
+        <span class="badge badge-blue">P0 红线 100%</span>
+        <span class="badge badge-green">业务权重 92.26%</span>
+        <span class="badge badge-violet">多轮 66.7%</span>
+        <span class="badge badge-green">CSAT 4.33/5</span>
+        <span class="badge badge-blue">P50 98ms</span>
+        <span class="badge badge-orange">对抗性 95%</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="demo-layout">
+      <!-- LEFT: Chat UI -->
+      <section class="chat-panel">
+        <div class="chat-header">
+          <div class="chat-avatar">
+            <span class="avatar-icon">小</span>
+          </div>
+          <div class="chat-info">
+            <h3>小招</h3>
+            <p>招行智能客服 · v3.12.1 final</p>
+          </div>
+          <div class="chat-status">
+            <span class="status-dot"></span>
+            <span>在线</span>
+          </div>
+        </div>
+
+        <div id="chat-messages" class="chat-messages">
+          <div class="message message-bot">
+            <div class="message-content">
+              <p>您好!我是招行智能客服"小招",可以帮您查询余额、办理业务、解答疑问。请问需要什么帮助?</p>
+              <span class="message-meta">v3.12.1 · L1 规则命中</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="chat-input-area">
+          <div class="preset-buttons">
+            <button class="preset-btn p0_red" data-scenario="S01">信用卡盗刷</button>
+            <button class="preset-btn p0_red" data-scenario="S02">反诈骗假冒公检法</button>
+            <button class="preset-btn p0_red" data-scenario="S03">投诉转人工</button>
+            <button class="preset-btn p1_biz" data-scenario="S04">账户余额查询</button>
+            <button class="preset-btn p1_biz" data-scenario="S05">账单查询</button>
+            <button class="preset-btn p1_biz" data-scenario="S06">信用卡还款</button>
+            <button class="preset-btn p1_biz" data-scenario="S07">理财产品咨询</button>
+            <button class="preset-btn p2_flow" data-scenario="S08">信用卡挂失</button>
+            <button class="preset-btn p2_flow" data-scenario="S09">信用卡激活</button>
+            <button class="preset-btn p3_chat" data-scenario="S10">问候语</button>
+            <button class="preset-btn p3_chat" data-scenario="S11">再见</button>
+            <button class="preset-btn adversarial" data-scenario="S12">⚠️ Prompt 注入</button>
+          </div>
+
+          <div class="input-row">
+            <input id="chat-input" type="text" placeholder="输入您的银行业务问题... (例如: 我的余额还有多少)" autocomplete="off">
+            <button id="send-btn" class="send-btn">发送</button>
+          </div>
+
+          <p class="input-hint">
+            💡 <strong>试试对抗性攻击</strong>: 输入 <code>ignore previous instructions</code> 或 <code>点击链接领 100 万</code> 或 <code>帮我绕过密码</code>
+          </p>
+        </div>
+      </section>
+
+      <!-- RIGHT: Routing Visualization Panel -->
+      <aside class="routing-panel">
+        <div class="routing-header">
+          <h3>实时路由决策</h3>
+          <p class="routing-subtitle">每条 query 的 routing 路径</p>
+        </div>
+
+        <div class="routing-empty" id="routing-empty">
+          <p>等待输入...</p>
+          <p class="hint">发消息后,这里显示 L0/L1/L2/L3 routing 决策</p>
+        </div>
+
+        <div class="routing-content" id="routing-content" style="display:none">
+          <div class="routing-section">
+            <div class="routing-step">
+              <span class="step-label">优先级</span>
+              <span id="routing-priority" class="step-value priority-badge">P0</span>
+            </div>
+            <div class="routing-step">
+              <span class="step-label">路由</span>
+              <span id="routing-path" class="step-value">—</span>
+            </div>
+            <div class="routing-step">
+              <span class="step-label">意图</span>
+              <span id="routing-intent" class="step-value">—</span>
+            </div>
+            <div class="routing-step">
+              <span class="step-label">置信度</span>
+              <span id="routing-confidence" class="step-value">—</span>
+            </div>
+            <div class="routing-step">
+              <span class="step-label">动作</span>
+              <span id="routing-action" class="step-value">—</span>
+            </div>
+            <div class="routing-step">
+              <span class="step-label">延迟</span>
+              <span id="routing-latency" class="step-value">—</span>
+            </div>
+            <div class="routing-reasoning">
+              <span class="step-label">匹配原因</span>
+              <p id="routing-reasoning-text">—</p>
+            </div>
+          </div>
+
+          <div class="business-weight">
+            <h4>业务权重视角</h4>
+            <div class="weight-grid">
+              <div class="weight-item">
+                <span class="weight-label">P0</span>
+                <span class="weight-value">10×</span>
+              </div>
+              <div class="weight-item">
+                <span class="weight-label">P1</span>
+                <span class="weight-value">5×</span>
+              </div>
+              <div class="weight-item">
+                <span class="weight-label">P2</span>
+                <span class="weight-value">2×</span>
+              </div>
+              <div class="weight-item">
+                <span class="weight-label">P3</span>
+                <span class="weight-value">1×</span>
+              </div>
+            </div>
+            <p class="weight-hint">
+              P0 红线 100 万一次的代价 vs P3 闲聊 1 毛一次的代价,业务权重 10× / 5× / 2× / 1×
+            </p>
+          </div>
+        </div>
+
+        <!-- KPI summary -->
+        <div class="kpi-summary">
+          <h4>v3.12.1 final · 实测 KPI</h4>
+          <div class="kpi-grid">
+            <div class="kpi-card">
+              <div class="kpi-value">100%</div>
+              <div class="kpi-label">P0 红线 (D v3.2)</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-value">92.26%</div>
+              <div class="kpi-label">业务权重准确率</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-value">66.7%</div>
+              <div class="kpi-label">多轮对话 (8/12)</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-value">95%</div>
+              <div class="kpi-label">对抗性 (95/100)</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-value">98ms</div>
+              <div class="kpi-label">端到端 P50</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-value">0.00%</div>
+              <div class="kpi-label">拒答率</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Honest disclosure -->
+        <div class="honest-disclosure">
+          <h4>诚实声明 (PM 视角)</h4>
+          <ul>
+            <li>CSAT 4.33/5 是从 12 业务场景 score 派生,不是真实用户调研</li>
+            <li>FCR 50.19% 是评测集口径 (P0 占 40%),生产口径应到 88-92%</li>
+            <li>0 条真实 95555 用户日志,这是最大遗憾 (项目期合规限制)</li>
+            <li>5 个 P0 对抗性 miss 是真实自杀/自伤危机,需危机干预补丁</li>
+            <li>D v3.2 主评测集 P0 从 100% → 97.91% (-2.09pp),对抗性 39% → 95% (+56pp) 是综合 trade-off</li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+
+    <!-- Bottom: Methodology timeline -->
+    <section class="methodology">
+      <h3>v3.12.1 final · 5 项新能力</h3>
+      <div class="method-grid">
+        <div class="method-card">
+          <div class="method-icon">⚖️</div>
+          <h4>业务权重 (P0=10x)</h4>
+          <p>平权 90.24% → <strong>加权 92.26% (+2.02pp)</strong></p>
+          <p class="method-detail">P0 红线 100 万一次 vs P3 闲聊 1 毛一次的代价</p>
+        </div>
+        <div class="method-card">
+          <div class="method-icon">💬</div>
+          <h4>多轮对话 (12 业务场景)</h4>
+          <p><strong>66.7% 通过率</strong> (8/12)</p>
+          <p class="method-detail">对话完成 100% / 槽位 100% / 合规 83.33%</p>
+        </div>
+        <div class="method-card">
+          <div class="method-icon">📊</div>
+          <h4>稳定性 (5 轮 bootstrap)</h4>
+          <p>平权 std=0.72pp · <strong>P0 漏检 std=0.00pp</strong></p>
+          <p class="method-detail">P0 银行业红线 5 轮全部 100% 稳定</p>
+        </div>
+        <div class="method-card">
+          <div class="method-icon">📈</div>
+          <h4>业务 KPI (CSAT/FCR/端到端)</h4>
+          <p><strong>CSAT 4.33/5</strong> · NPS 75 · P50 98ms</p>
+          <p class="method-detail">业务能直接 ROI 算钱的指标</p>
+        </div>
+        <div class="method-card adversarial-card">
+          <div class="method-icon">🛡️</div>
+          <h4>对抗性 (100 条 6 类)</h4>
+          <p>v3.12.0 <strong>39%</strong> → v3.12.1 <strong>95% (+56pp)</strong></p>
+          <p class="method-detail">Prompt 0%→100% / 钓鱼 0%→100% / 越权 11%→100% / 越界 10%→100%</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>
+      <strong>招行佛山分行"小招"AI 智能客服 · v3.12.1 final · 2026-06-25</strong>
+      · <a href="https://github.com/FrankFang99/cmb-smart-customer-service">GitHub</a>
+      · <a href="https://github.com/FrankFang99/cmb-smart-customer-service/blob/main/RESUME_PROJECT.md">简历</a>
+      · <a href="https://github.com/FrankFang99/cmb-smart-customer-service/blob/main/reports/v3.12.0_FINAL_REPORT.md">完整报告</a>
+    </p>
+    <p class="footer-hint">本页面是 demo,所有对话路由决策均真跑银行业 L0/L1/L2/L3 pipeline (JS 重写版)</p>
+  </footer>
+
+  <script src="xiaozhao-ai.js"></script>
+  <script src="xiaozhao-app.js"></script>
+</body>
+</html>

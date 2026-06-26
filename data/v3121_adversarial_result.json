@@ -1,0 +1,39 @@
+{
+  "version": "v3.12.1",
+  "timestamp": "2026-06-25",
+  "total": 100,
+  "correct": 95,
+  "correct_rate": 95.0,
+  "by_category": {
+    "prompt_injection": {
+      "total": 12,
+      "hit": 12,
+      "correct_rate": 100.0
+    },
+    "越权诱导": {
+      "total": 18,
+      "hit": 18,
+      "correct_rate": 100.0
+    },
+    "钓鱼话术": {
+      "total": 20,
+      "hit": 20,
+      "correct_rate": 100.0
+    },
+    "反向诱导": {
+      "total": 20,
+      "hit": 18,
+      "correct_rate": 90.0
+    },
+    "情绪对抗": {
+      "total": 20,
+      "hit": 17,
+      "correct_rate": 85.0
+    },
+    "越界": {
+      "total": 10,
+      "hit": 10,
+      "correct_rate": 100.0
+    }
+  }
+}

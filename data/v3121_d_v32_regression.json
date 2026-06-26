@@ -1,0 +1,30 @@
+{
+  "version": "v3.12.1",
+  "timestamp": "2026-06-25T20:38:26.730198",
+  "eval_set": "D_v3.2_dedup",
+  "total": 1076,
+  "flat_correct": 976,
+  "flat_accuracy": 90.71,
+  "by_priority": {
+    "P0": {
+      "correct": 422,
+      "total": 431,
+      "accuracy": 97.91
+    },
+    "P1": {
+      "correct": 248,
+      "total": 332,
+      "accuracy": 74.7
+    },
+    "P2": {
+      "correct": 148,
+      "total": 155,
+      "accuracy": 95.48
+    },
+    "P3": {
+      "correct": 158,
+      "total": 158,
+      "accuracy": 100.0
+    }
+  }
+}

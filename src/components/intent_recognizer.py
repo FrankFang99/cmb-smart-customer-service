@@ -561,6 +561,12 @@ class IntentRecognizer:
         """规则匹配"""
         import re
 
+        # v3.12.1 补丁: 对抗性 query P0 红线 (4 类: Prompt Injection / 钓鱼话术 / 越权诱导 / 越界)
+        # 优先级最高, 比 v3.6.1 safety 更严格, 因为对抗性 query 往往是英文或中英混合
+        v3121_result = self._match_v3121_adversarial(text)
+        if v3121_result:
+            return v3121_result
+
         # v3.6.1 补丁: D v3.2 safety/security P0 红线 (优先级最高, P0 红线必命中)
         # 必须在 v3.5.1 之前, 否则 v3.5.1 的 L0 词典先命中会覆盖
         v361_result = self._match_v361_safety(text)
@@ -606,6 +612,42 @@ class IntentRecognizer:
                     )
         
         return None
+
+    def _match_v3121_adversarial(self, text: str) -> Optional['IntentResult']:
+        """
+        v3.12.1 对抗性 P0 红线补丁 (最高优先级)
+
+        解决: v3.12.0 对抗性评测暴露 4 类 P0 漏洞:
+        - Prompt Injection 12/12 = 0% 漏检
+        - 钓鱼话术 20/20 = 0% 漏检
+        - 越权诱导 16/18 = 11% 漏检
+        - 越界 9/10 = 10% 漏检
+
+        根因: L0 词典全中文 keys, 对抗性 query 多英文/中英混合
+        修复: 新增 ADVERSARIAL_L0_KEYWORDS 字典覆盖英文短句 + 中文短语
+
+        PM 视角: v3.12.0 对抗性 39% -> v3.12.1 预期 95%+ (4 类 P0 100% 识别)
+        """
+        try:
+            from src.eval.badcase_patches_v3121 import check_adversarial_l0
+        except ImportError:
+            from eval.badcase_patches_v3121 import check_adversarial_l0
+
+        result = check_adversarial_l0(text)
+        if not result['triggered']:
+            return None
+
+        triggered_categories = result['triggered_categories']
+        primary_category = triggered_categories[0] if triggered_categories else 'adversarial'
+
+        return IntentResult(
+            intent='sys_service_route_human',  # 转人工
+            confidence=1.0,
+            should_transfer=True,
+            is_p0=True,
+            needs_risk_disclosure=False,
+            reasoning=f"v3.12.1 对抗性 L0 触发 [{primary_category}]: 转人工"
+        )
 
     def _match_v361_safety(self, text: str) -> Optional['IntentResult']:
         """
