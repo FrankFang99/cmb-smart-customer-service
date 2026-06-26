@@ -440,21 +440,22 @@
   <section>
     <div class="section-head">
       <span class="num">04</span>
-      <h2>PM 决策 trade-off：v3.10.1 final / v3.11.0 final / v3.12.0 final</h2>
+      <h2>PM 决策 trade-off：v3.10.1 / v3.11.0 / v3.12.0 / v3.12.1 final</h2>
       <span class="tag">核心面试点</span>
     </div>
 
     <div class="section-note">
-      v3.10.1 final 评测集是 488 P0（v3.10.1 期间 +57 P0 升级），v3.11.0 final / v3.12.0 final 评测集是 431 P0（v3.6.4 时确定）。<strong>v3.10.1 vs v3.11.0 两个版本不是直接可比</strong>——是不同 P0 集。v3.10.1 final 优先 P1 业务，v3.11.0 / v3.12.0 final 优先 P0 红线。v3.12.0 在 v3.11.0 基础上加业务权重 / 多轮 / 稳定性 / 业务 KPI / 对抗性 5 项新能力。
+      v3.10.1 final 评测集是 488 P0（v3.10.1 期间 +57 P0 升级），v3.11.0 / v3.12.0 / v3.12.1 final 评测集是 431 P0（v3.6.4 时确定）。v3.10.1 vs v3.11.0 不是直接可比——是不同 P0 集。v3.10.1 final 优先 P1 业务，v3.11.0 / v3.12.0 final 优先 P0 红线，v3.12.1 修复 4 个对抗性 P0 漏洞。v3.12.1 在 v3.12.0 基础上加 4 个 P0 漏洞修复 + GitHub Page Live Demo。
     </div>
 
     <table class="compare-table">
       <thead>
         <tr>
           <th>指标</th>
-          <th>v3.10.1 final 实测<br><span style="font-weight:400;">(488 P0 集)</span></th>
-          <th>v3.11.0 final 实测<br><span style="font-weight:400;">(431 P0 集)</span></th>
-          <th>v3.12.0 final 实测<br><span style="font-weight:400;">(431 P0 集 + 业务权重/多轮/稳定性/业务 KPI/对抗性)</span></th>
+          <th>v3.10.1 final<br><span style="font-weight:400;">(488 P0 集)</span></th>
+          <th>v3.11.0 final<br><span style="font-weight:400;">(431 P0 集)</span></th>
+          <th>v3.12.0 final<br><span style="font-weight:400;">(431 P0 集 + 5 项新能力)</span></th>
+          <th>v3.12.1 final<br><span style="font-weight:400;">(431 P0 + 4 漏洞修复 + GitHub Page)</span></th>
           <th>PM 视角</th>
         </tr>
       </thead>
@@ -464,98 +465,64 @@
           <td class="num p0">98.57% (481/488)</td>
           <td class="num p0"><strong>100% (431/431)</strong></td>
           <td class="num p0"><strong>100% (431/431)</strong></td>
-          <td class="src">v3.11.0/v3.12.0 优先 P0 红线</td>
+          <td class="num p0">97.91% (422/431)</td>
+          <td class="src">v3.11.0/v3.12.0 优先 P0, v3.12.1 难样本 -2pp</td>
         </tr>
         <tr>
           <td>D v3.2 P1 准确</td>
           <td class="num p1"><strong>88.73% (244/275)</strong></td>
           <td class="num p1">71.08% (236/332)</td>
           <td class="num p1">71.08% (236/332)</td>
-          <td class="src">v3.10.1 优先 P1 业务</td>
+          <td class="num p1">74.70% (248/332)</td>
+          <td class="src">v3.10.1 优先 P1 业务, v3.12.1 误伤降低</td>
         </tr>
         <tr>
-          <td>D v3.2 P2 准确</td>
-          <td class="num p2">94.19% (146/155)</td>
-          <td class="num p2">94.19% (146/155)</td>
-          <td class="num p2">94.19% (146/155)</td>
-          <td class="src">P2 稳定</td>
-        </tr>
-        <tr>
-          <td>D v3.2 P3 准确</td>
-          <td class="num p3">100% (158/158)</td>
-          <td class="num p3">100% (158/158)</td>
-          <td class="num p3">100% (158/158)</td>
-          <td class="src">P3 稳定</td>
-        </tr>
-        <tr>
-          <td>P1 误伤率</td>
-          <td class="num"><strong>11.27% (31/275)</strong></td>
-          <td class="num">28.92% (96/332)</td>
-          <td class="num">28.92% (96/332)</td>
-          <td class="src">v3.10.1 误伤低</td>
-        </tr>
-        <tr>
-          <td>D v3.3 P0 召回（真实未见）</td>
-          <td class="num">96.61% (171/177)</td>
-          <td class="num"><strong>100% (143/143)</strong></td>
-          <td class="num"><strong>100% (143/143)</strong></td>
-          <td class="src">v3.11.0/v3.12.0 真实泛化更优</td>
-        </tr>
-        <tr>
-          <td><strong>业务权重准确率 (P0=10x 加权)</strong></td>
-          <td class="num">—</td>
-          <td class="num">—</td>
-          <td class="num"><strong>92.26% (5940/6438)</strong></td>
-          <td class="src">v3.12.0 新增, 业务权重视角</td>
-        </tr>
-        <tr>
-          <td><strong>多轮对话通过率 (12 业务场景)</strong></td>
-          <td class="num">—</td>
-          <td class="num">—</td>
-          <td class="num"><strong>66.7% (8/12)</strong></td>
-          <td class="src">v3.12.0 新增, 真实业务对话流</td>
-        </tr>
-        <tr>
-          <td><strong>5 轮 bootstrap 稳定性 (平权 std)</strong></td>
-          <td class="num">—</td>
-          <td class="num">—</td>
-          <td class="num"><strong>0.72pp</strong></td>
-          <td class="src">v3.12.0 新增, std<2pp 生产稳定</td>
+          <td>D v3.2 平权准确率</td>
+          <td class="num">86.50%</td>
+          <td class="num">90.24%</td>
+          <td class="num">90.24%</td>
+          <td class="num"><strong>90.71% (976/1076)</strong></td>
+          <td class="src">v3.12.1 总评微涨</td>
         </tr>
         <tr>
           <td><strong>对抗性识别率 (100 条 6 类)</strong></td>
           <td class="num">—</td>
           <td class="num">—</td>
-          <td class="num"><strong>39% (暴露漏洞)</strong></td>
-          <td class="src">v3.12.0 新增, 反向诱导 95% / 钓鱼 0%</td>
+          <td class="num">39% (暴露漏洞)</td>
+          <td class="num"><strong>95% (+56pp)</strong></td>
+          <td class="src">v3.12.1 修复 4 类 P0 漏洞</td>
         </tr>
         <tr>
-          <td><strong>端到端延迟 P50</strong></td>
+          <td><strong>多轮对话通过率 (12 业务场景)</strong></td>
           <td class="num">—</td>
           <td class="num">—</td>
-          <td class="num"><strong>98.11ms</strong></td>
-          <td class="src">v3.12.0 新增, 真实用户感知</td>
+          <td class="num">66.7% (8/12)</td>
+          <td class="num">66.7% (8/12)</td>
+          <td class="src">持平</td>
         </tr>
         <tr>
-          <td><strong>CSAT / NPS (12 场景派生)</strong></td>
+          <td><strong>5 轮 bootstrap P0 不漏检 (worst)</strong></td>
           <td class="num">—</td>
           <td class="num">—</td>
-          <td class="num"><strong>4.33 / 75</strong></td>
-          <td class="src">v3.12.0 新增, 业务视角 KPI</td>
+          <td class="num">100%</td>
+          <td class="num">97.20%</td>
+          <td class="src">v3.12.1 难样本拖累</td>
         </tr>
         <tr>
-          <td>总耗时（D v3.2 全量）</td>
-          <td class="num">2152.7s (~36 min)</td>
-          <td class="num">2215s (~37 min)</td>
-          <td class="num">— (基于 v3.11.0 trace db)</td>
-          <td class="src">v3.12.0 重在 5 项新能力, 不重测总耗时</td>
+          <td><strong>端到端延迟 (纯规则本地)</strong></td>
+          <td class="num">—</td>
+          <td class="num">98.11ms (含 LLM)</td>
+          <td class="num">98.11ms</td>
+          <td class="num"><strong>0.00ms p50 / 1ms p95</strong></td>
+          <td class="src">v3.12.1 纯规则极快</td>
         </tr>
         <tr>
-          <td>补丁数</td>
-          <td class="num">6 项全部生效</td>
-          <td class="num">v3.6.4+v3.10.1+v3.11.0 R1</td>
-          <td class="num">+ 业务权重/多轮/稳定性/业务 KPI/对抗性 5 项</td>
-          <td class="src">v3.12.0 叠加不抄权重</td>
+          <td>GitHub Page Live Demo</td>
+          <td class="num">❌</td>
+          <td class="num">❌</td>
+          <td class="num">❌</td>
+          <td class="num">✅ docs/xiaozhao/</td>
+          <td class="src">v3.12.1 新增 Live Demo</td>
         </tr>
       </tbody>
     </table>
@@ -913,8 +880,8 @@
   </section>
 
   <div class="footer">
-    <div>招商银行佛山分行"小招"AI 智能客服 · 漏斗图与行业基准 · v3.12.0 final · 2026-06-24</div>
-    <div><code>RESUME_PROJECT.md</code> · <code>v3.12.0_FINAL_REPORT.md</code> · <code>dist_check_report.md</code></div>
+    <div>招商银行佛山分行"小招"AI 智能客服 · 漏斗图与行业基准 · v3.12.1 final · 2026-06-26</div>
+    <div><code>RESUME_PROJECT.md</code> · <code>v3.12.1_FINAL_REPORT.md</code> · <code>dist_check_report.md</code> · <a href="https://frankfang99.github.io/cmb-smart-customer-service/xiaozhao/">GitHub Page Live Demo</a></div>
   </div>
 
 </div>
