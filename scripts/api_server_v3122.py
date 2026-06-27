@@ -221,4 +221,4 @@ if __name__ == '__main__':
     print(f'\n[v3.12.2 API] Listening on http://localhost:{PORT}')
     print(f'[v3.12.2 API] Demo:  http://localhost:{PORT}/')
     print(f'[v3.12.2 API] API:   http://localhost:{PORT}/api/recognize')
-    app.run(host='127.0.0.1', port=PORT, debug=False)
+    app.run(host='127.0.0.1', port=PORT, debug=False, threaded=True)
