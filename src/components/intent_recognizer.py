@@ -185,11 +185,13 @@ class IntentType(str, Enum):
     SYS_GREETING = "sys_greeting"            # 问候
     SYS_BYE = "sys_bye"                       # 告别
     SYS_INTRO = "sys_intro"                   # 自我介绍
-    
+    SYS_FX_RATE = "sys_fx_rate"               # 汇率查询 (v3.12.2 L2 embedding 召回)
+    SYS_WEATHER = "sys_weather"               # 天气 (v3.12.2 L2 embedding 召回)
+
     # 感谢告别
     SYS_THANKS = "sys_thanks"                 # 感谢
     SYS_FEEDBACK = "sys_feedback"            # 反馈感谢
-    
+
     # 无效输入
     SYS_INVALID = "sys_invalid"               # 语义不通
     SYS_GIBBERISH = "sys_gibberish"           # 乱码/无法识别
@@ -540,15 +542,23 @@ class IntentRecognizer:
 
         # 1. 规则匹配（L0 红线 + L1 业务规则, 高速 7-10ms）
         rule_result = self._match_rules(text)
-        if rule_result:
+        # v3.12.2: L1 sys_offtopic (天气|新闻|股票) 容易被 L2 embedding 召回覆盖
+        # 只在 L1 命中 P0 红线 / 业务子规则时返回, sys_offtopic 让 L2 处理
+        if rule_result and rule_result.intent != IntentType.SYS_OFFTOPIC:
             return rule_result
 
-        # 2. 轻量 BERT 分类（L2 语义向量, ~600ms CPU）
+        # 2. L2 增强: BERT embedding cosine 召回 (汇率/天气/自我介绍)
+        # 优先于 classifier (因为 classifier 没训这 3 类)
+        embed_result = self._match_with_embedding(text)
+        if embed_result:
+            return embed_result
+
+        # 3. 轻量 BERT 分类（L2 语义向量, ~600ms CPU）
         model_result = self._match_with_model(text)
         if model_result:
             return model_result
 
-        # 3. LLM 兜底（L3 LLM API, ~5-30s 网络; 默认开, batch_eval 关)
+        # 4. LLM 兜底（L3 LLM API, ~5-30s 网络; 默认开, batch_eval 关)
         if use_llm:
             llm_result = self._match_with_llm(text)
             if llm_result:
@@ -867,13 +877,24 @@ class IntentRecognizer:
                 outputs = self._bert_model(**inputs)
             logits = outputs.logits[0]
             probs = torch.softmax(logits, dim=-1)
-            pred_id = int(torch.argmax(probs))
-            pred_conf = float(probs[pred_id])
-            pred_label = self._bert_id2label[pred_id]
 
-            # 置信度门控: < 0.5 让 L3 兜底 (避免低置信误判)
-            if pred_conf < 0.5:
+            # v3.12.2: 取 top-3 候选, 加权投票 (避免单一 argmax 错配)
+            # 权重: top1 * 0.5 + top2 * 0.3 + top3 * 0.2
+            top3_probs, top3_ids = torch.topk(probs, k=3)
+            top3_pairs = [
+                (self._bert_id2label[int(top3_ids[i])], float(top3_probs[i]))
+                for i in range(3)
+            ]
+            # 加权分数 = top1.conf * 0.5 + top2.conf * 0.3 + top3.conf * 0.2
+            weighted_conf = top3_pairs[0][1] * 0.5 + top3_pairs[1][1] * 0.3 + top3_pairs[2][1] * 0.2
+
+            # 门控: 加权 < 0.3 让 L3 兜底
+            if weighted_conf < 0.3:
                 return None
+
+            # 取 top1 label
+            pred_label = top3_pairs[0][0]
+            pred_conf = top3_pairs[0][1]
 
             # 把 BERT label 映射到 IntentType enum
             try:
@@ -891,11 +912,142 @@ class IntentRecognizer:
                 should_transfer=is_p0,
                 is_p0=is_p0,
                 needs_risk_disclosure=needs_risk,
-                reasoning=f'L2 BERT 分类: {pred_label} (conf={pred_conf:.3f})',
+                reasoning=f'L2 BERT top-3 投票: {top3_pairs[0][0]} ({top3_pairs[0][1]:.2f}) / {top3_pairs[1][0]} ({top3_pairs[1][1]:.2f}) / {top3_pairs[2][0]} ({top3_pairs[2][1]:.2f})',
             )
         except Exception as e:
             # 模型加载失败或推理失败, 不影响后续 fallback
             print(f'[v3.12.2 L2] BERT 推理失败: {e}')
+            return None
+
+    # ============================================================
+    # v3.12.2 L2 增强: Embedding Cosine 召回 (汇率/天气/自我介绍)
+    # ============================================================
+    # 这 3 类 BERT 没训过, 用 BERT 的 [CLS] embedding + 预存种子 query cosine 召回
+    # 不需要 retrain, 利用 BERT 已有语义能力
+
+    _EMBEDDING_SEEDS = {
+        # 汇率 (mock intent, mock_biz_db 里有 'sys_fx_rate' 答案)
+        'sys_fx_rate': [
+            '今天美元汇率是多少', '美元兑人民币多少', '欧元汇率', '日元换人民币',
+            '汇率今天多少', '招行美元汇率', '现钞买入价多少', '港币汇率',
+            '英镑兑人民币', '外汇牌价', '美元现汇卖出价', '今天汇率行情',
+            '查一下美元汇率', '换汇价格', '澳元汇率',
+        ],
+        # 天气 (闲聊兜底, 但模型层识别)
+        'sys_weather': [
+            '北京今天天气怎么样', '上海明天会下雨吗', '今天气温多少度',
+            '天气预报', '下雨了吗', '晴天还是阴天', '广州天气',
+        ],
+        # 自我介绍 (闲聊兜底, 模型层识别)
+        'sys_intro': [
+            '你是谁', '你叫什么名字', '介绍一下你自己',
+            '你是什么', '你是什么AI', '你是什么模型',
+        ],
+    }
+
+    _SEED_EMBEDDINGS = None  # 懒加载缓存
+
+    def _match_with_embedding(self, text: str) -> Optional['IntentResult']:
+        """
+        v3.12.2 L2 增强: 用 BERT 的 [CLS] embedding 跟预存种子 query 算 cosine
+        解决 BERT classifier 没训过的类 (汇率/天气/自我介绍)
+        """
+        try:
+            import torch
+
+            # 1. 懒加载: 加载 BERT + 算种子 embedding
+            if IntentRecognizer._SEED_EMBEDDINGS is None:
+                # 触发 BERT 加载 (复用 _match_with_model 的加载逻辑)
+                self._match_with_model('warmup')
+                if not hasattr(self, '_bert_tokenizer') or self._bert_tokenizer is None:
+                    return None
+
+                IntentRecognizer._SEED_EMBEDDINGS = {}
+                print('[v3.12.2 L2+] 预计算种子 embedding ...')
+
+                def _get_cls_emb(input_ids, attention_mask):
+                    """BertForSequenceClassification 没有 last_hidden_state, 需要 output_hidden_states=True"""
+                    with torch.no_grad():
+                        outputs = self._bert_model(
+                            input_ids=input_ids,
+                            attention_mask=attention_mask,
+                            output_hidden_states=True,
+                            return_dict=True,
+                        )
+                    # outputs.hidden_states 是 tuple(layer+1), 最后一个就是 last_hidden_state
+                    last_hidden = outputs.hidden_states[-1]  # (batch, seq, hidden)
+                    cls_emb = last_hidden[:, 0, :]  # [CLS] token
+                    return torch.nn.functional.normalize(cls_emb, p=2, dim=-1)
+
+                for intent, seeds in IntentRecognizer._EMBEDDING_SEEDS.items():
+                    inputs = self._bert_tokenizer(
+                        seeds,
+                        return_tensors='pt',
+                        truncation=True,
+                        max_length=32,
+                        padding=True,
+                    )
+                    cls_emb = _get_cls_emb(inputs['input_ids'], inputs['attention_mask'])
+                    IntentRecognizer._SEED_EMBEDDINGS[intent] = cls_emb
+                print(f'[v3.12.2 L2+] 完成, {len(IntentRecognizer._SEED_EMBEDDINGS)} 类种子 embedding')
+
+            # 2. 算 query 的 embedding
+            inputs = self._bert_tokenizer(
+                text,
+                return_tensors='pt',
+                truncation=True,
+                max_length=32,
+                padding=True,
+            )
+            with torch.no_grad():
+                outputs = self._bert_model(
+                    input_ids=inputs['input_ids'],
+                    attention_mask=inputs['attention_mask'],
+                    output_hidden_states=True,
+                    return_dict=True,
+                )
+            query_emb = outputs.hidden_states[-1][:, 0, :]  # (1, hidden_size)
+            query_emb = torch.nn.functional.normalize(query_emb, p=2, dim=-1)
+
+            # 3. 跟每类种子算 cosine (取每类的 max similarity)
+            best_intent = None
+            best_score = 0.0
+            best_seed_idx = -1
+            for intent, seed_embs in IntentRecognizer._SEED_EMBEDDINGS.items():
+                # seed_embs: (n_seeds, hidden_size), query_emb: (1, hidden_size)
+                scores = torch.mm(query_emb, seed_embs.t()).squeeze(0)  # (n_seeds,)
+                max_score, max_idx = torch.max(scores, dim=-1)
+                max_score = float(max_score)
+                if max_score > best_score:
+                    best_score = max_score
+                    best_intent = intent
+                    best_seed_idx = int(max_idx)
+
+            # 4. 门控: cosine < 0.75 不算 (避免噪音)
+            if best_score < 0.75:
+                return None
+
+            # 5. 返回 IntentResult
+            try:
+                intent_enum = IntentType(best_intent)
+            except ValueError:
+                # sys_fx_rate / sys_weather / sys_intro 不在 IntentType enum 里
+                # 用 sys_invalid 占位 + data_source 给 mock_biz_db 兜底
+                intent_enum = IntentType.SYS_INVALID
+
+            is_p0 = intent_enum.value in IntentCategory.P0_HUMAN_TRANSFER
+            needs_risk = intent_enum.value in IntentCategory.NEED_RISK_DISCLOSURE
+
+            return IntentResult(
+                intent=intent_enum,
+                confidence=round(best_score, 4),
+                should_transfer=is_p0,
+                is_p0=is_p0,
+                needs_risk_disclosure=needs_risk,
+                reasoning=f'L2 BERT embedding cosine: {best_intent} (score={best_score:.3f}, seed_idx={best_seed_idx})',
+            )
+        except Exception as e:
+            print(f'[v3.12.2 L2+] embedding 召回失败: {e}')
             return None
 
     def _match_with_llm(self, text: str) -> Optional['IntentResult']:

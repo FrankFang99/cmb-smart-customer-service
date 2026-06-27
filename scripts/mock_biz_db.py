@@ -393,6 +393,35 @@ def gen_answer(intent: str, query: str) -> Tuple[str, List[str]]:
                 sources.append('金融市场系统 (FXCore)')
             return kb['answer'], sources
 
+    # ---------- 5b. 天气 (v3.12.2 L2 embedding 召回) ----------
+    if intent == 'sys_weather':
+        return (
+            '我是招行智能客服, 天气查询我帮不上忙 😄\n\n'
+            '我能帮您:\n'
+            '  💰 查询余额 / 账单 / 积分\n'
+            '  💳 信用卡激活 / 挂失 / 还款\n'
+            '  📍 网点查询 / 客服电话\n'
+            '  💱 实时汇率 (mock 数据)\n\n'
+            '💡 推荐: 中国天气网 / 墨迹天气 / 苹果天气 App\n'
+            '数据来源: L2 BERT embedding 召回 (天气类)'
+        ), ['天气类-闲聊 (WeatherChat)']
+
+    # ---------- 5c. 自我介绍 (v3.12.2 L2 embedding 召回) ----------
+    if intent == 'sys_intro':
+        return (
+            '我是**招行智能客服 "小招"**, v3.12.2 版本, 基于 4 层 Cascade 架构:\n\n'
+            '  - **L0 红线词典**: 银行业强约束 (盗刷 / 转人工 / 投诉)\n'
+            '  - **L1 业务规则**: 100+ 关键词模式\n'
+            '  - **L2 BERT 分类 + Embedding 召回**: 30 + 3 label\n'
+            '  - **L3 LLM 兜底**: MiniMax M2.7 (含 thinking)\n\n'
+            '我能帮您:\n'
+            '  💰 查询余额 / 账单 / 积分\n'
+            '  💳 信用卡激活 / 挂失 / 还款\n'
+            '  📍 网点查询 / 客服电话\n'
+            '  💱 实时汇率 (mock)\n\n'
+            '数据来源: 4 大业务系统 (mock) + RAG 知识库'
+        ), ['闲聊系统 (ChatCore)', 'L2 BERT embedding 召回']
+
     # ---------- 6. P0 转人工类 (不能给 AI 回复) ----------
     if intent in ('cons_urg_human', 'sys_service_route_human'):
         return (
