@@ -94,6 +94,11 @@ body {
 .badge-violet { background: rgba(139, 92, 246, 0.3); color: #ede9fe; }
 .badge-orange { background: rgba(245, 158, 11, 0.3); color: #fef3c7; }
 
+/* 后端引擎 badge (实时显示 Python API / JS 兜底) */
+#backend-badge { transition: all 0.3s ease; }
+.backend-online { background: rgba(16, 185, 129, 0.4) !important; color: #d1fae5 !important; border: 1px solid rgba(16, 185, 129, 0.6); }
+.backend-offline { background: rgba(245, 158, 11, 0.3) !important; color: #fef3c7 !important; border: 1px solid rgba(245, 158, 11, 0.5); }
+
 /* ============================================================
  * Main Layout
  * ============================================================ */
