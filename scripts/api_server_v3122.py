@@ -108,18 +108,30 @@ def api_recognize():
         # ===== 调 Mock DB 生成真实答案 =====
         answer, data_sources = mock_gen_answer(intent_str, query)
 
-        # ===== L3 fallback 特殊处理 =====
-        # 如果 predicted 是 sys_invalid 且走了 L3, 给用户明确"建议转人工"而不是"抱歉没理解"
-        if intent_str == 'sys_invalid' and 'LLM' in result.reasoning:
-            answer = (
-                '我尝试了多种方式理解您的问题, 但暂时无法准确识别。\n\n'
-                '**建议直接转人工** (0 等待):\n'
-                '  - 输入 "转人工" 接入客服\n'
-                '  - 拨 95555 (7×24)\n'
-                '  - 紧急情况请拨 110\n\n'
-                '🔔 我已记录本次问题, 用于持续优化'
-            )
-            data_sources = ['意图识别失败 (建议转人工)']
+        # ===== sys_invalid 兜底 (mock_biz_db._keyword_fallback 已经处理关键词路由) =====
+        # 如果 mock_gen_answer 还是返回了"抱歉没理解"的兜底文案, 才给"建议转人工"
+        # _keyword_fallback 命中 → data_sources 会含真实数据源 (如 金融市场系统), 这里不会触发
+        if '抱歉, 您的问题暂时不在我的能力范围内' in answer:
+            if 'LLM' in result.reasoning:
+                # L3 跑了但没给出有效标签, 走关键词兜底也失败
+                answer = (
+                    '我尝试了多种方式理解您的问题, 但暂时无法准确识别。\n\n'
+                    '**建议直接转人工** (0 等待):\n'
+                    '  - 输入 "转人工" 接入客服\n'
+                    '  - 拨 95555 (7×24)\n'
+                    '  - 紧急情况请拨 110\n\n'
+                    '🔔 我已记录本次问题, 用于持续优化'
+                )
+                data_sources = ['意图识别失败 (建议转人工)']
+            else:
+                # L1/L2 漏了, L3 没开, 同样建议转人工
+                answer = (
+                    '抱歉, 我暂时无法理解您的问题, 但转人工可以更快解决。\n\n'
+                    '**建议直接转人工** (0 等待):\n'
+                    '  - 输入 "转人工"\n'
+                    '  - 或拨 95555\n'
+                )
+                data_sources = ['意图识别失败 (建议转人工)']
 
         elapsed_ms = (time.time() - start) * 1000
 

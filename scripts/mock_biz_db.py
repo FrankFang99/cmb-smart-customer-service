@@ -447,7 +447,13 @@ def gen_answer(intent: str, query: str) -> Tuple[str, List[str]]:
     if intent in ('sys_bye', 'sys_service_farewell', 'sys_thanks'):
         return '感谢您选择招商银行, 祝您生活愉快! 如有需要随时呼叫我 👋', ['闲聊系统 (ChatCore)']
 
-    # ---------- 8. fallback ----------
+    # ---------- 8. 关键词兜底 (intent=sys_invalid 时, 看 query 实际内容给答案) ----------
+    # 这是 v3.12.2 关键改进: 不让 AI 假装"我不理解", 而是看用户真正问的是什么, 给合理答案
+    keyword_answer = _keyword_fallback(query)
+    if keyword_answer:
+        return keyword_answer
+
+    # ---------- 9. 真兜底 ----------
     return (
         '抱歉, 您的问题暂时不在我的能力范围内。\n\n'
         '建议:\n'
@@ -456,6 +462,67 @@ def gen_answer(intent: str, query: str) -> Tuple[str, List[str]]:
         '  - 紧急情况请拨 95555\n\n'
         '🔔 我已记录本次问题, 将持续优化'
     ), ['意图识别失败 (建议转人工)']
+
+
+def _keyword_fallback(query: str) -> Optional[Tuple[str, List[str]]]:
+    """
+    关键词兜底: 当 intent=sys_invalid 时, 看 query 里有没有已知的业务关键词
+    这是反"规则驱动"的关键 - 不要让 AI 假装不理解, 而是尝试给出合理答案
+    """
+    q = query.lower()
+
+    # 汇率
+    if any(k in query for k in ['汇率', '外汇', '美元', '欧元', '日元', '港币', '英镑']):
+        kb = KnowledgeBase.find_by_intent('sys_fx_rate')
+        if kb:
+            return kb['answer'], ['金融市场系统 (FXCore)', 'RAG 知识库 (KB)']
+
+    # 天气 (闲聊兜底 - 不属于银行业务, 但要礼貌回复)
+    if any(k in query for k in ['天气', '气温', '下雨', '下雪', '晴天']):
+        return (
+            '我是招行智能客服, 天气查询我帮不上忙 😄\n\n'
+            '我可以帮您:\n'
+            '  💰 查询余额 / 账单 / 积分\n'
+            '  💳 信用卡激活 / 挂失 / 还款\n'
+            '  📍 网点查询 / 客服电话\n'
+            '  💱 实时汇率 (mock 数据)\n\n'
+            '请试试银行业务相关的问题?'
+        ), ['闲聊系统 (ChatCore)']
+
+    # 时间/日期
+    if any(k in query for k in ['几点', '今天几号', '日期', '现在时间', '星期几']):
+        now = datetime.datetime.now()
+        return (
+            f'当前时间: {now.strftime("%Y-%m-%d %H:%M:%S")}\n'
+            f'星期: {"一二三四五六日"[now.weekday()]}\n\n'
+            '💡 银行业务问题我也很乐意帮忙~'
+        ), ['闲聊系统 (ChatCore)']
+
+    # 问候/自我介绍
+    if any(k in query for k in ['你是谁', '叫什么', '介绍', '你是什么']):
+        return (
+            '我是**招行智能客服 "小招"**, v3.12.2 版本, 基于:\n\n'
+            '  - **L0 红线词典**: 银行业强约束 (盗刷 / 转人工 / 投诉)\n'
+            '  - **L1 业务规则**: 100+ 关键词模式\n'
+            '  - **L2 BERT 分类**: 30 个意图, val_acc 99.65%\n'
+            '  - **L3 LLM 兜底**: MiniMax M2.7 (含 thinking)\n\n'
+            '我能帮您查余额 / 账单 / 积分, 也能办激活 / 还款 / 转账。\n'
+            '数据来源包括 4 大业务系统 + RAG 知识库 (mock)。'
+        ), ['闲聊系统 (ChatCore)']
+
+    # 理财相关 (LLM 误判 sys_invalid 时兜底)
+    if any(k in query for k in ['理财', '基金', '朝朝宝', '稳健', '高收益']):
+        ans = MarketingSystem.get_marketing_answer('cons_prod_wealth')
+        if ans:
+            return ans + '\n\n⚠️ 理财有风险, 投资需谨慎。', ['理财系统 (WealthCore)', '营销系统 (MktCore)']
+
+    # 网点 / 电话
+    if any(k in query for k in ['网点', '地址', '在哪', '营业厅', '95555', '客服电话']):
+        kb = KnowledgeBase.find_by_intent('info_phone')
+        if kb:
+            return kb['answer'], ['RAG 知识库 (KB)', '网点系统 (BranchCore)']
+
+    return None
 
 
 # ============================================================
