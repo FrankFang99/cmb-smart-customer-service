@@ -67,8 +67,68 @@ const $routingContent = document.getElementById('routing-content');
 const $backendBadge = document.getElementById('backend-badge');
 
 // ============================================================
-// 消息渲染
+// 消息渲染 (支持简单 markdown: **粗体**, 换行, 列表)
 // ============================================================
+function renderMarkdown(text) {
+  // 简单 markdown 渲染:
+  //   **xxx** -> <strong>xxx</strong>
+  //   换行 -> <br>
+  //   "  - xxx" -> <ul><li>xxx</li></ul>
+  // 用 textContent 防 XSS, 不用 innerHTML
+  const lines = text.split('\n');
+  const container = document.createElement('div');
+
+  let inList = false;
+  let listUl = null;
+
+  for (const line of lines) {
+    const trimmed = line.trim();
+
+    if (trimmed.startsWith('- ')) {
+      // 列表项
+      if (!inList) {
+        listUl = document.createElement('ul');
+        listUl.style.margin = '4px 0';
+        listUl.style.paddingLeft = '20px';
+        container.appendChild(listUl);
+        inList = true;
+      }
+      const li = document.createElement('li');
+      renderInline(li, trimmed.slice(2));
+      listUl.appendChild(li);
+    } else {
+      // 普通行
+      if (inList) {
+        inList = false;
+        listUl = null;
+      }
+      if (trimmed === '') {
+        container.appendChild(document.createElement('br'));
+      } else {
+        const p = document.createElement('p');
+        p.style.margin = '4px 0';
+        renderInline(p, trimmed);
+        container.appendChild(p);
+      }
+    }
+  }
+  return container;
+}
+
+function renderInline(el, text) {
+  // **xxx** -> <strong>xxx</strong>
+  const parts = text.split(/(\*\*[^*]+\*\*)/);
+  for (const part of parts) {
+    if (part.startsWith('**') && part.endsWith('**')) {
+      const strong = document.createElement('strong');
+      strong.textContent = part.slice(2, -2);
+      el.appendChild(strong);
+    } else {
+      el.appendChild(document.createTextNode(part));
+    }
+  }
+}
+
 function addMessage(role, content, routing) {
   const div = document.createElement('div');
   div.className = 'message ' + (role === 'user' ? 'message-user' : 'message-bot');
@@ -76,9 +136,16 @@ function addMessage(role, content, routing) {
   const content_div = document.createElement('div');
   content_div.className = 'message-content';
 
-  const p = document.createElement('p');
-  p.textContent = content;
-  content_div.appendChild(p);
+  if (content) {
+    // bot 消息用 markdown 渲染; user 消息纯文本
+    if (role === 'bot') {
+      content_div.appendChild(renderMarkdown(content));
+    } else {
+      const p = document.createElement('p');
+      p.textContent = content;
+      content_div.appendChild(p);
+    }
+  }
 
   if (routing) {
     const meta = document.createElement('span');
@@ -144,6 +211,24 @@ function updateRouting(routing) {
   if (backendEl) {
     backendEl.textContent = routing.backend || '—';
   }
+
+  // 显示数据源 (v3.12.2 新增: 接入的结构化数据/RAG)
+  const dataSourcesEl = document.getElementById('routing-data-sources');
+  if (dataSourcesEl) {
+    const sources = routing.data_sources || [];
+    if (sources.length === 0) {
+      dataSourcesEl.textContent = '—';
+    } else {
+      // 列表渲染
+      dataSourcesEl.innerHTML = '';
+      sources.forEach(src => {
+        const tag = document.createElement('span');
+        tag.className = 'data-source-tag';
+        tag.textContent = src;
+        dataSourcesEl.appendChild(tag);
+      });
+    }
+  }
 }
 
 // ============================================================
@@ -196,8 +281,10 @@ function fallbackToJS(query) {
 async function recognize(query) {
   try {
     const apiResult = await callLocalAPI(query);
-    // API 返回不带 answer, 本地用 JS genAnswer 生成
-    apiResult.answer = xiaozhaoAI.genAnswer(apiResult.intent, query);
+    // API 已经返回真实 answer + data_sources (从 mock_biz_db 调出来), 不再用 JS genAnswer
+    if (!apiResult.answer) {
+      apiResult.answer = xiaozhaoAI.genAnswer(apiResult.intent, query);
+    }
     return apiResult;
   } catch (e) {
     console.log('[v3.12.2] 本地 API 失败, fallback 到 JS 规则:', e.message);
@@ -226,12 +313,14 @@ async function handleUserQuery(query) {
       priority: result.priority,
       elapsed_ms: result.elapsed_ms,
       backend: result.backend,
+      data_sources: result.data_sources || [],  // v3.12.2 加: 数据源
     };
+    // 渲染真实答案 (支持简单 markdown: **粗体**, - 列表)
     addMessage('bot', result.answer, routing);
     updateRouting(routing);
   } catch (e) {
     hideTyping();
-    addMessage('bot', '抱歉,识别服务暂时不可用,请稍后再试。', null);
+    addMessage('bot', '抱歉, 识别服务暂时不可用, 请稍后再试。', null);
     console.error('[v3.12.2] handleUserQuery error:', e);
   }
 }

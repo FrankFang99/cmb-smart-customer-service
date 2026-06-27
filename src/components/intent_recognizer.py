@@ -510,14 +510,20 @@ class IntentRecognizer:
             ("INVALID", self._invalid_rules),
         ]
     
-    def recognize(self, text: str, context: Optional[List[Dict]] = None) -> 'IntentResult':
+    def recognize(
+        self,
+        text: str,
+        context: Optional[List[Dict]] = None,
+        use_llm: bool = True,
+    ) -> 'IntentResult':
         """
-        意图识别主入口
-        
+        意图识别主入口 (v3.12.2 三层 Cascade: L0+L1 规则 → L2 BERT → L3 LLM)
+
         Args:
             text: 用户输入文本
             context: 对话上下文（多轮对话）
-        
+            use_llm: 是否启用 L3 LLM 兜底 (默认 True; batch_eval 关掉避免网络阻塞)
+
         Returns:
             IntentResult: 包含意图类型、置信度、是否转人工等
         """
@@ -531,22 +537,23 @@ class IntentRecognizer:
                 needs_risk_disclosure=False,
                 reasoning="空输入"
             )
-        
-        # 1. 规则匹配（高速）
+
+        # 1. 规则匹配（L0 红线 + L1 业务规则, 高速 7-10ms）
         rule_result = self._match_rules(text)
         if rule_result:
             return rule_result
-        
-        # 2. 轻量模型匹配（如有）
+
+        # 2. 轻量 BERT 分类（L2 语义向量, ~600ms CPU）
         model_result = self._match_with_model(text)
         if model_result:
             return model_result
-        
-        # 3. LLM兜底（如配置）
-        llm_result = self._match_with_llm(text)
-        if llm_result:
-            return llm_result
-        
+
+        # 3. LLM 兜底（L3 LLM API, ~5-30s 网络; 默认开, batch_eval 关)
+        if use_llm:
+            llm_result = self._match_with_llm(text)
+            if llm_result:
+                return llm_result
+
         # 4. 默认兜底
         return IntentResult(
             intent=IntentType.SYS_INVALID,
@@ -818,83 +825,172 @@ class IntentRecognizer:
         return None
 
     def _match_with_model(self, text: str) -> Optional['IntentResult']:
-        """轻量模型匹配（待实现）"""
-        # TODO: 集成轻量模型（如MiniLM）
-        return None
-    
+        """
+        v3.12.2 L2: BERT 语义意图分类 (加载已训练好的 bert-intent-finetuned)
+        - 30 label (含 info_acc_balance / info_bill_point / sec_stolen_card / cons_comp_service 等)
+        - val_acc 100% / holdout_acc 99.65%
+        - CPU 推理 ~50ms/query (max_len=64)
+        - 懒加载: 第一次调用时加载, 后续直接复用
+        """
+        try:
+            # 懒加载: 第一次调用才加载模型
+            if not hasattr(self, '_bert_tokenizer') or self._bert_tokenizer is None:
+                from transformers import AutoTokenizer, AutoModelForSequenceClassification
+                import json as _json
+
+                model_path = str(_ROOT_MODEL_DIR) if False else None
+                # 用绝对路径 (避免依赖 cwd)
+                import pathlib
+                _project_root = pathlib.Path(__file__).resolve().parents[2]
+                model_path = str(_project_root / 'models' / 'bert-intent-finetuned')
+
+                self._bert_tokenizer = AutoTokenizer.from_pretrained(model_path)
+                self._bert_model = AutoModelForSequenceClassification.from_pretrained(model_path)
+                self._bert_model.eval()
+
+                label2id_path = pathlib.Path(model_path) / 'label2id.json'
+                label2id = _json.loads(label2id_path.read_text(encoding='utf-8'))
+                self._bert_id2label = {v: k for k, v in label2id.items()}
+
+                print(f'[v3.12.2 L2] BERT loaded: {len(self._bert_id2label)} labels from {model_path}')
+
+            import torch
+
+            inputs = self._bert_tokenizer(
+                text,
+                return_tensors='pt',
+                truncation=True,
+                max_length=64,
+                padding=True,
+            )
+            with torch.no_grad():
+                outputs = self._bert_model(**inputs)
+            logits = outputs.logits[0]
+            probs = torch.softmax(logits, dim=-1)
+            pred_id = int(torch.argmax(probs))
+            pred_conf = float(probs[pred_id])
+            pred_label = self._bert_id2label[pred_id]
+
+            # 置信度门控: < 0.5 让 L3 兜底 (避免低置信误判)
+            if pred_conf < 0.5:
+                return None
+
+            # 把 BERT label 映射到 IntentType enum
+            try:
+                intent = IntentType(pred_label)
+            except ValueError:
+                # BERT 训的 label 不在当前 IntentType 里 (label space 不一致), 退到 sys_invalid
+                return None
+
+            is_p0 = intent.value in IntentCategory.P0_HUMAN_TRANSFER
+            needs_risk = intent.value in IntentCategory.NEED_RISK_DISCLOSURE
+
+            return IntentResult(
+                intent=intent,
+                confidence=round(pred_conf, 4),
+                should_transfer=is_p0,
+                is_p0=is_p0,
+                needs_risk_disclosure=needs_risk,
+                reasoning=f'L2 BERT 分类: {pred_label} (conf={pred_conf:.3f})',
+            )
+        except Exception as e:
+            # 模型加载失败或推理失败, 不影响后续 fallback
+            print(f'[v3.12.2 L2] BERT 推理失败: {e}')
+            return None
+
     def _match_with_llm(self, text: str) -> Optional['IntentResult']:
-        """LLM兜底匹配 - 使用MiniMax进行意图分类"""
+        """
+        v3.12.2 L3: LLM 兜底匹配 (修 v3.12.0 max_tokens=50 太小导致 200 状态但 content 空 的 bug)
+        - max_tokens=200 (LLM thinking 占 token, 必须够)
+        - 简化 prompt: 强制只输出 intent 标签
+        - 显式扣 think 标签 (MiniMax M2.7 默认开 思考模式)
+        - 仍然静默 except, 不抛异常 (fallback 到 sys_invalid)
+        """
         try:
             import httpx
-            
-            # 获取API配置
-            from ...config import settings
+            import re
+
+            # 获取 API 配置 (兼容项目里 sys.path.insert('src') 的导入方式)
+            try:
+                from ...config import settings
+            except (ImportError, ValueError):
+                try:
+                    from src.config import settings
+                except ImportError:
+                    from config import settings
+
             api_key, base_url, provider = settings.get_active_api_key()
             if not api_key:
                 return None
-            
+
             if provider == "MiniMax":
                 base_url = "https://api.minimaxi.com/v1"
-            
-            # 意图描述（精简版，用于LLM分类）
-            intent_options = """意图选项：
-- info_acc_balance: 余额查询（如：卡里还有多少钱、账户余额）
-- info_bill_amount: 账单金额（如：欠了多少钱、本期账单多少）
-- info_bill_date: 还款日期（如：几号还款、截止日期）
-- biz_card_loss: 卡片挂失（如：卡丢了、卡不见了）
-- biz_card_activate: 卡片激活（如：激活卡片、开卡）
-- biz_tran_external: 跨行转账（如：转账到其他银行、跨行汇款）
-- biz_tran_internal: 行内转账（如：招行卡互转）
-- cons_prod_loan: 贷款咨询（如：贷款利率、贷款额度）
-- cons_prod_wealth: 理财咨询（如：理财产品、收益）
-- cons_prod_credit: 信用卡咨询（如：信用卡额度、年费）
-- cons_urg_human: 转人工（如：转人工、找客服）
-- cons_comp_service: 服务投诉（如：态度差、服务差）
-- sec_fraud_report: 诈骗举报（如：被骗了、诈骗）
-- sec_stolen_card: 卡片盗刷（如：卡被盗刷、有陌生消费）
-- sys_greeting: 问候（如：你好、您好）
-- sys_invalid: 无效输入"""
-            
-            prompt = f"""你是银行客服意图分类器。用户输入："{text}"
 
-{intent_options}
+            # 简化 prompt: 强制 LLM 直接给 intent 标签
+            intent_options = (
+                '可选标签: info_acc_balance(余额) info_bill_amount(账单) info_bill_date(还款日) '
+                'info_bill_point(积分) info_tran_record(交易明细) info_branch(网点) info_phone(电话) '
+                'biz_pay_repay(还款) biz_card_activate(激活) biz_card_loss(挂失) biz_card_reissue(补卡) '
+                'biz_installment(分期) biz_pwd_reset(改密) biz_pwd_change(改密) biz_tran_limit(转账限额) '
+                'cons_prod_wealth(理财) cons_prod_loan(贷款) cons_prod_credit(信用卡咨询) '
+                'cons_urg_human(转人工) cons_comp_service(投诉) '
+                'sec_fraud_report(诈骗) sec_stolen_card(盗刷) sec_freeze_unexpected(异常冻结) '
+                'sales_credit_prod(信用卡推销) sales_loan_prod(贷款推销) sales_wealth_prod(理财推销) '
+                'sys_greeting(问候) sys_bye(再见) sys_thanks(感谢) sys_invalid(无效)'
+            )
+            prompt = (
+                f'银行意图分类。\n'
+                f'用户输入: {text}\n'
+                f'{intent_options}\n'
+                f'从选项里选一个标签输出,只输出标签本身。'
+            )
 
-请输出最匹配的意图（只输出意图名称，如：info_acc_balance）。"""
-            
             headers = {"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"}
             data = {
                 "model": "MiniMax-M2.7",
                 "messages": [{"role": "user", "content": prompt}],
-                "max_tokens": 50,
-                "temperature": 0.1
+                "max_tokens": 1000,  # v3.12.2 修: M2.7 强制开启思考模式, max_tokens 必须够 thinking + 标签
+                "temperature": 0.1,
             }
-            
+
             resp = httpx.post(f"{base_url}/chat/completions", headers=headers, json=data, timeout=30)
-            
+
             if resp.status_code == 200:
                 result = resp.json()
-                intent_str = result["choices"][0]["message"]["content"].strip()
-                
+                content = result["choices"][0]["message"]["content"].strip()
+
+                # 扣掉思考块: M2.7 输出 标记, 同时兼容
+                content = re.sub(r'<(think|reasoning)>.*?</\1>', '', content, flags=re.DOTALL).strip()
+                content = re.sub(r'<(think|reasoning)>.*', '', content, flags=re.DOTALL).strip()
+                # 兼容 "Final Answer: xxx" 这种格式
+                content = re.sub(r'(Final Answer|Answer|答案|输出)\s*[:：]\s*', '', content, flags=re.IGNORECASE).strip()
+
+                # 提取第一个 intent token (允许 a-z_ 至少含 1 个下划线)
+                m = re.search(r'\b([a-z]+(?:_[a-z]+)+)\b', content)
+                if not m:
+                    print(f'[v3.12.2 L3] LLM 输出无 intent 标签, content={content[:200]!r}')
+                    return None
+                intent_str = m.group(1)
+
                 try:
                     intent = IntentType(intent_str)
                 except ValueError:
-                    intent = IntentType.SYS_INVALID
-                
-                # 判断P0和风险提示
+                    return None
+
                 is_p0 = intent.value in IntentCategory.P0_HUMAN_TRANSFER
                 needs_risk = intent.value in IntentCategory.NEED_RISK_DISCLOSURE
-                
+
                 return IntentResult(
                     intent=intent,
                     confidence=0.7,
                     should_transfer=is_p0,
                     is_p0=is_p0,
                     needs_risk_disclosure=needs_risk,
-                    reasoning=f"LLM兜底分类: {intent_str}"
+                    reasoning=f'L3 LLM 兜底: {intent_str}',
                 )
-        except Exception:
-            pass
-        
+        except Exception as e:
+            print(f'[v3.12.2 L3] LLM 推理失败: {e}')
+
         return None
     
     def get_primary_category(self, intent: IntentType) -> str:
